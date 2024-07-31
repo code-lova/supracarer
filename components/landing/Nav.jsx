@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { navLinks } from "@constants/index";
+import { companySocials } from "@constants/index";
 
 const Nav = () => {
     const [active, setActive] = useState('');
@@ -51,6 +52,15 @@ const Nav = () => {
                     <Image src="/assets/images/download-btn.svg" width={30} height={30}/>
                 </div>
             </Link>
+            <div className="hidden lg:flex mt-[200px] space-x-4">
+                {companySocials.map((socials) => (
+                    <div key={socials.id} className='flex items-center rounded-md p-2'>
+                        <a href={socials.link}>
+                            <Image src={socials.icon} width={20} height={30} alt={socials.name}/>
+                        </a>
+                    </div>
+                ))}
+            </div>
 
            
         </nav>
