@@ -152,16 +152,16 @@
   }
 
   .form-control {
-    @apply w-[400px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-pink-500;
+    @apply w-[300px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-pink-500;
   }
 
   .subscribe-form {
-    @apply w-[380px] xl:w-[500px] py-3 px-4 rounded-md bg-gray-200 outline-none focus-within:border-2 border-pink-500;
+    @apply w-[320px] xl:w-[500px] py-3 px-4 rounded-md bg-gray-200 outline-none focus-within:border-2 border-pink-500;
   }
   
   
   .textarea-control{
-    @apply p-4 w-[400px] xl:w-[830px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-pink-500;
+    @apply p-4 w-[300px] xl:w-[630px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-pink-500;
   }
 
   .form-button {
