@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+
+.main {
+    width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    padding: 120px 24px 160px 24px;
+    pointer-events: none;
+  }
+  
+
+  .main:after {
+    content: "";
+    background-image: url("/assets/images/grid.svg");
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 0.4;
+    filter: invert(1);
+  }
+  
+  .gradient {
+    height: fit-content;
+    z-index: 3;
+    width: 100%;
+    max-width: 640px;
+    background-image: radial-gradient(
+        at 27% 37%,
+        hsla(215, 98%, 61%, 1) 0px,
+        transparent 0%
+      ),
+      radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
+      radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
+      radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
+      radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
+      radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
+      radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    filter: blur(100px) saturate(150%);
+    top: 80px;
+    opacity: 0.15;
+  }
+  
+
+
+@layer components {
+  .app {
+    max-width: 1740px;
+    margin: 0 auto;
+  }
+
+  .input {
+    @apply sm:flex-1 max-sm:w-full text-base leading-normal text-slate-gray pl-5 max-sm:p-5 outline-none sm:border-none border max-sm:border-slate-gray max-sm:rounded-full;
+  }
+
+  .transitioning {
+    @apply transition duration-300 ease-in-out transform hover:scale-105;
+  }
+
+ 
+}
+
+@layer utilities {
+  .padding {
+    @apply sm:px-8 sm:py-8 md:py-4 md:px-8 px-8 py-4;
+  }
+
+  .blue_gradient {
+    @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent underline;
+  }
+
+  .green_gradient {
+    @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
+  }
+
+
+
+  .card-color{
+    @apply bg-[#212428];
+  }
+
+  .bg-mobile-nav{
+    @apply cursor-pointer padding rounded-md lg:opacity-100 lg:max-h-full lg:block lg:pt-8  bg-gray-800 lg:bg-gray-800 transition-all duration-500 ease-in-out overflow-hidden;
+  }
+
+  .padding-x {
+    @apply sm:px-16 px-8;
+  }
+
+  .padding-y {
+    @apply sm:py-24 py-12;
+  }
+
+  .padding-l {
+    @apply sm:pl-16 pl-8;
+  }
+
+  .padding-r {
+    @apply sm:pr-16 pr-8;
+  }
+
+  .padding-t {
+    @apply sm:pt-24 pt-12;
+  }
+
+  .padding-b {
+    @apply sm:pb-24 pb-12;
+  }
+
+
+  .border-card{
+    @apply ring-stone-800 ring-[12px] rounded-lg;
+  }
+
+  .ul-li-style{
+    @apply hover:text-coral-red transitioning p-4 hover:shadow-shadow-1;
+  }
+
+  /* Custom Checkbox Styling */
+  .checkbox {
+    @apply appearance-none h-4 w-4 border-none rounded bg-gray-200 checked:bg-red-500 checked:ring-0;
+  }
+
+  .checkbox:focus {
+      @apply ring-2 ring-red-500;
+  }
+
+  .download-btn {
+    @apply p-3 rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500;
+  }
+
+  .faq-heading-bg {
+    @apply flex items-center justify-between font-semibold p-4 rounded-md cursor-pointer transition-colors duration-300;
+  }
+
+  .form-control {
+    @apply w-[400px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-pink-500;
+  }
+
+  .subscribe-form {
+    @apply w-[380px] xl:w-[500px] py-3 px-4 rounded-md bg-gray-200 outline-none focus-within:border-2 border-pink-500;
+  }
+  
+  
+  .textarea-control{
+    @apply p-4 w-[400px] xl:w-[830px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-pink-500;
+  }
+
+  .form-button {
+    @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white py-4 px-4 rounded;
+  }
+
+}
