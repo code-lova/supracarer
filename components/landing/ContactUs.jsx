@@ -2,7 +2,7 @@ import React from 'react'
 
 const ContactUs = () => {
   return (
-    <div className="ml-4 mb-12 bg-contact py-20">
+    <div className="ml-4 mr-4 mb-12 bg-contact py-20">
         <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">Stay Connected With Us</h1>
         <div className="text-center my-4 font-extralight px-4 text-base leading-6 lg:px-40">
             <p className="text-slate-gray">
