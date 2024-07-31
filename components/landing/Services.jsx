@@ -16,6 +16,8 @@ const Services = () => {
                             height={60}
                             className=' object-contain mx-auto'
                             loading='lazy'
+                            layout='responsive'
+                            quality={75}
                         />
                         <div className='font-semibold'>
                             <p className='text-pink-500'>{services.title}</p>

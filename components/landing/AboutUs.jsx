@@ -12,7 +12,7 @@ const AboutUs = () => {
             </div>
             
             
-            <div className="grid grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-2 space-x-4 mt-2 lg:mt-6">
+            <div className="grid grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-2 gap-2 mt-2 lg:mt-6">
                 <div className="px-4 lg:px-2 font-extralight">
 
                     <p className="my-6 lg:my-0 capitalize font-bold text-2xl tracking-widest underline text-pink-500">Supracarer</p>
@@ -36,8 +36,14 @@ const AboutUs = () => {
                         </div>
                     ))}
                 </div>
-                <div>
-                    <Image className="object-fill" src="/assets/images/crutches.webp" width={490} height={350}/>
+                <div className='mt-8 xl:mt-0'>
+                    <Image 
+                        className="object-fill" 
+                        src="/assets/images/crutches.webp" 
+                        width={480} 
+                        height={350}
+                        alt='nurse-helping-elderly'
+                    />
                 </div>
             </div>
         </div>

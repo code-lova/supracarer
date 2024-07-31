@@ -10,7 +10,7 @@ const Nav = () => {
 
     return (
         <nav className="bg-gray-800 fixed shadow-2xl z-50 top-0 left-0 w-full px-2 lg:px-6 lg:py-6 lg:w-[300px] lg:h-screen lg:fixed lg:left-0 lg:top-0 lg:bg-gray-800 lg:text-white">
-            <div className="flex justify-between items-center mt-2 lg:flex-col lg:items-start lg:pt-4">
+            <div className="flex justify-between items-center mt-3 lg:flex-col lg:items-start lg:pt-4">
                 <Link 
                     href="/"
                     onClick={() => {
