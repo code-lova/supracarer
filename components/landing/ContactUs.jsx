@@ -5,12 +5,12 @@ const ContactUs = () => {
     <div className="ml-4 mr-4 mb-12 bg-contact py-20">
         <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">Stay Connected With Us</h1>
         <div className="text-center my-4 font-extralight px-4 text-base leading-6 lg:px-40">
-            <p className="text-slate-gray">
+            <p className="text-lg leading-7 text-semi-dark">
                 Reach out to Supracarer for personalized assistance and support with our AI-powered home healthcare services
             </p>
         </div> 
 
-        <div className="p-2">
+        <div className="p-2 py-6">
             <form action="" className="flex flex-col">
                 <div className="grid sm:grid-cols-1 md:grid-cols-1 gap-8 mx-auto lg:grid-cols-1 xl:grid-cols-2">
                     <div className="flex flex-col">

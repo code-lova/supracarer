@@ -7,7 +7,7 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     <footer className='w-full bg-footer bg-cover p-6'>
-        <div className='font-extralight text-slate-gray grid grid-cols-1 gap-6 md:px-8 lg:grid lg:grid-cols-3'>
+        <div className='font-extralight text-semi-dark grid grid-cols-1 gap-6 md:px-8 lg:grid lg:grid-cols-3'>
             <div>
                 <Image 
                     src="/assets/images/logo.png" 

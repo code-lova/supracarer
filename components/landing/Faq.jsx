@@ -15,7 +15,7 @@ const Faq = () => {
     <div className="ml-4 mb-12 bg-gradient-to-r from-transparent to-gray-200 py-20">
       <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">Frequently Asked Questions</h1>
       <div className="text-center my-4 font-extralight px-4 text-base leading-6 lg:px-40">
-        <p className="text-slate-gray">
+        <p className="text-lg leading-7 text-semi-dark">
             Get Answers to Your Questions About Supracarer, Our AI-Powered In Home Health Care App
         </p>
       </div> 
@@ -33,7 +33,7 @@ const Faq = () => {
                 className={`faq-heading-bg ${openFaq === faq.id ? 'bg-custom-green text-white' : 'bg-white text-black'}`}
                 onClick={() => toggleAccodion(faq.id)}
               >
-                  <h1 className='text-sm'>{faq.question}</h1>
+                  <h1 className='text-[16px]'>{faq.question}</h1>
                   <Image 
                       src="/assets/icons/arrow-down.svg" 
                       width={15} 
@@ -42,7 +42,7 @@ const Faq = () => {
                   />
               </div>
 
-              <div className={`bg-white font-extralight p-4 transition-max-height duration-500 ease-in-out overflow-hidden ${openFaq === faq.id ? 'max-h-96' : 'hidden'}`}>
+              <div className={`bg-white font-semi-thick p-4 transition-max-height duration-500 ease-in-out overflow-hidden ${openFaq === faq.id ? 'max-h-96' : 'hidden'}`}>
                 <p>{faq.answer}</p>
               </div>
             </div>

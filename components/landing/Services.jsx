@@ -18,10 +18,11 @@ const Services = () => {
                             loading='lazy'
                             layout='responsive'
                             quality={75}
+                            alt={services.title}
                         />
                         <div className='font-semibold'>
-                            <p className='text-pink-500'>{services.title}</p>
-                            <p className='font-extralight'>{services.description}</p>
+                            <p className='text-pink-500 tracking-wider text-lg'>{services.title}</p>
+                            <p className='font-semi-thick text-semi-dark font-extralight py-2'>{services.description}</p>
                         </div>
                         
                     </div>

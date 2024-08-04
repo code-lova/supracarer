@@ -8,7 +8,7 @@ const AboutUs = () => {
         <div className="my-20 ml-4 mr-4 mb-12">
             <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">Who We Are</h1>
             <div className="text-center my-2 font-extralight px-4 text-base leading-6 lg:px-40">
-                <p className="text-slate-gray">We are a pioneering healthcare technology company dedicated to revolutionizing home health care through our AI-powered app. </p>
+                <p className="text-semi-dark text-base xl:text-lg leading-7">We are a pioneering healthcare technology company dedicated to revolutionizing home health care through our AI-powered app. </p>
             </div>
             
             
@@ -17,7 +17,7 @@ const AboutUs = () => {
 
                     <p className="my-6 lg:my-0 capitalize font-bold text-2xl tracking-widest underline text-pink-500">Supracarer</p>
                     {aboutUs.map((abt) => (
-                        <p className="my-4 " key={abt.id}>
+                        <p className="my-4 font-semi-thick text-semi-dark" key={abt.id}>
                             {abt.statement} <br />
                         </p>
                     ))}
@@ -25,14 +25,14 @@ const AboutUs = () => {
                     {mission.map((mision) => (
                         <div key={mision.title} className="my-4">
                             <h1 className="font-semibold text-pink-500 text-xl underline">{mision.title}</h1>
-                            <p className="leading-7">{mision.mission}</p>
+                            <p className="leading-7 font-semi-thick text-semi-dark">{mision.mission}</p>
                         </div>
                     ))}
 
                     {vision.map((vison) => (
                         <div key={vison.title} className="my-4">
                             <h1 className="font-semibold text-pink-500 text-xl underline">{vison.title}</h1>
-                            <p className="leading-7">{vison.vision}</p>
+                            <p className="leading-7 font-semi-thick text-semi-dark">{vison.vision}</p>
                         </div>
                     ))}
                 </div>

@@ -6,11 +6,12 @@ const Hero = () => {
   return (
     <div className="relative w-full h-[400px] lg:h-[600px]">
         <Image 
-            src="/assets/images/hero-bg6.webp" 
+            src="/assets/images/hero-bg62.webp" 
             layout="fill" 
             objectFit="cover" 
             alt="Hero Background"
             className="absolute inset-0"
+            loading='lazy'
         />
 
         {/* Dark overlay */}

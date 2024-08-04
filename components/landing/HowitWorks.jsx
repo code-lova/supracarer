@@ -19,11 +19,12 @@ const HowitWorks = () => {
             </div>
             <div className="p-0">
                 {howItWorks.map((how) => (
-                    <div key={how.id} className="my-2">
-                        <b>{how.id}</b>
-                        <h1>
-                            <b className="text-pink-500">{how.name}</b> <p className="font-extralight text-slate-gray">{how.description}</p>
-                        </h1>
+                    <div key={how.id} className="my-4">
+                        <h1 className='font-bold'>{how.id}</h1>
+                        <h2>
+                            <p className="text-pink-500 font-bold text-lg tracking-wider">{how.name}</p> 
+                            <p className="font-semi-thick text-semi-dark text-base leading-8">{how.description}</p>
+                        </h2>
                         
                     </div>
                 ))}

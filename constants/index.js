@@ -93,7 +93,7 @@ export const aboutUs = [
     },
     {
         id: "3",
-        statement: "We provide a 24 hours services and ​our customer services are always ​available when you need."
+        statement: "We offer round-the-clock services, with our customer support team available whenever you need assistance."
     },
     
 ]
@@ -118,7 +118,7 @@ export const team = [
         id: '1',
         image: "/assets/images/team.webp",
         name: "Kwabena Owusu",
-        position: "Founder/CEO",
+        position: "Founder",
         socials: {
             facebook: {
                 link: 'https://fb.com',
@@ -142,7 +142,7 @@ export const team = [
         id: '2',
         image: "/assets/images/team.webp",
         name: "Mawuena Abena Dossah",
-        position: "Co-Founder/Business ​Develo​pment Lead/COO",
+        position: "Co-Founder",
         socials: {
             facebook: {
                 link: 'https://fb.com',
@@ -223,7 +223,7 @@ export const service = [
         id: '2',
         title: 'For The Sick',
         image: '/assets/images/service2.webp',
-        description: 'Be free to find individuals that ​meet your preferances and ​requirement with us'
+        description: 'Be free to find individuals that ​meet your preferences and ​requirement with us'
     },
     {
         id: '3',
@@ -239,8 +239,8 @@ export const pricingPlan = [
         id: '1',
         name: 'Basic Plan',
         heading: 'Perfect for those who need reliable and nearby assistance',
-        amount: '19.99',
-        annual: '199.99',
+        amount: '₵19.99',
+        annual: '₵199.99',
         discount: '16%',
         features: {
             first:{
@@ -270,8 +270,8 @@ export const pricingPlan = [
         id: '2',
         name: 'Standard Plan',
         heading: 'Ideal for clients who need specialized care tailored to their unique needs.',
-        amount: '39.99',
-        annual: '399.99',
+        amount: '₵39.99',
+        annual: '₵399.99',
         discount: '16%',
         features: {
             first:{
@@ -300,8 +300,8 @@ export const pricingPlan = [
         id: '3',
         name: 'Premium Plan',
         heading: 'The ultimate plan for comprehensive, responsive, and expert home healthcare.',
-        amount: '59.99',
-        annual: '599.99',
+        amount: '₵59.99',
+        annual: '₵599.99',
         discount: '16%',
         features: {
             first:{

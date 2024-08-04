@@ -97,6 +97,14 @@
     @apply bg-[#212428];
   }
 
+  .font-semi-thick{
+    @apply font-light;
+  }
+
+  .text-semi-dark{
+    @apply text-slate-900;
+  }
+
   .bg-mobile-nav{
     @apply cursor-pointer px-8 py-2 rounded-md lg:opacity-100 lg:max-h-full lg:block lg:pt-8  bg-gray-800 lg:bg-gray-800 transition-all duration-500 ease-in-out overflow-hidden;
   }

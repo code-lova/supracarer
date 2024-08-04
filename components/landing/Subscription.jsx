@@ -6,8 +6,8 @@ const Subscription = () => {
         <div className="ml-2 mb-12 py-20">
             <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">Subscribe & stay updated</h1>
             <div className="text-center my-4 font-extralight px-4 text-base leading-6 lg:px-40">
-                <p className="text-slate-gray">
-                Sign up to our newsletter and be the first to know about latest news, special offers, events, and discounts.
+                <p className="text-slate-gray text-lg leading-7 text-semi-dark">
+                    Sign up to our newsletter and be the first to know about latest news, special offers, events, and discounts.
                 </p>
             </div> 
 

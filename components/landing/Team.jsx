@@ -27,7 +27,7 @@ const Team = () => {
         <div className="ml-4 mb-12 bg-gradient-to-r from-transparent to-gray-200 py-20 relative">
             <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">Meet The Team</h1>
             <div className="text-center my-4 font-extralight px-4 text-base leading-6 lg:px-40">
-                <p className="text-slate-gray">
+                <p className="text-semi-dark text-lg leading-7">
                     Our team is a dedicated group of healthcare professionals, technologists, and innovators passionate about improving home health care.
                 </p>
             </div> 
@@ -54,18 +54,19 @@ const Team = () => {
                                 <p className="text-sm font-semibold">{member.position}</p>
                             </div>
                             <div className="flex justify-center space-x-4 mt-4 bg-slate-500 p-4 rounded-xl">
-                                <Link href={member.socials.facebook.link}>
+                                {/* <Link href={member.socials.facebook.link}>
                                     <Image src={member.socials.facebook.icon} width={20} height={20} />
                                 </Link>
                                 <Link href={member.socials.instagram.link}>
                                     <Image src={member.socials.instagram.icon} width={20} height={20} />
+                                </Link> */}
+                                <Link href={member.socials.linkedin.link} className='flex items-center space-x-2'>
+                                    <p className='text-lg font-bold text-white'>Connect</p>
+                                    <Image src={member.socials.linkedin.icon} width={23} height={20} />
                                 </Link>
-                                <Link href={member.socials.linkedin.link}>
-                                    <Image src={member.socials.linkedin.icon} width={20} height={20} />
-                                </Link>
-                                <Link href={member.socials.twitter.link}>
+                                {/* <Link href={member.socials.twitter.link}>
                                     <Image src={member.socials.twitter.icon} width={20} height={20} />
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
                     ))}
