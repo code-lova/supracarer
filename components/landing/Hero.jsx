@@ -24,9 +24,12 @@ const Hero = () => {
                 <p className="mt-4 text-base lg:text-xl w-[250px] xl:text-2xl md:w-[400px] xl:w-[610px] text-black font-extralight tracking-widest">
                     Top A.I generated matchmaking with ​highly trained caregivers, reliable ​assistance, round-the-clock services, ​and more!
                 </p>
-                <Link href="/">
-                    <div className="flex justify-center items-center space-x-2 h-14 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-lg w-[180px] mt-10 transitioning shadow-2xl">
-                        <button className="text-white font-bold">Try for Free</button>
+                <p className=" mt-3 text-[14px] font-semibold w-[250px] lg:text-xl xl:text-2xl md:w-[400px] xl:w-[610px] xl:tracking-widest text-gray-700">
+                    Be the first to get all premium features for free, when we lunch. 
+                </p>
+                <Link href="/leads">
+                    <div className="flex justify-center items-center space-x-2 h-14 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-lg w-[198px] mt-4 transitioning shadow-2xl">
+                        <button className="text-white font-bold">Get free Spot Now</button>
                         <span><Image src="/assets/icons/arrow.svg" width={30} height={10}/></span>
                     </div>
                 </Link>
