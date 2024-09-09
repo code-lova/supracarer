@@ -24,7 +24,7 @@ export const POST = async(req) => {
       // Email content
       const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: 'kenjoejoe38@gmail.com', // Recipient email address
+        to: 'matthonciu@gmail.com', // Recipient email address
         subject: 'New Lead Submission',
         text: `You received a new lead from Supracarer with details: ${fullName} (${email})`,
       };
