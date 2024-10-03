@@ -15,6 +15,7 @@ const Features = () => {
                         width={70} height={20}
                         className=" object-contain mx-auto"
                     />
+                    <h3 className="font-bold blue_gradient uppercase mt-4 leading-6 text-base tracking-wider text-center">{feature.title}</h3>
                     <p className="font-semi-thick text-semi-dark mt-4 leading-6 text-base tracking-wider text-center">{feature.description}</p>
                 </div>
             ))}
