@@ -15,15 +15,15 @@ const ContactUs = () => {
                 <div className="grid sm:grid-cols-1 md:grid-cols-1 gap-8 mx-auto lg:grid-cols-1 xl:grid-cols-2">
                     <div className="flex flex-col">
                         <label htmlFor="full-name" className="text-slate-gray font-semibold mb-1">Full Name</label>
-                        <input type="text" id="full-name" placeholder="e.g., John" className="form-control" />
+                        <input type="text" id="full-name" placeholder="e.g., John Doe" className="form-control" />
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="email" className="text-slate-gray font-semibold mb-1">Email Address</label>
-                        <input type="email" id="email" placeholder="Email Address" className="form-control" />
+                        <input type="email" id="email" placeholder="e.g., johndoe@gmail.com" className="form-control" />
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="subject" className="text-slate-gray font-semibold mb-1">Subject</label>
-                        <input type="text" id="subject" placeholder="Subject" className="form-control" />
+                        <input type="text" id="subject" placeholder="I need help urgently" className="form-control" />
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="phone" className="text-slate-gray font-semibold mb-1">Phone</label>

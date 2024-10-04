@@ -13,7 +13,7 @@ export const navLinks = [
     {
         id: 'features',
         link: '/features',
-        title: "features"
+        title: "Features"
     },
     {
         id: 'how',
@@ -39,43 +39,46 @@ export const features = [
     {
         icon: '/assets/icons/proximity.svg',
         name: 'Proximity-Based Matching',
-        description: 'The app uses geolocation technology to match caregivers with clients who are in close proximity.'
+        title: 'Expertly Matched Caregivers',
+        description: 'We take the guesswork out of finding care. Our platform carefully matches you with caregivers and nurses based on your health needs, preferences, and care requirements, ensuring you receive personalized and dedicated support.'
     },
     {
         icon: '/assets/icons/expert.svg',
         name: 'Needs and Expertise Matching',
-        description: 'The app employs AI to evaluate and match caregivers based on their expertise and the specific healthcare needs of clients.'
+        title: 'Seamless Booking',
+        description: 'With our user-friendly booking system, scheduling care services is simple. Whether you need urgent care or are planning ahead, Supracarer makes it easy to arrange services that work around your schedule.'
     },
     {
         icon: '/assets/icons/urgency.svg',
         name: 'Dynamic Availability and Urgency Matching',
-        description: 'The app constantly updates the availability status of caregivers and matches them with clients based on the urgency of the care required.'
+        title: 'Thriving Fitness Community',
+        description: 'Join our vibrant community focused on health and wellness. Share fitness tips, participate in group activities, and stay motivated on your journey to better health with support from peers and professionals alike.'
     }
 ]
 
 export const howItWorks = [
     {
-        id: 'step-1',
+        id: 'Step 1',
         name: 'User Registration and Profile Setup:',
         description: 'Clients and caregivers register on the app and set up their profiles, including location, health needs, and expertise.'
     },
     {
-        id: 'step-2',
+        id: 'Step 2',
         name: 'Service Request Initiation:',
         description: 'Clients initiate a service request by inputting their location, specific needs, and urgency level.'
     },
     {
-        id: 'step-3',
-        name: 'AI-Driven Matching Process:',
-        description: 'The app uses AI to match the client with the most suitable caregiver based on proximity, expertise, and availability.'
+        id: 'Step 3',
+        name: 'Matching Process:',
+        description: 'Supracarer matches the client with the most suitable caregiver based on proximity, expertise, and availability.'
     },
     {
-        id: 'step-4',
+        id: 'Step 4',
         name: 'Notification and Confirmation:',
         description: 'Both the client and the caregiver receive notifications about the match. The caregiver confirms the appointment.'
     },
     {
-        id: 'step-5',
+        id: 'Step 5',
         name: 'Care Delivery and Feedback:',
         description: 'The caregiver provides the required care, and both parties can leave feedback in the app to improve future matching and service quality.'
     }
@@ -85,11 +88,11 @@ export const aboutUs = [
 
     {   
         id: "1",
-        statement: "An AI-powered ​homecare app that easily connects ​families with qualified home care nurses, ensuring a simple and efficient process."
+        statement: "A homecare app that easily connects families with qualified home care nurses, ensuring a simple and efficient process. "
     },
     {
         id: "2",
-        statement: "We help connect you to ​professionally trained caregivers of ​your choice or preference though ​referral matchmaking."
+        statement: "We are dedicated to helping individuals and families find trusted, compassionate caregivers and nurses who provide high-quality support tailored to their specific needs."
     },
     {
         id: "3",
@@ -109,7 +112,7 @@ export const mission = [
 export const vision = [
     {
         title: "Our Vision",
-        vision: "Our vision is to transform home health care into a seamless, efficient, and compassionate experience through innovative AI technology."
+        vision: "Our vision is to transform home health care into a seamless, efficient, and compassionate experience offering you the assistance you need and when you need it."
     }
 ]
 
@@ -217,19 +220,19 @@ export const service = [
         id: '1',
         title: 'For The Elderly',
         image: '/assets/images/service1.webp',
-        description: 'Have no hard time finding a ​compassionate person to care for ​that loved one with our help'
+        description: 'Have no hard time finding a ​compassionate person to care for ​that loved one with our help.'
     },
     {
         id: '2',
         title: 'For The Sick',
         image: '/assets/images/service2.webp',
-        description: 'Be free to find individuals that ​meet your preferences and ​requirement with us'
+        description: 'Be free to find individuals that ​meet your preferences and ​requirement with us.'
     },
     {
         id: '3',
         title: 'For Nurses and Caregivers',
         image: '/assets/images/service3.webp',
-        description: 'Connect with families in need and ​get full paying job offers that meet ​your field of studies'
+        description: 'Connect with families in need and ​get full paying job offers that meet ​your field of studies.'
     },
 
 ]
@@ -333,17 +336,17 @@ export const faqData = [
     {
         id: '1',
         question: 'What is Proximity-Based Matching and how does it benefit me?',
-        answer: 'Proximity-Based Matching uses geolocation technology to connect you with caregivers who are nearby. This ensures that caregivers can reach you quickly in case of emergencies, reducing travel time and costs, and providing prompt assistance.'
+        answer: 'We match you to our nurses and caregivers who are nearby. This ensures that caregivers can reach you quickly in case of emergencies, reducing travel time and costs, and providing prompt assistance.'
     },
     {
         id: '2',
         question: 'How does Needs and Expertise Matching work in Supracarer?',
-        answer: 'Needs and Expertise Matching employs AI to assess and match caregivers based on their skills and your specific healthcare needs. This includes matching based on medical conditions, required skill sets, and previous experience, ensuring you receive the most suitable care.'
+        answer: 'Needs and Expertise Matching match you to our trusted caregivers based on their skills and your specific healthcare needs. This includes matching based on medical conditions, required skill sets, and previous experience, ensuring you receive the most suitable care.'
     },
     {
         id: '3',
         question: 'What is Dynamic Availability and Urgency Matching?',
-        answer: 'Dynamic Availability and Urgency Matching constantly updates caregivers availability and matches them with clients based on the urgency of care required. It prioritizes urgent needs, ensuring that caregivers are assigned to clients who need immediate attention.'
+        answer: 'Dynamic Availability and Urgency Matching constantly updates caregivers availability and matches them with you based on the urgency of care required. It prioritizes urgent needs, ensuring that caregivers are assigned to clients who need immediate attention.'
     },
     {
         id: '4',

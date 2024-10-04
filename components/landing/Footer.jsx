@@ -17,7 +17,7 @@ const Footer = () => {
                     className="object-fill w-[200px]"
                 /> 
                 <p className='mt-4'>
-                    AI generated matchmaking with ​highly trained caregivers, reliable ​assistance, round-the-clock services, ​and more!
+                    Get personalized home care services with our ​highly trained caregivers, reliable ​assistance, round-the-clock services, ​and more!
                 </p>
                 <div className='flex space-x-2 mt-4'>
                     {companySocials.map((socials) => (
@@ -36,7 +36,7 @@ const Footer = () => {
                     <div>
                         <ul className='mt-2 p-3'>
                             <li className='hover:underline xl:transitioning'>
-                                <a href="">FaQ</a>
+                                <a href="">FAQs</a>
                             </li>
                             <li className='hover:underline xl:transitioning'>
                                 <a href="">About</a>

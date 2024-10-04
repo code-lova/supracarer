@@ -8,7 +8,7 @@ const AboutUs = () => {
         <div className="my-20 ml-4 mr-4 mb-12">
             <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">Who We Are</h1>
             <div className="text-center my-2 font-extralight px-4 text-base leading-6 lg:px-40">
-                <p className="text-semi-dark text-base xl:text-lg leading-7">We are a pioneering healthcare technology company dedicated to revolutionizing home health care through our AI-powered app. </p>
+                <p className="text-semi-dark text-base xl:text-lg leading-7">We are a pioneering healthcare technology company dedicated to revolutionizing home health care through our innovative platform. </p>
             </div>
             
             
