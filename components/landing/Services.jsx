@@ -13,10 +13,9 @@ const Services = () => {
                         <Image 
                             src={services.image} 
                             width={290} 
-                            height={60}
+                            height={260}
                             className=' object-contain mx-auto'
                             loading='lazy'
-                            layout='responsive'
                             quality={75}
                             alt={services.title}
                         />

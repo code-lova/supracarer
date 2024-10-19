@@ -43,12 +43,9 @@
         hsla(215, 98%, 61%, 1) 0px,
         transparent 0%
       ),
-      radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
-      radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
       radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
-      radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
       radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
-      radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+      radial-gradient(at 79% 53%, rgb(238, 165, 212) 0px, transparent 50%);
     position: absolute;
     content: "";
     width: 100%;
@@ -79,7 +76,7 @@
 
 @layer utilities {
   .padding {
-    @apply sm:px-8 sm:py-8 md:py-4 md:px-8 px-8 py-2;
+    @apply lg:py-4 lg:px-[120px] px-6 py-6;
   }
 
   .blue_gradient {
@@ -106,6 +103,10 @@
 
   .bg-mobile-nav{
     @apply cursor-pointer px-8 py-2 rounded-md lg:opacity-100 lg:max-h-full lg:block lg:pt-8  bg-gray-800 lg:bg-gray-800 transition-all duration-500 ease-in-out overflow-hidden;
+  }
+
+  .bg-mobile-nav2{
+    @apply flex-col items-center space-y-2 lg:space-y-0 lg:flex-row lg:space-x-5 lg:flex bg-gray-50 lg:bg-transparent absolute lg:static top-[78px] left-0 w-full lg:w-auto p-5 lg:p-0 transition-all duration-500 ease-in-out;
   }
 
   .padding-x {
