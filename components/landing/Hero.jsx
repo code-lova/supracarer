@@ -7,8 +7,8 @@ const Hero = () => {
     <div className="relative w-full h-[400px] lg:h-[600px]">
         <Image 
             src="/assets/images/hero-bg62.webp" 
-            layout="fill" 
-            objectFit="cover" 
+            fill 
+            style={{ objectFit: 'cover' }}
             alt="Hero Background"
             className="absolute inset-0"
             loading='lazy'
@@ -22,7 +22,7 @@ const Hero = () => {
                 <h1 className="text-pink-500 font-montserrat text-3xl tracking-widest">Trusted by All</h1>
                 <h1 className="text-[30px] font-bold md:text-[40px] lg:text-6xl tracking-wider blue_gradient">In Home ​Healthcare ​App</h1>
                 <p className="mt-4 text-base lg:text-xl w-[250px] xl:text-2xl md:w-[400px] xl:w-[610px] text-black font-extralight tracking-widest">
-                Experience personalized care with Supracarer, where we connect you directly with highly trained caregivers and nurses. Enjoy reliable assistance, tailored services, and support whenever you need it.
+                Experience personalized care with Supracarer, where we connect you directly with highly trained caregivers and nurses.
                 </p>
                 <p className=" mt-3 text-[14px] font-semibold w-[250px] lg:text-xl xl:text-2xl md:w-[400px] xl:w-[610px] xl:tracking-widest text-gray-700">
                     Be the first to get all premium features for free, when we launch. 

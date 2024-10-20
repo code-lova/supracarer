@@ -48,7 +48,7 @@ const Team = () => {
                             key={member.id}
                             className="flex-shrink-0 border border-gray-400 bg-gradient-to-r from-gray-200 to-green-100 rounded-lg p-2 transitioning shadow-lg text-center"
                         >
-                            <Image className="object-fill mx-auto" src={member.image} objectFit="cover" width={250} height={220} />
+                            <Image className="object-fill mx-auto" src={member.image} width={250} height={250} />
                             <div className="py-4">
                                 <h1 className="text-slate-gray font-light">{member.name}</h1>
                                 <p className="text-sm font-semibold">{member.position}</p>

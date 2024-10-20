@@ -14,7 +14,7 @@ const HowitWorks = () => {
                     src="/assets/images/app_ui.webp" 
                     width={600} 
                     height={640}
-                    layout='responsive'
+                   
                 />
             </div>
             <div className="p-0">
