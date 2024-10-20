@@ -54,6 +54,22 @@
     top: 80px;
     opacity: 0.15;
   }
+
+  .custom-dot {
+    position: relative;
+    padding-left: 20px; /* Space for the dot */
+}
+
+.custom-dot::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem; /* Adjust based on your text size */
+    width: 8px; /* Adjust size */
+    height: 8px; /* Adjust size */
+    border-radius: 50%;
+    background-color: black; /* Black dot */
+}
   
 
 
