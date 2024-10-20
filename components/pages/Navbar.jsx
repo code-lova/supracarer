@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div>
-        <div className="hidden md:flex bg-gray-800 w-full top-0 padding text-white item-center justify-between">
+        <div className="hidden md:flex bg-gray-800 w-full fixed z-50 padding text-white item-center justify-between">
             <div>
                 <Image 
                     src="/assets/images/logo.png" 
@@ -45,7 +45,7 @@ const Navbar = () => {
                 </div>
             </div>
         </div>
-        <nav className="bg-white fixed shadow-md z-50 w-full padding">
+        <nav className="bg-white fixed shadow-md z-50 md:top-20 w-full padding">
             <div className='flex items-center justify-between'>
                 <ul className={`${toggle ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'
                     } lg:flex flex-col px-6 lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-5 bg-gray-50 lg:bg-transparent absolute lg:static top-[78px] lg:top-0 left-0 w-full lg:w-auto p-5 lg:p-0 transition-all duration-500 ease-in-out delay-200 lg:transition-none lg:opacity-100 lg:translate-y-0`}
@@ -62,7 +62,7 @@ const Navbar = () => {
                 {/* show this menu handburger button for smaller screens */}
                 <Image 
                     className="cursor-pointer lg:hidden z-20" 
-                    src={toggle ? '/assets/images/close.svg' : '/assets/images/menu.svg'} 
+                    src={toggle ? '/assets/icons/closeb.svg' : '/assets/icons/menub.svg'} 
                     width={40} 
                     height={50} 
                     alt="menu"

@@ -56,6 +56,54 @@ export const features = [
     }
 ]
 
+
+
+
+
+export const keyBenefits = [
+    {
+        id: 1,
+        title: "Personalized, All-in-One Holistic Health Solution:",
+        desc: {
+            paragraph1: "Whether you're focused on physical, mental, or emotional well-being, Supracarer offers an integrated platform that addresses all aspects of your health.",
+            paragraph2: "Your wellness plan is tailored to your unique goals, preferences, and lifestyle, ensuring a completely personalized experience."
+        }
+    },
+    {
+        id: 2,
+        title: "Access to Certified Practitioners from Various Health Disciplines:",
+        desc: {
+            paragraph1: "Connect with trusted experts including nutritionists, mental health counselors, yoga instructors, and more, all in one place.",
+            paragraph2: "Benefit from a range of specialties designed to support holistic wellness."
+        }
+    },
+    {
+        id: 4,
+        title: "Seamless Appointment Scheduling:",
+        desc: {
+            paragraph1: "Easily book appointments with certified practitioners directly through the platform. No more hassle with finding and managing multiple contacts.",
+            paragraph2: ""
+        }
+    },
+    {
+        id: 5,
+        title: "Tailored Health Advice from Day One:",
+        desc: {
+            paragraph1: "Supracarer starts working for you the moment you sign up by offering customized tips and insights that match your individual health profile.",
+            paragraph2: ""
+        }
+    },
+    {
+        id: 6,
+        title: "Flexible and Convenient:",
+        desc: {
+            paragraph1: "Manage your wellness journey on your own terms, whether you prefer mobile, desktop, or tablet. Stay connected and track your progress from anywhere.",
+            paragraph2: ""
+        }
+    }
+];
+
+
 export const howItWorks = [
     {
         id: 'Step 1',
@@ -393,4 +441,5 @@ export const companySocials = [
     }
 
 ]
+
 
