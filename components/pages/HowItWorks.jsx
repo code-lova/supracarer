@@ -1,6 +1,8 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Image from "next/image";
+import { howItWorks } from "@constants/index";
 
 const HowItWorks = () => {
   return (

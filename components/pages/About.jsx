@@ -2,6 +2,7 @@
 import Navbar from "./Navbar";
 import Team from "@components/landing/Team";
 import Footer from "./Footer";
+import Image from "next/image";
 
 export const About = () => {
   return (

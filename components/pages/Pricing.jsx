@@ -1,8 +1,26 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Image from "next/image";
+import { pricingPlan } from "@constants/index";
 
 const Pricing = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handlePrevious = () => {
+        setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : pricingPlan.length - 1));
+    };
+
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex < pricingPlan.length - 1 ? prevIndex + 1 : 0));
+    };
+
+    const handleIndicatorClick = (index) => {
+        setCurrentIndex(index);
+    };
+
+
   return (
     <div>
       <Navbar />
