@@ -69,7 +69,7 @@ const Features = () => {
             <div className='grid grid-cols-1 md:grid md:gap-1 md:grid-cols-2 mt-12'>
                 <div className='mb-8'>
                     <Image src="/assets/images/features.png" width={500} height={310} className='object-fit mx-auto'/>
-                    <Link href="/login">
+                    <Link href="/signin">
                         <div className="flex justify-center mx-auto items-center space-x-2 h-14 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-lg w-[198px] mt-16 transitioning shadow-2xl">
                             <button className="text-white font-bold">Get started for free</button>
                         </div>

@@ -68,7 +68,7 @@ const Navbar = () => {
                     alt="menu"
                     onClick={() => setToggle(!toggle)}
                 />          
-                <Link href="/login">
+                <Link href="/signin">
                     <div className="flex justify-center -mt-2 items-center space-x-2 h-14 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-lg w-[168px] transitioning shadow-md">
                         <button className="text-white font-bold">Request A Nurese</button>
                     </div>
