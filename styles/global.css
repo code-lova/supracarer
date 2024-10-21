@@ -192,4 +192,12 @@
     @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white py-4 px-4 rounded;
   }
 
+  .login-btn{
+    @apply w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white py-4 px-4 rounded;
+  }
+
+  .login-form-input{
+    @apply mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm outline-none focus:ring-custom-green focus:border-pink-500;
+  }
+
 }
