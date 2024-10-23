@@ -4,26 +4,37 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Image from "next/image";
 import { pricingPlan } from "@constants/index";
+import { faqs } from "@constants/index";
 
 const Pricing = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(null);
 
-    const handlePrevious = () => {
-        setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : pricingPlan.length - 1));
-    };
+  const toggleAccordion = (index) => {
+    setActiveIndex(index === activeIndex ? null : index);
+  };
 
-    const handleNext = () => {
-        setCurrentIndex((prevIndex) => (prevIndex < pricingPlan.length - 1 ? prevIndex + 1 : 0));
-    };
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    const handleIndicatorClick = (index) => {
-        setCurrentIndex(index);
-    };
+  const handlePrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : pricingPlan.length - 1
+    );
+  };
 
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex < pricingPlan.length - 1 ? prevIndex + 1 : 0
+    );
+  };
+
+  const handleIndicatorClick = (index) => {
+    setCurrentIndex(index);
+  };
 
   return (
     <div>
       <Navbar />
+
       <div className="w-full py-20 md:py-28">
         <div className="relative w-screen h-[318px]">
           <Image
@@ -45,7 +56,7 @@ const Pricing = () => {
         </div>
       </div>
 
-      <div className="my-20 ml-4 mr-4 mb-12 relative">
+      <div className="mx-4 mb-12 relative">
         <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">
           Our Pricing Plan
         </h1>
@@ -57,7 +68,7 @@ const Pricing = () => {
         </div>
 
         {/* Pricing plan section for larger screen */}
-        <div className="hidden my-10 w-[350px] lg:w-full mx-auto md:grid md:grid-cols-1 lg:grid lg:grid-cols-3 gap-2">
+        <div className="hidden my-10 w-[200px] lg:w-[90%] mx-auto md:grid md:grid-cols-1 lg:grid lg:grid-cols-3 gap-2">
           {pricingPlan.map((plan) => (
             <div
               key={plan.id}
@@ -172,6 +183,25 @@ const Pricing = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      <div className="w-full max-w-2xl mx-auto mt-16">
+        {faqs.map((faq, index) => (
+          <div key={index} className="mb-4 border-b border-gray-200">
+            <button
+              onClick={() => toggleAccordion(index)}
+              className="w-full text-left p-4 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-300 flex justify-between items-center"
+            >
+              <span className="text-lg font-medium">{faq.question}</span>
+              <span className="text-xl">
+                {activeIndex === index ? "-" : "+"}
+              </span>
+            </button>
+            {activeIndex === index && (
+              <div className="p-4 text-gray-700 bg-white">{faq.answer}</div>
+            )}
+          </div>
+        ))}
       </div>
 
       <Footer />

@@ -30,13 +30,13 @@ const HowItWorks = () => {
         </div>
       </div>
 
-      <div className="my-6 md:my-20 mx-4 mb-12">
-        <h1 className=" text-xl md:text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest py-16 pr-4 md:px-32">
+      <div className="mx-4 mb-12">
+        <h1 className=" text-xl md:text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest pr-4 md:px-48">
           A Step-by-step guide on how to register on Supracarer and start
           enjoying the benefits
         </h1>
 
-        <div className="grid grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-2 space-x-4 mt-2 lg:mt-6">
+        <div className="grid grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-2 space-x-4 mt-2 lg:mt-6 md:mx-20">
           <div className="p-2">
             <Image
               className="object-fill w-full h-auto rounded-xl"
