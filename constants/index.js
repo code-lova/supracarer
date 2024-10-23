@@ -443,3 +443,17 @@ export const companySocials = [
 ]
 
 
+export const faqs = [
+  {
+    question: "What’s the difference between the Basic and Standard plans?",
+    answer: "The Basic plan gives you access to basic homecare services, while the Standard plan offers advanced features such as detailed health tracking, priority booking, and 24/7 support."
+  },
+  {
+    question: "How does billing work for the Premium plan?",
+    answer: "You can choose between monthly or annual subscriptions. Annual subscribers save 20% compared to the monthly rate. Billing occurs on the first of each month or annually."
+  },
+  {
+    question: "Can I cancel or switch plans at any time?",
+    answer: "Yes, you can cancel or switch between plans at any time. There are no cancellation fees, and you'll retain access to Pro features until the end of your billing period."
+  },
+];
