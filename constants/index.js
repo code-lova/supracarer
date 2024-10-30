@@ -31,6 +31,34 @@ export const navLinks = [
         title: "Contact Us"
     },
 ]
+export const DashboardLinks = [
+
+    {
+        id: 'clients',
+        link: '/clients',
+        title: "Home"
+    },
+    {
+        id: 'notification',
+        link: '/notifications',
+        title: "Notifications"
+    },
+    {
+        id: 'booking',
+        link: '/booking',
+        title: "Book an appointment"
+    },
+    {
+        id: 'payments',
+        link: '/payments',
+        title: "Payments & Subscriptions"
+    },
+    {
+        id: 'contact',
+        link: '/contact',
+        title: "Contact Us"
+    },
+]
 
 
 
