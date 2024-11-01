@@ -70,14 +70,16 @@ const Profile = () => {
           <h2 className="text-3xl text-white font-bold pt-0 md:pt-10 pb-2">
             Victor Omale
           </h2>
-          <p className="text-white"><Image
+          <p className="text-white">
+            <Image
               src={"/assets/icons/icons8-phone-48.png"}
               width={30}
               height={30}
               alt="menu"
               className="inline-block pr-3"
             />
-            +233 345 345 345</p>
+            +233 345 345 345
+          </p>
           <p className="text-white">
             <Image
               src={"/assets/icons/icons8-envelope-48.png"}
@@ -86,7 +88,8 @@ const Profile = () => {
               alt="menu"
               className="inline-block pr-3"
             />
-            victor@supracarer.com</p>
+            victor@supracarer.com
+          </p>
           <p className="text-white">
             <Image
               src={"/assets/icons/icons8-place-marker-50.png"}
@@ -95,7 +98,8 @@ const Profile = () => {
               alt="menu"
               className="inline-block pr-3"
             />
-            359, St Mary's Road, Accra, Ghana</p>
+            359, St Mary's Road, Accra, Ghana
+          </p>
           <p className="text-white md:pt-5 pt-2">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
             minus odit quia quis tempore dolorem, voluptatem quae inventore
@@ -121,8 +125,8 @@ const Profile = () => {
                 <h3 className="text-xl font-bold text-cyan-400">Height</h3>
                 <p className="text-sm pt-2">160cm</p>
               </div>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

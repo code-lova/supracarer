@@ -1,4 +1,4 @@
-import Clients from '@components/dashboard/Clients'
+import Clients from '@components/clientdashboard/Clients'
 import React from 'react'
 
 const page = () => {
