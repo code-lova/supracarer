@@ -1,4 +1,4 @@
-import HowItWorks from '@components/pages/HowItWorks'
+import HowItWorks from '@components/pages/homepages/HowItWorks'
 import React from 'react'
 
 const HowItWorksPage = () => {

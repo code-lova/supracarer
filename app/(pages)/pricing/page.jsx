@@ -1,4 +1,4 @@
-import Pricing from '@components/pages/Pricing'
+import Pricing from '@components/pages/homepages/Pricing'
 import React from 'react'
 
 const PricingPage = () => {

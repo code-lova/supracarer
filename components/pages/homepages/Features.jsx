@@ -1,9 +1,9 @@
 import React from 'react';
-import Navbar from './Navbar';
+import Navbar from '../Navbar';
 import Image from 'next/image';
 import { features, keyBenefits } from '@constants';
 import Link from 'next/link';
-import Footer from './Footer';
+import Footer from '../Footer';
 
 const Features = () => {
   return (
