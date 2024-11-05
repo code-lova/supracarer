@@ -1,94 +1,113 @@
+"use client";
 import Link from 'next/link';
-import React from 'react';
-import Image from 'next/image';
-
+import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { loginSchema } from '@schema';
+import toast from 'react-hot-toast';
+import LoaderButton from '@components/LoaderButton';
+import { useMutation } from '@tanstack/react-query';
+import { loginRequest } from '@service/request/loginRequest';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
+  const navigate = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const { mutate } = useMutation({
+    mutationFn: loginRequest,
+    onMutate: () => {
+      setLoading(true); // Set loading to true when mutation starts
+    },
+    onSuccess: () => {
+      toast.success("Login successful!");
+      // Redirect or further actions here
+
+      setLoading(false); // Optionally reset loading state
+    },
+    onError: () => {
+      const errorMessage = "Invalid email or password";
+      toast.error(errorMessage);
+      setLoading(false);
+    },
+    onSettled: () => {
+      setLoading(false);
+    }
+  });
+  
+  const handleSubmit = (values) => {
+    mutate(values);
+  };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gray-100 px-4'>
-      <div className='bg-white p-8 rounded-lg shadow-lg max-w-md w-full'>
-        <div className='flex flex-row items-center justify-center'>
-         
-          <h1 className='text-2xl font-bold mb-1 text-center uppercase blue_gradient'>Welcome Back </h1>
-
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div className="flex flex-row items-center justify-center">
+          <h1 className="text-2xl font-bold mb-1 text-center uppercase blue_gradient">
+            Welcome Back
+          </h1>
         </div>
-        <h2 className='text-2xl font-bold mb-6 text-center'>Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
-        
-        <form className='space-y-4'>
-          <div>
-            <label htmlFor='email' className='block text-sm font-medium text-gray-700'>Email</label>
-            <input 
-              type='email' 
-              id='email' 
-              className='login-form-input' 
-              placeholder='you@example.com'
-              required
-            />
-          </div>
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validationSchema={loginSchema}
+          onSubmit={handleSubmit}
+        >
+          {() => (
+            <Form className="space-y-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                <Field
+                  type="email"
+                  name="email"
+                  className="login-form-input"
+                  placeholder="you@example.com"
+                />
+                <ErrorMessage name="email" component="div" className="text-red-600 text-sm mt-1" />
+              </div>
 
-          <div>
-            <label htmlFor='password' className='block text-sm font-medium text-gray-700'>Password</label>
-            <input 
-              type='password' 
-              id='password' 
-              className='login-form-input' 
-              placeholder='••••••••' 
-              required
-            />
-          </div>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <Field
+                  type="password"
+                  name="password"
+                  className="login-form-input"
+                  placeholder="••••••••"
+                />
+                <ErrorMessage name="password" component="div" className="text-red-600 text-sm mt-1" />
+              </div>
 
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center'>
-              <input 
-                id='remember-me' 
-                type='checkbox' 
-                className='h-4 w-4  rounded'
-              />
-              <label htmlFor='remember-me' className='ml-2 block text-sm text-gray-900'>
-                Remember me
-              </label>
-            </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Field type="checkbox" name="remember" className="h-4 w-4 rounded" />
+                  <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
+                    Remember me
+                  </label>
+                </div>
 
-            <div>
-              <Link href='#' className='text-sm text-custom-green hover:text-green-700'>
-                Forgot password?
-              </Link>
-            </div>
-          </div>
+                <Link href="/forgot-password" className="text-sm text-custom-green hover:text-green-700">
+                  Forgot password?
+                </Link>
+              </div>
 
-          <button type='submit' className='login-btn'>
-            Login
-          </button>
+              <LoaderButton loading={loading} loadingText="Processing..." type="submit" text="Login account" className="login-btn" />
+              
+            </Form>
+          )}
+        </Formik>
 
-
-        </form>
-
-        <div className='mt-6 text-center'>
-          <p className='text-sm text-gray-600'>Or login with</p>
-          <button className='mt-4 w-full bg-black text-white py-2 px-4 rounded-md shadow-md hover:bg-dark-yellow hover:text-black transition duration-300 flex items-center justify-center'>
-            <Image 
-              src="/assets/icons/google.svg"
-              width={30}
-              height={30}
-              alt='google'
-              className='object-contain'
-            />
-            <span>Google</span>
-          </button>
-        </div>
-
-        <div className='mt-4 flex flex-row justify-between'>
-          <Link href="/" className='flex items-center text-custom-green hover:text-green-700 transition-colors duration-300'>
-            <span className='mr-2'>&#8592;</span> 
+        <div className="mt-4 flex flex-row justify-between">
+          <Link href="/" className="flex items-center text-custom-green hover:text-green-700 transition-colors duration-300">
+            <span className="mr-2">&#8592;</span>
             <p>Go Back</p>
           </Link>
-
-          <Link href="/signup" className='flex items-center text-custom-green hover:text-green-700 transition-colors duration-300'>
+          <Link href="/signup" className="flex items-center text-custom-green hover:text-green-700 transition-colors duration-300">
             <p>SignUp</p>
           </Link>
-
         </div>
       </div>
     </div>

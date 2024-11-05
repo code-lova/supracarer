@@ -1,10 +1,10 @@
-import Profile from '@components/dashboard/Profile'
+import Clients from '@components/accounts/client/Clients'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Profile />
+        <Clients />
     </div>
   )
 }

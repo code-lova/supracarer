@@ -1,7 +1,7 @@
 "use client";
 import React, {useRef} from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 import Image from "next/image";
 import { team } from "@constants/index";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 import Image from "next/image";
 import { pricingPlan } from "@constants/index";
 import { faqs } from "@constants/index";
