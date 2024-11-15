@@ -35,7 +35,7 @@ export const DashboardLinks = [
 
     {
         id: 'clients',
-        link: '/clients',
+        link: '/client',
         title: "Home"
     },
     {
@@ -57,6 +57,11 @@ export const DashboardLinks = [
         id: 'contact',
         link: '/contact',
         title: "Contact Us"
+    },
+    {
+        id: 'signout',
+        link: '/signout',
+        title: "Signout"
     },
 ]
 

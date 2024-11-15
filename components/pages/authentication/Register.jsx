@@ -5,7 +5,7 @@ import { registrationSchema } from "@schema";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/LoaderButton";
 import React, {useState} from "react";
-import { registerRequest } from "@service/request/registerRequest";
+import { registerRequest } from "@service/request/auth/registerRequest";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from 'next/navigation';
 

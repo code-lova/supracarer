@@ -1,10 +1,10 @@
 import API from "@config/apiClient";
 
-export const registerRequest = async (data) => {
-    try {
-      const response = await API.post("/auth/register", data);
-      return response.data;
-    } catch (error) {
+export const loginRequest = async (data) => {
+   try{
+     const response = await API.post("/auth/login", data); 
+     return response;
+   } catch (error) {
       if (error.response) {
         throw new Error(
           error.response.data.message || "An error occurred during registration."
@@ -18,5 +18,5 @@ export const registerRequest = async (data) => {
         // Something happened in setting up the request
         throw new Error(error.message || "An unexpected error occurred.");
       }
-    }
-  };
+   }
+};

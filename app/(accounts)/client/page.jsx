@@ -1,10 +1,10 @@
-import Clients from '@components/accounts/client/Clients'
+import Client from '@components/accounts/client/Client'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Clients />
+        <Client />
     </div>
   )
 }
