@@ -37,6 +37,11 @@ export const navLinks = [
       title: "Home",
     },
     {
+      id: "message",
+      link: "/messages",
+      title: "Messages",
+    },
+    {
       id: "notification",
       link: "/notifications",
       title: "Notifications",
@@ -45,11 +50,6 @@ export const navLinks = [
       id: "booking",
       link: "/booking",
       title: "Book an appointment",
-    },
-    {
-      id: "payments",
-      link: "/payments",
-      title: "Payments & Subscriptions",
     },
     {
       id: "contact",
