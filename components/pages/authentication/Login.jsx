@@ -21,7 +21,7 @@ const Login = () => {
     },
     onSuccess: () => {
       toast.success("Login successfully");
-      navigate.push("/success")
+      navigate.push("/redirect")
       setLoading(false);
     },
     onError: () => {

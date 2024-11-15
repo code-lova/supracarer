@@ -41,9 +41,6 @@ const ForgotPassword = () => {
             Forgot Password
           </h1>
         </div>
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Enter valid email
-        </h2>
 
         {!isSuccess ? (
           <Formik

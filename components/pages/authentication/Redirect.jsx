@@ -5,7 +5,7 @@ import useUser from '@hooks/useUser';
 import { useRouter } from 'next/navigation';
 
 
-const SuccessPage = () => {
+const Redirect = () => {
   const { user, isLoading, isError, refetch } = useUser();
   const navigate = useRouter();
 
@@ -61,4 +61,4 @@ const SuccessPage = () => {
   )
 }
 
-export default SuccessPage;
+export default Redirect;

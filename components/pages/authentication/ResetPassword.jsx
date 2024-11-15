@@ -6,30 +6,39 @@ import { resetPasswordSchema } from "@schema";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/LoaderButton";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { resetPasswordRequest } from "@service/request/auth/resetPasswordRequest";
 
 const ResetPassword = () => {
-  const navigate = useRouter();
-  const searchParams = useSearchParams();
-  const code = searchParams.get("code");
-  const exp = searchParams.get("exp");
-
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
+  const [code, setCode] = useState(null);
+  const [exp, setExp] = useState(null);
 
+  const navigate = useRouter();
+
+
+  // Use effect to access search params after mount
   useEffect(() => {
-    const currentTime = Date.now();
-    if (code && exp && currentTime < Number(exp)) {
-      setIsValid(true);
-    } else {
-      toast.error("The reset link has expired. Please request a new one.");
-      navigate.push("/forgot-password"); // Redirect to forgot password page
+    const params = new URLSearchParams(window.location.search);
+    const codeParam = params.get("code");
+    const expParam = params.get("exp");
+
+    if (codeParam && expParam) {
+      setCode(codeParam);
+      setExp(Number(expParam));
+      const currentTime = Date.now();
+      if (currentTime < Number(expParam)) {
+        setIsValid(true);
+      } else {
+        toast.error("The reset link has expired. Please request a new one.");
+        navigate.push("/forgot-password");
+      }
     }
-  }, [code, exp, navigate]);
+  }, [navigate]);
 
   const handleSubmit = (values) => {
-    if (!code || !isValid) {
+    if (!exp || !code || !isValid) {
       toast.error("Invalid or expired reset link.");
       return;
     }
