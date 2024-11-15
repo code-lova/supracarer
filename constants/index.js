@@ -32,29 +32,51 @@ export const navLinks = [
   ];
   export const DashboardLinks = [
     {
-      id: "clients",
-      link: "/clients",
+      id: "client",
+      link: "/client",
       title: "Home",
     },
-    {
-      id: "message",
-      link: "/messages",
-      title: "Messages",
-    },
+    // {
+    //   id: "message",
+    //   link: "/messages",
+    //   title: "Messages",
+    // },
     {
       id: "notification",
-      link: "/notifications",
+      link: "/client/notifications",
       title: "Notifications",
     },
     {
       id: "booking",
-      link: "/booking",
+      link: "/client/booking",
       title: "Book an appointment",
     },
     {
       id: "contact",
       link: "/contact",
       title: "Contact Us",
+    },
+  ];
+  export const NurseDashboardLinks = [
+    {
+      id: "nurse",
+      link: "/nurse",
+      title: "Home",
+    },
+    {
+      id: "notification",
+      link: "/nurse/notifications",
+      title: "Notifications",
+    },
+    {
+      id: "client",
+      link: "/nurse/clients",
+      title: "Clients",
+    },
+    {
+      id: "contact",
+      link: "/contact",
+      title: "Contact Support",
     },
   ];
   

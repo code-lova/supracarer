@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { DashboardLinks } from "@constants/index";
 import Link from "next/link";
 import Image from "next/image";
-import Header from "../Header";
-import Aside from "../Aside";
+import NurseAside from "./NurseAside";
+import NurseHeader from "./NurseHeader";
 
 const Nurse = () => {
   const [active, setActive] = useState("");
@@ -12,8 +11,8 @@ const Nurse = () => {
 
   return (
     <div>
-      <Aside />
-      <Header />
+      <NurseAside />
+      <NurseHeader />
       <div className="lg:ml-[300px]">
         <section className="px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
           <h2 className=" lg:text-3xl mt-6 md:mt-0 text-2xl text-center font-bold text-cyan-400">

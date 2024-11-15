@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import Aside from "./Aside";
-import Header from "./Header";
+import Aside from "./client/Aside";
+import Header from "./client/Header";
 
 const Contact = () => {
   return (
