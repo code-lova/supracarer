@@ -38,7 +38,7 @@ const ResetPassword = () => {
   }, [navigate]);
 
   const handleSubmit = (values) => {
-    if (!exp || !code || !isValid) {
+    if (!exp || !code || !isValid || Date.now() > exp) {
       toast.error("Invalid or expired reset link.");
       return;
     }
