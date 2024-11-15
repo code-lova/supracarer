@@ -22,8 +22,7 @@ const Register = () => {
         },
         onSuccess: () => {
           toast.success("A verification link was sent to your email");
-          // Redirect or further actions here
-    
+          navigate.push("/success")
           setLoading(false); // Optionally reset loading state
         },
         onError: (error) => {
