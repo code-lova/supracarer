@@ -3,7 +3,7 @@ import API from "@config/apiClient";
 export const sendPasswordResetRequest = async (email) => {
     try {
       const response = await API.post("/auth/password/forgot", email);
-      return response.data; // Return the data from the response
+      return response;
     } catch (error) {
       // Check if the error has a response and extract the message
       if (error.response) {

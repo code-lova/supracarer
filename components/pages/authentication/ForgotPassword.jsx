@@ -6,7 +6,7 @@ import { forgotPasswordSchema } from "@schema";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/LoaderButton";
 import { useMutation } from "@tanstack/react-query";
-import { sendPasswordResetRequest } from "@service/request/sendPasswordResetRequest";
+import { sendPasswordResetRequest } from "@service/request/auth/sendPasswordResetRequest";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -41,9 +41,6 @@ const ForgotPassword = () => {
             Forgot Password
           </h1>
         </div>
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Enter valid email
-        </h2>
 
         {!isSuccess ? (
           <Formik
