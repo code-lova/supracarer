@@ -25,7 +25,7 @@ const Notifications = () => {
                 <span className="pr-5 text-2xl">&#128980;</span>Take your
                 medications
               </p>
-              <p className="pl-10 font-semibold text-cyan-400">
+              <p className="pl-10 font-semibold text-black">
                 27 July, 14:33
               </p>
             </div>
@@ -34,7 +34,7 @@ const Notifications = () => {
                 <span className="pr-5 text-2xl">&#128980;</span>Take your
                 medications
               </p>
-              <p className="pl-10 font-semibold text-cyan-400">
+              <p className="pl-10 font-semibold text-black">
                 27 July, 14:33
               </p>
             </div>
@@ -43,7 +43,7 @@ const Notifications = () => {
                 <span className="pr-5 text-2xl">&#128980;</span>Take your
                 medications
               </p>
-              <p className="pl-10 font-semibold text-cyan-400">
+              <p className="pl-10 font-semibold text-black">
                 27 July, 14:33
               </p>
             </div>
@@ -52,7 +52,7 @@ const Notifications = () => {
                 <span className="pr-5 text-2xl">&#128980;</span>Take your
                 medications
               </p>
-              <p className="pl-10 font-semibold text-cyan-400">
+              <p className="pl-10 font-semibold text-black">
                 27 July, 14:33
               </p>
             </div>
@@ -61,7 +61,7 @@ const Notifications = () => {
                 <span className="pr-5 text-2xl">&#128980;</span>Take your
                 medications
               </p>
-              <p className="pl-10 font-semibold text-cyan-400">
+              <p className="pl-10 font-semibold text-black">
                 27 July, 14:33
               </p>
             </div>
