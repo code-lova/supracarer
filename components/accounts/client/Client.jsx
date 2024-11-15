@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { historyData } from "@constants/index";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,12 +7,57 @@ import UpdateModal from "../UpdateModal";
 import HistoryModal from "../HistoryModal";
 import Header from "../Header";
 import Aside from "../Aside";
+import useUser from "@hooks/useUser";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { logoutRequest } from "@service/request/auth/logoutRequest";
+import { queryClient } from "@config/ReactQueryProvider";
 
-const Clients = () => {
+
+const Client = () => {
+
+  const { user, refetch, isLoading } = useUser();
+  const navigate = useRouter();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+
+
+  const { mutate:signOut } = useMutation({
+    mutationFn: logoutRequest,
+    onSettled: () => {
+      queryClient.clear();
+      navigate.push("/signin", { replace: true })
+    }
+
+  });
+
+  // Refetch user if user data is null
+  useEffect(() => {
+    if (!user && !isLoading) {
+      refetch();
+    }
+  }, [user, isLoading, refetch]);
+
+
+
+   // Handle navigation when user data is null after refetch
+   useEffect(() => {
+    if (!isLoading && !user) {
+      navigate.push("/signin");
+    }
+  }, [user, isLoading, navigate]);
+
+  // Show a loading indicator if data is loading
+  if (isLoading) return <p>Loading...</p>;
+
+  // Ensure user is valid before rendering the dashboard
+  if (!user) return null;
+
+  const { fullname, email, createdAt } = user;
+
+ 
 
   return (
     <div>
@@ -21,7 +66,7 @@ const Clients = () => {
       <div className="lg:ml-[300px]">
         <section className="px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
           <h2 className=" lg:text-3xl mt-6 md:mt-0 text-2xl text-center font-bold text-cyan-400">
-            Hi, Victor Omale
+            Hi, {fullname}
           </h2>
           <div className="hidden md:flex items-center gap-4">
             <Image
@@ -286,4 +331,4 @@ const Clients = () => {
   );
 };
 
-export default Clients;
+export default Client;

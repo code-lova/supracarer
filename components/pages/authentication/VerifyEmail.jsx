@@ -3,11 +3,11 @@ import React from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { verifyEmailRequest } from "@service/request/verifyEmailRequest";
+import { verifyEmailRequest } from "@service/request/auth/verifyEmailRequest";
 
 const VerifyEmail = () => {
     const { id: code } = useParams();
-    const { data, isLoading, isSuccess, isError, error } = useQuery({
+    const { isLoading, isSuccess, isError, error } = useQuery({
         queryKey: ["emailVerification", code],
         queryFn: () => verifyEmailRequest(code),
         enabled: !!code, // Only run query if `code` is available
