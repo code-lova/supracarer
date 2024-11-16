@@ -1,135 +1,196 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
-import Image from "next/image";
-import { DashboardLinks } from "@constants/index";
+import Aside from "./Aside";
+import Header from "./Header";
 
 const Booking = () => {
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
+  const [formData, setFormData] = useState({
+    clientName: "",
+    contactPhone: "",
+    contactEmail: "",
+    address: "",
+    patientAge: "",
+    patientGender: "",
+    medicalCondition: "",
+    serviceRequired: "",
+    appointmentDate: "",
+    appointmentTime: "",
+    duration: "",
+    specialRequests: "",
+  });
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
   return (
     <div className="lg:ml-[200px]">
-      <aside className="bg-gray-800 fixed shadow-2xl z-50 top-0 left-0 w-full px-2 lg:px-2 lg:py-6 lg:w-[250px] lg:h-screen lg:fixed lg:left-0 lg:top-0 lg:bg-gray-800 lg:text-white">
-        <div className="flex justify-between items-center mt-3 lg:flex-col lg:items-start lg:pt-4">
-          <Link
-            href="/"
-            onClick={() => {
-              setActive("");
-              window.scrollTo(0, 0);
-            }}
-          >
-            <Image
-              src="/assets/images/logo.png"
-              width={180}
-              height={50}
-              alt="Supracarer logo"
-              className="mx-auto"
-            />
-          </Link>
-          <Image
-            className="cursor-pointer lg:hidden"
-            src={
-              toggle ? "/assets/images/close.svg" : "/assets/images/menu.svg"
-            }
-            width={40}
-            height={50}
-            alt="menu"
-            onClick={() => setToggle(!toggle)}
-          />
-        </div>
-
-        <ul
-          className={`${
-            toggle ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          } bg-mobile-nav`}
+      <Aside />
+      <Header />
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-center mb-6">
+          Book an Appointment
+        </h1>
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6"
         >
-          {DashboardLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className="text-white hover:underline py-2 hover:lg:text-white lg:transitioning lg:py-4 font-light text-[15px]"
-              onClick={() => setActive(nav.title)}
-            >
-              <Link href={nav.link}>{nav.title}</Link>
-            </li>
-          ))}
-        </ul>
-      </aside>
-      <header className="hidden w-full md:flex justify-end items-center gap-4 bg-blue-400 py-6 pr-10">
-        <Link href="/messages">
-          <Image
-            src={"/assets/icons/icons8-envelope-48.png"}
-            width={30}
-            height={40}
-            alt="menu"
-          />
-        </Link>
-        <div className="bg-red-500 w-5 h-5 rounded-full mt-[-20px] ml-[-28px]">
-          <p className="text-white text-center font-bold text-sm">1</p>
-        </div>
-        <Link href="/notifications">
-          <Image
-            src={"/assets/icons/icons8-bell-48.png"}
-            width={30}
-            height={40}
-            alt="menu"
-          />
-        </Link>
-        <div className="bg-red-500 w-5 h-5 rounded-full mt-[-20px] ml-[-28px]">
-          <p className="text-white text-center font-bold text-sm">1</p>
-        </div>
-        <div className="w-[30px] h-[30px] rounded-full bg-white">
-          <Link href="/profile">
-            <Image
-              src={"/assets/icons/icons8-user-48.png"}
-              width={30}
-              height={40}
-              alt="menu"
-            />
-          </Link>
-        </div>
-      </header>
-      <div className="lg:ml-[200px] mt-20 lg:mt-0 bg-white p-8 rounded-lg shadow-lg lg:max-w-4xl w-full">
-        <div className="flex flex-row items-center justify-center">
-          <h1 className="text-2xl font-bold mb-1 text-center uppercase blue_gradient">
-            Book A Nurse
-          </h1>
-        </div>
-
-        <form className="space-y-4">
-          <div>
-            <label
-              htmlFor="firstname"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Firstname
-            </label>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Full Name</label>
             <input
               type="text"
-              id="name"
-              className="login-form-input"
-              placeholder="Omale"
+              name="clientName"
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.clientName}
+              onChange={handleChange}
               required
             />
           </div>
-
-          <div>
-            <label
-              htmlFor="lastname"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Lastname
-            </label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block text-gray-700 mb-2">Phone Number</label>
+              <input
+                type="tel"
+                name="contactPhone"
+                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.contactPhone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Email Address</label>
+              <input
+                type="email"
+                name="contactEmail"
+                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.contactEmail}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Address</label>
             <input
               type="text"
-              id="lastname"
-              className="login-form-input"
-              placeholder="Victor"
+              name="address"
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.address}
+              onChange={handleChange}
               required
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block text-gray-700 mb-2">Age</label>
+              <input
+                type="number"
+                name="patientAge"
+                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.patientAge}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Gender</label>
+              <select
+                name="patientGender"
+                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.patientGender}
+                onChange={handleChange}
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">
+              Medical Condition
+            </label>
+            <textarea
+              name="medicalCondition"
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.medicalCondition}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Service Required</label>
+            <select
+              name="serviceRequired"
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.serviceRequired}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select a Service</option>
+              <option value="Wound Care">Wound Care</option>
+              <option value="Catheter Care">Catheter Care</option>
+              <option value="Mental Health Support">
+                Mental Health Support
+              </option>
+              <option value="NCD Management">NCD Management</option>
+              <option value="Patient Escort">Patient Escort</option>
+            </select>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block text-gray-700 mb-2">Preferred Date</label>
+              <input
+                type="date"
+                name="appointmentDate"
+                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.appointmentDate}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Preferred Time</label>
+              <input
+                type="time"
+                name="appointmentTime"
+                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.appointmentTime}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">
+              Duration (in hours)
+            </label>
+            <input
+              type="number"
+              name="duration"
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.duration}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Special Requests</label>
+            <textarea
+              name="specialRequests"
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.specialRequests}
+              onChange={handleChange}
             />
           </div>
           <button type="submit" className="login-btn font-bold">
-            PROCEED
+            Book Appointment
           </button>
         </form>
       </div>

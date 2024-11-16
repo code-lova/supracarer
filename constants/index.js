@@ -53,8 +53,13 @@ export const navLinks = [
     },
     {
       id: "contact",
-      link: "/contact",
+      link: "/client/contact",
       title: "Contact Us",
+    },
+    {
+      id: "settings",
+      link: "/client/settings",
+      title: "Settings",
     },
   ];
   export const NurseDashboardLinks = [
@@ -75,8 +80,13 @@ export const navLinks = [
     },
     {
       id: "contact",
-      link: "/contact",
+      link: "/nurse/contact",
       title: "Contact Support",
+    },
+    {
+      id: "settings",
+      link: "/nurse/settings",
+      title: "Settings",
     },
   ];
   

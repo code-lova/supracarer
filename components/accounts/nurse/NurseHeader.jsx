@@ -32,7 +32,7 @@ const NurseHeader = () => {
           <p className="text-white text-center font-bold text-sm">1</p>
         </div>
         <div className="w-[30px] h-[30px] rounded-full bg-white">
-          <Link href="/profile">
+          <Link href="/nurse/profile">
             <Image
               src={"/assets/icons/icons8-user-48.png"}
               width={30}
