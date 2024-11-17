@@ -44,78 +44,101 @@ const Nurse = () => {
           </div>
         </section>
         <div className="mt-28 md:mt-0 container md:px-20 lg:p-6 overflow-x-hidden">
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <div className="bg-pink-400 w-full text-white p-6 rounded-lg shadow-lg">
-      <div className="flex justify-between items-center">
-        <h2 className="hover:underline text-2xl font-semibold">Appointment Schedule</h2>
-        <button className="rounded-xl p-3 bg-cyan-400 text-sm font-semibold">
-          <Link href="/messages">More</Link>
-        </button>
-      </div>
-      <div className="mt-5 flex flex-col gap-6">
-        <div>
-          <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
-          </p>
-          <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-pink-400 w-full text-white p-6 rounded-lg shadow-lg">
+              <div className="flex justify-between items-center">
+                <h2 className="hover:underline text-2xl font-semibold">
+                  Appointment Schedule
+                </h2>
+                <button className="rounded-xl p-3 bg-cyan-400 text-sm font-semibold">
+                  <Link href="/messages">More</Link>
+                </button>
+              </div>
+              <div className="mt-5 flex flex-col gap-6">
+                <div>
+                  <p className="text-2xl">
+                    <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
+                  </p>
+                  <p className="pl-10 font-semibold text-cyan-400">
+                    27 July, 14:33
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl">
+                    <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
+                  </p>
+                  <p className="pl-10 font-semibold text-cyan-400">
+                    27 July, 14:33
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl">
+                    <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
+                  </p>
+                  <p className="pl-10 font-semibold text-cyan-400">
+                    27 July, 14:33
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl">
+                    <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
+                  </p>
+                  <p className="pl-10 font-semibold text-cyan-400">
+                    27 July, 14:33
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-pink-400 w-full text-white p-6 rounded-lg shadow-lg">
+              <div className="flex justify-between items-center">
+                <h2 className="hover:underline text-2xl font-semibold">
+                  Notifications
+                </h2>
+                <button className="rounded-xl p-3 bg-cyan-400 text-sm font-semibold">
+                  <Link href="/notifications">More</Link>
+                </button>
+              </div>
+              <div className="mt-5 flex flex-col gap-6">
+                <div>
+                  <p className="text-2xl">
+                    <span className="pr-5 text-2xl">&#128980;</span>Take your
+                    medications
+                  </p>
+                  <p className="pl-10 font-semibold text-cyan-400">
+                    27 July, 14:33
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl">
+                    <span className="pr-5 text-2xl">&#128980;</span>Take your
+                    medications
+                  </p>
+                  <p className="pl-10 font-semibold text-cyan-400">
+                    27 July, 14:33
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl">
+                    <span className="pr-5 text-2xl">&#128980;</span>Take your
+                    medications
+                  </p>
+                  <p className="pl-10 font-semibold text-cyan-400">
+                    27 July, 14:33
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl">
+                    <span className="pr-5 text-2xl">&#128980;</span>Take your
+                    medications
+                  </p>
+                  <p className="pl-10 font-semibold text-cyan-400">
+                    27 July, 14:33
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
-          </p>
-          <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
-        </div>
-        <div>
-          <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
-          </p>
-          <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
-        </div>
-        <div>
-          <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
-          </p>
-          <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
-        </div>
-      </div>
-    </div>
-    <div className="bg-pink-400 w-full text-white p-6 rounded-lg shadow-lg">
-      <div className="flex justify-between items-center">
-        <h2 className="hover:underline text-2xl font-semibold">Notifications</h2>
-        <button className="rounded-xl p-3 bg-cyan-400 text-sm font-semibold">
-          <Link href="/notifications">More</Link>
-        </button>
-      </div>
-      <div className="mt-5 flex flex-col gap-6">
-        <div>
-          <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>Take your medications
-          </p>
-          <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
-        </div>
-        <div>
-          <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>Take your medications
-          </p>
-          <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
-        </div>
-        <div>
-          <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>Take your medications
-          </p>
-          <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
-        </div>
-        <div>
-          <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>Take your medications
-          </p>
-          <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
       </div>
     </div>
   );

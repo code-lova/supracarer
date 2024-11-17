@@ -26,7 +26,7 @@ const Aside = () => {
               className="mx-auto"
             />
           </Link>
-          <div className="flex">
+          <div className="flex lg:hidden">
             <Link href="/client/profile">
               <Image
                 src={"/assets/icons/icons8-user-48.png"}

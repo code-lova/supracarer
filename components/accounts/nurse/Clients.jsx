@@ -21,7 +21,6 @@ const Clients = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* {data.map((entry, index) => ( */}
                   <tr className="text-center">
                     <td className="border border-gray-300 px-4 py-2"><Link href="/client/profile">Victor Omale</Link></td>
                     <td className="border border-gray-300 px-4 py-2">26</td>
@@ -29,7 +28,6 @@ const Clients = () => {
                     <td className="border border-gray-300 px-4 py-2">Accra</td>
                     <td className="border border-gray-300 px-4 py-2">20/11/2024</td>
                   </tr>
-                {/* ))} */}
               </tbody>
             </table>
           </div>
