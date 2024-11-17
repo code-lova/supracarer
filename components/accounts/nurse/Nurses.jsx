@@ -47,7 +47,7 @@ const Nurse = () => {
   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div className="bg-pink-400 w-full text-white p-6 rounded-lg shadow-lg">
       <div className="flex justify-between items-center">
-        <h2 className="hover:underline text-2xl font-semibold">Messages</h2>
+        <h2 className="hover:underline text-2xl font-semibold">Appointment Schedule</h2>
         <button className="rounded-xl p-3 bg-cyan-400 text-sm font-semibold">
           <Link href="/messages">More</Link>
         </button>
@@ -55,25 +55,25 @@ const Nurse = () => {
       <div className="mt-5 flex flex-col gap-6">
         <div>
           <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>When are you coming?
+            <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
           </p>
           <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
         </div>
         <div>
           <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>When are you coming?
+            <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
           </p>
           <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
         </div>
         <div>
           <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>When are you coming?
+            <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
           </p>
           <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
         </div>
         <div>
           <p className="text-2xl">
-            <span className="pr-5 text-2xl">&#128980;</span>When are you coming?
+            <span className="pr-5 text-2xl">&#128980;</span>Omale Victor
           </p>
           <p className="pl-10 font-semibold text-cyan-400">27 July, 14:33</p>
         </div>

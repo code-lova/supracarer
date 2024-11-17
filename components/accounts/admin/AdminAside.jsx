@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { NurseDashboardLinks, historyData } from "@constants/index";
+import { AdminDashboardLinks } from "@constants/index";
 
 
-const NurseAside = () => {
+const AdminAside = () => {
     const [active, setActive] = useState("");
     const [toggle, setToggle] = useState(false);
   return (
@@ -54,7 +54,7 @@ const NurseAside = () => {
             toggle ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           } bg-mobile-nav`}
         >
-          {NurseDashboardLinks.map((nav) => (
+          {AdminDashboardLinks.map((nav) => (
             <li
               key={nav.id}
               className="text-white hover:underline py-2 hover:lg:text-white lg:transitioning lg:py-4 font-light text-[15px]"
@@ -69,4 +69,4 @@ const NurseAside = () => {
   );
 };
 
-export default NurseAside;
+export default AdminAside;

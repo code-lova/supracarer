@@ -8,7 +8,7 @@ const NurseContact = () => {
     <div>
       <NurseAside />
       <NurseHeader />
-      <div className="flex flex-col justify-center items-center mb-12 bg-contact py-20 ml-40">
+      <div className="flex flex-col justify-center items-center mb-12 bg-contact py-20 lg:ml-40">
         <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">
           Stay Connected With Us
         </h1>

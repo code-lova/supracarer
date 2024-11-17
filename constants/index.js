@@ -89,6 +89,33 @@ export const navLinks = [
       title: "Settings",
     },
   ];
+  export const AdminDashboardLinks = [
+    {
+      id: "admin",
+      link: "/admin",
+      title: "Home",
+    },
+    {
+      id: "notification",
+      link: "/admin/notifications",
+      title: "Notifications",
+    },
+    {
+      id: "client",
+      link: "/admin/clients",
+      title: "Clients",
+    },
+    {
+      id: "nurse",
+      link: "/admin/nurses",
+      title: "Nurses",
+    },
+    {
+      id: "settings",
+      link: "/admin/settings",
+      title: "Settings",
+    },
+  ];
   
   export const features = [
     {

@@ -4,10 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { DashboardLinks, historyData } from "@constants/index";
 
-
 const Aside = () => {
-    const [active, setActive] = useState("");
-    const [toggle, setToggle] = useState(false);
+  const [active, setActive] = useState("");
+  const [toggle, setToggle] = useState(false);
   return (
     <div>
       <aside className="bg-gray-800 fixed shadow-2xl z-50 top-0 left-0 w-full px-2 lg:px-2 lg:py-6 lg:w-[250px] lg:h-screen lg:fixed lg:left-0 lg:top-0 lg:bg-gray-800 lg:text-white">
@@ -27,16 +26,26 @@ const Aside = () => {
               className="mx-auto"
             />
           </Link>
-          <Image
-            className="cursor-pointer lg:hidden"
-            src={
-              toggle ? "/assets/images/close.svg" : "/assets/images/menu.svg"
-            }
-            width={40}
-            height={50}
-            alt="menu"
-            onClick={() => setToggle(!toggle)}
-          />
+          <div className="flex">
+            <Link href="/client/profile">
+              <Image
+                src={"/assets/icons/icons8-user-48.png"}
+                width={40}
+                height={50}
+                alt="menu"
+              />
+            </Link>
+            <Image
+              className="cursor-pointer lg:hidden"
+              src={
+                toggle ? "/assets/images/close.svg" : "/assets/images/menu.svg"
+              }
+              width={40}
+              height={50}
+              alt="menu"
+              onClick={() => setToggle(!toggle)}
+            />
+          </div>
         </div>
 
         <ul

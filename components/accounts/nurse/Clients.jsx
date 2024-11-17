@@ -9,8 +9,8 @@ const Clients = () => {
     <div>
         <NurseAside />
         <NurseHeader />
-        <div className="ml-[300px] mt-10 overflow-x-auto">
-            <table className="min-w-[1000px] border-collapse border border-gray-200">
+        <div className="lg:ml-[300px] mt-32 lg:mt-10 overflow-x-auto">
+            <table className="min-w-full lg:min-w-[1000px] border-collapse border border-gray-200">
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-300 px-4 py-2 bg-cyan-400">Name</th>
