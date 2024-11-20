@@ -7,7 +7,7 @@ import UpdateModal from "./UpdateModal";
 import HistoryModal from "./HistoryModal";
 import Header from "./Header";
 import Aside from "./Aside";
-// import useUser from "@hooks/useUser";
+import useUser from "@hooks/useUser";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { logoutRequest } from "@service/request/auth/logoutRequest";
