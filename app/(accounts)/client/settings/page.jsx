@@ -1,10 +1,10 @@
-import Nurse from '@components/accounts/nurse/Nurses'
+import Settings from '@components/accounts/client/Settings'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Nurse />
+        <Settings />
     </div>
   )
 }

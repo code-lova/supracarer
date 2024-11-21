@@ -1,10 +1,10 @@
-import Nurse from '@components/accounts/nurse/Nurses'
+import Messages from '@components/accounts/Messages'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Nurse />
+        <Messages />
     </div>
   )
 }

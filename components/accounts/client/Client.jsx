@@ -1,21 +1,27 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { DashboardLinks } from "@constants/index";
+import { historyData } from "@constants/index";
 import Link from "next/link";
 import Image from "next/image";
+import UpdateModal from "./UpdateModal";
+import HistoryModal from "./HistoryModal";
+import Header from "./Header";
+import Aside from "./Aside";
 import useUser from "@hooks/useUser";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { logoutRequest } from "@service/request/auth/logoutRequest";
 import { queryClient } from "@config/ReactQueryProvider";
 
+
 const Client = () => {
 
   const { user, refetch, isLoading } = useUser();
   const navigate = useRouter();
-
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 
 
   const { mutate:signOut } = useMutation({
@@ -55,91 +61,8 @@ const Client = () => {
 
   return (
     <div>
-      <aside className="bg-gray-800 fixed shadow-2xl z-50 top-0 left-0 w-full px-2 lg:px-2 lg:py-6 lg:w-[250px] lg:h-screen lg:fixed lg:left-0 lg:top-0 lg:bg-gray-800 lg:text-white">
-        <div className="flex justify-between items-center mt-3 lg:flex-col lg:items-start lg:pt-4">
-          <Link
-            href="/"
-            onClick={() => {
-              setActive("");
-              window.scrollTo(0, 0);
-            }}
-          >
-            <Image
-              src="/assets/images/logo.png"
-              width={180}
-              height={50}
-              alt="Supracarer logo"
-              className="mx-auto"
-            />
-          </Link>
-          <Image
-            className="cursor-pointer lg:hidden"
-            src={
-              toggle ? "/assets/images/close.svg" : "/assets/images/menu.svg"
-            }
-            width={40}
-            height={50}
-            alt="menu"
-            onClick={() => setToggle(!toggle)}
-          />
-        </div>
-
-        <ul
-          className={`${
-            toggle ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          } bg-mobile-nav`}
-        >
-          {DashboardLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className="text-white hover:underline py-2 hover:lg:text-white lg:transitioning lg:py-4 font-light text-[15px]"
-              onClick={() => setActive(nav.title)}
-            >
-              {nav.id === "signout" ? (
-                <button onClick={signOut} className="text-white hover:underline">
-                {nav.title}
-              </button>
-              ): (
-                <Link href={nav.link}>{nav.title}</Link>
-              )}
-            </li>
-          ))}
-        </ul>
-      </aside>
-      <header className="hidden w-full md:flex justify-end items-center gap-4 bg-blue-400 py-6 pr-10">
-        <Link href="/messages">
-          <Image
-            src={"/assets/icons/icons8-envelope-48.png"}
-            width={30}
-            height={40}
-            alt="menu"
-          />
-        </Link>
-        <div className="bg-red-500 w-5 h-5 rounded-full mt-[-20px] ml-[-28px]">
-          <p className="text-white text-center font-bold text-sm">1</p>
-        </div>
-        <Link href="/notifications">
-          <Image
-            src={"/assets/icons/icons8-bell-48.png"}
-            width={30}
-            height={40}
-            alt="menu"
-          />
-        </Link>
-        <div className="bg-red-500 w-5 h-5 rounded-full mt-[-20px] ml-[-28px]">
-          <p className="text-white text-center font-bold text-sm">1</p>
-        </div>
-        <div className="w-[30px] h-[30px] rounded-full bg-white">
-          <Link href="/profile">
-            <Image
-              src={"/assets/icons/icons8-user-48.png"}
-              width={30}
-              height={40}
-              alt="menu"
-            />
-          </Link>
-        </div>
-      </header>
+      <Aside />
+      <Header />
       <div className="lg:ml-[300px]">
         <section className="px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
           <h2 className=" lg:text-3xl mt-6 md:mt-0 text-2xl text-center font-bold text-cyan-400">
@@ -173,7 +96,7 @@ const Client = () => {
         <div className="mt-28 md:mt-0 container md:px-20 lg:p-6 overflow-x-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="mx-10 md:mx-0 grid grid-cols-1 gap-6 md:grid-cols-2 md:col-span-1">
-              <div className="bg-gray-100 md:p-3 px-5 pt-5 rounded-lg md:w-[250px] h-[200px] shadow-lg">
+              <div className="bg-gray-100 md:p-3 px-5 pt-5 rounded-lg md:w-[250px] h-[280px] shadow-lg">
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-xl font-bold text-cyan-400">
@@ -186,7 +109,7 @@ const Client = () => {
                     <p>mmHG</p>
                   </div>
                 </div>
-                <div className="flex items-center justify-center pt-[25px]">
+                <div className="flex items-center justify-center pt-[20px]">
                   <Image
                     src={"/assets/images/icons8-chart-60.png"}
                     width={100}
@@ -194,8 +117,26 @@ const Client = () => {
                     alt="menu"
                   />
                 </div>
+                <div className="pt-4 flex justify-between items-start">
+                  <div>
+                    <button
+                      onClick={() => setIsHistoryModalOpen(true)}
+                      className="login-btn text-sm font-bold"
+                    >
+                      History
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => setIsUpdateModalOpen(true)}
+                      className="login-btn text-sm font-bold"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="md:ml-[60px] lg:ml-[120px] bg-gray-100 md:p-3 px-5 pt-5 rounded-lg md:w-[250px] h-[200px] shadow-lg">
+              <div className="md:ml-[60px] lg:ml-[120px] bg-gray-100 md:p-3 px-5 pt-5 rounded-lg md:w-[250px] h-[280px] shadow-lg">
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-xl font-bold text-cyan-400">
@@ -216,8 +157,26 @@ const Client = () => {
                     alt="menu"
                   />
                 </div>
+                <div className="pt-4 flex justify-between items-start">
+                  <div>
+                    <button
+                      onClick={() => setIsHistoryModalOpen(true)}
+                      className="login-btn text-sm font-bold"
+                    >
+                      History
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => setIsUpdateModalOpen(true)}
+                      className="login-btn text-sm font-bold"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="bg-gray-100 md:p-3 px-5 pt-5 rounded-lg md:w-[250px] h-[200px] shadow-lg">
+              <div className="bg-gray-100 md:p-3 px-5 pt-5 rounded-lg md:w-[250px] h-[280px] shadow-lg">
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-xl font-bold text-cyan-400">
@@ -238,8 +197,26 @@ const Client = () => {
                     alt="menu"
                   />
                 </div>
+                <div className="pt-4 flex justify-between items-start">
+                  <div>
+                    <button
+                      onClick={() => setIsHistoryModalOpen(true)}
+                      className="login-btn text-sm font-bold"
+                    >
+                      History
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => setIsUpdateModalOpen(true)}
+                      className="login-btn text-sm font-bold"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="bg-gray-100 md:ml-[60px] lg:ml-[120px] md:p-3 px-5 pt-5 rounded-lg md:w-[250px] h-[200px] shadow-lg">
+              <div className="bg-gray-100 md:ml-[60px] lg:ml-[120px] md:p-3 px-5 pt-5 rounded-lg md:w-[250px] h-[280px] shadow-lg">
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-xl font-bold text-cyan-400">
@@ -260,7 +237,26 @@ const Client = () => {
                     alt="menu"
                   />
                 </div>
+                <div className="pt-4 flex justify-between items-start">
+                  <div>
+                    <button
+                      onClick={() => setIsHistoryModalOpen(true)}
+                      className="login-btn text-sm font-bold"
+                    >
+                      History
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => setIsUpdateModalOpen(true)}
+                      className="login-btn text-sm font-bold"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
               </div>
+              
             </div>
             <div className="md:col-span-2 bg-pink-400 lg:ml-[250px] w-full lg:w-[380px] text-white p-6 rounded-lg shadow-lg">
               <div className="flex justify-between items-center">
@@ -322,6 +318,15 @@ const Client = () => {
           </div>
         </div>
       </div>
+      <UpdateModal
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+      />
+      <HistoryModal
+        isOpen={isHistoryModalOpen}
+        onClose={() => setIsHistoryModalOpen(false)}
+        data={historyData}
+      />
     </div>
   );
 };

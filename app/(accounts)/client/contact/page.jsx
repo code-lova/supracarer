@@ -1,10 +1,10 @@
-import Profile from '@components/accounts/Profile'
+import Contact from '@components/accounts/client/Contact'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Profile />
+        <Contact />
     </div>
   )
 }

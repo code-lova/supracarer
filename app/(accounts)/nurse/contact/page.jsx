@@ -1,10 +1,10 @@
-import Nurse from '@components/accounts/nurse/Nurses'
+import NurseContact from '@components/accounts/nurse/NurseContact'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Nurse />
+        <NurseContact />
     </div>
   )
 }
