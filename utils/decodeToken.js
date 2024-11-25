@@ -1,4 +1,3 @@
-// utils/decodeToken.js
 import jwt from "jsonwebtoken";
 
 export function getUserRoleFromToken() {

@@ -8,10 +8,8 @@ import HistoryModal from "./HistoryModal";
 import Header from "./Header";
 import Aside from "./Aside";
 import useUser from "@hooks/useUser";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { logoutRequest } from "@service/request/auth/logoutRequest";
-import { queryClient } from "@config/ReactQueryProvider";
+
 
 
 const Client = () => {
@@ -23,15 +21,6 @@ const Client = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 
-
-  const { mutate:signOut } = useMutation({
-    mutationFn: logoutRequest,
-    onSettled: () => {
-      queryClient.clear();
-      navigate.push("/signin", { replace: true })
-    }
-
-  });
 
   // Refetch user if user data is null
   useEffect(() => {
