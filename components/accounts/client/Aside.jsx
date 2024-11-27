@@ -3,10 +3,24 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { DashboardLinks, historyData } from "@constants/index";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { logoutRequest } from "@service/request/auth/logoutRequest";
+import { queryClient } from "@config/ReactQueryProvider";
 
 const Aside = () => {
+  const navigate = useRouter();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
+
+  const { mutate:signOut } = useMutation({
+    mutationFn: logoutRequest,
+    onSettled: () => {
+      queryClient.clear();
+      navigate.push("/signin", { replace: true })
+    }
+  });
+
   return (
     <div>
       <aside className="bg-gray-800 fixed shadow-2xl z-50 top-0 left-0 w-full px-2 lg:px-2 lg:py-6 lg:w-[250px] lg:h-screen lg:fixed lg:left-0 lg:top-0 lg:bg-gray-800 lg:text-white">
@@ -62,6 +76,11 @@ const Aside = () => {
               <Link href={nav.link}>{nav.title}</Link>
             </li>
           ))}
+          <li
+            onClick={signOut}
+            className="text-white hover:underline py-2 hover:lg:text-white lg:transitioning lg:py-4 font-light text-[15px]">
+              Logout
+          </li>
         </ul>
       </aside>
     </div>
