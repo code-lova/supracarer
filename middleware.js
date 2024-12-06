@@ -17,16 +17,15 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get("accessToken")?.value;
 
-  // Redirect unauthenticated users to login
-  if (!accessToken) {
-    if ([ROUTES.LOGIN, ROUTES.SIGNUP].includes(pathname)) {
-      return NextResponse.next();
-    }
-    return NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
-  }
+  //Allow access to login and signup pages
+  // if (![ROUTES.LOGIN, ROUTES.SIGNUP].includes(pathname)) {
+  //   if (!accessToken) {
+  //     return NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
+  //   }
+  // }
 
-  const redirectToLogin = () => 
-    NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
+  // const redirectToLogin = () => 
+  //   NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
 
   try {
     // Verify the JWT using jose
@@ -61,7 +60,10 @@ export async function middleware(request) {
     return NextResponse.next();
     
   } catch (error) {
-    return redirectToLogin();
+   // Token is invalid or expired - allow refresh attempt
+    const response = NextResponse.next();
+    response.headers.set("InvalidAccessToken", "true");
+    return response;
   }
 }
 

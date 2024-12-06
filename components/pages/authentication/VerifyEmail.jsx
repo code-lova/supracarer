@@ -2,15 +2,28 @@
 import React from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { verifyEmailRequest } from "@service/request/auth/verifyEmailRequest";
+import { useRouter } from "next/navigation";
+import { logoutRequest } from "@service/request/auth/logoutRequest";
+import { queryClient } from "@config/ReactQueryProvider";
+
 
 const VerifyEmail = () => {
+  const navigate = useRouter();
     const { id: code } = useParams();
     const { isLoading, isSuccess, isError, error } = useQuery({
         queryKey: ["emailVerification", code],
         queryFn: () => verifyEmailRequest(code),
         enabled: !!code, // Only run query if `code` is available
+    });
+
+    const { mutate:signOut } = useMutation({
+      mutationFn: logoutRequest,
+      onSettled: () => {
+        queryClient.clear();
+        navigate.push("/signin", { replace: true })
+      }
     });
 
   return (
@@ -45,13 +58,13 @@ const VerifyEmail = () => {
         )}
 
         <div className="mt-10 flex flex-row justify-between">
-          <Link
-            href="/signin"
+          <button
+            onClick={signOut}
             className="flex items-center text-custom-green hover:text-green-700 transition-colors duration-300"
           >
             <span className="mr-2">&#8592;</span>
             <p className="font-bold text-base">Login</p>
-          </Link>
+          </button>
         </div>
       </div>
     </div>
