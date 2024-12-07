@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { DashboardLinks, historyData } from "@constants/index";
+import { DashboardLinks } from "@constants/index";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { logoutRequest } from "@service/request/auth/logoutRequest";
