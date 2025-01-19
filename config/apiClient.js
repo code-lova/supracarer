@@ -7,8 +7,17 @@ const options = {
 }
 
 // Separate client for token refresh
+// const TokenRefreshClient = axios.create(options);
+// TokenRefreshClient.interceptors.response.use((response) => response.data);
+
 const TokenRefreshClient = axios.create(options);
-TokenRefreshClient.interceptors.response.use((response) => response.data);
+TokenRefreshClient.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    console.error("Token refresh failed:", error.message);
+    return Promise.reject(error);
+  }
+);
 
 const API = axios.create(options);
 
@@ -27,7 +36,8 @@ API.interceptors.response.use(
         if (status === 401 && data?.errorCode === "InvalidAccessToken") {
             try {
                 await TokenRefreshClient.get("/auth/refresh");
-                return TokenRefreshClient(config);
+                //return TokenRefreshClient(config);
+                return API(config);
             } catch (error) {
               queryClient.clear();
               if (navigate) {
