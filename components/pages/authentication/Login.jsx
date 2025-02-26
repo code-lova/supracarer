@@ -1,43 +1,56 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { loginSchema } from "@schema";
+import { signIn, useSession } from "next-auth/react";
+import { loginSchema } from "@schema/auth";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/LoaderButton";
-import { useMutation } from "@tanstack/react-query";
-import { loginRequest } from "@service/request/auth/loginRequest";
 import { useRouter } from "next/navigation";
 
-
 const Login = () => {
-  const navigate = useRouter();
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const { mutate } = useMutation({
-    mutationFn: loginRequest,
-    onMutate: () => {
-      setLoading(true);
-    },
-    onSuccess: () => {
-      toast.success("Login successfully");
-      navigate.push("/redirect")
-      setLoading(false);
-    },
-    onError: () => {
+  // Redirect logged-in users to their respective dashboard
+  useEffect(() => {
+    if (status === "authenticated") {
+      switch (session.user.role) {
+        case "client":
+          router.push("/client");
+          break;
+        case "nurse":
+          router.push("/nurse");
+          break;
+        case "admin":
+          router.push("/admin");
+          break;
+        default:
+          router.push("/signin");
+      }
+    }
+  }, [session, status, router]);
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setLoading(true);
+
+    const result = await signIn("credentials", {
+      redirect: false, // Prevent NextAuth from handling redirects
+      email: values.email,
+      password: values.password,
+    });
+
+    if (result?.error) {
       toast.error("Invalid email or password");
       setLoading(false);
-    },
-    onSettled: () => {
-      setLoading(false);
-    },
-  });
+    } else {
+      toast.success("Login successful");
+      // Redirect logic is now handled in useEffect
+    }
 
-  const handleSubmit = (values) => {
-    mutate(values);
+    setSubmitting(false);
   };
-
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">

@@ -1,22 +1,12 @@
 "use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { setNavigate } from "@config/apiClient";
 import "@styles/global.css";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryProvider } from "@config/ReactQueryProvider";
+import { SessionProvider } from "next-auth/react";
 
 import ServerLayout from "./ServerLayout";
 
 const RootLayout = ({ children }) => {
-  const navigate = useRouter();
-  useEffect(() => {
-    setNavigate((path, options) => {
-      navigate.push(path, options);
-    });
-  }, [navigate]);
-
-
   return (
     <ServerLayout>
       <div className="main">
@@ -24,10 +14,12 @@ const RootLayout = ({ children }) => {
       </div>
 
       <main className="app">
-        <ReactQueryProvider>
-          {children}
-          <Toaster />
-        </ReactQueryProvider>
+        <SessionProvider>
+          <ReactQueryProvider>
+            {children}
+            <Toaster />
+          </ReactQueryProvider>
+        </SessionProvider>
       </main>
     </ServerLayout>
   );

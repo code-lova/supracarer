@@ -2,12 +2,13 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { resetPasswordSchema } from "@schema";
+import { resetPasswordSchema } from "@schema/auth";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/LoaderButton";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { resetPasswordRequest } from "@service/request/auth/resetPasswordRequest";
+import { signIn } from "next-auth/react";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,6 @@ const ResetPassword = () => {
   const [exp, setExp] = useState(null);
 
   const navigate = useRouter();
-
 
   // Use effect to access search params after mount
   useEffect(() => {
@@ -50,8 +50,8 @@ const ResetPassword = () => {
     onMutate: () => setLoading(true),
     onSuccess: () => {
       toast.success("Password reset successful!");
-      navigate.push("/signin");
       setLoading(false);
+      navigate.push("/signin");
     },
     onError: (error) => {
       toast.error(error.message || "Failed to reset password.");
@@ -59,7 +59,7 @@ const ResetPassword = () => {
     },
     onSettled: () => {
       setLoading(false);
-    }
+    },
   });
 
   return (

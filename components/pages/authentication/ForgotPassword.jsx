@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { forgotPasswordSchema } from "@schema";
+import { forgotPasswordSchema } from "@schema/auth";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/LoaderButton";
 import { useMutation } from "@tanstack/react-query";
