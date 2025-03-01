@@ -1,34 +1,15 @@
 import React from "react";
-import Navbar from "../Navbar";
 import Footer from "../Footer";
 import Image from "next/image";
-
+import FeatureBg from "../FeatureBg";
 
 const Contact = () => {
   return (
-    <div>
-      <Navbar />
-
-      <div className="w-full py-20 md:py-28">
-        <div className="relative w-screen h-[318px]">
-          <Image
-            src="/assets/images/featuresBg.png"
-            fill
-            alt="about us"
-            className="object-cover w-full h-full"
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center max-w-[300px] mx-auto lg:max-w-full">
-            <h1 className=" text-white text-3xl md:text-4xl font-bold text-center">
-              How To Get Started With Supracarer
-            </h1>
-            <div className=" mt-4">
-              <p className="text-white text-base font-medium py-2 text-center">
-                Your holistic health journey, empowered by technology
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <section>
+      <FeatureBg
+        heading="How To Get Started With Supracarer"
+        subheading="Your holistic health journey, empowered by technology"
+      />
 
       <div className="ml-4 mr-4 mb-12 bg-contact py-20">
         <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">
@@ -124,7 +105,7 @@ const Contact = () => {
       </div>
 
       <Footer />
-    </div>
+    </section>
   );
 };
 

@@ -3,32 +3,15 @@ import Navbar from "../Navbar";
 import Footer from "../Footer";
 import Image from "next/image";
 import { howItWorks } from "@constants/index";
+import FeatureBg from "../FeatureBg";
 
 const HowItWorks = () => {
   return (
-    <div>
-      <Navbar />
-
-      <div className="w-full py-20 md:py-28">
-        <div className="relative w-screen h-[318px]">
-          <Image
-            src="/assets/images/featuresBg.png"
-            fill
-            alt="about us"
-            className="object-cover w-full h-full"
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center max-w-[300px] mx-auto lg:max-w-full">
-            <h1 className=" text-white text-3xl md:text-4xl font-bold text-center">
-              How To Get Started With Supracarer
-            </h1>
-            <div className=" mt-4">
-              <p className="text-white text-base font-medium py-2 text-center">
-                Your holistic health journey, empowered by technology
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <section>
+      <FeatureBg
+        heading="How To Get Started With Supracarer"
+        subheading="Your holistic health journey, empowered by technology"
+      />
 
       <div className="mx-4 mb-12">
         <h1 className=" text-xl md:text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest pr-4 md:px-48">
@@ -65,7 +48,7 @@ const HowItWorks = () => {
       </div>
 
       <Footer />
-    </div>
+    </section>
   );
 };
 
