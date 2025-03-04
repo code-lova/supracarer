@@ -164,12 +164,19 @@
     @apply sm:pb-24 pb-12;
   }
 
+  /* optional for div page section  */
   .pageSection {
     @apply px-12 md:px-0 md:mx-32;
   }
 
+  /* for abut us page  */
   .greenVerticalTextBox {
     @apply hidden md:flex items-center justify-center absolute -left-6 top-1/2 transform -translate-y-1/2 bg-green-600 text-white w-[70px] py-6 px-2 text-center  rounded-full border-4 border-white shadow-2xl z-10;
+  }
+
+  /* Gray background for pages  */
+  .grayBackground {
+    @apply py-16 px-6 lg:px-[70px] bg-gradient-to-r from-transparent to-gray-200;
   }
 
 

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { resetPasswordSchema } from "@schema/auth";
 import toast from "react-hot-toast";
-import LoaderButton from "@components/LoaderButton";
+import LoaderButton from "@components/core/LoaderButton";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { resetPasswordRequest } from "@service/request/auth/resetPasswordRequest";

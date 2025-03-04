@@ -64,7 +64,7 @@ const Features = () => {
         </div>
       </div>
 
-      <div className="py-16 px-6 lg:px-[70px] bg-gradient-to-r from-transparent to-gray-200">
+      <div className="grayBackground">
         <h1 className="text-4xl font-bold text-center blue_gradient font-montserrat tracking-widest">
           Why Choose Supracarer
         </h1>

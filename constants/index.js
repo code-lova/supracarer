@@ -1,3 +1,7 @@
+import { Doctor } from "@components/core/doctor";
+import { Elderly } from "@components/core/elderly";
+import { Nurse } from "@components/core/nurse";
+
 export const navLinks = [
     {
       id: "home",
@@ -560,6 +564,7 @@ export const navLinks = [
         "Yes, you can cancel or switch between plans at any time. There are no cancellation fees, and you'll retain access to Pro features until the end of your billing period.",
     },
   ];
+
   export const historyData = [
     {
       name: "John Doe",
@@ -585,5 +590,29 @@ export const navLinks = [
       time: "9:30 AM",
       bloodPressure: "115/75",
     },
+  ];
+
+  export const abtWhatWeOffer = [
+    {
+      id: 1,
+      name: "For The Elderly",
+      image: "/assets/images/02.webp",
+      icon: <Elderly color="green"  className="w-12 h-12 transition-all duration-300"/>,
+      text: "Have no hard time finding a ​compassionate person to care for ​that loved one with our help."
+    },
+    {
+      id: 2,
+      name: "For The Sick",
+      image: "/assets/images/10500.webp",
+      icon: <Nurse color="green"  className="w-12 h-12 transition-all duration-300"/>,
+      text: "Be free to find individuals that ​meet your preferences and ​requirement with us."
+    },
+    {
+      id: 3,
+      name: "For Nurses and Caregivers",
+      image: "/assets/images/nurses.webp",
+      icon: <Doctor color="green"  className="w-12 h-12 transition-all duration-300"/>,
+      text: "Connect with families in need and ​get full paying job offers that meet ​your field of studies."
+    }
   ];
   

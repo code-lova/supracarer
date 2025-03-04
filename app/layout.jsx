@@ -5,11 +5,14 @@ import { ReactQueryProvider } from "@config/ReactQueryProvider";
 import { SessionProvider } from "next-auth/react";
 import Navbar from "@components/pages/Navbar";
 import { usePathname } from "next/navigation";
-
 import ServerLayout from "./ServerLayout";
+import { showNavbarPaths } from "@utils/navbarPaths";
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
+
+  const shouldShowNavbar = showNavbarPaths.includes(pathname);
+
   return (
     <ServerLayout>
       <div className="main">
@@ -19,7 +22,7 @@ const RootLayout = ({ children }) => {
       <main className="app">
         <SessionProvider>
           <ReactQueryProvider>
-            { pathname !== "/" && <Navbar />}
+            {shouldShowNavbar && <Navbar />}
             {children}
             <Toaster />
           </ReactQueryProvider>
