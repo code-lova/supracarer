@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { signIn, useSession } from "next-auth/react";
 import { loginSchema } from "@schema/auth";
 import toast from "react-hot-toast";
-import LoaderButton from "@components/LoaderButton";
+import LoaderButton from "@components/core/LoaderButton";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
