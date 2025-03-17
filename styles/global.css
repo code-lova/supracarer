@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +7,7 @@
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
+  font-family: 'Open Sans', Arial, sans-serif;
 }
 
 .main {
@@ -107,7 +107,7 @@
 
 @layer utilities {
   .padding {
-    @apply lg:py-4 lg:px-[120px] px-6 py-6;
+    @apply lg:py-4 xl:px-[111px] px-6 py-6;
   }
 
   .blue_gradient {
@@ -166,12 +166,12 @@
 
   /* optional for div page section  */
   .pageSection {
-    @apply px-12 md:px-0 md:mx-32;
+    @apply mx-7 md:mx-28;
   }
 
   /* for abut us page  */
   .greenVerticalTextBox {
-    @apply hidden md:flex items-center justify-center absolute -left-6 top-1/2 transform -translate-y-1/2 bg-green-600 text-white w-[70px] py-6 px-2 text-center  rounded-full border-4 border-white shadow-2xl z-10;
+    @apply hidden md:flex items-center justify-center absolute -left-6 top-1/2 transform -translate-y-1/2 bg-carer-green text-white w-[70px] py-6 px-2 text-center  rounded-full border-4 border-white shadow-2xl z-10;
   }
 
   /* Gray background for pages  */
@@ -190,11 +190,11 @@
 
   /* Custom Checkbox Styling */
   .checkbox {
-    @apply appearance-none h-4 w-4 border-none rounded bg-gray-200 checked:bg-red-500 checked:ring-0;
+    @apply appearance-none h-4 w-4 border-none rounded bg-gray-200 checked:bg-carer-blue checked:ring-0;
   }
 
   .checkbox:focus {
-      @apply ring-2 ring-red-500;
+      @apply ring-2 ring-carer-blue;
   }
 
   .download-btn {
@@ -206,20 +206,20 @@
   }
 
   .form-control {
-    @apply w-[300px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-pink-500;
+    @apply w-[400px] xl:w-[300px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-carer-blue;
   }
 
   .subscribe-form {
-    @apply w-[320px] xl:w-[500px] py-3 px-4 rounded-md bg-gray-200 outline-none focus-within:border-2 border-pink-500;
+    @apply w-[320px] xl:w-[500px] py-3 px-4 rounded-md bg-gray-200 outline-none focus-within:border-2 border-carer-blue;
   }
   
   
   .textarea-control{
-    @apply p-4 w-[300px] xl:w-[630px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-pink-500;
+    @apply p-4 w-[400px] xl:w-[630px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-carer-blue;
   }
 
   .form-button {
-    @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white py-4 px-4 rounded;
+    @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-500 text-white py-4 px-4 rounded;
   }
 
   .login-btn{
