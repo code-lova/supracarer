@@ -29,10 +29,10 @@ const Team = () => {
       <div className="pageSection text-center my-4 font-extralight px-4 text-base leading-6 lg:px-40">
        
         <div className="text-center mt-2 text-carer-blue">
-          <h2 className="text-3xl lg:text-4xl font-bold">
+          <h2 className="text-2xl lg:text-4xl font-bold">
             We are passionate about
           </h2>
-          <h2 className="text-3xl lg:text-4xl font-bold">
+          <h2 className="text-2xl lg:text-4xl font-bold">
             {" "}
              advancing home health care.
           </h2>
