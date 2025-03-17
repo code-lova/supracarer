@@ -11,10 +11,10 @@ const Services = () => {
       </h1>
 
       <div className="text-center mt-2 text-carer-blue">
-        <h2 className="text-3xl lg:text-4xl font-bold">
+        <h2 className="text-2xl lg:text-4xl font-bold">
           We're committed to deliver
         </h2>
-        <h2 className="text-3xl lg:text-4xl font-bold">high quality service</h2>
+        <h2 className="text-2xl lg:text-4xl font-bold">high quality service</h2>
       </div>
 
       <div className="flex flex-col justify-center items-center lg:flex-row gap-5 mt-16">

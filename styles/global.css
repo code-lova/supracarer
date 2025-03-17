@@ -206,7 +206,7 @@
   }
 
   .form-control {
-    @apply w-[400px] xl:w-[300px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-carer-blue;
+    @apply w-[300px] xl:w-[300px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-carer-blue;
   }
 
   .subscribe-form {
@@ -215,7 +215,7 @@
   
   
   .textarea-control{
-    @apply p-4 w-[400px] xl:w-[630px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-carer-blue;
+    @apply p-4 w-[300px] xl:w-[630px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-carer-blue;
   }
 
   .form-button {
