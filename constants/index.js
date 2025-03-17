@@ -1,3 +1,8 @@
+import { Doctor } from "@components/core/icon/doctor";
+import { Elderly } from "@components/core/icon/elderly";
+import { Nurse } from "@components/core/icon/nurse";
+import { Linkedin, Instagram, Twitter, FacebookRect } from "@components/core/icon/socials";
+
 export const navLinks = [
     {
       id: "home",
@@ -357,29 +362,6 @@ export const navLinks = [
     },
   ];
   
-  export const service = [
-    {
-      id: "1",
-      title: "For The Elderly",
-      image: "/assets/images/service1.webp",
-      description:
-        "Have no hard time finding a ​compassionate person to care for ​that loved one with our help.",
-    },
-    {
-      id: "2",
-      title: "For The Sick",
-      image: "/assets/images/service2.webp",
-      description:
-        "Be free to find individuals that ​meet your preferences and ​requirement with us.",
-    },
-    {
-      id: "3",
-      title: "For Nurses and Caregivers",
-      image: "/assets/images/service3.webp",
-      description:
-        "Connect with families in need and ​get full paying job offers that meet ​your field of studies.",
-    },
-  ];
   
   export const pricingPlan = [
     {
@@ -521,25 +503,25 @@ export const navLinks = [
       id: 1,
       name: "Facebook",
       link: "https://fb.com",
-      icon: "/assets/icons/fb.svg",
+      icon: <FacebookRect />,
     },
     {
       id: 2,
       name: "Instagram",
       link: "https://ig.com",
-      icon: "/assets/icons/ig.svg",
+      icon: <Instagram />,
     },
     {
       id: 3,
       name: "Linkedin",
       link: "https://linkedin.com",
-      icon: "/assets/icons/linkedin.svg",
+      icon: <Linkedin />,
     },
     {
       id: 4,
       name: "X",
       link: "https://x.com",
-      icon: "/assets/icons/twitter.svg",
+      icon: <Twitter />,
     },
   ];
   
@@ -560,6 +542,7 @@ export const navLinks = [
         "Yes, you can cancel or switch between plans at any time. There are no cancellation fees, and you'll retain access to Pro features until the end of your billing period.",
     },
   ];
+
   export const historyData = [
     {
       name: "John Doe",
@@ -585,5 +568,29 @@ export const navLinks = [
       time: "9:30 AM",
       bloodPressure: "115/75",
     },
+  ];
+
+  export const abtWhatWeOffer = [
+    {
+      id: 1,
+      name: "For The Elderly",
+      image: "/assets/images/02.webp",
+      icon: <Elderly color="#006838"  className="w-12 h-12 transition-all duration-300"/>,
+      text: "Have no hard time finding a ​compassionate person to care for ​that loved one with our help."
+    },
+    {
+      id: 2,
+      name: "For The Sick",
+      image: "/assets/images/10500.webp",
+      icon: <Nurse color="#006838"  className="w-12 h-12 transition-all duration-300"/>,
+      text: "Be free to find individuals that ​meet your preferences and ​requirement with us."
+    },
+    {
+      id: 3,
+      name: "For Nurses and Caregivers",
+      image: "/assets/images/nurses.webp",
+      icon: <Doctor color="#006838"  className="w-12 h-12 transition-all duration-300"/>,
+      text: "Connect with families in need and ​get full paying job offers that meet ​your field of studies."
+    }
   ];
   

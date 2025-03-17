@@ -1,21 +1,17 @@
 "use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { setNavigate } from "@config/apiClient";
 import "@styles/global.css";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryProvider } from "@config/ReactQueryProvider";
-
+import { SessionProvider } from "next-auth/react";
+import Navbar from "@components/pages/Navbar";
+import { usePathname } from "next/navigation";
 import ServerLayout from "./ServerLayout";
+import { showNavbarPaths } from "@utils/navbarPaths";
 
 const RootLayout = ({ children }) => {
-  const navigate = useRouter();
-  useEffect(() => {
-    setNavigate((path, options) => {
-      navigate.push(path, options);
-    });
-  }, [navigate]);
+  const pathname = usePathname();
 
+  const shouldShowNavbar = showNavbarPaths.includes(pathname);
 
   return (
     <ServerLayout>
@@ -24,10 +20,13 @@ const RootLayout = ({ children }) => {
       </div>
 
       <main className="app">
-        <ReactQueryProvider>
-          {children}
-          <Toaster />
-        </ReactQueryProvider>
+        <SessionProvider>
+          <ReactQueryProvider>
+            {shouldShowNavbar && <Navbar />}
+            {children}
+            <Toaster />
+          </ReactQueryProvider>
+        </SessionProvider>
       </main>
     </ServerLayout>
   );

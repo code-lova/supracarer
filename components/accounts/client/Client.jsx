@@ -7,46 +7,25 @@ import UpdateModal from "./UpdateModal";
 import HistoryModal from "./HistoryModal";
 import Header from "./Header";
 import Aside from "./Aside";
-import useUser from "@hooks/useUser";
 import { useRouter } from "next/navigation";
-
-
+import { useSession } from "next-auth/react";
+import LoadingStateUI from "@components/core/loading";
 
 const Client = () => {
-
-  const { user, refetch, isLoading } = useUser();
-  const navigate = useRouter();
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
+  const { data: session, status } = useSession();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const router = useRouter();
 
-
-  // Refetch user if user data is null
   useEffect(() => {
-    if (!user && !isLoading) {
-      refetch();
+    if (status === "unauthenticated") {
+      router.push("/signin");
     }
-  }, [user, isLoading, refetch]);
+  }, [status, router]);
 
-
-
-   // Handle navigation when user data is null after refetch
-   useEffect(() => {
-    if (!isLoading && !user) {
-      navigate.push("/signin");
-    }
-  }, [user, isLoading, navigate]);
-
-  // Show a loading indicator if data is loading
-  if (isLoading) return <p>Loading...</p>;
-
-  // Ensure user is valid before rendering the dashboard
-  if (!user) return null;
-
-  const { fullname, email, createdAt } = user;
-
- 
+  if (status === "loading") {
+    return <LoadingStateUI label="Redirecting you in a sec" />;
+  }
 
   return (
     <div>
@@ -55,7 +34,7 @@ const Client = () => {
       <div className="lg:ml-[300px]">
         <section className="px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
           <h2 className=" lg:text-3xl mt-6 md:mt-0 text-2xl text-center font-bold text-cyan-400">
-            Hi, {fullname}
+            Hi, {session?.user?.fullname || "User"}
           </h2>
           <div className="hidden md:flex items-center gap-4">
             <Image
@@ -245,7 +224,6 @@ const Client = () => {
                   </div>
                 </div>
               </div>
-              
             </div>
             <div className="md:col-span-2 bg-pink-400 lg:ml-[250px] w-full lg:w-[380px] text-white p-6 rounded-lg shadow-lg">
               <div className="flex justify-between items-center">

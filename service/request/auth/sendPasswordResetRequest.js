@@ -1,18 +1,16 @@
-import API from "@config/apiClient";
-
 export const sendPasswordResetRequest = async (email) => {
-    try {
-      const response = await API.post("/auth/password/forgot", email);
-      return response;
-    } catch (error) {
-      // Check if the error has a response and extract the message
-      if (error.response) {
-        const message = error.response.data.message || "An unexpected error occurred.";
-        throw new Error(message); // Throw a new Error with the user-friendly message
-      } else if (error.request) {
-        throw new Error("No response received from the server. Please try again.");
-      } else {
-        throw new Error("An unexpected error occurred.");
-      }
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/password/forgot`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(email),
     }
-  };
+  );
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to send request");
+  }
+
+  return response.json();
+};

@@ -1,39 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import NurseAside from "./NurseAside";
 import NurseHeader from "./NurseHeader";
-import useUser from "@hooks/useUser";
 import { useRouter } from "next/navigation";
 
 const Nurse = () => {
-  const { user, refetch, isLoading } = useUser();
   const navigate = useRouter();
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
 
-  useEffect(() => {
-    if (!user && !isLoading) {
-      refetch();
-    }
-  }, [user, isLoading, refetch]);
-
-  // Handle navigation when user data is null after refetch
-  useEffect(() => {
-    if (!isLoading && !user) {
-      navigate.push("/signin");
-    }
-  }, [user, isLoading, navigate]);
-
-  // Show a loading indicator if data is loading
-  if (isLoading) return <p>Loading...</p>;
-
-  // Ensure user is valid before rendering the dashboard
-  if (!user) return null;
-
-  const { fullname, email, createdAt } = user;
-
+  
   return (
     <div>
       <NurseAside />
@@ -41,7 +17,7 @@ const Nurse = () => {
       <div className="lg:ml-[300px]">
         <section className="px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
           <h2 className=" lg:text-3xl mt-6 md:mt-0 text-2xl text-center font-bold text-cyan-400">
-            Hi, Nurse { fullname }
+            Hi, Nurse
           </h2>
           <div className="hidden md:flex items-center gap-4">
             <Image

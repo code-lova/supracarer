@@ -1,22 +1,19 @@
-import API from "@config/apiClient";
-
 export const registerRequest = async (data) => {
-    try {
-      const response = await API.post("/auth/register", data);
-      return response;
-    } catch (error) {
-      if (error.response) {
-        throw new Error(
-          error.response.data.message || "An error occurred during registration."
-        );
-      } else if (error.request) {
-        // Request was made but no response was received
-        throw new Error(
-          "No response received from the server. Please try again."
-        );
-      } else {
-        // Something happened in setting up the request
-        throw new Error(error.message || "An unexpected error occurred.");
-      }
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     }
-  };
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(
+      errorData.message || "An error occurred during registration."
+    );
+  }
+
+  return await response.json();
+};
