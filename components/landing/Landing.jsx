@@ -1,66 +1,63 @@
 "use client";
 import Nav from "./Nav";
-import Hero from './Hero';
-import Features from './Features';
-import HowitWorks from './HowitWorks';
-import AboutUs from './AboutUs';
-import Services from './Services';
-import Team from './Team';
-import Pricing from './Pricing';
-import Faq from './Faq';
-import ContactUs from './ContactUs';
-import Subscription from './Subscription';
+import Hero from "./Hero";
+import Features from "./Features";
+import HowitWorks from "./HowitWorks";
+import AboutUs from "./AboutUs";
+import Services from "./Services";
+import Team from "./Team";
+import Pricing from "./Pricing";
+import Faq from "./Faq";
+import ContactUs from "./ContactUs";
+import Subscription from "./Subscription";
 import Connect from "./Connect";
 import Footer from "./Footer";
-
+import Marquee from "@components/core/marquee";
 
 const Landing = () => {
+  return (
+    <section className="flex flex-col lg:flex-row w-full mt-[6px] lg:mt-0">
+      <div className="w-full relative">
+        {/* Hero background image */}
+        <Hero />
 
-    return (
-        <section className="flex flex-col lg:flex-row w-full mt-[78px] lg:mt-0">
-            <Nav />
-            <div className="w-full lg:ml-[300px] relative">
+        {/* Who we are */}
+        <AboutUs />
 
-                {/* Hero background image */}
-                <Hero />
+        {/* Features of the app section */}
+        <Features />
 
-                {/* Features of the app section */}
-                <Features />
+        {/* How it works */}
+        <HowitWorks />
 
-                {/* How it works */}
-                <HowitWorks />
+        <Marquee />
 
-                {/* Who we are */}
-               <AboutUs />
+        {/* Our services section */}
+        <Services />
 
-                {/* Our services section */}
-                <Services />
+        {/* The team sections */}
+        <Team />
 
-                {/* The team sections */}
-                <Team />
+        {/* Our Pricing Plan section */}
+        {/* <Pricing /> */}
 
-                {/* Our Pricing Plan section */}
-                <Pricing />
+        {/* FaQ section */}
+        <Faq />
 
-                {/* FaQ section */}
-                <Faq />
+        {/* contact us section */}
+        <ContactUs />
 
-                {/* contact us section */}
-                <ContactUs />
+        {/* The Subscription section */}
+        <Subscription />
 
-                {/* The Subscription section */}
-                <Subscription />
+        {/* connect section */}
+        {/* <Connect /> */}
 
-                {/* connect section */}
-                <Connect />
-
-                {/* Footer section of the landing */}
-                <Footer />
-
-            </div>
-           
-        </section>
-    );
+        {/* Footer section of the landing */}
+        <Footer />
+      </div>
+    </section>
+  );
 };
 
 export default Landing;

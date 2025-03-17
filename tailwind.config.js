@@ -23,6 +23,7 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "contact": "url('/assets/shape/contact-shap1.svg')",
         "footer": "url('/assets/images/footer-bg.png')",
+        "news-letter": "url('/assets/images/news-letter-bg.png')",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
           'contact': "url('/assets/shape/contact-shape1.svg')"
@@ -32,19 +33,30 @@ module.exports = {
         montserrat: ['Montserrat', 'sans-serif'],
       },
       colors: {
-        'heading-color': "#c4cfde",
-        'primary': "#ECEEFF",
+        'haven-blue': "#013e5b",
+        'carer-green': "#3cb148",
+        "ever-green": "#006838",
         "slate-gray": "#6D6D6D",
-        "pale-blue": "#F5F6FF",
-        "white-400": "rgba(255, 255, 255, 0.80)",
+        "carer-blue": "#2c9ace",
         "custom-green": "#428f73",
         "custom-white": "#ffff",
+        "custom-dark": "#121211",
+        "tranquil-teal": "#088272",
       },
       boxShadow: {
         '3xl': '0 10px 40px rgba(0, 0, 0, 0.1)',
         'shadow-1': '10px 10px 19px #1c1e22, -10px -10px 19px #262a2e',
         'shadow-2': 'inset 21px 21px 19px #181a1d, inset -21px -21px 19px #202225',
         'inner-shadow': '1px 4px 2px -3px rgba(0, 0, 0, 0.7) inset, -1px -3px 3px -2px rgba(255, 255, 255, 0.2) inset',
+      },
+      keyframes: {
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        marquee: "marquee 20s linear infinite",
       },
       
     },

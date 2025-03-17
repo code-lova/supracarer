@@ -6,8 +6,8 @@ import { team } from "@constants/index";
 import Link from "next/link";
 import FeatureBg from "../FeatureBg";
 import { aboutUs, mission, vision } from "@constants/index";
-import { FlagSolid } from "@components/core/flag";
-import { SharpDiamond } from "@components/core/diamond";
+import { FlagSolid } from "@components/core/icon/flag";
+import { SharpDiamond } from "@components/core/icon/diamond";
 import { abtWhatWeOffer } from "@constants/index";
 import { NormalBtn } from "@components/core/button";
 
@@ -60,7 +60,7 @@ export const About = () => {
           </div>
 
           <div className="w-[97%] md:w-1/2 pl-0 md:pl-[10px]">
-            <h1 className="capitalize text-green-600 text-base font-bold">
+            <h1 className="capitalize text-tranquil-teal text-base font-bold">
               Get to know us
             </h1>
             <h2 className="text-3xl md:text-4xl font-bold blue_gradient">
