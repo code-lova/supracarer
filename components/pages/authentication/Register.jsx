@@ -24,7 +24,7 @@ const Register = () => {
       setLoading(false); // Optionally reset loading state
     },
     onError: (error) => {
-      const errorMessage = error?.message || "An error occured";
+      const errorMessage = error?.message || "Validation error occured";
       toast.error(errorMessage);
       setLoading(false);
     },
