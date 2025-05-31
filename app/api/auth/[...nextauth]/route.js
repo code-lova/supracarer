@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { refreshAccessToken } from "@service/request/auth/resfreshAccessToken";
 
 const handler = NextAuth({
   session: {
@@ -21,7 +20,7 @@ const handler = NextAuth({
       async authorize(credentials) {
         try {
           const apiResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+            `${process.env.NEXT_PUBLIC_API_URL}/login`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -45,8 +44,7 @@ const handler = NextAuth({
             fullname: data.user.fullname,
             role: data.user.role,
             accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
-            accessTokenExpires: Date.now() + 15 * 60 * 1000,
+            accessTokenExpires: Date.now() + 24 * 60 * 60 * 1000,
           };
         } catch (error) {
           throw new Error(error.message || "Login failed");
@@ -66,17 +64,16 @@ const handler = NextAuth({
           fullname: user.fullname,
           role: user.role,
           accessToken: user.accessToken,
-          refreshToken: user.refreshToken,
           accessTokenExpires: user.accessTokenExpires,
         };
       }
 
       if (Date.now() < token.accessTokenExpires) {
-        return token; // Token is still valid
+        return token;
       }
 
-      // Refresh access token using refresh token
-      return await refreshAccessToken(token);
+      token.error = "AccessTokenExpired";
+      return token;
     },
 
     async session({ session, token }) {
@@ -86,7 +83,6 @@ const handler = NextAuth({
         role: token.role,
       };
       session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
       session.error = token.error;
       return session;
     },

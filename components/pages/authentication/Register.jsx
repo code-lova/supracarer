@@ -18,9 +18,10 @@ const Register = () => {
     onMutate: () => {
       setLoading(true); // Set loading to true when mutation starts
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success("A verification link was sent to your email");
-      navigate.push("/success");
+      localStorage.setItem("verificationEmail", data.user.email);
+      navigate.push("/verify-email");
       setLoading(false); // Optionally reset loading state
     },
     onError: (error) => {
@@ -46,12 +47,12 @@ const Register = () => {
 
         <Formik
           initialValues={{
-            fullname: "",
+            name: "",
             email: "",
             phone: "",
             role: "",
             password: "",
-            confirmPassword: "",
+            password_confirmation: "",
           }}
           validationSchema={registrationSchema}
           onSubmit={handleSubmit}
@@ -66,13 +67,13 @@ const Register = () => {
                   Full Name
                 </label>
                 <Field
-                  name="fullname"
+                  name="name"
                   type="text"
                   className="login-form-input"
                   placeholder="John Doe"
                 />
                 <ErrorMessage
-                  name="fullname"
+                  name="name"
                   component="div"
                   className="text-red-500 text-sm"
                 />
@@ -159,19 +160,19 @@ const Register = () => {
 
               <div>
                 <label
-                  htmlFor="confirmPassword"
+                  htmlFor="password_confirmation"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Confirm Password
                 </label>
                 <Field
-                  name="confirmPassword"
+                  name="password_confirmation"
                   type="password"
                   className="login-form-input"
                   placeholder="••••••••"
                 />
                 <ErrorMessage
-                  name="confirmPassword"
+                  name="password_confirmation"
                   component="div"
                   className="text-red-500 text-sm"
                 />

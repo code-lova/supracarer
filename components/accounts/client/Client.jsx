@@ -32,7 +32,7 @@ const Client = () => {
       <Aside />
       <Header />
       <div className="lg:ml-[300px]">
-        <section className="px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
+        <section className="px-18 md:px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
           <h2 className=" lg:text-3xl mt-6 md:mt-0 text-2xl text-center font-bold text-cyan-400">
             Hi, {session?.user?.fullname || "User"}
           </h2>
