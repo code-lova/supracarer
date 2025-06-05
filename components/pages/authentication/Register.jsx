@@ -19,7 +19,7 @@ const Register = () => {
       setLoading(true); // Set loading to true when mutation starts
     },
     onSuccess: (data) => {
-      toast.success("A verification link was sent to your email");
+      toast.success("A verification code was sent to your email");
       localStorage.setItem("verificationEmail", data.user.email);
       navigate.push("/verify-email");
       setLoading(false); // Optionally reset loading state

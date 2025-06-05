@@ -8,13 +8,13 @@ import LoaderButton from "@components/core/LoaderButton";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { resetPasswordRequest } from "@service/request/auth/resetPasswordRequest";
-import { signIn } from "next-auth/react";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [code, setCode] = useState(null);
   const [exp, setExp] = useState(null);
+  const [email, setEmail] = useState("");
 
   const navigate = useRouter();
 
@@ -22,27 +22,34 @@ const ResetPassword = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const codeParam = params.get("code");
-    const expParam = params.get("exp");
+    const expParam = parseInt(params.get("exp"), 10);
+    const emailParam = params.get("email");
 
-    if (codeParam && expParam) {
-      setCode(codeParam);
-      setExp(Number(expParam));
-      const currentTime = Date.now();
-      if (currentTime < Number(expParam)) {
-        setIsValid(true);
-      } else {
-        toast.error("The reset link has expired. Please request a new one.");
-        navigate.push("/forgot-password");
-      }
+    const now = Date.now();
+
+    if (!codeParam || !expParam || now > expParam * 1000) {
+      toast.error("The reset link is invalid or has expired.");
+      navigate.push("/forgot-password");
+      return;
     }
+
+    setCode(codeParam);
+    setExp(expParam);
+    setEmail(emailParam);
+    setIsValid(true);
   }, [navigate]);
 
   const handleSubmit = (values) => {
-    if (!exp || !code || !isValid || Date.now() > exp) {
+    if (!exp || !code || !isValid || Date.now() > exp * 1000) {
       toast.error("Invalid or expired reset link.");
       return;
     }
-    mutate({ ...values, resetVerificationCode: code });
+    mutate({
+      email: email,
+      password: values.password,
+      password_confirmation: values.confirmPassword,
+      token: code,
+    });
   };
 
   const { mutate } = useMutation({
@@ -77,8 +84,23 @@ const ResetPassword = () => {
             validationSchema={resetPasswordSchema}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {({ isSubmitting }) => (
               <Form className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    disabled
+                    className="login-form-input bg-gray-100 cursor-not-allowed"
+                  />
+                </div>
                 <div>
                   <label
                     htmlFor="password"
@@ -120,7 +142,7 @@ const ResetPassword = () => {
                 </div>
 
                 <LoaderButton
-                  loading={loading}
+                  loading={loading || isSubmitting}
                   loadingText="Processing..."
                   type="submit"
                   text="Reset password"

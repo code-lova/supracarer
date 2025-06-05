@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { historyData } from "@constants/index";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,7 +8,6 @@ import HistoryModal from "./HistoryModal";
 import Header from "./Header";
 import Aside from "./Aside";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import LoadingStateUI from "@components/core/loading";
 import { getUserRequest } from "@service/request/user/getUserRequest";
@@ -18,13 +17,6 @@ const Client = () => {
   const { data: status } = useSession();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/signin");
-    }
-  }, [status, router]);
 
   // Fetch user details
   const { data, isLoading } = useQuery({

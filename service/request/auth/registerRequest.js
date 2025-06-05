@@ -9,11 +9,18 @@ export const registerRequest = async (data) => {
   );
 
   if (!response.ok) {
-    const errorData = await response.json();
- 
-    throw new Error(
-      errorData.errors || "An error occurred during registration."
-    );
+
+    let errorMessage = "An error occurred during registration.";
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.errors || errorData.message || errorMessage;
+    } catch (e) {
+      // fallback if response isn't valid JSON (e.g. plain text or HTML)
+      errorMessage = response.status === 429
+        ? "Too many requests. Please wait a moment and try again."
+        : errorMessage;
+    }
+    throw new Error(errorMessage);
   }
 
   return await response.json();

@@ -46,6 +46,8 @@ export const resetPasswordSchema = yup.object().shape({
     .string()
     .min(8, "Password must be at least 8 characters")
     .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(/[A-Z]/, "Must contain an uppercase letter")
+    .matches(/[a-z]/, "Must contain a lowercase letter")
     .matches(
       /[!@#$%^&*(),.?":{}|<>]/,
       "Password must contain at least one special character"
