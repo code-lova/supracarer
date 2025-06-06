@@ -1,9 +1,12 @@
 export const sendPasswordResetRequest = async (email) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/password/forgot`,
+    `${process.env.NEXT_PUBLIC_API_URL}/forgot-password`,
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json", 
+        'Accept': 'application/json' 
+      },
       body: JSON.stringify(email),
     }
   );

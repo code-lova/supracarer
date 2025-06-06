@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,68 +7,67 @@
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
 }
 
 .main {
-    width: 100vw;
-    min-height: 100vh;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    padding: 120px 24px 160px 24px;
-    pointer-events: none;
-  }
-  
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  padding: 120px 24px 160px 24px;
+  pointer-events: none;
+}
 
-  .main:after {
-    content: "";
-    background-image: url("/assets/images/grid.svg");
-    z-index: 1;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    opacity: 0.4;
-    filter: invert(1);
-  }
-  
-  .gradient {
-    height: fit-content;
-    z-index: 3;
-    width: 100%;
-    max-width: 640px;
-    background-image: radial-gradient(
-        at 27% 37%,
-        hsla(215, 98%, 61%, 1) 0px,
-        transparent 0%
-      ),
-      radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
-      radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
-      radial-gradient(at 79% 53%, rgb(238, 165, 212) 0px, transparent 50%);
-    position: absolute;
-    content: "";
-    width: 100%;
-    height: 100%;
-    filter: blur(100px) saturate(150%);
-    top: 80px;
-    opacity: 0.15;
-  }
+.main:after {
+  content: "";
+  background-image: url("/assets/images/grid.svg");
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0.4;
+  filter: invert(1);
+}
 
-  .custom-dot {
-    position: relative;
-    padding-left: 20px; /* Space for the dot */
+.gradient {
+  height: fit-content;
+  z-index: 3;
+  width: 100%;
+  max-width: 640px;
+  background-image: radial-gradient(
+      at 27% 37%,
+      hsla(215, 98%, 61%, 1) 0px,
+      transparent 0%
+    ),
+    radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
+    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
+    radial-gradient(at 79% 53%, rgb(238, 165, 212) 0px, transparent 50%);
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  filter: blur(100px) saturate(150%);
+  top: 80px;
+  opacity: 0.15;
+}
+
+.custom-dot {
+  position: relative;
+  padding-left: 20px; /* Space for the dot */
 }
 
 .custom-dot::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.5rem; /* Adjust based on your text size */
-    width: 8px; /* Adjust size */
-    height: 8px; /* Adjust size */
-    border-radius: 50%;
-    background-color: black; /* Black dot */
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem; /* Adjust based on your text size */
+  width: 8px; /* Adjust size */
+  height: 8px; /* Adjust size */
+  border-radius: 50%;
+  background-color: black; /* Black dot */
 }
 
 .loader {
@@ -81,12 +80,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-
-  
-
 
 @layer components {
   .app {
@@ -101,8 +101,6 @@
   .transitioning {
     @apply transition duration-300 ease-in-out transform hover:scale-105;
   }
-
- 
 }
 
 @layer utilities {
@@ -118,25 +116,23 @@
     @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
   }
 
-
-
-  .card-color{
+  .card-color {
     @apply bg-[#212428];
   }
 
-  .font-semi-thick{
+  .font-semi-thick {
     @apply font-light;
   }
 
-  .text-semi-dark{
+  .text-semi-dark {
     @apply text-slate-900;
   }
 
-  .bg-mobile-nav{
+  .bg-mobile-nav {
     @apply cursor-pointer px-8 py-2 rounded-md lg:opacity-100 lg:max-h-full lg:block lg:pt-8  bg-gray-800 lg:bg-gray-800 transition-all duration-500 ease-in-out overflow-hidden;
   }
 
-  .bg-mobile-nav2{
+  .bg-mobile-nav2 {
     @apply flex-col items-center space-y-2 lg:space-y-0 lg:flex-row lg:space-x-5 lg:flex bg-gray-50 lg:bg-transparent absolute lg:static top-[78px] left-0 w-full lg:w-auto p-5 lg:p-0 transition-all duration-500 ease-in-out;
   }
 
@@ -179,12 +175,15 @@
     @apply py-16 px-6 lg:px-[70px] bg-gradient-to-r from-transparent to-gray-200;
   }
 
+  .form-field {
+    @apply w-full border rounded-lg px-3 py-2 bg-gray-100;
+  }
 
-  .border-card{
+  .border-card {
     @apply ring-stone-800 ring-[12px] rounded-lg;
   }
 
-  .ul-li-style{
+  .ul-li-style {
     @apply hover:text-coral-red transitioning p-4 hover:shadow-shadow-1;
   }
 
@@ -194,7 +193,7 @@
   }
 
   .checkbox:focus {
-      @apply ring-2 ring-carer-blue;
+    @apply ring-2 ring-carer-blue;
   }
 
   .download-btn {
@@ -212,9 +211,8 @@
   .subscribe-form {
     @apply w-[320px] xl:w-[500px] py-3 px-4 rounded-md bg-gray-200 outline-none focus-within:border-2 border-carer-blue;
   }
-  
-  
-  .textarea-control{
+
+  .textarea-control {
     @apply p-4 w-[300px] xl:w-[630px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-carer-blue;
   }
 
@@ -222,12 +220,11 @@
     @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-500 text-white py-4 px-4 rounded;
   }
 
-  .login-btn{
+  .login-btn {
     @apply w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white py-4 px-4 rounded;
   }
 
-  .login-form-input{
+  .login-form-input {
     @apply mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm outline-none focus:ring-custom-green focus:border-pink-500;
   }
-
 }

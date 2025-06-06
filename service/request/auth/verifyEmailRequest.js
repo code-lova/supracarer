@@ -1,11 +1,17 @@
-export const verifyEmailRequest = async (verificationCode) => {
+export const verifyEmailRequest = async (data) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/email/verify/${verificationCode}`
+    `${process.env.NEXT_PUBLIC_API_URL}/verify-email`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }
   );
-
+  
   if (!response.ok) {
-    throw new Error("An error occurred during email verification.");
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Email verification failed");
   }
 
-  return response.json();
+  return await response.json();
 };

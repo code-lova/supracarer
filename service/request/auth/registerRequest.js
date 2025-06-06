@@ -1,6 +1,6 @@
 export const registerRequest = async (data) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+    `${process.env.NEXT_PUBLIC_API_URL}/register`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -9,18 +9,18 @@ export const registerRequest = async (data) => {
   );
 
   if (!response.ok) {
-    const errorData = await response.json();
-    // Extract first validation error if "errors" key exists and it's an array
-    if (
-      errorData.errors &&
-      Array.isArray(errorData.errors) &&
-      errorData.errors.length > 0
-    ) {
-      throw new Error(errorData.errors[0].message);
+
+    let errorMessage = "An error occurred during registration.";
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.errors || errorData.message || errorMessage;
+    } catch (e) {
+      // fallback if response isn't valid JSON (e.g. plain text or HTML)
+      errorMessage = response.status === 429
+        ? "Too many requests. Please wait a moment and try again."
+        : errorMessage;
     }
-    throw new Error(
-      errorData.message || "An error occurred during registration."
-    );
+    throw new Error(errorMessage);
   }
 
   return await response.json();

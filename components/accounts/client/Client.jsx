@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { historyData } from "@constants/index";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,21 +7,24 @@ import UpdateModal from "./UpdateModal";
 import HistoryModal from "./HistoryModal";
 import Header from "./Header";
 import Aside from "./Aside";
-import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import LoadingStateUI from "@components/core/loading";
+import { getUserRequest } from "@service/request/user/getUserRequest";
+import DashboardSkeletonLoader from "@components/core/skeleton/dashboard/DashboardSkeletonLoader";
 
 const Client = () => {
-  const { data: session, status } = useSession();
+  const { data: status } = useSession();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
-  const router = useRouter();
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/signin");
-    }
-  }, [status, router]);
+  // Fetch user details
+  const { data, isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUserRequest,
+    refetchOnWindowFocus: false,
+  });
+  const user = data?.data;
 
   if (status === "loading") {
     return <LoadingStateUI label="Redirecting you in a sec" />;
@@ -32,34 +35,42 @@ const Client = () => {
       <Aside />
       <Header />
       <div className="lg:ml-[300px]">
-        <section className="px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
-          <h2 className=" lg:text-3xl mt-6 md:mt-0 text-2xl text-center font-bold text-cyan-400">
-            Hi, {session?.user?.fullname || "User"}
-          </h2>
-          <div className="hidden md:flex items-center gap-4">
-            <Image
-              src={"/assets/icons/icons8-alarm-clock-64.png"}
-              width={50}
-              height={70}
-              alt="menu"
-            />
-            <div>
-              <h2 className="text-2xl font-bold text-cyan-400">Reminder</h2>
-              <p>Take Medications</p>
-            </div>
-          </div>
-          <div className="md:hidden flex items-center gap-4 border-2 rounded-full h-20 w-[250px] py-8 px-4 my-12">
-            <Image
-              src={"/assets/icons/icons8-alarm-clock-64.png"}
-              width={50}
-              height={70}
-              alt="menu"
-            />
-            <div>
-              <h2 className="text-xl font-bold text-cyan-400">Reminder</h2>
-              <p>Take Medications</p>
-            </div>
-          </div>
+        <section className="px-18 md:px-20 flex flex-col md:flex-row justify-between items-center border-2 lg:w-[1000px] h-20 md:my-10 mt-[100px] rounded-full">
+          {isLoading ? (
+            <DashboardSkeletonLoader />
+          ) : (
+            <>
+              <h2 className="lg:text-3xl mt-6 md:mt-0 text-2xl text-center font-bold text-cyan-400">
+                Hi, {user?.fullname || "User"}
+              </h2>
+
+              <div className="hidden md:flex items-center gap-4">
+                <Image
+                  src={"/assets/icons/icons8-alarm-clock-64.png"}
+                  width={50}
+                  height={70}
+                  alt="menu"
+                />
+                <div>
+                  <h2 className="text-2xl font-bold text-cyan-400">Reminder</h2>
+                  <p>Take Medications</p>
+                </div>
+              </div>
+
+              <div className="md:hidden flex items-center gap-4 border-2 rounded-full h-20 w-[250px] py-8 px-4 my-12">
+                <Image
+                  src={"/assets/icons/icons8-alarm-clock-64.png"}
+                  width={50}
+                  height={70}
+                  alt="menu"
+                />
+                <div>
+                  <h2 className="text-xl font-bold text-cyan-400">Reminder</h2>
+                  <p>Take Medications</p>
+                </div>
+              </div>
+            </>
+          )}
         </section>
         <div className="mt-28 md:mt-0 container md:px-20 lg:p-6 overflow-x-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const registrationSchema = yup.object().shape({
-  fullname: yup.string().required("Your full name is required"),
+  name: yup.string().required("Your full name is required"),
   email: yup
     .string()
     .email("Invalid email format")
@@ -20,7 +20,7 @@ export const registrationSchema = yup.object().shape({
       "Password must contain at least one special character"
     )
     .required("Password is required"),
-  confirmPassword: yup
+  password_confirmation: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
@@ -46,6 +46,8 @@ export const resetPasswordSchema = yup.object().shape({
     .string()
     .min(8, "Password must be at least 8 characters")
     .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(/[A-Z]/, "Must contain an uppercase letter")
+    .matches(/[a-z]/, "Must contain a lowercase letter")
     .matches(
       /[!@#$%^&*(),.?":{}|<>]/,
       "Password must contain at least one special character"
@@ -55,4 +57,10 @@ export const resetPasswordSchema = yup.object().shape({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
+});
+
+export const verifyEmailSchema = yup.object().shape({
+  code: yup.string()
+    .length(6, "Code must be 6 characters")
+    .required("Verification code required"),
 });

@@ -1,18 +1,38 @@
 "use client";
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Formik, Form, Field } from "formik";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import Aside from "./Aside";
 import Header from "./Header";
 import { getUserRequest } from "@service/request/user/getUserRequest";
+import LoadingStateUI from "@components/core/loading";
+import toast from "react-hot-toast";
+import { updateClientprofile } from "@service/request/client/updateProfileRequest";
+import { updateClientSchema } from "@schema/client/profile";
+import LoaderButton from "@components/core/LoaderButton";
 
 const Settings = () => {
+  const queryClient = useQueryClient();
   // Fetch user details
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["user"],
     queryFn: getUserRequest,
+    refetchOnWindowFocus: false,
+  });
+  const user = data?.data;
+
+  const mutation = useMutation({
+    mutationFn: updateClientprofile,
+    onSuccess: () => {
+      toast.success("Profile updated successfully!");
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (err) => {
+      toast.error(err.message || "An error occurred while updating profile.");
+    },
   });
 
+ 
 
   return (
     <div>
@@ -20,14 +40,12 @@ const Settings = () => {
       <Header />
       <div className="lg:ml-[200px]">
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-center mb-6">
+          <h1 className="text-3xl font-bold text-center mb-2 md:mb-8 mt-12 md:mt-8">
             Update Profile
           </h1>
 
-          {/* Loading and Error Handling */}
-          {isLoading && (
-            <p className="text-center text-gray-600">Loading user details...</p>
-          )}
+          {isLoading && <LoadingStateUI label="Loading user details..." />}
+
           {isError && (
             <p className="text-center text-red-500">Error: {error.message}</p>
           )}
@@ -35,116 +53,252 @@ const Settings = () => {
           {!isLoading && !isError && data && (
             <Formik
               initialValues={{
-                fullname: data.fullname || "",
-                phone: data.phone || "",
-                email: data.email || "",
-                age: data.age || "",
-                weight: data.weight || "",
-                height: data.height || "",
-                gender: data.gender || "",
-                about: data.about || "",
+                name: user.fullname || "",
+                email: user.email || "",
+                phone: user.phone || "",
+                date_of_birth: user.date_of_birth || "",
+                place_of_birth: user.place_of_birth || "",
+                blood_group: user.blood_group || "",
+                genotype: user.genotype || "",
+                address: user.address || "",
+                religion: user.religion || "",
+                nationality: user.nationality || "",
+                weight: user.weight || "",
+                height: user.height || "",
+                gender: user.gender || "",
+                about: user.about || "",
+                image: null,
+                preview: "",
               }}
+              validationSchema={updateClientSchema}
               onSubmit={(values) => {
-                console.log("Updated Information:", values);
-                alert("Settings updated successfully!");
+                console.log("Submitting values", values);
+                const payload = { ...values };
+                delete payload.preview; // not needed on backend
+                mutation.mutate(payload);
               }}
             >
-              {({ values }) => (
-                <Form className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
-                  <div className="mb-4">
+              {({ values, setFieldValue }) => (
+                <Form className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6 space-y-4">
+                  {/* Image */}
+                  <div>
                     <label className="block text-gray-700 mb-2">
-                      Full Name
+                      Profile Picture
                     </label>
-                    <Field
-                      type="text"
-                      name="fullname"
-                      className="w-full border rounded-lg px-3 py-2 bg-gray-100"
-                      disabled
+                    <div className="mb-2">
+                      {user.image && !values.preview && (
+                        <img
+                          src={`${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}/${user.image}`}
+                          alt="Current"
+                          className="w-24 h-24 rounded-full object-cover"
+                        />
+                      )}
+                      {values.preview && (
+                        <img
+                          src={values.preview}
+                          alt="Preview"
+                          className="w-24 h-24 rounded-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      name="image"
+                      accept="image/*"
+                      onChange={(event) => {
+                        const file = event.currentTarget.files?.[0];
+                        if (file) {
+                          setFieldValue("image", file);
+                          setFieldValue("preview", URL.createObjectURL(file));
+                        }
+                      }}
+                      className="w-full"
+                    />
+                    <ErrorMessage
+                      name="image"
+                      component="div"
+                      className="text-red-500 text-sm"
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  {/* Name */}
+                  <div>
+                    <label>Full Name</label>
+                    <Field name="name" className="form-field" />
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
+                  </div>
+
+                  {/* Email & Phone */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-gray-700 mb-2">
-                        Phone Number
-                      </label>
-                      <Field
-                        type="tel"
-                        name="phone"
-                        className="w-full border rounded-lg px-3 py-2 bg-gray-100"
-                        disabled
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Email Address
-                      </label>
-                      <Field
-                        type="email"
+                      <label>Email</label>
+                      <Field name="email" className="form-field" />
+                      <ErrorMessage
                         name="email"
-                        className="w-full border rounded-lg px-3 py-2 bg-gray-100"
-                        disabled
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label>Phone</label>
+                      <Field name="phone" className="form-field" />
+                      <ErrorMessage
+                        name="phone"
+                        component="div"
+                        className="text-red-500 text-sm"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  {/* Date & Place of Birth */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-gray-700 mb-2">Age</label>
+                      <label>Date of Birth</label>
                       <Field
-                        type="number"
-                        name="age"
-                        className="w-full border rounded-lg px-3 py-2 bg-gray-100"
-                        disabled
+                        name="date_of_birth"
+                        type="date"
+                        className="form-field"
+                      />
+                      <ErrorMessage
+                        name="date_of_birth"
+                        component="div"
+                        className="text-red-500 text-sm"
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700 mb-2">
-                        Weight (kg)
-                      </label>
-                      <Field
-                        type="number"
-                        name="weight"
-                        className="w-full border rounded-lg px-3 py-2 bg-gray-100"
-                        disabled
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Height (cm)
-                      </label>
-                      <Field
-                        type="number"
-                        name="height"
-                        className="w-full border rounded-lg px-3 py-2 bg-gray-100"
-                        disabled
+                      <label>Place of Birth</label>
+                      <Field name="place_of_birth" className="form-field" />
+                      <ErrorMessage
+                        name="place_of_birth"
+                        component="div"
+                        className="text-red-500 text-sm"
                       />
                     </div>
                   </div>
 
-                  <div className="mb-4">
-                    <label className="block text-gray-700 mb-2">Gender</label>
-                    <Field
-                      type="text"
-                      name="gender"
-                      className="w-full border rounded-lg px-3 py-2 bg-gray-100"
-                      disabled
+                  {/* Blood Group & Genotype */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label>Blood Group</label>
+                      <Field name="blood_group" className="form-field" />
+                      <ErrorMessage
+                        name="blood_group"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label>Genotype</label>
+                      <Field name="genotype" className="form-field" />
+                      <ErrorMessage
+                        name="genotype"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Address, Religion, Nationality */}
+                  <div>
+                    <label>Address</label>
+                    <Field name="address" className="form-field" />
+                    <ErrorMessage
+                      name="address"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label>Religion</label>
+                    <Field name="religion" className="form-field" />
+                    <ErrorMessage
+                      name="religion"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label>Nationality</label>
+                    <Field name="nationality" className="form-field" />
+                    <ErrorMessage
+                      name="nationality"
+                      component="div"
+                      className="text-red-500 text-sm"
                     />
                   </div>
 
-                  <div className="mb-4">
-                    <label className="block text-gray-700 mb-2">About</label>
+                  {/* Weight & Height */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label>Weight (kg)</label>
+                      <Field
+                        name="weight"
+                        type="number"
+                        className="form-field"
+                      />
+                      <ErrorMessage
+                        name="weight"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label>Height (cm)</label>
+                      <Field
+                        name="height"
+                        type="number"
+                        className="form-field"
+                      />
+                      <ErrorMessage
+                        name="height"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Gender */}
+                  <div>
+                    <label>Gender</label>
+                    <Field as="select" name="gender" className="form-field">
+                      <option value="">Select</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </Field>
+                    <ErrorMessage
+                      name="gender"
+                      component="div"
+                      className="text-red-500 text-sm"
+                    />
+                  </div>
+
+                  {/* About */}
+                  <div>
+                    <label>About</label>
                     <Field
                       as="textarea"
                       name="about"
-                      className="w-full border rounded-lg px-3 py-2 bg-gray-100"
                       rows="4"
-                      disabled
+                      className="form-field"
+                    />
+                    <ErrorMessage
+                      name="about"
+                      component="div"
+                      className="text-red-500 text-sm"
                     />
                   </div>
-                  <button type="submit" className="login-btn font-bold">
-                    Update Profile
-                  </button>
+
+                  <LoaderButton
+                    loading={mutation.isPending}
+                    loadingText="Updating..."
+                    text="Update Profile"
+                    type="submit"
+                  />
                 </Form>
               )}
             </Formik>
