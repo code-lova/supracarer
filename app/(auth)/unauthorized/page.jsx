@@ -38,7 +38,9 @@ const UnauthorizedPage = () => {
       >
         <span className="mr-2">&#8592;</span> Back to dashboard
       </button>
-      <p className="text-[300px] font-bold">403</p>
+      <div className="flex justify-center">
+        <p className="text-[200px] md:text-[300px] font-bold">403</p>
+      </div>
     </div>
   );
 };

@@ -1,11 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
-import Image from "next/image";
 import { pricingPlan } from "@constants/index";
-import { faqs } from "@constants/index";
+import { pricingFaqs } from "@constants/index";
 import FeatureBg from "../FeatureBg";
+import Footer from "@components/landing/Footer";
 
 const Pricing = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -169,7 +167,7 @@ const Pricing = () => {
       </div>
 
       <div className="w-full max-w-2xl mx-auto mt-16">
-        {faqs.map((faq, index) => (
+        {pricingFaqs.map((faq, index) => (
           <div key={index} className="mb-4 border-b border-gray-200">
             <button
               onClick={() => toggleAccordion(index)}
@@ -186,8 +184,7 @@ const Pricing = () => {
           </div>
         ))}
       </div>
-
-      <Footer />
+        <Footer />
     </section>
   );
 };

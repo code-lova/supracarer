@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { updateClientprofile } from "@service/request/client/updateProfileRequest";
 import { updateClientSchema } from "@schema/client/profile";
 import LoaderButton from "@components/core/LoaderButton";
+import { uploadToCloudinary } from "@utils/uploadToCloudinary";
 
 const Settings = () => {
   const queryClient = useQueryClient();
@@ -31,8 +32,6 @@ const Settings = () => {
       toast.error(err.message || "An error occurred while updating profile.");
     },
   });
-
- 
 
   return (
     <div>
@@ -71,11 +70,27 @@ const Settings = () => {
                 preview: "",
               }}
               validationSchema={updateClientSchema}
-              onSubmit={(values) => {
+              onSubmit={async (values) => {
                 console.log("Submitting values", values);
                 const payload = { ...values };
-                delete payload.preview; // not needed on backend
-                mutation.mutate(payload);
+                delete payload.preview;
+
+                try {
+                  // If image is File → upload first
+                  if (values.image && typeof values.image !== 'string') {
+                    const cloudinaryData = await uploadToCloudinary(values.image);
+                    payload.image = cloudinaryData.secure_url;
+                    payload.image_public_id = cloudinaryData.public_id;
+                  } else {
+                    // Remove image fields → so we don't clear existing image
+                    delete payload.image;
+                    delete payload.image_public_id;
+                  }
+
+                  mutation.mutate(payload);
+                } catch (error) {
+                  toast.error(error.message || 'Failed to upload image');
+                }
               }}
             >
               {({ values, setFieldValue }) => (
@@ -88,7 +103,7 @@ const Settings = () => {
                     <div className="mb-2">
                       {user.image && !values.preview && (
                         <img
-                          src={`${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}/${user.image}`}
+                          src={user.image}
                           alt="Current"
                           className="w-24 h-24 rounded-full object-cover"
                         />

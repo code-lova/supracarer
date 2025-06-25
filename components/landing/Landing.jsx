@@ -4,12 +4,11 @@ import Features from "./Features";
 import HowitWorks from "./HowitWorks";
 import AboutUs from "./AboutUs";
 import Services from "./Services";
-import Team from "./Team";
 import Faq from "./Faq";
-import ContactUs from "./ContactUs";
 import Subscription from "./Subscription";
 import Footer from "./Footer";
 import Marquee from "@components/core/Marquee";
+import Partners from "./Partners";
 
 const Landing = () => {
   return (
@@ -32,23 +31,14 @@ const Landing = () => {
         {/* Our services section */}
         <Services />
 
-        {/* The team sections */}
-        <Team />
-
-        {/* Our Pricing Plan section */}
-        {/* <Pricing /> */}
-
         {/* FaQ section */}
         <Faq />
 
-        {/* contact us section */}
-        <ContactUs />
+        {/* Partnership section */}
+        <Partners />
 
         {/* The Subscription section */}
         <Subscription />
-
-        {/* connect section */}
-        {/* <Connect /> */}
 
         {/* Footer section of the landing */}
         <Footer />

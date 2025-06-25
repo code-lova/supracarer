@@ -11,7 +11,23 @@ const roleBasedRoutes: Record<string, string[]> = {
 export default withAuth(
   function middleware(req) {
     const { nextUrl, nextauth } = req;
-    const user = nextauth?.token;
+    const user = nextauth?.token as { role?: string};
+
+    const pathname = nextUrl.pathname;
+
+    if (user && (pathname === "/signin" || pathname === "/signup")) {
+      const role = user?.role;
+
+      // Redirect based on user role
+      const roleDashboardMap: Record<string, string> = {
+        client: "/client",
+        nurse: "/nurse",
+        admin: "/admin",
+      };
+
+      const redirectUrl = roleDashboardMap[role] || "/";
+      return NextResponse.redirect(new URL(redirectUrl, req.url));
+    }
 
     if (!user) {
       return NextResponse.redirect(new URL("/signin", req.url));
@@ -41,5 +57,11 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/client/:path*", "/nurse/:path*", "/admin/:path*"],
+  matcher: [
+    "/client/:path*",
+    "/nurse/:path*",
+    "/admin/:path*",
+    "/signin",
+    
+  ],
 };

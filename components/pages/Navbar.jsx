@@ -1,16 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { navLinks } from "@constants";
 import Link from "next/link";
-import { SharpSearch } from "@components/core/icon/search";
 import { ProfileFill } from "@components/core/icon/profile";
 import { OutlineEmail } from "@components/core/icon/envelope";
 import { BaselinePhoneInTalk } from "@components/core/icon/phone";
 import { OutlineAccessTime } from "@components/core/icon/time";
 import { companySocials } from "@constants";
+import { emailDetail, phoneDetail } from "@utils/Contact";
+import { NormalBtn } from "@components/core/button";
+import NavLinks from "@components/core/NavLinks";
 
 const Navbar = () => {
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const [toggle, setToggle] = useState(false);
   // Close menu on link click
   const handleNavClick = () => {
@@ -24,24 +27,32 @@ const Navbar = () => {
           <div className="flex items-center justify-between gap-4 ">
             <div className="flex item-center space-x-1">
               <OutlineEmail />
-              <p className="text-xs md:text-sm">supracarer@gmail.com</p>
+              <Link
+                href={`mailto:${emailDetail?.details}`}
+                className="text-xs md:text-sm"
+              >
+                {emailDetail?.details}
+              </Link>
             </div>
             <div className="flex item-center space-x-1">
               <OutlineAccessTime />
-              <p className="text-xs md:text-sm">
-                Mon - Fri: 09.00am - 10.00 pm
-              </p>
+              <p className="text-xs md:text-sm">Available 24/7</p>
             </div>
             <div className="flex item-center space-x-1">
               <BaselinePhoneInTalk />
-              <p className="text-xs md:text-sm">+233-234-567-890</p>
+              <Link
+                href={`tel:${phoneDetail?.details}`}
+                className="text-xs md:text-sm"
+              >
+                {phoneDetail?.details}
+              </Link>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             {companySocials.map((socials) => (
               <div key={socials.id}>
-                <a href={socials.link}>{socials.icon}</a>
+                <a href={socials.link} target="__blank" title={socials.name}>{socials.icon}</a>
               </div>
             ))}
           </div>
@@ -63,15 +74,12 @@ const Navbar = () => {
               toggle ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
             } lg:flex flex-col px-6 lg:flex-row items-center gap-4 space-y-2 lg:space-y-0 lg:space-x-5 bg-gray-50 lg:bg-transparent absolute lg:static top-[78px] lg:top-0 left-0 w-full lg:w-auto p-5 lg:p-0 transition-all duration-500 ease-in-out delay-200 lg:transition-none lg:opacity-100 lg:translate-y-0`}
           >
-            {navLinks.map((nav) => (
-              <li
-                key={nav.id}
-                className="text-haven-blue py-2 hover:lg:text-custom-green lg:transitioning lg:py-2 font-bold text-[16px]"
-                onClick={handleNavClick}
-              >
-                <Link href={nav.link}>{nav.title}</Link>
-              </li>
-            ))}
+            <NavLinks
+              navLinks={navLinks}
+              mobileDropdownOpen={mobileDropdownOpen}
+              setMobileDropdownOpen={setMobileDropdownOpen}
+              handleNavClick={handleNavClick}
+            />
           </ul>
           {/* show this menu handburger button for smaller screens */}
           <Image
@@ -84,9 +92,14 @@ const Navbar = () => {
             alt="menu"
             onClick={() => setToggle(!toggle)}
           />
-          <div className="hidden lg:flex items-center gap-2 cursor-pointer">
-            <ProfileFill color="#006838" />
-            <SharpSearch color="#006838" />
+          <div className="hidden lg:flex items-center gap-4 cursor-pointer">
+            <div className="flex items-center justify-between">
+              <ProfileFill color="#006838" />
+              <Link className="font-bold text-md text-[#006838]" href="/signin">
+                Login
+              </Link>
+            </div>
+            <NormalBtn href="/signup" children="Sign Up" />
           </div>
         </div>
       </nav>

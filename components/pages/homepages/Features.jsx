@@ -1,71 +1,46 @@
 import React from "react";
-import Navbar from "../Navbar";
 import Image from "next/image";
-import { features, keyBenefits } from "@constants";
-import Link from "next/link";
-import Footer from "../Footer";
+import { keyBenefits } from "@constants";
+import Footer from "@components/landing/Footer";
 import FeatureBg from "../FeatureBg";
+import Features from "@components/landing/Features";
+import { NormalBtn } from "@components/core/button";
+import Subscription from "@components/landing/Subscription";
 
-const Features = () => {
+const FeaturesComponentPage = () => {
   return (
     <section>
       <FeatureBg
         heading="Discover Our Key Features"
         subheading="Your holistic health journey, empowered by technology"
       />
-      <div className="pageSection">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold blue_gradient font-montserrat tracking-widest">
-            Features
-          </h1>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] lg:gap-10">
-          <div className="mb-10">
-            <h1 className="text-[28px] blue_gradient">
-              Discover a holistic health experience designed to support your
-              well-being
-            </h1>
+      <div className="w-full">
+        <Features />
+      </div>
 
-            <h3 className=" justify-center leading-loose mt-4 text-base">
-              Supracarer empowers your wellness journey by offering tailored
-              health plans, convenient appointment scheduling, and comprehensive
-              mental wellness support. The platform creates personalized
-              strategies to meet your unique health goals while providing
-              continuous assistance for building healthier habits. Users can
-              easily book sessions with a diverse range of certified
-              practitioners, all within a user-friendly app.
-            </h3>
-            <p className="mt-10 text-center font-bold">
-              Supracarer makes it simple to prioritize your holistic health with
-              expert guidance and easy-to-use tools.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-y-9 md:grid md:grid-cols-2 md:gap-x-2 lg:grid lg:grid-cols-2 lg:gap-x-2">
-            {features.map((feature) => (
-              <div
-                key={feature.name}
-                className="border border-gray-400 rounded-lg p-6 transitioning shadow-lg"
-              >
-                <Image
-                  src={feature.icon}
-                  width={70}
-                  height={20}
-                  className=" object-contain mx-auto"
-                />
-                <h3 className="font-bold blue_gradient uppercase mt-4 leading-6 text-base tracking-wider text-center">
-                  {feature.title}
-                </h3>
-                <p className="font-semi-thick text-semi-dark mt-4 leading-6 text-base tracking-wider text-center">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div className="pageSection mb-10 mt-6">
+        <h1 className="text-3xl md:text-4xl mb-10 text-center font-bold text-carer-blue">
+          Discover a holistic health experience designed to support your
+          well-being
+        </h1>
+
+        <p className="text-justify leading-loose mt-4 text-semi-dark text-base">
+          Supracarer empowers your wellness journey by offering tailored health
+          plans, convenient appointment scheduling, and comprehensive mental
+          wellness support. The platform creates personalized strategies to meet
+          your unique health goals while providing continuous assistance for
+          building healthier habits. Users can easily book sessions with a
+          diverse range of certified practitioners, all within a user-friendly
+          app.
+        </p>
+        <p className="mt-10 text-center font-bold text-tranquil-teal">
+          Supracarer makes it simple to prioritize your holistic health with
+          expert guidance and easy-to-use tools.
+        </p>
       </div>
 
       <div className="grayBackground">
-        <h1 className="text-4xl font-bold text-center blue_gradient font-montserrat tracking-widest">
+        <h1 className="text-4xl font-bold text-center text-carer-blue tracking-widest">
           Why Choose Supracarer
         </h1>
 
@@ -77,20 +52,17 @@ const Features = () => {
               height={310}
               className="object-fit mx-auto"
             />
-            <Link href="/signin">
-              <div className="flex justify-center mx-auto items-center space-x-2 h-14 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-lg w-[198px] mt-16 transitioning shadow-2xl">
-                <button className="text-white font-bold">
-                  Get started for free
-                </button>
-              </div>
-            </Link>
+            
+            <div className="flex justify-center mt-12">
+              <NormalBtn href="/signin" children="Get started for free" />
+            </div>
           </div>
 
           <div className="bg-white p-4 md:p-8 rounded-md">
             {keyBenefits.map((item) => (
               <div key={item.id} className="mb-4">
                 <div className="">
-                  <h1 className="text-[16px] font-bold text-pink-500">
+                  <h1 className="text-[16px] font-bold text-tranquil-teal">
                     {item.title}
                   </h1>
                   <ul className="list-none ml-2">
@@ -110,9 +82,11 @@ const Features = () => {
         </div>
       </div>
 
+      <Subscription />
+
       <Footer />
     </section>
   );
 };
 
-export default Features;
+export default FeaturesComponentPage;
