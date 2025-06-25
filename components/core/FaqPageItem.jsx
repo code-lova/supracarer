@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
-export const FaqItem = ({ question, answer }) => {
+export const FaqPageItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

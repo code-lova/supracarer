@@ -4,7 +4,7 @@ import FeatureBg from "../FeatureBg";
 import Subscription from "@components/landing/Subscription";
 import Footer from "@components/landing/Footer";
 import { faqs } from "@constants";
-import { FaqItem } from "@components/core/FaqItem";
+import { FaqPageItem } from "@components/core/FaqPageItem";
 
 
 const categories = ["All", "Client", "Caregiver", "General"];
@@ -61,7 +61,7 @@ const Faq = () => {
 
         <div className="max-w-4xl mx-auto space-y-4 overflow-y-auto max-h-[500px] px-2">
           {filteredFaqs.length > 0 ? (
-            filteredFaqs.map((faq, index) => <FaqItem key={index} {...faq} />)
+            filteredFaqs.map((faq, index) => <FaqPageItem key={index} {...faq} />)
           ) : (
             <p className="text-center text-gray-500">No matching FAQs found.</p>
           )}
