@@ -1,11 +1,13 @@
 import React from "react";
 import Image from "next/image";
 import { companySocials } from "@constants/index";
+import { emailDetail, phoneDetail, addressDetail } from "@utils/Contact";
+import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-footer bg-cover p-6">
-      <div className="grid grid-cols-1 gap-6 md:px-8 lg:grid lg:grid-cols-3">
+    <footer className="relative w-full bg-footer bg-cover p-6">
+      <div className="grid grid-cols-1 gap-6 md:px-8 lg:grid lg:grid-cols-3 pb-14">
         <div>
           <Image
             src="/assets/images/logo.png"
@@ -22,76 +24,103 @@ const Footer = () => {
           <div className="flex space-x-2 mt-4">
             {companySocials.map((socials) => (
               <div key={socials.id} className="">
-                <a href={socials.link}>{socials.icon}</a>
+                <Link href={socials.link}>{socials.icon}</Link>
               </div>
             ))}
           </div>
         </div>
 
         <div className="mt-2">
-          <h1 className="font-bold text-ever-green underline text-lg">
-            Useful Links
-          </h1>
-          <div className="flex justify-between">
+          <div className="flex justify-evenly">
             <div>
+              <h1 className="font-bold text-ever-green underline text-lg">
+                Useful Links
+              </h1>
               <ul className="mt-2 p-3">
                 <li className="hover:underline xl:transitioning">
-                  <a href="">FAQs</a>
+                  <Link href="/faq">FAQs</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <a href="">About</a>
+                  <Link href="/about">About</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <a href="">Terms & Conditions</a>
+                  <Link href="/terms">Terms & Conditions</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <a href="">Privacy Policy</a>
+                  <Link href="/privacy-policy">Privacy Policy</Link>
                 </li>
               </ul>
             </div>
+
             <div>
-              <ul className="mt-2 p-3">
+              <h1 className="font-bold text-ever-green underline text-lg">
+                Resources
+              </h1>
+              <ul className="p-3">
                 <li className="hover:underline xl:transitioning">
-                  <a href="">Services</a>
+                  <Link href="/blog">Blog</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <a href="">Features</a>
+                  <Link href="/features">Features</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <a href="">Download App</a>
+                  <Link href="">Download App</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <a href="">Support</a>
+                  <Link href="/contact">Support</Link>
                 </li>
               </ul>
             </div>
+
+             <div>
+              <h1 className="font-bold text-ever-green underline text-lg">
+                Professionals
+              </h1>
+              <ul className="p-3">
+                <li className="hover:underline xl:transitioning">
+                  <p>Doctors</p>
+                </li>
+                <li className="hover:underline xl:transitioning">
+                  <p>Physician Assistants</p>
+                </li>
+                <li className="hover:underline xl:transitioning">
+                  <p>Nutritionists</p>
+                </li>
+                <li className="hover:underline xl:transitioning">
+                  <p>Physiotherapists</p>
+                </li>
+                <li className="hover:underline xl:transitioning">
+                  <p>Clinical Psychologists</p>
+                </li>
+              </ul>
+            </div>
+
           </div>
         </div>
 
-        <div className="mb-16">
+        <div className="mt-2">
           <h1 className="font-bold text-ever-green underline text-lg">
             Contacts
           </h1>
 
           <div className="flex space-x-2 mt-4">
             <p className="font-bold">Address:</p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Voluptates, officiis
-            </p>
+            <p>{addressDetail?.details}</p>
           </div>
           <div className="flex space-x-2 mt-4">
-            <p className="font-bold">Email:</p>
-            <p>mebcghana@gmail.com</p>
+            <Link href={`mailto:${emailDetail?.details}`} className="font-bold">
+              Email: {emailDetail?.details}
+            </Link>
           </div>
           <div className="flex space-x-2 mt-4">
-            <p className="font-bold">Phone:</p>
-            <p>(+233)-54-914-8087</p>
+            <Link href={`tel:${phoneDetail?.details}`} className="font-bold">
+              Phone: {phoneDetail?.details}
+            </Link>
           </div>
         </div>
       </div>
       <div className="absolute inset-x-0 bottom-0 w-full bg-gray-500 text-center py-4">
-        <p className="text-white">© 2024 Supracarer. All rights reserved.</p>
+        <p className="text-white">© 2025 Supracarer. All rights reserved.</p>
       </div>
     </footer>
   );

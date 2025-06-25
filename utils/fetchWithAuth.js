@@ -7,12 +7,9 @@ export const fetchWithAuth = async (url, options = {}) => {
     throw new Error("No access token found. User might be logged out.");
   }
 
-  const isFormData = options.body instanceof FormData;
-
   let response = await fetch(url, {
     ...options,
     headers: {
-      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...options.headers,
       Authorization: `Bearer ${session.accessToken}`,
     },

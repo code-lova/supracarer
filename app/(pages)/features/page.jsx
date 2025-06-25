@@ -1,13 +1,17 @@
-import React from 'react';
-import Features from '@components/pages/homepages/Features';
+import React from "react";
+import FeaturesComponentPage from "@components/pages/homepages/Features";
+
+export const metadata = {
+  title: "Features - Supracarer",
+  description: "Discover more about supracarer features.",
+};
 
 const FeaturePage = () => {
   return (
     <div>
-        <Features />
+      <FeaturesComponentPage />
     </div>
-   
-  )
-}
+  );
+};
 
-export default FeaturePage
+export default FeaturePage;

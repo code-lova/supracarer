@@ -16,7 +16,7 @@ const FeatureBg = ({ heading, subheading }) => {
             { heading }
           </h1>
           <div className=" mt-4">
-            <p className="text-white text-base font-medium py-2 text-center">
+            <p className="text-white text-base font-medium leading-8 py-2 text-center">
               { subheading }
             </p>
           </div>

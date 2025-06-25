@@ -4,8 +4,8 @@ import { features } from "@constants/index";
 
 const Features = () => {
   return (
-    <div className="bg-gradient-to-r from-transparent to-gray-200 py-10 relative">
-      <div className="pageSection">
+    <div className="bg-gradient-to-r from-transparent to-gray-50 py-2 relative">
+      <div className="pageSection mb-20">
         <h1 className="capitalize text-tranquil-teal text-base font-bold text-center">
           Features
         </h1>
@@ -18,9 +18,8 @@ const Features = () => {
             Making a Difference
           </h2>
         </div>
-        <p className="text-3xl lg:text-4xl font-bold text-carer-blue text-center mt-2"></p>
 
-        <div className="grid grid-cols-1 gap-y-9 md:grid md:grid-cols-3 md:gap-x-4 lg:grid lg:grid-cols-3 lg:gap-x-4 my-6">
+        <div className="grid grid-cols-1 gap-y-9 md:grid md:grid-cols-3 md:gap-x-4 lg:grid lg:grid-cols-3 lg:gap-x-4 mt-10">
           {features.map((feature) => (
             <div
               key={feature.name}

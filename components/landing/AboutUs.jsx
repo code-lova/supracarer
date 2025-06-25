@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { aboutUs, mission, vision } from "@constants/index";
 import { Doctor } from "@components/core/icon/doctor";
 import { Nurse } from "@components/core/icon/nurse";
 import { NormalBtn } from "@components/core/button";
@@ -22,7 +21,7 @@ const AboutUs = () => {
           <div className="hidden md:block relative w-full h-full">
             <Image
               src="/assets/images/holdinghands.webp"
-              alt="home-care app"
+              alt="supracarer_home-care app"
               fill
               style={{ objectFit: "cover" }}
               loading="lazy"
@@ -33,7 +32,7 @@ const AboutUs = () => {
           <div className="block md:hidden">
             <Image
               src="/assets/images/carer5.webp"
-              alt="home-care app"
+              alt="supracarer_home app"
               fill
               style={{ objectFit: "cover" }}
               loading="lazy"
@@ -49,35 +48,17 @@ const AboutUs = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-carer-blue leading-8 mt-4">
             Living life in the fullest begins right now with you
           </h2>
-          <p className="mt-4 text-base text-semi-dark leading-7">
+          <p className="mt-4 text-base text-semi-dark leading-8">
             We are a pioneering healthcare technology company dedicated to
             revolutionizing home health care through our innovative platform.
           </p>
+          <p className="mt-1 text-base text-semi-dark leading-8">
+            {" "}
+            We also provide NCD prevention and management tools and resources.
+          </p>
 
-          {mission.map((mision) => (
-            <div key={mision.title} className="my-4">
-              <h1 className="font-semibold text-tranquil-teal text-xl underline">
-                {mision.title}
-              </h1>
-              <p className="leading-7 text-base text-semi-dark">
-                {mision.mission}
-              </p>
-            </div>
-          ))}
-
-          {vision.map((vison) => (
-            <div key={vison.title} className="my-4">
-              <h1 className="font-semibold text-tranquil-teal text-xl underline">
-                {vison.title}
-              </h1>
-              <p className="leading-7 text-base text-semi-dark">
-                {vison.vision}
-              </p>
-            </div>
-          ))}
-
-          <div className="mt-8 flex flex-col lg:flex-row item-center justify-between gap-6">
-            <div className="flex items-center gap-3 w-full md:w-[300px]">
+          <div className="mt-8 flex flex-col lg:flex-row item-center justify-between gap-4">
+            <div className="flex items-center gap-3 w-full md:w-[310px]">
               <div className="bg-tranquil-teal p-2 rounded-xl transition-transform duration-300 ease-in-out transform hover:scale-110 hover:bg-carer-blue">
                 <Doctor color="#fff" />
               </div>
@@ -93,20 +74,18 @@ const AboutUs = () => {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3 w-full md:w-[300px]">
+            <div className="flex items-center gap-3 w-full md:w-[340px]">
               <div className="bg-tranquil-teal p-2 rounded-xl transition-transform duration-300 ease-in-out transform hover:scale-110 hover:bg-carer-blue">
                 <Nurse color="#fff" />
               </div>
               <div className="flex flex-col">
                 <h2 className="text-base font-bold text-haven-blue mb-2">
-                  Expert Nursing
+                  Professional Home Care
                 </h2>
-                <p className="text-sm text-semi-dark mb-2">
-                  Skilled and compassionate.
+                <p className="text-sm text-semi-dark mb-1">
+                  Skilled professional from a
                 </p>
-                <p className="text-sm text-semi-dark">
-                  care for all.
-                </p>
+                <p className="text-sm text-semi-dark">multidisciplinary team.</p>
               </div>
             </div>
           </div>

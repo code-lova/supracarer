@@ -3,8 +3,8 @@ export function ProfileFill({ color = "currentColor", ...props }) {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        width="2em"
-        height="2em"
+        width="1.2em"
+        height="1.2em"
         {...props}
       >
         <path

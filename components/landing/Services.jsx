@@ -54,14 +54,14 @@ const Services = () => {
 
       <div className="mx-auto lg:border border-gray-400 rounded-md w-auto h-auto lg:w-[700px] lg:h-[80px] mt-16 flex flex-col lg:flex-row items-center lg:gap-6 ">
         <p className="block lg:hidden text-xl lg:text-sm text-center lg:text-start lg:mt-6 mb-6 px-6 py-2">
-          Need any kind of Elderly Care services?
+          In Need of Elderly Care service ?.
           <br className="mt-3" />
-          <span className="mt-5 block">Send a request now.</span>
+          <span className="mt-5 block">Book a professional caregiver.</span>
         </p>
-        <p className="hidden lg:block text-xl lg:text-sm text-center lg:mt-6 mb-6 px-8 py-2">
-          Need any kind of Elderly Care services? Send a request now.
+        <p className="hidden lg:block text-xl lg:text-sm text-center lg:mt-6 mb-6 px-6 py-2">
+          In Need of Elderly Care service ?. Book a professional caregiver.
         </p>
-        <NormalBtn href="/signin" children="Request a Nurse" />
+        <NormalBtn href="/signin" children="Get Care Now" />
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 import React from "react";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
-import Image from "next/image";
-import { howItWorks } from "@constants/index";
 import FeatureBg from "../FeatureBg";
+import Footer from "@components/landing/Footer";
+import HowitWorks from "@components/landing/HowitWorks";
+import Subscription from "@components/landing/Subscription";
+import Faq from "@components/landing/Faq";
 
 const HowItWorks = () => {
   return (
@@ -13,39 +13,11 @@ const HowItWorks = () => {
         subheading="Your holistic health journey, empowered by technology"
       />
 
-      <div className="mx-4 mb-12">
-        <h1 className=" text-xl md:text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest pr-4 md:px-48">
-          A Step-by-step guide on how to register on Supracarer and start
-          enjoying the benefits
-        </h1>
+      <HowitWorks />
 
-        <div className="grid grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-2 space-x-4 mt-2 lg:mt-6 md:mx-20">
-          <div className="p-2">
-            <Image
-              className="object-fill w-full h-auto rounded-xl"
-              src="/assets/images/app_ui.webp"
-              width={600}
-              height={640}
-              layout="responsive"
-            />
-          </div>
-          <div className="p-0">
-            {howItWorks.map((how) => (
-              <div key={how.id} className="my-4">
-                <h1 className="font-bold">{how.id}</h1>
-                <h2>
-                  <p className="text-pink-500 font-bold text-lg tracking-wider">
-                    {how.name}
-                  </p>
-                  <p className="font-semi-thick text-semi-dark text-base leading-8">
-                    {how.description}
-                  </p>
-                </h2>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <Faq />
+
+      <Subscription />
 
       <Footer />
     </section>

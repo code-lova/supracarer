@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { NormalBtn } from "@components/core/button";
 
 const Hero = () => {
   return (
@@ -36,14 +37,10 @@ const Hero = () => {
           {/* <p className=" mt-3 text-[14px] font-semibold w-[250px] lg:text-xl xl:text-2xl md:w-[400px] xl:w-[610px] xl:tracking-widest text-gray-700">
                     Be the first to get all premium features for free, when we launch. 
                 </p> */}
-          <Link href="/signin">
-            <div className="flex justify-center items-center space-x-2 h-14 bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-500 rounded-lg w-[198px] mt-4 md:mt-12 transitioning shadow-2xl">
-              <button className="text-white font-bold">Request a nurse</button>
-              <span className="">
-                <Image src="/assets/icons/arrow.svg" width={30} height={10} />
-              </span>
-            </div>
-          </Link>
+          <div className="mt-5">
+            <NormalBtn href="/signin" children="Get Care Now" />
+          </div>
+          
         </div>
       </div>
     </div>
