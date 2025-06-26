@@ -257,7 +257,7 @@ export const aboutUs = [
   {
     id: "1",
     statement:
-      "A homecare app that easily connects families with qualified home care nurses, ensuring a simple and efficient process. ",
+      "A homecare app that easily connects families with qualified home care healthcare professionals, ensuring a simple and efficient process. ",
   },
   {
     id: "2",
@@ -295,99 +295,33 @@ export const vision = [
 export const team = [
   {
     id: "1",
-    image: "/assets/images/team.webp",
+    image: "/assets/images/founder.webp",
     name: "Kwabena Owusu",
     position: "Founder",
-    socials: {
-      facebook: {
-        link: "https://fb.com",
-        icon: "/assets/icons/fb.svg",
-      },
-      instagram: {
-        link: "https://ig.com",
-        icon: "/assets/icons/ig.svg",
-      },
-      linkedin: {
-        link: "https://linkedin.com",
-        icon: "/assets/icons/linkedin.svg",
-      },
-      twitter: {
-        link: "https://twitter.com",
-        icon: "/assets/icons/twitter.svg",
-      },
-    },
   },
   {
     id: "2",
-    image: "/assets/images/team.webp",
-    name: "Mawuena Abena Dossah",
-    position: "Co-Founder",
-    socials: {
-      facebook: {
-        link: "https://fb.com",
-        icon: "/assets/icons/fb.svg",
-      },
-      instagram: {
-        link: "https://ig.com",
-        icon: "/assets/icons/ig.svg",
-      },
-      linkedin: {
-        link: "https://linkedin.com",
-        icon: "/assets/icons/linkedin.svg",
-      },
-      twitter: {
-        link: "https://twitter.com",
-        icon: "/assets/icons/twitter.svg",
-      },
-    },
+    image: "/assets/images/co-founder.webp",
+    name: "Jeremiah Ebizo",
+    position: "Co-Founder/CTO",
   },
   {
     id: "3",
-    image: "/assets/images/team.webp",
-    name: "Jeremiah Ebizo",
-    position: "Software Engineer/CTO",
-    socials: {
-      facebook: {
-        link: "https://fb.com",
-        icon: "/assets/icons/fb.svg",
-      },
-      instagram: {
-        link: "https://ig.com",
-        icon: "/assets/icons/ig.svg",
-      },
-      linkedin: {
-        link: "https://linkedin.com",
-        icon: "/assets/icons/linkedin.svg",
-      },
-      twitter: {
-        link: "https://twitter.com",
-        icon: "/assets/icons/twitter.svg",
-      },
-    },
+    image: "/assets/images/founders-adviser.webp",
+    name: "Mawuena Abena Dossah",
+    position: "Founder's Advisor",
   },
   {
     id: "4",
-    image: "/assets/images/team.webp",
-    name: "Anita Adjoa Tafua ​Annor",
-    position: "Marketing ​Director/C​MO",
-    socials: {
-      facebook: {
-        link: "https://fb.com",
-        icon: "/assets/icons/fb.svg",
-      },
-      instagram: {
-        link: "https://ig.com",
-        icon: "/assets/icons/ig.svg",
-      },
-      linkedin: {
-        link: "https://linkedin.com",
-        icon: "/assets/icons/linkedin.svg",
-      },
-      twitter: {
-        link: "https://twitter.com",
-        icon: "/assets/icons/twitter.svg",
-      },
-    },
+    image: "/assets/images/head-of-finance.webp",
+    name: "Nancy Pepprah",
+    position: "Head of Finance",
+  },
+  {
+    id: "5",
+    image: "/assets/images/brand-designer.webp",
+    name: "Joshua Acquah Addo",
+    position: "Brand Designer",
   },
 ];
 
@@ -582,7 +516,6 @@ export const faqs = [
       "Dynamic Availability and Urgency Matching constantly updates caregivers availability and matches them with you based on the urgency of care required. It prioritizes urgent needs, ensuring that caregivers are assigned to clients who need immediate attention.",
     role: "general",
   },
-  
 ];
 
 export const pricingFaqs = [

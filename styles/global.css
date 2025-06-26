@@ -105,7 +105,7 @@
 
 @layer utilities {
   .padding {
-    @apply lg:py-4 xl:px-[111px] px-6 py-6;
+    @apply px-6 py-6 md:py-4 xl:px-[100px] ;
   }
 
   .blue_gradient {
