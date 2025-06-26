@@ -21,7 +21,7 @@ const Services = () => {
         {abtWhatWeOffer.map((service) => (
           <div
             key={service.id}
-            className="px-4 w-[380px] h-[500px] bg-custom-white rounded-xl border-2 border-ever-green transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-none"
+            className="px-4 w-[380px] h-[470px] bg-custom-white rounded-xl border-2 border-ever-green transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-none"
           >
             <div className="mt-6 w-[350px] h-[250px] mx-auto relative overflow-hidden">
               <Image
@@ -31,11 +31,12 @@ const Services = () => {
                 height={400}
                 style={{ objectFit: "cover" }}
                 loading="lazy"
-                className="w-full h-full mx-auto rounded-3xl transition-all duration-300 group-hover:scale-95"
+                className="w-full h-full mx-auto rounded-3xl"
               />
+               
             </div>
 
-            <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto relative -top-10 border border-ever-green shadow-xl flex items-center justify-center transition-all duration-300 group-hover:scale-90">
+            <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto relative -top-10 border border-ever-green shadow-xl flex items-center justify-center">
               {service.icon}
             </div>
             <div className="-mt-3">
@@ -54,12 +55,12 @@ const Services = () => {
 
       <div className="mx-auto lg:border border-gray-400 rounded-md w-auto h-auto lg:w-[700px] lg:h-[80px] mt-16 flex flex-col lg:flex-row items-center lg:gap-6 ">
         <p className="block lg:hidden text-xl lg:text-sm text-center lg:text-start lg:mt-6 mb-6 px-6 py-2">
-          In Need of Elderly Care service ?.
+          In Need of Elderly Care service?
           <br className="mt-3" />
           <span className="mt-5 block">Book a professional caregiver.</span>
         </p>
         <p className="hidden lg:block text-xl lg:text-sm text-center lg:mt-6 mb-6 px-6 py-2">
-          In Need of Elderly Care service ?. Book a professional caregiver.
+          In Need of Elderly Care service? Book a professional caregiver.
         </p>
         <NormalBtn href="/signin" children="Get Care Now" />
       </div>

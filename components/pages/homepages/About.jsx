@@ -11,21 +11,7 @@ import Footer from "@components/landing/Footer";
 import Subscription from "@components/landing/Subscription";
 
 export const About = () => {
-  const scrollContainerRef = useRef(null);
 
-  const scrollLeft = () => {
-    scrollContainerRef.current.scrollBy({
-      left: -300,
-      behavior: "smooth",
-    });
-  };
-
-  const scrollRight = () => {
-    scrollContainerRef.current.scrollBy({
-      left: 300,
-      behavior: "smooth",
-    });
-  };
   return (
     <section>
       <FeatureBg

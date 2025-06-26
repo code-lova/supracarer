@@ -68,11 +68,11 @@ const NavLinks = ({
                   ? mobileDropdownOpen
                     ? "block"
                     : "hidden"
-                  : "absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 -translate-y-2"
+                  : "absolute left-0 mt-4 w-48 bg-white rounded-md shadow-lg z-50 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 -translate-y-2"
               }`}
             >
               {nav.subNav.map((sub) => (
-                <li key={sub.id} className="px-4 py-2 hover:bg-gray-100">
+                <li key={sub.id} className="px-4 mt-2 py-3 hover:bg-gray-100">
                   <Link
                     href={sub.link}
                     className={`flex items-center space-x-2 ${

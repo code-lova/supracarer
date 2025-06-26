@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <div>
       <div className="hidden md:flex md:-mt-8 lg:mt-0 bg-haven-blue w-full fixed z-50 padding text-white item-center justify-between">
-        <div className="w-full flex items-center justify-between mt-2 lg:-mt-1">
+        <div className="w-full flex items-center justify-between mt-2 lg:-mt-1 md:mt-6">
           <div className="flex items-center justify-between gap-4 ">
             <div className="flex item-center space-x-1">
               <OutlineEmail />
@@ -58,12 +58,12 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <nav className="bg-custom-white -mt-2 md:-mt-8 fixed shadow-md z-50 md:top-20 w-full padding">
+      <nav className="bg-custom-white -mt-2 md:-mt-8 fixed shadow-md z-50 md:top-20 w-full padding text-xs">
         <div className="flex items-center justify-between">
           <div>
             <Image
               src="/assets/images/logo.png"
-              width={180}
+              width={175}
               height={50}
               alt="Supracarer logo"
               className="mx-auto"
@@ -72,7 +72,7 @@ const Navbar = () => {
           <ul
             className={`${
               toggle ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
-            } lg:flex flex-col px-6 lg:flex-row items-center gap-4 space-y-2 lg:space-y-0 lg:space-x-5 bg-gray-50 lg:bg-transparent absolute lg:static top-[78px] lg:top-0 left-0 w-full lg:w-auto p-5 lg:p-0 transition-all duration-500 ease-in-out delay-200 lg:transition-none lg:opacity-100 lg:translate-y-0`}
+            } lg:flex flex-col px-6 lg:flex-row items-center gap-3 space-y-2 lg:space-y-0 lg:space-x-5 bg-gray-50 lg:bg-transparent absolute lg:static top-[78px] lg:top-0 left-0 w-full lg:w-auto p-5 lg:p-0 transition-all duration-500 ease-in-out delay-200 lg:transition-none lg:opacity-100 lg:translate-y-0`}
           >
             <NavLinks
               navLinks={navLinks}
@@ -95,7 +95,7 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center gap-4 cursor-pointer">
             <div className="flex items-center justify-between">
               <ProfileFill color="#006838" />
-              <Link className="font-bold text-md text-[#006838]" href="/signin">
+              <Link className="font-bold text-sm text-[#006838]" href="/signin">
                 Login
               </Link>
             </div>
