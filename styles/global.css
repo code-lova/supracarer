@@ -205,15 +205,19 @@
   }
 
   .form-control {
-    @apply w-[400px] xl:w-[300px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-carer-blue;
+    @apply w-[300px] xl:w-[300px] py-3 px-4 rounded-md bg-gray-200 shadow-inner outline-none focus-within:border-2 border-carer-blue;
   }
 
   .subscribe-form {
     @apply w-[320px] xl:w-[500px] py-3 px-4 rounded-md bg-gray-200 outline-none focus-within:border-2 border-carer-blue;
   }
 
+  .nav-control {
+    @apply lg:flex flex-col px-6 lg:flex-row items-start gap-3 space-y-2 lg:space-y-0 lg:space-x-5 bg-gray-50 lg:bg-transparent absolute lg:static top-[78px] lg:top-0 left-0 w-full lg:w-auto p-5 lg:p-0 z-40;
+  }
+
   .textarea-control {
-    @apply p-4 w-[400px] xl:w-[630px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-carer-blue;
+    @apply p-4 w-[300px] xl:w-[630px] h-[200px] shadow-inner bg-gray-200 outline-none mt-2 rounded-lg focus-within:border-2 border-carer-blue;
   }
 
   .form-button {

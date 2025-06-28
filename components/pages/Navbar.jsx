@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { navLinks } from "@constants";
 import Link from "next/link";
@@ -52,7 +52,9 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             {companySocials.map((socials) => (
               <div key={socials.id}>
-                <a href={socials.link} target="__blank" title={socials.name}>{socials.icon}</a>
+                <a href={socials.link} target="__blank" title={socials.name}>
+                  {socials.icon}
+                </a>
               </div>
             ))}
           </div>
@@ -71,8 +73,8 @@ const Navbar = () => {
           </div>
           <ul
             className={`${
-              toggle ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
-            } lg:flex flex-col px-6 lg:flex-row items-center gap-3 space-y-2 lg:space-y-0 lg:space-x-5 bg-gray-50 lg:bg-transparent absolute lg:static top-[78px] lg:top-0 left-0 w-full lg:w-auto p-5 lg:p-0 transition-all duration-500 ease-in-out delay-200 lg:transition-none lg:opacity-100 lg:translate-y-0`}
+              toggle ? "flex" : "hidden"
+            } nav-control`}
           >
             <NavLinks
               navLinks={navLinks}
