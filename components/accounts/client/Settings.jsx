@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Aside from "./Aside";
 import Header from "./Header";
-import { getUserRequest } from "@service/request/user/getUserRequest";
+import { getUserRequest } from "@service/request/user/getAuthUser";
 import LoadingStateUI from "@components/core/loading";
 import toast from "react-hot-toast";
 import { updateClientprofile } from "@service/request/client/updateProfileRequest";
@@ -77,8 +77,10 @@ const Settings = () => {
 
                 try {
                   // If image is File → upload first
-                  if (values.image && typeof values.image !== 'string') {
-                    const cloudinaryData = await uploadToCloudinary(values.image);
+                  if (values.image && typeof values.image !== "string") {
+                    const cloudinaryData = await uploadToCloudinary(
+                      values.image
+                    );
                     payload.image = cloudinaryData.secure_url;
                     payload.image_public_id = cloudinaryData.public_id;
                   } else {
@@ -89,7 +91,7 @@ const Settings = () => {
 
                   mutation.mutate(payload);
                 } catch (error) {
-                  toast.error(error.message || 'Failed to upload image');
+                  toast.error(error.message || "Failed to upload image");
                 }
               }}
             >

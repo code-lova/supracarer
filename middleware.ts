@@ -4,14 +4,14 @@ import { NextResponse } from "next/server";
 // Define role-based access control for specific routes
 const roleBasedRoutes: Record<string, string[]> = {
   "/client": ["client"],
-  "/nurse": ["nurse"],
+  "/health-service": ["healthworker"],
   "/admin": ["admin"],
 };
 
 export default withAuth(
   function middleware(req) {
     const { nextUrl, nextauth } = req;
-    const user = nextauth?.token as { role?: string};
+    const user = nextauth?.token as { role?: string };
 
     const pathname = nextUrl.pathname;
 
@@ -21,7 +21,7 @@ export default withAuth(
       // Redirect based on user role
       const roleDashboardMap: Record<string, string> = {
         client: "/client",
-        nurse: "/nurse",
+        healthworker: "/health-service",
         admin: "/admin",
       };
 
@@ -59,9 +59,9 @@ export default withAuth(
 export const config = {
   matcher: [
     "/client/:path*",
-    "/nurse/:path*",
+    "/health-service/:path*",
     "/admin/:path*",
+    "/auth-logout",
     "/signin",
-    
   ],
 };

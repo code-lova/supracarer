@@ -40,7 +40,7 @@ const handler = NextAuth({
           }
 
           return {
-            id: data.user._id,
+            id: data.user.id,
             fullname: data.user.fullname,
             role: data.user.role,
             accessToken: data.accessToken,

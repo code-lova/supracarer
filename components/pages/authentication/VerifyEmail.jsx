@@ -26,17 +26,20 @@ const VerifyEmail = () => {
       router.push("/signup");
       toast.error("Forbidden, Please register first.");
     }
+  }, []);
 
+  useEffect(() => {
     if (timeLeft === 0) {
       setShowResend(true);
-
       const timeout = setTimeout(() => {
-        setShowResend(false); // Hide after 60s
+        setShowResend(false);
       }, 60000);
 
       return () => clearTimeout(timeout);
     }
   }, [timeLeft]);
+
+  
 
   const { mutate } = useMutation({
     mutationFn: verifyEmailRequest,
@@ -44,8 +47,6 @@ const VerifyEmail = () => {
       setLoading(true);
     },
     onSuccess: () => {
-      localStorage.removeItem("verificationEmail");
-      localStorage.removeItem("verificationStartTime");
       toast.success("Email verified successfully!");
       router.push("/signin");
       setLoading(false);
@@ -56,6 +57,8 @@ const VerifyEmail = () => {
     },
     onSettled: () => {
       setLoading(false);
+      localStorage.removeItem("verificationEmail");
+      localStorage.removeItem("verificationStartTime");
     },
   });
 

@@ -7,6 +7,7 @@ import Navbar from "@components/pages/Navbar";
 import { usePathname } from "next/navigation";
 import ServerLayout from "./ServerLayout";
 import { showNavbarPaths } from "@utils/navbarPaths";
+import { UserProvider } from "@context/userContext";
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
@@ -22,9 +23,11 @@ const RootLayout = ({ children }) => {
       <main className="app">
         <SessionProvider>
           <ReactQueryProvider>
-            {shouldShowNavbar && <Navbar />}
-            {children}
-            <Toaster />
+            <UserProvider>
+              {shouldShowNavbar && <Navbar />}
+              {children}
+              <Toaster />
+            </UserProvider>
           </ReactQueryProvider>
         </SessionProvider>
       </main>

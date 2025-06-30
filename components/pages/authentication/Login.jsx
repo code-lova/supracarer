@@ -7,22 +7,24 @@ import { loginSchema } from "@schema/auth";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/core/LoaderButton";
 import { useRouter } from "next/navigation";
-
+import { useUserContext } from "@context/userContext";
+import LoadingStateUI from "@components/core/loading";
 
 const Login = () => {
   const { data: session, status } = useSession();
+  const { refetchUser } = useUserContext();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   // Redirect logged-in users to their respective dashboard
   useEffect(() => {
     if (status === "authenticated") {
-      switch (session.user.role) {
+      switch (session?.user?.role) {
         case "client":
           router.push("/client");
           break;
-        case "nurse":
-          router.push("/nurse");
+        case "healthworker":
+          router.push("/health-service");
           break;
         case "admin":
           router.push("/admin");
@@ -47,11 +49,19 @@ const Login = () => {
       setLoading(false);
     } else {
       toast.success("Login successful");
-      // Redirect logic is now handled in useEffect
+      refetchUser();
     }
 
     setSubmitting(false);
   };
+
+  if (status === "loading" || status === "authenticated") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingStateUI label="Redirecting you in a sec..." />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
