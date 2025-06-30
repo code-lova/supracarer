@@ -9,6 +9,11 @@ import {
   FaUsers,
   FaLightbulb,
   FaHandshake,
+  FaHome,
+  FaBell,
+  FaUserFriends,
+  FaHeadset,
+  FaCog,
 } from "react-icons/fa";
 
 import {
@@ -91,31 +96,36 @@ export const DashboardLinks = [
     title: "Settings",
   },
 ];
-export const NurseDashboardLinks = [
+export const HealthDashboardLinks = [
   {
-    id: "nurse",
-    link: "/nurse",
+    id: "health",
+    link: "/health-service",
     title: "Home",
+    icon: FaHome,
   },
   {
     id: "notification",
-    link: "/nurse/notifications",
+    link: "/health-service/notifications",
     title: "Notifications",
+    icon: FaBell,
   },
   {
     id: "client",
-    link: "/nurse/clients",
+    link: "/health-service/clients",
     title: "Clients",
+    icon: FaUserFriends,
   },
   {
     id: "contact",
-    link: "/nurse/contact",
+    link: "/health-service/contact",
     title: "Contact Support",
+    icon: FaHeadset,
   },
   {
     id: "settings",
-    link: "/nurse/settings",
+    link: "/health-service/settings",
     title: "Settings",
+    icon: FaCog,
   },
 ];
 export const AdminDashboardLinks = [

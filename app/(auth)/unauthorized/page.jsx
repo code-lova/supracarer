@@ -14,8 +14,8 @@ const UnauthorizedPage = () => {
         case "admin":
           setDashboardPath("/admin");
           break;
-        case "nurse":
-          setDashboardPath("/nurse");
+        case "healthworker":
+          setDashboardPath("/health-service");
           break;
         case "client":
           setDashboardPath("/client");

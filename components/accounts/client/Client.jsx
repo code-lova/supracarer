@@ -10,7 +10,7 @@ import Aside from "./Aside";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import LoadingStateUI from "@components/core/loading";
-import { getUserRequest } from "@service/request/user/getUserRequest";
+import { getUserRequest } from "@service/request/user/getAuthUser";
 import DashboardSkeletonLoader from "@components/core/skeleton/dashboard/DashboardSkeletonLoader";
 
 const Client = () => {

@@ -8,10 +8,14 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { registerRequest } from "@service/request/auth/registerRequest";
+import LoadingStateUI from "@components/core/loading";
+import useRedirectIfAuthenticated from "@hooks/useRedirectIfAuthenticated";
 
 const Register = () => {
+  const status = useRedirectIfAuthenticated();
   const navigate = useRouter();
   const [loading, setLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState("");
 
   const { mutate } = useMutation({
     mutationFn: registerRequest,
@@ -38,6 +42,14 @@ const Register = () => {
     mutate(values);
   };
 
+  if (status === "loading" || status === "authenticated") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingStateUI label="Redirecting you in a sec..." />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
@@ -51,13 +63,14 @@ const Register = () => {
             email: "",
             phone: "",
             role: "",
+            practitioner: "",
             password: "",
             password_confirmation: "",
           }}
           validationSchema={registrationSchema}
           onSubmit={handleSubmit}
         >
-          {() => (
+          {({ setFieldValue }) => (
             <Form className="space-y-4">
               <div>
                 <label
@@ -126,9 +139,18 @@ const Register = () => {
                 >
                   Please select a role
                 </label>
-                <Field name="role" as="select" className="login-form-input">
+                <Field
+                  name="role"
+                  as="select"
+                  className="login-form-input"
+                  onChange={(e) => {
+                    const role = e.target.value;
+                    setSelectedRole(role);
+                    setFieldValue("role", role);
+                  }}
+                >
                   <option value="">Select a role</option>
-                  <option value="nurse">Nurse</option>
+                  <option value="healthworker">Healthcare Professional</option>
                   <option value="client">Client</option>
                 </Field>
                 <ErrorMessage
@@ -137,7 +159,33 @@ const Register = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
-
+              {selectedRole === "healthworker" && (
+                <div>
+                  <label
+                    htmlFor="practitioner"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Practitioner Type
+                  </label>
+                  <Field
+                    name="practitioner"
+                    as="select"
+                    className="login-form-input"
+                  >
+                    <option value="">Select practitioner</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="nurse">Nurse</option>
+                    <option value="physician_assistant">
+                      Physician Assistant
+                    </option>
+                  </Field>
+                  <ErrorMessage
+                    name="practitioner"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
+              )}
               <div>
                 <label
                   htmlFor="password"

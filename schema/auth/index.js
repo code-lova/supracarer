@@ -9,8 +9,20 @@ export const registrationSchema = yup.object().shape({
   phone: yup.string().required("Phone number is required"),
   role: yup
     .string()
-    .oneOf(["nurse", "client"], "Invalid role")
+    .oneOf(["healthworker", "client"], "Invalid role")
     .required("Role is required"),
+  practitioner: yup.string().when("role", {
+    is: "healthworker",
+    then: () =>
+      yup
+        .string()
+        .oneOf(
+          ["doctor", "nurse", "physician_assistant"],
+          "Invalid practitioner type"
+        )
+        .required("Please select a practitioner type"),
+    otherwise: () => yup.string().notRequired(),
+  }),
   password: yup
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -60,7 +72,8 @@ export const resetPasswordSchema = yup.object().shape({
 });
 
 export const verifyEmailSchema = yup.object().shape({
-  code: yup.string()
+  code: yup
+    .string()
     .length(6, "Code must be 6 characters")
     .required("Verification code required"),
 });

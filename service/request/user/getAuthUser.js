@@ -1,7 +1,7 @@
 import { fetchWithAuth } from "@utils/fetchWithAuth";
 
-export const getUserRequest = async () => {
-  const response = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/client`, {
+export const getAuthUser = async () => {
+  const response = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
