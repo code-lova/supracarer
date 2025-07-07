@@ -20,7 +20,11 @@ const HealthServiceLayout = ({ children }) => {
     <>
       <Sidebar />
       <NavigationBar />
-      <div className="lg:ml-[300px] mt-[50px] px-4">{children}</div>
+      <section className="px-2 md:px-5 lg:ml-[280px] mt-[95px]">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          {children}
+        </div>
+      </section>
     </>
   );
 };

@@ -2,27 +2,38 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { logoutRequest } from "@/service/request/auth/logoutRequest";
+import { signOut as nextAuthSignOut } from "next-auth/react";
 import { HealthDashboardLinks } from "@constants/index";
 import { FaSignOutAlt } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUserContext } from "@/context/userContext";
 
 const Sidebar = () => {
-  const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
+  const queryClient = useQueryClient();
+  const { setUser } = useUserContext();
 
   const toggleDrawer = () => setToggle(!toggle);
 
-  const handleRedirectToLogout = () => {
+  const handleLogout = async () => {
     setLoading(true);
-    router.push("/auth-logout");
+    try {
+      await logoutRequest();
+    } catch (e) {
+      // Optionally handle error, but proceed with sign out regardless
+    }
+    await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
+    queryClient.clear();
+    setUser(null);
   };
 
   return (
     <div>
-      <aside className="bg-white fixed shadow-xl z-50 top-0 left-0 w-full px-2 lg:px-2 lg:py-6 lg:w-[250px] lg:h-screen lg:fixed lg:left-0 lg:top-0 md:bg-white lg:text-haven-blue">
+      <aside className="bg-white fixed shadow-md lg:shadow-[0_-2px_4px_rgba(0,0,0,0.1),0_2px_3px_rgba(0,0,0,0.1)] rounded-xl md:rounded-3xl z-50 top-0 left-0 w-full px-2 lg:px-2  lg:py-6 lg:w-[270px] lg:h-[750px] lg:fixed lg:left-2 lg:top-1 md:bg-white lg:text-haven-blue">
         <div className="flex justify-between items-center mt-3 lg:flex-col lg:items-start lg:-mt-1">
           <Link href="/health-service">
             <Image
@@ -30,7 +41,7 @@ const Sidebar = () => {
               width={180}
               height={50}
               alt="Supracarer logo"
-              className="mx-auto"
+              className="mx-auto px-4"
             />
           </Link>
           <div className="flex lg:hidden">
@@ -60,33 +71,38 @@ const Sidebar = () => {
             toggle ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           } bg-mobile-nav`}
         >
-          {HealthDashboardLinks.map((nav) => {
-            const Icon = nav.icon;
-            const isActive = pathname === nav.link;
+          {Array.isArray(HealthDashboardLinks) &&
+            HealthDashboardLinks.map((nav) => {
+              const Icon = nav.icon;
+              const isActive = pathname === nav.link;
 
-            return (
-              <li
-                key={nav.id}
-                className={`flex items-center gap-2 py-3 lg:py-3 font-semibold text-[15px] transition-colors duration-300 px-4 rounded-full cursor-pointer
+              return (
+                <li
+                  key={nav.id}
+                  className={`flex items-center gap-2 py-3 lg:py-3 font-semibold text-[15px] transition-colors duration-300 px-4 rounded-full cursor-pointer
                 ${
                   isActive
                     ? "bg-tranquil-teal text-white"
                     : "text-tranquil-teal md:hover:bg-gray-100 mt-1"
                 }`}
-              >
-                <Icon className="text-lg md:text-3xl" />
-                <Link href={nav.link} onClick={toggleDrawer} className="w-full">
-                  {nav.title}
-                </Link>
-              </li>
-            );
-          })}
+                >
+                  <Icon className="text-lg md:text-3xl" />
+                  <Link
+                    href={nav.link}
+                    onClick={toggleDrawer}
+                    className="w-full"
+                  >
+                    {nav.title}
+                  </Link>
+                </li>
+              );
+            })}
 
           <li
             className={`flex items-center gap-2 font-semibold py-4 px-4 cursor-pointer ${
               loading ? "opacity-50 pointer-events-none" : ""
             } text-tranquil-teal`}
-            onClick={handleRedirectToLogout}
+            onClick={handleLogout}
           >
             <FaSignOutAlt className="text-lg" />
             {loading ? "Logging Out..." : "Logout"}

@@ -42,6 +42,7 @@ module.exports = {
         "custom-white": "#ffff",
         "custom-dark": "#121211",
         "tranquil-teal": "#088272",
+        "light-green": "#E9F3ED",
       },
       boxShadow: {
         '3xl': '0 10px 40px rgba(0, 0, 0, 0.1)',

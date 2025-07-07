@@ -16,7 +16,7 @@ const VerifyEmail = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const { timeLeft, resetCountdown, formatTime } = useResendCountdown();
-  const [showResend, setShowResend] = useState(false);
+  // No showResend state needed; timer logic handled in render
 
   useEffect(() => {
     const storedEmail = localStorage.getItem("verificationEmail");
@@ -29,17 +29,15 @@ const VerifyEmail = () => {
   }, []);
 
   useEffect(() => {
-    if (timeLeft === 0) {
-      setShowResend(true);
-      const timeout = setTimeout(() => {
-        setShowResend(false);
-      }, 60000);
-
-      return () => clearTimeout(timeout);
+    const startTime = localStorage.getItem("verificationStartTime");
+    if (!startTime) {
+      const now = Date.now();
+      localStorage.setItem("verificationStartTime", now);
+    } else {
+      resetCountdown();
     }
-  }, [timeLeft]);
+  }, []);
 
-  
 
   const { mutate } = useMutation({
     mutationFn: verifyEmailRequest,
@@ -71,7 +69,6 @@ const VerifyEmail = () => {
     mutationFn: resendVerification,
     onSuccess: () => {
       toast.success(`Verification code resent to ${email}`);
-      resetCountdown();
     },
     onError: () => {
       toast.error("Too many request or failed to send.");
@@ -83,7 +80,6 @@ const VerifyEmail = () => {
       toast.error("No email found to resend verification.");
       return;
     }
-
     resendCode({ email });
   };
 
@@ -134,7 +130,7 @@ const VerifyEmail = () => {
                   {formatTime(timeLeft)}
                 </span>
               </p>
-            ) : showResend ? (
+            ) : (
               <button
                 onClick={handleResend}
                 disabled={isResending}
@@ -142,10 +138,6 @@ const VerifyEmail = () => {
               >
                 {isResending ? "Resending..." : "Resend verification code"}
               </button>
-            ) : (
-              <p className="text-sm text-gray-500 italic">
-                Resend option expired
-              </p>
             )}
           </div>
         </div>

@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const NavigationBar = () => {
   return (
-    <div>
-      <header className="hidden w-full md:flex justify-end items-center gap-4 bg-tranquil-teal py-6 pr-10">
+    <div className="w-full pl-[300px] pr-5 fixed top-0 md:top-1 z-50">
+      <header className="hidden bg-white shadow-md lg:shadow-[0_-2px_4px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] rounded-3xl lg:flex justify-end items-center gap-4 py-4 pr-10">
         <Link href="/notifications">
           <Image
             src={"/assets/icons/icons8-bell-48.png"}
