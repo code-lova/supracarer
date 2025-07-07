@@ -53,7 +53,7 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-6 text-center uppercase blue_gradient">
+        <h1 className="text-2xl font-bold mb-6 text-center uppercase text-custom-green">
           Create an account
         </h1>
 
@@ -147,6 +147,9 @@ const Register = () => {
                     const role = e.target.value;
                     setSelectedRole(role);
                     setFieldValue("role", role);
+                    if (role !== "healthworker") {
+                      setFieldValue("practitioner", "");
+                    }
                   }}
                 >
                   <option value="">Select a role</option>

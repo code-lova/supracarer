@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import ServerLayout from "./ServerLayout";
 import { showNavbarPaths } from "@utils/navbarPaths";
 import { UserProvider } from "@context/userContext";
+import { SessionTimeoutProvider } from "@providers/SessionTimeoutProvider";
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
@@ -24,9 +25,11 @@ const RootLayout = ({ children }) => {
         <SessionProvider>
           <ReactQueryProvider>
             <UserProvider>
-              {shouldShowNavbar && <Navbar />}
-              {children}
-              <Toaster />
+              <SessionTimeoutProvider>
+                {shouldShowNavbar && <Navbar />}
+                {children}
+                <Toaster />
+              </SessionTimeoutProvider>
             </UserProvider>
           </ReactQueryProvider>
         </SessionProvider>

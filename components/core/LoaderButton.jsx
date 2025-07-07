@@ -2,7 +2,7 @@ import React from "react";
 
 const LoaderButton = ({ loading, text, type, loadingText }) => (
   <button
-    className="flex items-center justify-center login-btn"
+    className="loader-button"
     disabled={loading}
     type={type}
   >
