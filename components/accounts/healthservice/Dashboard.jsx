@@ -4,6 +4,10 @@ import DetailsCard from "./dashboard-kits/DetailsCard";
 import CalenderCard from "./dashboard-kits/CalenderCard";
 import ProfileCard from "./dashboard-kits/ProfileCard";
 import ActivityStatCard from "./dashboard-kits/ActivityStatCard";
+import RatingsCard from "./dashboard-kits/RatingsCard";
+import AppointmentCard from "./dashboard-kits/AppointmentCard";
+import ServiceChargeCard from "./dashboard-kits/ServiceChargeCard";
+import RecentAppointmentsCard from "./dashboard-kits/RecentAppointmentCard";
 
 const Dashboard = () => {
   return (
@@ -13,20 +17,18 @@ const Dashboard = () => {
           <div className="grid grid-col-1 gap-4 mb-1">
             <DetailsCard />
 
-            {/* three small boxes */}
             <div className="flex flex-col md:flex-row gap-4">
-              <div className="bg-white w-full h-[100px] border-2 rounded-2xl shadow-md"></div>
-              <div className="bg-white w-full h-[100px] border-2 rounded-2xl shadow-md"></div>
+              <AppointmentCard />
 
-              <div className="bg-white w-full h-[100px] border-2 rounded-2xl shadow-md"></div>
+              <ServiceChargeCard />
+
+              <RatingsCard />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* this is for the piechart chart */}
               <ActivityStatCard />
 
-              {/* placeholder to see 3 list of patients/clients appointments */}
-              <div className="bg-white w-full h-[263px] border-2 rounded-2xl shadow-md"></div>
+              <RecentAppointmentsCard />
             </div>
           </div>
         </div>
