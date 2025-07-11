@@ -9,6 +9,9 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserContext } from "@/context/userContext";
+import { FaAlignRight } from "react-icons/fa6";
+import { RiCloseLargeFill } from "react-icons/ri";
+import { FaBell } from "react-icons/fa";
 
 const Sidebar = () => {
   const [toggle, setToggle] = useState(false);
@@ -34,7 +37,7 @@ const Sidebar = () => {
   return (
     <div>
       <aside className="bg-white fixed shadow-md lg:shadow-[0_-2px_4px_rgba(0,0,0,0.1),0_2px_3px_rgba(0,0,0,0.1)] rounded-xl md:rounded-3xl z-50 top-0 left-0 w-full px-2 lg:px-2  lg:py-6 lg:w-[270px] lg:h-[750px] lg:fixed lg:left-2 lg:top-1 md:bg-white lg:text-haven-blue">
-        <div className="flex justify-between items-center mt-3 lg:flex-col lg:items-start lg:-mt-1">
+        <div className="flex justify-between items-center mt-4 lg:flex-col lg:items-start lg:-mt-1">
           <Link href="/health-service">
             <Image
               src="/assets/images/logo.png"
@@ -44,25 +47,35 @@ const Sidebar = () => {
               className="mx-auto px-4"
             />
           </Link>
-          <div className="flex lg:hidden">
-            <Link href="/health-service/profile">
-              <Image
-                src={"/assets/icons/icons8-user-48.png"}
-                width={40}
-                height={50}
-                alt="menu"
-              />
-            </Link>
-            <Image
+          <div className="flex justify-between space-x-6 items-center lg:hidden mr-3">
+            <div className="relative">
+              <Link href="/health-service/profile">
+                <FaBell
+                  className="text-tranquil-teal cursor-pointer"
+                  size={27}
+                />
+              </Link>
+              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                2
+              </span>
+            </div>
+            {/* ☰ Hamburger menu */}
+            <div
               className="cursor-pointer lg:hidden"
-              src={
-                toggle ? "/assets/images/close.svg" : "/assets/images/menu.svg"
-              }
-              width={40}
-              height={50}
-              alt="menu"
               onClick={() => setToggle(!toggle)}
-            />
+            >
+              {toggle ? (
+                <RiCloseLargeFill
+                  className="text-tranquil-teal cursor-pointer font-semibold"
+                  size={30}
+                />
+              ) : (
+                <FaAlignRight
+                  className="text-tranquil-teal cursor-pointer"
+                  size={27}
+                />
+              )}
+            </div>
           </div>
         </div>
 
