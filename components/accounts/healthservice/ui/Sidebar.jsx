@@ -36,7 +36,7 @@ const Sidebar = () => {
 
   return (
     <div>
-      <aside className="bg-white fixed shadow-md lg:shadow-[0_-2px_4px_rgba(0,0,0,0.1),0_2px_3px_rgba(0,0,0,0.1)] rounded-xl md:rounded-3xl z-50 top-0 left-0 w-full px-2 lg:px-2  lg:py-6 lg:w-[270px] lg:h-[750px] lg:fixed lg:left-2 lg:top-1 md:bg-white lg:text-haven-blue">
+      <aside className="bg-white fixed shadow-md lg:shadow-[0_-2px_4px_rgba(0,0,0,0.1),0_2px_3px_rgba(0,0,0,0.1)] rounded-xl md:rounded-3xl z-50 top-0 left-0 w-full px-2 lg:px-2  lg:py-6 lg:w-[270px] lg:h-[750px] lg:fixed lg:left-2 lg:top-1 lg:text-haven-blue">
         <div className="flex justify-between items-center mt-4 lg:flex-col lg:items-start lg:-mt-1">
           <Link href="/health-service">
             <Image
