@@ -17,10 +17,6 @@ const RootLayout = ({ children }) => {
 
   return (
     <ServerLayout>
-      <div className="main">
-        <div className="gradient"></div>
-      </div>
-
       <main className="app">
         <SessionProvider>
           <ReactQueryProvider>

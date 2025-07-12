@@ -14,7 +14,7 @@ const DetailsCard = () => {
       <div className="w-full h-[200px] md:h-[260px] border-2 bg-tranquil-teal rounded-3xl shadow-md px-4 py-4">
         <div className="flex item-center justify-between gap-4 md:gap-9">
           <div className="flex flex-col justify-between gap-6 h-full">
-            <div className="flex items-center justify-between px-2 md:px-4 py-2 bg-ever-green rounded-lg w-[160px] lg:w-[185px]">
+            <div className="flex items-center justify-between px-2 md:px-4 py-2 bg-ever-green rounded-lg w-[160px] md:w-[185px]">
               <FaRegCalendarAlt
                 className="text-white cursor-pointer hover:text-tranquil-teal"
                 size={16}
@@ -27,7 +27,7 @@ const DetailsCard = () => {
                 Good Day,
               </h1>
               {userDetails && (
-                <h2 className="text-[13px] md:text-xl capitalize lg:text-3xl md:-mt-3 font-bold text-white">
+                <h2 className="text-[13px] md:text-xl capitalize lg:text-3xl md:mt-3 lg:-mt-3 font-bold text-white">
                   {userDetails.fullname || "Username"}
                 </h2>
               )}
@@ -45,7 +45,7 @@ const DetailsCard = () => {
             </div>
           </div>
 
-          <div className="flex items-end h-full max-w-[130px] md:max-w-[220px] lg:max-w-[170px] w-full">
+          <div className="flex items-end h-full max-w-[130px] md:max-w-[170px] lg:max-w-[170px] w-full">
             <Image
               src="/assets/images/health.png"
               width={280}

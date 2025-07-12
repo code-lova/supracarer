@@ -12,7 +12,7 @@ import RecentAppointmentsCard from "./dashboard-kits/RecentAppointmentCard";
 const Dashboard = () => {
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 w-full mb-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 w-full mb-6 mt-[95px]">
         <div className="w-full h-auto md:h-[660px] md:col-span-2">
           <div className="grid grid-col-1 gap-4 mb-1">
             <DetailsCard />

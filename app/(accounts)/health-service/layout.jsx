@@ -17,15 +17,15 @@ const HealthServiceLayout = ({ children }) => {
   }
 
   return (
-    <>
+    <div className="bg-dashboard">
       <Sidebar />
       <NavigationBar />
-      <section className="px-2 md:px-5 lg:ml-[280px] mt-[95px]">
+      <section className="px-2 md:px-5 lg:ml-[280px]">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {children}
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
