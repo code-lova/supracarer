@@ -33,8 +33,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="w-full h-auto md:h-[660px]">
-          <div className="grid grid-col-1 gap-4 px-1">
+        <div className="w-full h-auto md:h-[660px] mt-6 xl:mt-0">
+          <div className="w-full grid grid-col-1 gap-4 px-0">
             <ProfileCard />
 
             <CalenderCard />

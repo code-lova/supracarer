@@ -61,7 +61,7 @@ const Login = () => {
   ) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <LoadingStateUI label="Redirecting you in a sec..." />
+        <LoadingStateUI />
       </div>
     );
   }

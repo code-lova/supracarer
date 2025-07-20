@@ -11,7 +11,7 @@ const HealthServiceLayout = ({ children }) => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <LoadingStateUI label="Redirecting you in a sec..." />
+        <LoadingStateUI />
       </div>
     );
   }
@@ -20,8 +20,8 @@ const HealthServiceLayout = ({ children }) => {
     <div className="bg-dashboard">
       <Sidebar />
       <NavigationBar />
-      <section className="px-2 md:px-5 lg:ml-[280px]">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+      <section className="px-2 md:px-4 lg:ml-[280px] min-h-screen">
+        <div className="flex flex-col md:flex-row justify-between">
           {children}
         </div>
       </section>

@@ -6,7 +6,7 @@ import CalendarWidget from "@components/core/CalenderWidget";
 const CalenderCard = () => {
   return (
     <>
-      <div className="bg-white w-full h-[372px] border-2 rounded-2xl shadow-md">
+      <div className="bg-white w-full h-[375px] border-2 rounded-2xl shadow-md">
         <div className="bg-tranquil-teal w-full h-[55px] rounded-2xl flex items-center justify-between px-4">
           <h2 className="text-md font-bold text-white">My Calender</h2>
           <Link
