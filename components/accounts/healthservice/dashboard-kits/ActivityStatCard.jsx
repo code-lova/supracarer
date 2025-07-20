@@ -5,7 +5,7 @@ import Piechart from "./Piechart";
 const ActivityStatCard = () => {
   return (
     <>
-      <div className="bg-white w-full h-[263px] border-2 rounded-2xl shadow-md md:col-span-2">
+      <div className="bg-white w-full h-[279px] border-2 rounded-2xl shadow-md md:col-span-2">
         <div className="flex items-center justify-center gap-1 h-full py-4 px-1">
           <div className="bg-white w-full h-[250px]">
             <h1 className="px-2 py-3 text-tranquil-teal font-semibold text-xl">

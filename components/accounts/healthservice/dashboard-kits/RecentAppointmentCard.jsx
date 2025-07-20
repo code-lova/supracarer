@@ -15,7 +15,7 @@ const RecentAppointmentsCard = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <div className="bg-white w-full h-[263px] border-2 rounded-2xl shadow-md p-4 relative">
+    <div className="bg-white w-full h-[279px] border-2 rounded-2xl shadow-md p-4 relative">
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-tranquil-teal font-semibold text-md">
           Recent Appointments

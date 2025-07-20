@@ -6,7 +6,7 @@ import { FaUserAlt, FaBell } from "react-icons/fa";
 const NavigationBar = () => {
   return (
     <>
-      <header className="hidden md:flex fixed top-1 right-5 z-30 bg-white md:w-[700px] xl:w-[1126px] shadow-md lg:shadow-[0_-2px_4px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] rounded-3xl justify-end items-center gap-4 py-4 pr-10">
+      <header className="hidden md:flex fixed top-2 right-5 z-30 bg-white md:w-[700px] xl:w-[1126px] shadow-md lg:shadow-[0_-2px_4px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] rounded-3xl justify-end items-center gap-4 py-4 pr-10">
         <Link href="/notifications">
           <FaBell className="text-tranquil-teal cursor-pointer" size={30} />
         </Link>

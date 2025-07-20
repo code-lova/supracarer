@@ -15,6 +15,7 @@ import {
   FaHeadset,
   FaCog,
 } from "react-icons/fa";
+import { SiLootcrate } from "react-icons/si";
 
 import {
   Linkedin,
@@ -114,6 +115,12 @@ export const HealthDashboardLinks = [
     link: "/health-service/clients",
     title: "Clients",
     icon: FaUserFriends,
+  },
+  {
+    id: "grs",
+    link: "/health-service/guided-rate-system",
+    title: "Guided Rate System",
+    icon: SiLootcrate,
   },
   {
     id: "contact",
@@ -725,3 +732,85 @@ export const coreValues = [
       "We build long-term relationships through reliability, confidentiality, and respect.",
   },
 ];
+
+// For profile update form
+export const countries = [
+  "Ghana",
+  "Nigeria",
+  "Kenya",
+  "South Africa",
+  "United States",
+  "United Kingdom",
+  "Canada",
+  "Germany",
+  "France",
+  "India",
+];
+
+export const region = [
+  "Ahafo",
+  "Ashanti",
+  "Bono",
+  "Bono East",
+  "Central",
+  "Eastern",
+  "Greater Accra",
+  "North East",
+  "Northern",
+  "Oti",
+  "Savannah",
+  "Upper East",
+  "Upper West",
+  "Volta",
+  "Western",
+  "Western North",
+];
+
+export const religion = [
+  "Christianity",
+  "Islam",
+  "Traditional African Religion",
+  "Hinduism",
+  "Buddhism",
+  "Atheism",
+  "Other",
+];
+
+export const gender = [
+  "Male",
+  "Female",
+  "Non-binary",
+  "Transgender",
+  "Bigender",
+];
+
+export const shiftRateBands = {
+  "8-hour": { min: 120, max: 200 },
+  "12-hour": { min: 150, max: 250 },
+  "24-hour(live-in)": { min: 300, max: 400 },
+};
+
+export const shiftServiceType = [
+  "NurseEscort",
+  "AgedCare",
+  "CompanionshipCare",
+  "MentalHealthSupport",
+  "HypertensiveCare",
+  "StrokeCare",
+  "DiabeticCare",
+  "CatheterCare",
+  "MedicationManagement",
+];
+
+export const HourRateBands = {
+  RN: {
+    "Catheter Care": [80, 120],
+    "Wound Dressing(Once Daily)": [90, 130],
+    "Chronic Disease Monitoring": [70, 100],
+  },
+  NAC: {
+    "Catheter Care": [60, 90],
+    "Wound Dressing(Once Daily)": [70, 100],
+    "Chronic Disease Monitoring": [50, 80],
+  },
+};
