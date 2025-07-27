@@ -1,3 +1,4 @@
+"use client";
 import { FaRegCalendarTimes } from "react-icons/fa";
 import React from "react";
 import Link from "next/link";
@@ -19,8 +20,8 @@ const CalenderCard = () => {
             />
           </Link>
         </div>
-        <div className="px-2">
-          <p className="text-gray-600 font-bold">Mark only unavailable dates</p>
+        <div className="px-2 py-1">
+          <p className="text-slate-gray text-xs font-semibold">Mark Dates of Unavailability</p>
           <CalendarWidget />
         </div>
       </div>

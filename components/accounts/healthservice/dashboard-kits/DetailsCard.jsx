@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import Image from "next/image";
@@ -31,9 +32,9 @@ const DetailsCard = () => {
                   {userDetails.fullname || "Username"}
                 </h2>
               )}
-              <p className="text-white text-xs md:text-[15px] font-semibold">
+              <div className="text-white text-xs md:text-[15px] font-semibold">
                 <CurrentDateTime showGreeting={true} textClass="text-white" />
-              </p>
+              </div>
               <p className="text-white text-[10px] md:text-[13px] mt-2 md:mt-3">
                 Last Activity:
               </p>

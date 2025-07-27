@@ -90,11 +90,6 @@ const mockPatients = [
   },
 ];
 
-const statusClass = {
-  Confirmed: "bg-blue-100 text-blue-700",
-  Ongoing: "bg-yellow-100 text-yellow-700",
-  Done: "bg-green-100 text-green-700",
-};
 
 const Clients = () => {
   const [patients, setPatients] = useState(mockPatients);
