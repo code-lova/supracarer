@@ -14,7 +14,7 @@ const NavigationBar = () => {
           <p className="text-white text-center font-bold text-sm">1</p>
         </div>
         <div className="w-[30px] h-[30px] rounded-full bg-white">
-          <Link href="/health-service/profile">
+          <Link href="/health-service/settings">
             <FaUserAlt className="text-tranquil-teal cursor-pointer" size={30}/>
           </Link>
         </div>

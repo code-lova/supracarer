@@ -62,6 +62,36 @@
   }
 }
 
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff #fff; /* green and white */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #16a34a;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+
+
 @layer components {
   .app {
     max-width: 1740px;
@@ -204,6 +234,10 @@
   }
 
   .login-form-input {
-    @apply mt-1 block w-full p-2 border border-gray-300 rounded-xl shadow-sm outline-none focus:ring-custom-green focus:border-tranquil-teal;
+    @apply mt-1 block w-full text-slate-gray text-sm p-2 border border-gray-300 rounded-xl shadow-sm outline-none focus:ring-custom-green focus:border-tranquil-teal;
+  }
+
+  .form-input {
+    @apply border border-gray-300 text-slate-gray rounded px-4 py-2 text-sm shadow-sm outline-none focus:ring-custom-green focus:border-tranquil-teal;
   }
 }

@@ -121,6 +121,18 @@ const Sidebar = () => {
             {loading ? "Logging Out..." : "Logout"}
           </li>
         </ul>
+
+        <div className="mt-10 hidden lg:flex flex-col items-center bg-tranquil-teal/10 w-full h-[200px] rounded-xl p-4 text-gray-500 text-sm font-semibold">
+            <p>SupraBot Coming Soon...</p>
+            <Image 
+              src="/assets/images/bot.webp"
+              width={200}
+              height={200}
+              className=" object-contain -mt-3"
+            />
+        </div>
+
+
       </aside>
     </div>
   );

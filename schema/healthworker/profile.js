@@ -12,14 +12,6 @@ export const updateHealthWorkerSchema = Yup.object().shape({
   country: Yup.string().required("Country is required"),
   region: Yup.string().required("Region is required"),
   working_hours: Yup.string().required("Set your working hours"),
-  // guided_rate: Yup.number()
-  //   .min(5, "Minimum rate must be at least GHS 5")
-  //   .max(300, "Maximum rate is GHS 300")
-  //   .required("Rate is required"),
-  // rate_type: Yup.string()
-  //   .oneOf(["shift", "daily"])
-  //   .required("Rate type is required"),
-  // rate_justification: Yup.string().optional(),
   address: Yup.string().required("Address is required"),
   religion: Yup.string(),
   gender: Yup.string()

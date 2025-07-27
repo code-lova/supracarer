@@ -97,7 +97,6 @@ const Settings = () => {
   });
 
   const handleSubmit = (payload) => {
-    console.log("Submitting:", payload);
     mutation.mutate(payload);
   };
 
