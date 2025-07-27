@@ -47,6 +47,7 @@ const Sidebar = () => {
               className="mx-auto px-4"
             />
           </Link>
+          <div className="hidden xl:block w-full bg-gray-200 h-[2px] font-bold mt-2"></div>
           <div className="flex justify-between space-x-6 items-center lg:hidden mr-3">
             <div className="relative">
               <Link href="/health-service/profile">
@@ -92,14 +93,14 @@ const Sidebar = () => {
               return (
                 <li
                   key={nav.id}
-                  className={`flex items-center gap-2 py-3 lg:py-3 font-semibold text-[15px] transition-colors duration-300 px-4 rounded-full cursor-pointer
+                  className={`flex items-center gap-2 py-2 lg:py-2 font-semibold text-[14px] transition-colors duration-300 px-4 rounded-full cursor-pointer
                 ${
                   isActive
                     ? "bg-tranquil-teal text-white"
                     : "text-tranquil-teal md:hover:bg-gray-100 mt-1"
                 }`}
                 >
-                  <Icon className="text-lg md:text-3xl" />
+                  <Icon className="text-lg md:text-2xl" />
                   <Link
                     href={nav.link}
                     onClick={toggleDrawer}
@@ -112,7 +113,7 @@ const Sidebar = () => {
             })}
 
           <li
-            className={`flex items-center gap-2 font-semibold py-4 px-4 cursor-pointer ${
+            className={`flex items-center gap-2 text-[14px] font-semibold py-2 px-4 cursor-pointer ${
               loading ? "opacity-50 pointer-events-none" : ""
             } text-tranquil-teal`}
             onClick={handleLogout}
@@ -122,17 +123,16 @@ const Sidebar = () => {
           </li>
         </ul>
 
-        <div className="mt-10 hidden lg:flex flex-col items-center bg-tranquil-teal/10 w-full h-[200px] rounded-xl p-4 text-gray-500 text-sm font-semibold">
-            <p>SupraBot Coming Soon...</p>
-            <Image 
-              src="/assets/images/bot.webp"
-              width={200}
-              height={200}
-              className=" object-contain -mt-3"
-            />
+        <div className="mt-36 hidden lg:flex flex-col items-center bg-gradient-to-br from-teal-100/20 via-blue-100/20 to-transparent z-0 w-full h-[200px] rounded-xl p-4 text-gray-500 text-sm font-semibold">
+          <p>SupraBot Coming Soon...</p>
+          <Image
+            src="/assets/images/bot.webp"
+            width={200}
+            height={200}
+            alt="suprabot"
+            className=" object-contain -mt-3"
+          />
         </div>
-
-
       </aside>
     </div>
   );

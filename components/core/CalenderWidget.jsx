@@ -14,10 +14,16 @@ import {
   isSameDay,
 } from "date-fns";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  toggleUnavailableDate,
+  getUnavailableDates,
+} from "@service/request/healthworker/dasboard";
+import toast from "react-hot-toast";
 
 const CalendarWidget = () => {
+  const queryClient = useQueryClient();
   const [currentDate, setCurrentDate] = useState(new Date());
-
   // CHANGED: store multiple selected dates
   const [selectedDates, setSelectedDates] = useState([]);
 
@@ -26,25 +32,64 @@ const CalendarWidget = () => {
 
   // UPDATED: toggle date selection
   const today = new Date();
+
+  // Fetch existing unavailable dates
+  const { data: unavailableDates = [], isLoading } = useQuery({
+    queryKey: ["unavailableDates"],
+    queryFn: getUnavailableDates,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  // Convert to Date objects for internal use
+  React.useEffect(() => {
+    if (unavailableDates.length > 0) {
+      setSelectedDates(unavailableDates.map((date) => new Date(date)));
+    }
+  }, [unavailableDates]);
+
+  const mutation = useMutation({
+    mutationFn: toggleUnavailableDate,
+    onMutate: async ({ date }) => {
+      await queryClient.cancelQueries(["unavailableDates"]);
+
+      const previousDates =
+        queryClient.getQueryData(["unavailableDates"]) || [];
+
+      const isRemoving = previousDates.includes(date);
+      const newDates = isRemoving
+        ? previousDates.filter((d) => d !== date)
+        : [...previousDates, date];
+
+      queryClient.setQueryData(["unavailableDates"], newDates);
+
+      return { previousDates };
+    },
+    onSuccess: (data) => {
+      const toggledDate = new Date(data.date);
+      const isRemoving = data.status === "removed";
+
+      setSelectedDates((prev) => {
+        if (isRemoving) {
+          return prev.filter((d) => !isSameDay(d, toggledDate));
+        } else {
+          return [...prev, toggledDate];
+        }
+      });
+    },
+    onError: (err, _, context) => {
+      queryClient.setQueryData(["unavailableDates"], context.previousDates);
+      toast.error("Something went wrong. Try again.");
+    },
+  });
+
   const handleDateClick = (date) => {
     // Only allow future dates (today or after)
     if (date < today.setHours(0, 0, 0, 0)) return;
 
-    const alreadySelected = selectedDates.some((d) => isSameDay(d, date));
-    if (alreadySelected) {
-      setSelectedDates((prev) => prev.filter((d) => !isSameDay(d, date)));
-    } else {
-      setSelectedDates((prev) => [...prev, date]);
-    }
+    const formatted = format(date, "yyyy-MM-dd");
 
-    console.log(
-      "Selected Dates:",
-      [
-        ...(alreadySelected
-          ? selectedDates.filter((d) => !isSameDay(d, date))
-          : [...selectedDates, date]),
-      ].map((d) => format(d, "yyyy-MM-dd"))
-    );
+    // Optimistically toggle state while waiting for response
+    mutation.mutate({ date: formatted });
   };
 
   const renderHeader = () => (
@@ -104,7 +149,7 @@ const CalendarWidget = () => {
           <div
             key={day.toString()}
             className={`text-center text-sm p-1 rounded-lg transition-all duration-150
-              ${!isCurrentMonth ? "text-gray-300" : "text-gray-700"}
+              ${!isCurrentMonth ? "text-gray-300" : "text-slate-gray"}
               ${
                 isSelected ? "bg-tranquil-teal text-white" : "hover:bg-gray-100"
               }
@@ -129,6 +174,12 @@ const CalendarWidget = () => {
 
     return <div className="space-y-1 py-1 font-semibold">{rows}</div>;
   };
+
+  if (isLoading || mutation.isPending) {
+    return (
+      <div className="p-4 text-gray-400 animate-pulse">Loading calendar...</div>
+    );
+  }
 
   return (
     <>

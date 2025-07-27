@@ -11,10 +11,10 @@ const AppointmentCard = () => {
         </p>
       </div>
       <div className="flex items-center justify-between mt-4 mb-2">
-        <h2 className="text-xl font-bold text-tranquil-teal">
-          4<span className="text-xs px-1 text-tranquil-teal ">total</span>
+        <h2 className="text-xl font-bold text-tranquil-teal mt-2">
+          4<span className="text-sm px-1 text-tranquil-teal ">total</span>
         </h2>
-        <FaCalendarAlt className="text-tranquil-teal" size={30} />
+        <FaCalendarAlt className="text-tranquil-teal" size={35} />
       </div>
     </div>
   );

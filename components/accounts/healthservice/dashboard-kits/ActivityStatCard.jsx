@@ -34,17 +34,17 @@ const ActivityStatCard = () => {
                 </select>
               </form>
 
-              <div className="flex flex-col bg-light-green border-2 rounded-xl items-start h-full px-4 py-2">
+              <div className="flex flex-col bg-light-green text-sm border-2 rounded-xl items-start h-full px-4 py-2">
                 <div className="mb-1">
-                  <h2 className="font-bold text-2xl text-tranquil-teal">25</h2>
+                  <h2 className="font-bold text-xl text-tranquil-teal">25</h2>
                   <p className="text-slate-gray font-semibold">Completed</p>
                 </div>
                 <div className="mb-1">
-                  <h2 className="font-bold text-2xl text-tranquil-teal">5</h2>
+                  <h2 className="font-bold text-xl text-tranquil-teal">5</h2>
                   <p className="text-slate-gray font-semibold">Missed</p>
                 </div>
                 <div className="mb-1">
-                  <h2 className="font-bold text-2xl text-tranquil-teal">3</h2>
+                  <h2 className="font-bold text-xl text-tranquil-teal">3</h2>
                   <p className="text-slate-gray font-semibold">Cancelled</p>
                 </div>
               </div>

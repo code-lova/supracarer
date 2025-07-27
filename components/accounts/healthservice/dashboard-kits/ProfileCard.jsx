@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { FaPencilAlt } from "react-icons/fa";
@@ -37,11 +38,11 @@ const ProfileCard = () => {
               </div>
             )}
 
-            <div className="w-[200px]">
+            <div className="w-[200px] space-y-1">
               <h3 className="text-lg font-semibold text-tranquil-teal -mt-2 capitalize">
                 {userDetails?.fullname || "UserName"}
               </h3>
-              <p className="text-sm text-gray-500 font-semibold capitalize">
+              <p className="text-xs text-slate-gray font-semibold capitalize">
                 {userDetails?.practitioner || "Practitioner"}
               </p>
               <div className="mt-6 flex items-center gap-2 text-slate-gray text-sm">
@@ -59,7 +60,7 @@ const ProfileCard = () => {
               <h2 className="text-slate-gray text-xs font-bold">
                 Gender
               </h2>
-              <p className="text-sm text-tranquil-teal font-semibold">
+              <p className="text-xs text-tranquil-teal font-semibold">
                 {userDetails?.gender || "Not provided"}
               </p>
             </div>
@@ -67,14 +68,14 @@ const ProfileCard = () => {
               <h2 className="text-slate-gray text-xs font-bold">
                 Working Hours
               </h2>
-              <p className="text-sm text-tranquil-teal font-semibold">
+              <p className="text-xs text-tranquil-teal font-semibold">
                 {userDetails?.working_hours || "8am - 5pm"}
               </p>
             </div>
             <div className="grid grid-cols-1 gap-1 w-full border-l border-slate-gray pl-2 ml-4 text-center">
-              <h2 className="text-slate-gray text-xs font-bold">Service Charge</h2>
-              <p className="text-sm text-tranquil-teal font-semibold capitalize">
-                {userDetails?.service_charge || "Not provided"}
+              <h2 className="text-slate-gray text-xs font-bold">Phone</h2>
+              <p className="text-xs text-tranquil-teal font-semibold">
+                {userDetails?.phone || "Not provided"}
               </p>
             </div>
           </div>

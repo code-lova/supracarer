@@ -44,7 +44,7 @@ const RecentAppointmentsCard = () => {
             key={index}
             className="flex justify-between text-sm border-b pb-1 text-gray-700"
           >
-            <span className="font-semibold truncate w-1/2">{item.name}</span>
+            <span className="font-semibold text-slate-gray truncate w-1/2">{item.name}</span>
             <span className="w-1/2 text-right text-xs text-gray-500">
               {item.date}, {item.time}
             </span>
