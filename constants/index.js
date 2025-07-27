@@ -15,7 +15,7 @@ import {
   FaHeadset,
   FaCog,
 } from "react-icons/fa";
-import { SiLootcrate } from "react-icons/si";
+import { SiLootcrate, SiOnlyoffice } from "react-icons/si";
 
 import {
   Linkedin,
@@ -105,10 +105,10 @@ export const HealthDashboardLinks = [
     icon: FaHome,
   },
   {
-    id: "notification",
-    link: "/health-service/notifications",
-    title: "Notifications",
-    icon: FaBell,
+    id: "appointments",
+    link: "/health-service/appointments",
+    title: "Appointments",
+    icon: SiOnlyoffice,
   },
   {
     id: "client",
@@ -123,9 +123,9 @@ export const HealthDashboardLinks = [
     icon: SiLootcrate,
   },
   {
-    id: "contact",
-    link: "/health-service/contact",
-    title: "Contact Support",
+    id: "support",
+    link: "/health-service/support",
+    title: "Support",
     icon: FaHeadset,
   },
   {
@@ -785,32 +785,80 @@ export const gender = [
 ];
 
 export const shiftRateBands = {
-  "8-hour": { min: 120, max: 200 },
-  "12-hour": { min: 150, max: 250 },
-  "24-hour(live-in)": { min: 300, max: 400 },
+  "8-hour(Live-out)": { min: 120, max: 200 },
+  "12-hour(Live-out)": { min: 150, max: 250 },
+  "24-hour(Live-in)": { min: 300, max: 400 },
 };
 
 export const shiftServiceType = [
-  "NurseEscort",
-  "AgedCare",
-  "CompanionshipCare",
-  "MentalHealthSupport",
-  "HypertensiveCare",
-  "StrokeCare",
-  "DiabeticCare",
-  "CatheterCare",
-  "MedicationManagement",
+  "Nurse Escort",
+  "Aged Care",
+  "Companionship Care",
+  "Mental Health Support",
+  "Hypertensive Care",
+  "Stroke Care",
+  "Diabetic Care",
+  "Catheter Care",
+  "Medication Management",
 ];
 
-export const HourRateBands = {
-  RN: {
-    "Catheter Care": [80, 120],
-    "Wound Dressing(Once Daily)": [90, 130],
-    "Chronic Disease Monitoring": [70, 100],
-  },
-  NAC: {
-    "Catheter Care": [60, 90],
-    "Wound Dressing(Once Daily)": [70, 100],
-    "Chronic Disease Monitoring": [50, 80],
-  },
+export const hourRateServiceOptions = {
+  RN: [
+    { name: "Catheter Care", min: 80, max: 120 },
+    { name: "Wound Dressing(Once Daily)", min: 90, max: 130 },
+    { name: "Chronic Disease Monitoring", min: 70, max: 100 },
+  ],
+  NAC: [
+    { name: "Catheter Care", min: 60, max: 90 },
+    { name: "Wound Dressing(Once Daily)", min: 70, max: 100 },
+    { name: "Chronic Disease Monitoring", min: 50, max: 80 },
+  ],
 };
+
+export const mockPatients = [
+  {
+    id: 1,
+    name: "Ama Mensah",
+    age: 34,
+    email: "ama.mensah@email.com",
+    image: "/assets/images/patient1.jpg",
+    details: "Ama is a diabetic patient requiring daily monitoring.",
+  },
+  {
+    id: 2,
+    name: "Kwame Boateng",
+    age: 42,
+    email: "kwame.boateng@email.com",
+    image: "/assets/images/patient2.jpg",
+    details: "Kwame is hypertensive and needs regular checkups.",
+  },
+  {
+    id: 3,
+    name: "Efua Owusu",
+    age: 29,
+    email: "efua.owusu@email.com",
+    image: "/assets/images/patient3.jpg",
+    details: "Efua is recovering from surgery and needs wound care.",
+  },
+  {
+    id: 4,
+    name: "Yaw Asante",
+    age: 51,
+    email: "yaw.asante@email.com",
+    image: "/assets/images/patient4.jpg",
+    details:
+      "Yaw is elderly and requires companionship and medication reminders.",
+  },
+];
+
+export const supportSubjects = [
+  "Account Verification Issue",
+  "Unable to Update Rates",
+  "Problem with Booking a Client",
+  "Client Did Not Show Up",
+  "Missing Payment",
+  "Shift Conflict",
+  "Feedback about App",
+  "Technical Error or Bug",
+  "Request for Feature",
+];

@@ -38,3 +38,64 @@ export const NormalBtn = ({
     </button>
   );
 };
+
+const colorVariants = {
+  green: {
+    base: "bg-custom-green",
+    hover: "hover:bg-tranquil-teal",
+  },
+  red: {
+    base: "bg-red-600",
+    hover: "hover:bg-red-700",
+  },
+  darkblue: {
+    base: "bg-haven-blue",
+    hover: "hover:bg-tranquil-teal",
+  },
+  gray: {
+    base: "bg-slate-gray",
+    hover: "bg-gray-300",
+  },
+};
+
+export const SmallBtn = ({
+  onClick,
+  color = "green",
+  children = "",
+  type = "button",
+  icon = null,
+}) => {
+  const { base, hover } = colorVariants[color] || colorVariants.green;
+
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      className={`px-3 py-1 ${base} ${hover} text-white rounded-sm text-xs flex items-center gap-2`}
+    >
+      {icon && <span>{icon}</span>}
+      <span>{children}</span>
+    </button>
+  );
+};
+
+export const MediumBtn = ({ loading, text, type, onClick, loadingText, color = "green", }) => {
+  const { base, hover } = colorVariants[color] || colorVariants.darkblue;
+  return (
+    <button
+      type={type}
+      disabled={loading}
+      onClick={onClick}
+      className={`px-4 py-2 ${base} ${hover} text-white rounded-sm text-md`}
+    >
+      {loading ? (
+        <div className="flex items-center">
+          <div className="loader mr-2" />
+          {loadingText}
+        </div>
+      ) : (
+        text
+      )}
+    </button>
+  );
+};
