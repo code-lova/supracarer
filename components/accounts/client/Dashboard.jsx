@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   FaRegCalendarAlt,
-  FaEllipsisV,
   FaMapMarkerAlt,
   FaStar,
   FaCalendarAlt,
@@ -13,6 +12,7 @@ import {
   FaCalendarCheck,
   FaPencilAlt,
 } from "react-icons/fa";
+import { PiWarningFill } from "react-icons/pi";
 
 import {
   BarChart,
@@ -72,14 +72,18 @@ const Dashboard = () => {
     (appt) => appt.status !== "Done"
   );
 
-  // Parse the date of the appointment or fallback to current date
-  const referenceDate = nextAppointment?.date
-    ? parseISO(nextAppointment.date)
-    : new Date();
-
   return (
     <>
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 w-full mb-6 mt-[95px] px-2">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 w-full mb-6 mt-[98px] lg:mt-[80px] px-2">
+        {userDetails?.address === null && (
+          <div className="lg:hidden flex item-center space-x-1 bg-yellow-100 px-3 py-2 rounded">
+            <PiWarningFill className="text-yellow-600" size={25} />
+            <p className="text-[15px] text-yellow-600 font-semibold">
+              Please Update your profile for better experience
+            </p>
+          </div>
+        )}
+
         {/* Left Section (2/3 Width) */}
         <div className="w-full h-auto md:h-[660px] md:col-span-2">
           <div className="grid grid-cols-1 gap-4 mb-1">
@@ -162,7 +166,7 @@ const Dashboard = () => {
             {/* One Cards barchart placeholder */}
             <div className="grid grid-cols-1 md:grid-cols-3">
               {/* Activity Chart/Stats */}
-              <div className="md:col-span-3 overflow-y-auto bg-white rounded-2xl py-3 px-3 shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[243px]">
+              <div className="md:col-span-3 overflow-y-auto bg-white rounded-2xl py-3 px-3 shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[260px]">
                 <div className="flex items-center justify-between">
                   <h3 className="text-dark-blue font-semibold text-lg">
                     Monthly Activity
@@ -293,7 +297,7 @@ const Dashboard = () => {
             </div>
 
             {/* Available Nurses with image, star rating, name, practioner type(doctor/nurse), location(with location icon) */}
-            <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[380px]">
+            <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[396px]">
               <div className="flex justify-between items-center border-b-2 w-full h-[50px] px-4">
                 <div>
                   <h3 className="text-dark-blue font-semibold text-lg">
@@ -307,7 +311,7 @@ const Dashboard = () => {
               </div>
 
               <div className="p-6">
-                <div className="grid grid-cols-1 gap-2 mt-1 h-[280px] w-full overflow-y-auto">
+                <div className="grid grid-cols-1 gap-2 h-[299px] w-full overflow-y-auto">
                   {availableNurses.map((nurse) => (
                     <div
                       key={nurse.id}
@@ -332,10 +336,10 @@ const Dashboard = () => {
                           </div>
                         </div>
 
-                        <p className="text-sm text-slate-gray mt-1">
+                        <p className="text-xs text-slate-gray mt-1">
                           {nurse.type}
                         </p>
-                        <div className="flex items-center text-sm text-slate-gray mt-1">
+                        <div className="flex items-center text-xs text-slate-gray mt-1">
                           <FaMapMarkerAlt className="mr-1" />
                           {nurse.location}
                         </div>
