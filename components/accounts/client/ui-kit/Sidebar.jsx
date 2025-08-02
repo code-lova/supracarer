@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { logoutRequest } from "@/service/request/auth/logoutRequest";
 import { signOut as nextAuthSignOut } from "next-auth/react";
-import { HealthDashboardLinks } from "@constants/index";
+import { clientDashboardLinks } from "@constants/index";
 import { FaSignOutAlt } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -36,7 +36,7 @@ const Sidebar = () => {
 
   return (
     <div>
-      <aside className="bg-white fixed shadow-md lg:shadow-[0_-2px_4px_rgba(0,0,0,0.1),0_2px_3px_rgba(0,0,0,0.1)] rounded-xl md:rounded-3xl z-50 top-0 left-0 w-full px-2 lg:px-2  lg:py-6 lg:w-[270px] lg:h-[758px] lg:fixed lg:left-2 lg:top-2 lg:text-haven-blue">
+      <aside className="bg-white fixed shadow-md lg:shadow-xl rounded-md md:rounded-xl z-50 top-0 left-0 w-full lg:px-2  lg:py-6 lg:w-[270px] lg:h-full lg:fixed lg:text-haven-blue">
         <div className="flex justify-between items-center mt-4 lg:flex-col lg:items-start lg:-mt-1">
           <Link href="/health-service">
             <Image
@@ -52,7 +52,7 @@ const Sidebar = () => {
             <div className="relative">
               <Link href="/health-service/profile">
                 <FaBell
-                  className="text-tranquil-teal cursor-pointer"
+                  className="text-carer-blue cursor-pointer"
                   size={27}
                 />
               </Link>
@@ -67,12 +67,12 @@ const Sidebar = () => {
             >
               {toggle ? (
                 <RiCloseLargeFill
-                  className="text-tranquil-teal cursor-pointer font-semibold"
+                  className="text-carer-blue cursor-pointer font-semibold"
                   size={30}
                 />
               ) : (
                 <FaAlignRight
-                  className="text-tranquil-teal cursor-pointer"
+                  className="text-carer-blue cursor-pointer"
                   size={27}
                 />
               )}
@@ -83,10 +83,10 @@ const Sidebar = () => {
         <ul
           className={`${
             toggle ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          } bg-mobile-nav`}
+          } bg-mobile-nav transition-all duration-300 overflow-hidden`}
         >
-          {Array.isArray(HealthDashboardLinks) &&
-            HealthDashboardLinks.map((nav) => {
+          {Array.isArray(clientDashboardLinks) &&
+            clientDashboardLinks.map((nav) => {
               const Icon = nav.icon;
               const isActive = pathname === nav.link;
 
@@ -95,33 +95,38 @@ const Sidebar = () => {
                   <Link
                     href={nav.link}
                     onClick={toggleDrawer}
-                    className={`flex items-center gap-2 py-2 lg:py-3 px-4 rounded-full font-semibold text-[14px] transition-colors duration-300 w-full
+                    className={`flex items-center gap-2 py-3 px-3 font-semibold text-[15px] transition-colors duration-300 w-full
+                    ${isActive ? "text-carer-blue" : "text-slate-gray hover:text-dark-gray-blue transitioning"}`}
+                  >
+                    {/* Icon - increased size, padded, and styled when active */}
+                    <Icon
+                      className={`text-2xl md:text-3xl p-1 transition-all duration-300
                       ${
                         isActive
-                          ? "bg-tranquil-teal text-white"
-                          : "text-tranquil-teal md:hover:bg-gray-100 mt-1"
+                          ? "bg-carer-blue rounded-md text-white"
+                          : "bg-transparent"
                       }`}
-                  >
-                    <Icon className="text-lg md:text-2xl" />
+                    />
                     <span>{nav.title}</span>
                   </Link>
                 </li>
               );
-            })}
+          })}
 
+          {/* Logout Item */}
           <li
-            className={`flex items-center gap-2 text-[14px] font-semibold py-2 px-4 cursor-pointer ${
-              loading ? "opacity-50 pointer-events-none" : ""
-            } text-tranquil-teal`}
+            className={`flex items-center gap-3 text-[15px] font-semibold py-3 px-4 cursor-pointer
+            ${loading ? "opacity-50 pointer-events-none" : ""} text-slate-gray`}
             onClick={handleLogout}
           >
-            <FaSignOutAlt className="text-lg" />
+            {/* Logout Icon - larger size for consistency */}
+            <FaSignOutAlt className="text-xl md:text-xl" />
             {loading ? "Logging Out..." : "Logout"}
           </li>
         </ul>
 
-        <div className="mt-24 hidden lg:flex flex-col items-center bg-gradient-to-br from-teal-100/20 via-blue-100/20 to-transparent z-0 w-full h-[200px] rounded-xl p-4 text-gray-500 text-sm font-semibold">
-          <p>SupraBot Coming Soon...</p>
+        <div className="mt-16 hidden lg:flex flex-col items-center bg-gradient-to-br from-teal-100/20 via-blue-100/20 to-transparent z-0 w-full h-[200px] rounded-xl p-4 text-gray-500 text-sm font-semibold">
+          <p className="text-carer-blue font-bold">SupraBot Coming Soon...</p>
           <Image
             src="/assets/images/bot.webp"
             width={200}

@@ -1,28 +1,41 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAuthUser } from "@service/request/user/getAuthUser";
+import { useSession } from "next-auth/react";
+import { getAuthUser, getClientUser } from "@service/request/user/getAuthUser";
 
 export const AUTH = "auth";
 
 const useUser = (opts = {}) => {
+  const { data: session, status } = useSession();
+
+  const role = session?.user?.role ?? null;
+
+  const enabled = status === "authenticated" && !!role;
+
   const {
     data = null,
     refetch,
     isLoading,
     ...rest
   } = useQuery({
-    queryKey: [AUTH],
+    queryKey: [AUTH, role],
     queryFn: async () => {
       try {
-        return await getAuthUser();
+        if (role === "client") {
+          return await getClientUser();
+        } else {
+          return await getAuthUser(); // default to healthworker or admin, etc.
+        }
       } catch {
         return null;
       }
     },
-    refetchOnWindowFocus: true, // Refresh user data on focus
-    staleTime: 5 * 60 * 1000, // Five minutes to avoid too frequent refetching
+    enabled, // only run if authenticated and role is known
+    refetchOnWindowFocus: true,
+    staleTime: 5 * 60 * 1000,
     ...opts,
   });
-  return { user: data, refetch, isLoading, ...rest };
+
+  return { user: data, refetch, isLoading: enabled && isLoading, ...rest };
 };
 
 export default useUser;

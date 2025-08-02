@@ -20,13 +20,17 @@
   pointer-events: none;
 }
 
-.bg-dashboard{
+.bg-dashboard {
   width: 100vw;
   min-height: 100vh;
-  background-color: rgb(243, 241, 241);
+  background-color: rgb(247, 247, 247);
 }
 
-
+.client-bg {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #ededed;
+}
 
 .custom-dot {
   position: relative;
@@ -53,6 +57,19 @@
   animation: spin 1s linear infinite;
 }
 
+.multi-spinner {
+  border-radius: 9999px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #3bb3a8;   /* tranquil-teal */
+  border-right-color: #0077b6; /* carer-blue */
+  border-bottom-color: #3bb3a8;
+  border-left-color: #0077b6;
+  animation: spin 1s linear infinite;
+}
+
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -61,7 +78,6 @@
     transform: rotate(360deg);
   }
 }
-
 
 .custom-scrollbar {
   scrollbar-width: thin;
@@ -89,9 +105,6 @@
   background: transparent;
 }
 
-
-
-
 @layer components {
   .app {
     max-width: 1740px;
@@ -103,13 +116,13 @@
   }
 
   .transitioning {
-    @apply transition duration-300 ease-in-out transform hover:scale-105;
+    @apply transition-transform duration-1000 ease-in-out hover:scale-105;
   }
 }
 
 @layer utilities {
   .padding {
-    @apply px-6 py-6 md:py-4 xl:px-[100px] ;
+    @apply px-6 py-6 md:py-4 xl:px-[100px];
   }
 
   .blue_gradient {
@@ -203,7 +216,6 @@
   .checkbox:focus {
     @apply ring-2 ring-carer-blue;
   }
-
 
   .faq-heading-bg {
     @apply flex items-center justify-between font-semibold p-4 rounded-md cursor-pointer transition-colors duration-300;
