@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Aside from "./Aside";
-import Header from "./Header";
+
 
 const Booking = () => {
   const [formData, setFormData] = useState({
@@ -29,8 +28,7 @@ const Booking = () => {
   };
   return (
     <div className="lg:ml-[200px]">
-      <Aside />
-      <Header />
+
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-center mb-6">
           Book an Appointment

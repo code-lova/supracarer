@@ -12,7 +12,9 @@ import {
   FaHome,
   FaBell,
   FaUserFriends,
+  FaUserEdit,
   FaHeadset,
+  FaBookOpen,
   FaCog,
 } from "react-icons/fa";
 import { SiLootcrate, SiOnlyoffice } from "react-icons/si";
@@ -70,38 +72,49 @@ export const navLinks = [
     title: "Contact Us",
   },
 ];
-export const DashboardLinks = [
+export const clientDashboardLinks = [
   {
     id: "client",
     link: "/client",
-    title: "Home",
+    title: "Dashboard",
+    icon: FaHome,
   },
   {
     id: "notification",
     link: "/client/notifications",
     title: "Notifications",
+    icon: FaBell,
   },
   {
     id: "booking",
     link: "/client/booking",
     title: "Book an appointment",
+    icon: FaBookOpen,
   },
   {
     id: "contact",
     link: "/client/contact",
     title: "Contact Us",
+    icon: FaHeadset,
+  },
+   {
+    id: "profile",
+    link: "/client/profile",
+    title: "Profile",
+    icon: FaUserEdit,
   },
   {
     id: "settings",
     link: "/client/settings",
     title: "Settings",
+    icon: FaCog,
   },
 ];
 export const HealthDashboardLinks = [
   {
     id: "health",
     link: "/health-service",
-    title: "Home",
+    title: "Dashboard",
     icon: FaHome,
   },
   {

@@ -2,8 +2,7 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Aside from "./Aside";
-import Header from "./Header";
+
 import { getUserRequest } from "@service/request/user/getAuthUser";
 import LoadingStateUI from "@components/core/loading";
 import toast from "react-hot-toast";
@@ -35,8 +34,7 @@ const Settings = () => {
 
   return (
     <div>
-      <Aside />
-      <Header />
+
       <div className="lg:ml-[200px]">
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold text-center mb-2 md:mb-8 mt-12 md:mt-8">

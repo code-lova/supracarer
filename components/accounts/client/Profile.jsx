@@ -1,12 +1,12 @@
 "use client";
-import React from "react";
 import Image from "next/image";
-import Aside from "./Aside";
+import React from "react";
+
 
 const Profile = () => {
   return (
     <div>
-      <Aside />
+
       <div className="md:ml-[200px]">
         <div className="h-[300px] w-full bg-cyan-400">
           <div className="flex justify-center items-center md:w-[220px] md:h-[220px] w-[100px] h-[100px] rounded-full border-4 border-gray-900 bg-gray-400 absolute md:top-[200px] md:left-[700px] top-[250px] left-[130px]">

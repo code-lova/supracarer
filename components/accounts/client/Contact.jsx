@@ -1,13 +1,11 @@
 "use client";
 import React from "react";
-import Aside from "./Aside";
-import Header from "./Header";
+
 
 const Contact = () => {
   return (
     <div>
-      <Aside />
-      <Header />
+
       <div className="flex flex-col justify-center items-center mb-12 bg-contact py-20 lg:ml-40">
         <h1 className="text-3xl font-bold text-center blue_gradient font-montserrat tracking-widest">
           Stay Connected With Us

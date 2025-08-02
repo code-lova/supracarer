@@ -85,7 +85,7 @@ const Support = () => {
           onSubmit={handleSubmit}
         >
           {() => (
-            <Form className="space-y-6 py-8">
+            <Form className="space-y-6 py-4">
               {/* Subject Dropdown */}
               <div>
                 <label
@@ -143,7 +143,7 @@ const Support = () => {
         </Formik>
 
         {/* === Chat-style Message List Below Form === */}
-        <div className="max-h-[250px] xl:max-h-[200px] overflow-y-auto space-y-3 mt-4 pb-6">
+        <div className="max-h-[250px] xl:h-[190px] overflow-x-auto space-y-3 mt-4 xl:mt-1 pb-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold text-gray-700 mb-2">
               Your Recent Messages
