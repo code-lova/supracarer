@@ -1,12 +1,8 @@
-import Booking from '@components/accounts/client/Booking'
-import React from 'react'
+import Booking from "@components/accounts/client/Booking";
+import React from "react";
 
 const page = () => {
-  return (
-    <div>
-        <Booking />
-    </div>
-  )
-}
+  return <Booking />;
+};
 
-export default page
+export default page;
