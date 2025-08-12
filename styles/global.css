@@ -186,6 +186,10 @@
     @apply w-full h-full mt-[95px];
   }
 
+  .pageContent {
+    @apply w-full h-full mt-[98px] lg:mt-[80px];
+  }
+
   /* for abut us page  */
   .greenVerticalTextBox {
     @apply hidden md:flex items-center justify-center absolute -left-6 top-1/2 transform -translate-y-1/2 bg-carer-green text-white w-[70px] h-[500px] py-6 px-2 text-center  rounded-full border-4 border-white shadow-2xl z-10;
@@ -251,5 +255,9 @@
 
   .form-input {
     @apply border border-gray-300 text-slate-gray rounded px-4 py-2 text-sm shadow-sm outline-none focus:ring-custom-green focus:border-tranquil-teal;
+  }
+
+   .steper-form-input {
+    @apply w-full border border-gray-300 text-slate-gray rounded px-4 py-2 text-sm shadow-sm outline-none focus:ring-carer-blue focus:border-carer-blue;
   }
 }

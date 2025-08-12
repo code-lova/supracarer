@@ -19,7 +19,7 @@ const ClientLayout = ({ children }) => {
     <div className="client-bg">
       <Sidebar />
       <NavigationBar />
-      <section className="px-2 md:px-4 lg:ml-[280px] min-h-screen">
+      <section className="px-2 md:px-4 lg:ml-[270px] min-h-screen">
         <div className="flex flex-col md:flex-row justify-between">
           {children}
         </div>

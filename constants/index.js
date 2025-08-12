@@ -10,12 +10,12 @@ import {
   FaLightbulb,
   FaHandshake,
   FaHome,
-  FaBell,
   FaUserFriends,
   FaUserEdit,
   FaHeadset,
   FaBookOpen,
   FaCog,
+  FaClipboardList
 } from "react-icons/fa";
 import { SiLootcrate, SiOnlyoffice } from "react-icons/si";
 
@@ -80,21 +80,21 @@ export const clientDashboardLinks = [
     icon: FaHome,
   },
   {
-    id: "notification",
-    link: "/client/notifications",
-    title: "Notifications",
-    icon: FaBell,
+    id: "appointment",
+    link: "/client/appointment",
+    title: "Appointments",
+    icon: FaClipboardList,
   },
   {
     id: "booking",
     link: "/client/booking",
-    title: "Book an appointment",
+    title: "Booking",
     icon: FaBookOpen,
   },
   {
-    id: "contact",
-    link: "/client/contact",
-    title: "Contact Us",
+    id: "support",
+    link: "/client/support",
+    title: "Support",
     icon: FaHeadset,
   },
    {
@@ -874,4 +874,28 @@ export const supportSubjects = [
   "Feedback about App",
   "Technical Error or Bug",
   "Request for Feature",
+];
+
+export const medicalServicesOptions = [
+  "Catheter Care",
+  "Wound Dressing(Once Daily)",
+  "Chronic Disease Monitoring",
+  "Nurse Escort",
+  "Aged Care",
+  "Companionship Care",
+  "Mental Health Support",
+  "Hypertensive Care",
+  "Stroke Care",
+  "Diabetic Care",
+  "Medication Management",
+];
+
+export const extraServicesOptions = [
+  "Physiotherapy",
+  "Dietitian consultation",
+  "Clinical Psychologist sessions",
+  "Home lab tests",
+  "Telemedicine with Physician Assistant / Doctor",
+  "Weekly family update report",
+  "Relief nurse cover for off days",
 ];

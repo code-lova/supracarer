@@ -53,8 +53,8 @@ const colorVariants = {
     hover: "hover:bg-tranquil-teal",
   },
   gray: {
-    base: "bg-slate-gray",
-    hover: "bg-gray-300",
+    base: "bg-slate-gray2",
+    hover: "hover:bg-gray-300 hover:text-slate-gray2",
   },
 };
 
