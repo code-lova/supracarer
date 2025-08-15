@@ -21,7 +21,7 @@ const Booking = () => {
     meal: "No",
     num_of_meals: "",
     medical_services: [],
-    other_extra_services: [],
+    other_extra_service: [],
     special_notes: "",
     start_date: "",
     end_date: "",

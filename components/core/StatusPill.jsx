@@ -1,20 +1,23 @@
 import React from "react";
 import clsx from "clsx";
 import {
-  FiAlertCircle,     
+  FiAlertCircle,
   FiCheckCircle,
   FiThumbsUp,
   FiClock,
-  FiHelpCircle
+  FiHelpCircle,
+  FiXCircle,
+  FiLoader,
 } from "react-icons/fi";
 
-
 const statusStyleMap = {
-  pending: "bg-yellow-400 text-white",
+  pending: "bg-yellow-100 text-yellow-800",
   replied: "bg-green-500 text-white",
-  confirmed: "bg-blue-100 text-blue-700",
-  ongoing: "bg-yellow-100 text-yellow-700",
-  done: "bg-green-100 text-green-700",
+  confirmed: "bg-green-100 text-green-800",
+  ongoing: "bg-purple-100 text-purple-800",
+  done: "bg-gray-100 text-gray-800",
+  cancelled: "bg-red-100 text-red-800",
+  processing: "bg-blue-100 text-blue-800",
 };
 
 const sizeClassMap = {
@@ -29,11 +32,20 @@ const statusIconMap = {
   confirmed: FiThumbsUp,
   ongoing: FiClock,
   done: FiCheckCircle,
+  cancelled: FiXCircle,
+  processing: FiLoader,
 };
 
-const StatusPill = ({ status, size = "sm", customClass = "", icon, clickable = false }) => {
+const StatusPill = ({
+  status,
+  size = "sm",
+  customClass = "",
+  icon,
+  clickable = false,
+}) => {
   const normalizedStatus = status?.toLowerCase() || "pending";
-  const statusStyle = statusStyleMap[normalizedStatus] || "bg-gray-200 text-gray-700";
+  const statusStyle =
+    statusStyleMap[normalizedStatus] || "bg-gray-200 text-gray-700";
   const sizeStyle = sizeClassMap[size] || sizeClassMap.sm;
 
   const Icon = icon || statusIconMap[normalizedStatus] || FiHelpCircle;
