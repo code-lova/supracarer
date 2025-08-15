@@ -93,7 +93,7 @@ const StepTwo = ({
             Other Extra Services(Optional)
           </label>
           <div className="flex flex-wrap gap-2">
-            {renderOptions("other_extra_services", extraServicesOptions)}
+            {renderOptions("other_extra_service", extraServicesOptions)}
           </div>
         </div>
 

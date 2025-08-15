@@ -49,8 +49,8 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
         </div>
         <div className="mb-2">
           <strong>Other Extra Services:</strong>{" "}
-          {formValues.other_extra_services.length > 0
-            ? formValues.other_extra_services.join(", ")
+          {formValues.other_extra_service.length > 0
+            ? formValues.other_extra_service.join(", ")
             : "—"}
         </div>
         <div>
