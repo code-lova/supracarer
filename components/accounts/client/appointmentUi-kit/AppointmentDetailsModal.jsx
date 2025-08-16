@@ -3,7 +3,6 @@ import React from "react";
 import {
   FaTimes,
   FaCalendarAlt,
-  FaClock,
   FaUser,
   FaHome,
   FaUtensils,
@@ -15,6 +14,7 @@ import {
   FaSpinner,
   FaTrash,
   FaBan,
+  FaStar,
 } from "react-icons/fa";
 
 const AppointmentDetailsModal = ({
@@ -23,6 +23,7 @@ const AppointmentDetailsModal = ({
   appointment,
   onCancelAppointment,
   onDeleteAppointment,
+  onCompleteAppointment,
   isCancelling = false,
   isDeleting = false,
 }) => {
@@ -427,12 +428,34 @@ const AppointmentDetailsModal = ({
               </button>
             )}
 
+            {/* Done Button - Only show for Ongoing appointments */}
+            {appointment.status === "Ongoing" && (
+              <button
+                onClick={() =>
+                  onCompleteAppointment(
+                    appointment.uuid,
+                    appointment.health_worker?.name
+                  )
+                }
+                disabled={isCancelling || isDeleting}
+                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+              >
+                <FaStar className="mr-2" />
+                Done
+              </button>
+            )}
+
             {/* Contact Health Worker Button - Only show when worker is assigned and confirmed */}
             {appointment.health_worker &&
-              appointment.status === "Confirmed" && (
-                <button className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+              appointment.status === "Confirmed" &&
+              appointment.health_worker.phone && (
+                <a
+                  href={`tel:${appointment.health_worker.phone}`}
+                  className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center"
+                  style={{ textDecoration: "none" }}
+                >
                   Contact Health Worker
-                </button>
+                </a>
               )}
           </div>
         </div>

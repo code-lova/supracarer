@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import AppointmentDetailsModal from "./appointmentUi-kit/AppointmentDetailsModal";
 import CancelAppointmentModal from "./appointmentUi-kit/CancelAppointmentModal";
+import CompleteAppointmentModal from "./appointmentUi-kit/CompleteAppointmentModal";
 import StatusPill from "@components/core/StatusPill";
 import DateFormatter from "@components/core/DateFormatter";
 import EmptyState from "@components/core/EmptyState";
@@ -21,6 +22,7 @@ import {
   showBooking,
   cancelBooking,
   deleteBooking,
+  completeBooking,
 } from "@service/request/client/bookingApt";
 
 const Appointments = () => {
@@ -29,6 +31,8 @@ const Appointments = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [appointmentToCancel, setAppointmentToCancel] = useState(null);
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
+  const [appointmentToComplete, setAppointmentToComplete] = useState(null);
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,6 +97,21 @@ const Appointments = () => {
     },
   });
 
+  // Complete booking mutation
+  const completeBookingMutation = useMutation({
+    mutationFn: ({ uuid, rating, review }) =>
+      completeBooking(uuid, rating, review),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      handleCloseCompleteModal();
+      handleCloseModal();
+      toast.success("Appointment marked as done and review submitted!");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to complete appointment");
+    },
+  });
+
   // Extract appointments from the API response and transform the data structure
   const appointments = React.useMemo(() => {
     if (!appointmentsData?.data) return [];
@@ -141,16 +160,16 @@ const Appointments = () => {
 
   const handleCancelAppointment = (bookingUuid) => {
     // Find the appointment to get details for the modal
-    const appointment = appointments?.find(apt => apt.uuid === bookingUuid);
+    const appointment = appointments?.find((apt) => apt.uuid === bookingUuid);
     setAppointmentToCancel(appointment);
     setIsCancelModalOpen(true);
   };
 
   const handleConfirmCancellation = (reason) => {
     if (appointmentToCancel) {
-      cancelBookingMutation.mutate({ 
-        uuid: appointmentToCancel.uuid, 
-        reason: reason 
+      cancelBookingMutation.mutate({
+        uuid: appointmentToCancel.uuid,
+        reason: reason,
       });
     }
   };
@@ -168,6 +187,27 @@ const Appointments = () => {
     ) {
       deleteBookingMutation.mutate(bookingUuid);
     }
+  };
+
+  const handleCompleteAppointment = (bookingUuid, healthWorkerName) => {
+    const appointment = appointments?.find((apt) => apt.uuid === bookingUuid);
+    setAppointmentToComplete({ ...appointment, healthWorkerName });
+    setIsCompleteModalOpen(true);
+  };
+
+  const handleSubmitComplete = ({ rating, review }) => {
+    if (appointmentToComplete) {
+      completeBookingMutation.mutate({
+        uuid: appointmentToComplete.uuid,
+        rating,
+        review,
+      });
+    }
+  };
+
+  const handleCloseCompleteModal = () => {
+    setIsCompleteModalOpen(false);
+    setAppointmentToComplete(null);
   };
 
   const statusOptions = [
@@ -547,6 +587,7 @@ const Appointments = () => {
         appointment={selectedAppointment}
         onCancelAppointment={handleCancelAppointment}
         onDeleteAppointment={handleDeleteAppointment}
+        onCompleteAppointment={handleCompleteAppointment}
         isCancelling={cancelBookingMutation.isLoading}
         isDeleting={deleteBookingMutation.isLoading}
       />
@@ -557,9 +598,20 @@ const Appointments = () => {
         onClose={handleCloseCancelModal}
         onConfirm={handleConfirmCancellation}
         isLoading={cancelBookingMutation.isLoading}
-        appointmentDetails={appointmentToCancel && {
-          reference: appointmentToCancel.booking_reference,
-        }}
+        appointmentDetails={
+          appointmentToCancel && {
+            reference: appointmentToCancel.booking_reference,
+          }
+        }
+      />
+
+      {/* Complete Appointment Modal */}
+      <CompleteAppointmentModal
+        isOpen={isCompleteModalOpen}
+        onClose={handleCloseCompleteModal}
+        onSubmit={handleSubmitComplete}
+        isLoading={completeBookingMutation.isLoading}
+        healthWorkerName={appointmentToComplete?.healthWorkerName}
       />
     </div>
   );
