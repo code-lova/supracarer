@@ -111,3 +111,31 @@ export const showBooking = async (params = {}) => {
 
   return response.json();
 };
+
+export const completeBooking = async (bookingUuid, rating, review) => {
+  const response = await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/mark-done/${bookingUuid}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        status: "Done",
+        rating,
+        review,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    if (response.status === 422 && errorData.errors)
+      throw new Error(Object.values(errorData.errors).flat().join(" "));
+    if (response.status >= 500)
+      throw new Error("Server error. Please try again later.");
+    throw new Error(
+      errorData.message || "An error occurred. Please try again."
+    );
+  }
+
+  return response.json();
+};

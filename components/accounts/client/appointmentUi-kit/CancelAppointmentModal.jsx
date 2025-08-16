@@ -29,9 +29,9 @@ const CancelAppointmentModal = ({
       return;
     }
 
-    if (reason.trim().length < 10) {
+    if (reason.trim().length < 20) {
       setError(
-        "Please provide a more detailed reason (at least 10 characters)"
+        "Please provide a more detailed reason (at least 20 characters)"
       );
       return;
     }
@@ -119,7 +119,7 @@ const CancelAppointmentModal = ({
               </p>
             )}
             <p className="mt-1 text-xs text-gray-500">
-              Minimum 10 characters required
+              Minimum 20 characters required
             </p>
           </div>
 

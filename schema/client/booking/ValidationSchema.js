@@ -221,3 +221,16 @@ export const StepFourValidationSchema = Yup.object().shape({
       otherwise: (schema) => schema.notRequired(),
     }),
 });
+
+//validationg mark appointment, review and ratings 
+export const validateCompleteAppointment = Yup.object().shape({
+  rating: Yup.number()
+    .min(1, "Rating must be at least 1 star")
+    .max(5, "Rating must be at most 5 stars")
+    .required("Rating is required"),
+
+  review: Yup.string()
+    .min(20, "Review must be at least 20 characters")
+    .max(300, "Review must be at most 300 characters")
+    .required("Review is required"),
+});
