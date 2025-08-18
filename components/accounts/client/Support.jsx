@@ -8,8 +8,8 @@ import {
   FaUser,
   FaUserMd,
 } from "react-icons/fa";
-import SupportTicketModal from "./supportUi-kit/SupportTicketModal";
-import MobileChatModal from "./supportUi-kit/MobileChatModal";
+import SupportTicketModal from "./supportUI-kit/SupportTicketModal";
+import MobileChatModal from "./supportUI-kit/MobileChatModal";
 import {
   createSupportTicket,
   getSupportTicketAndMessages,
