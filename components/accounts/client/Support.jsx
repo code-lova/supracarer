@@ -1,358 +1,173 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   FaPlus,
   FaPaperPlane,
   FaLock,
   FaEnvelopeOpenText,
+  FaUser,
+  FaUserMd,
 } from "react-icons/fa";
-
-// Dummy data for tickets and messages (replace with API integration)
-const initialTickets = [
-  {
-    id: 1,
-    subject: "Payment Issue",
-    status: "opened",
-    lastMessage: "Admin: Please provide your transaction ID.",
-    messages: [
-      {
-        sender: "client",
-        text: "I was double charged for my booking.",
-        time: "2025-08-15 10:00",
-      },
-      {
-        sender: "admin",
-        text: "Please provide your transaction ID.",
-        time: "2025-08-15 10:05",
-      },
-    ],
-  },
-  {
-    id: 2,
-    subject: "Booking Cancellation",
-    status: "closed",
-    lastMessage: "Client: Thank you for your help!",
-    messages: [
-      {
-        sender: "client",
-        text: "Can I cancel my booking?",
-        time: "2025-08-14 09:00",
-      },
-      {
-        sender: "admin",
-        text: "Yes, your booking has been cancelled.",
-        time: "2025-08-14 09:10",
-      },
-      {
-        sender: "client",
-        text: "Thank you for your help!",
-        time: "2025-08-14 09:15",
-      },
-    ],
-  },
-  {
-    id: 3,
-    subject: "Client Unavailability",
-    status: "opened",
-    lastMessage: "Admin: Please update your availability in settings.",
-    messages: [
-      {
-        sender: "client",
-        text: "I won’t be available this weekend.",
-        time: "2025-08-13 15:30",
-      },
-      {
-        sender: "admin",
-        text: "Please update your availability in settings.",
-        time: "2025-08-13 15:35",
-      },
-    ],
-  },
-  {
-    id: 4,
-    subject: "App Login Issue",
-    status: "opened",
-    lastMessage: "Client: I still can't log in.",
-    messages: [
-      {
-        sender: "client",
-        text: "I can't log in to the app.",
-        time: "2025-08-12 08:20",
-      },
-      {
-        sender: "admin",
-        text: "Try resetting your password.",
-        time: "2025-08-12 08:25",
-      },
-      {
-        sender: "client",
-        text: "I still can't log in.",
-        time: "2025-08-12 08:30",
-      },
-    ],
-  },
-  {
-    id: 5,
-    subject: "Profile Update",
-    status: "closed",
-    lastMessage: "Admin: Your profile has been updated.",
-    messages: [
-      {
-        sender: "client",
-        text: "Can you update my phone number?",
-        time: "2025-08-11 17:45",
-      },
-      {
-        sender: "admin",
-        text: "Your profile has been updated.",
-        time: "2025-08-11 17:50",
-      },
-    ],
-  },
-  {
-    id: 6,
-    subject: "Refund Request",
-    status: "opened",
-    lastMessage: "Admin: We are processing your refund.",
-    messages: [
-      {
-        sender: "client",
-        text: "I’d like a refund for my last booking.",
-        time: "2025-08-10 11:10",
-      },
-      {
-        sender: "admin",
-        text: "We are processing your refund.",
-        time: "2025-08-10 11:15",
-      },
-    ],
-  },
-  {
-    id: 7,
-    subject: "Nurse Replacement",
-    status: "opened",
-    lastMessage: "Admin: We will assign a new nurse shortly.",
-    messages: [
-      {
-        sender: "client",
-        text: "The nurse didn’t show up.",
-        time: "2025-08-09 19:00",
-      },
-      {
-        sender: "admin",
-        text: "We will assign a new nurse shortly.",
-        time: "2025-08-09 19:10",
-      },
-    ],
-  },
-  {
-    id: 8,
-    subject: "App Notification Issue",
-    status: "closed",
-    lastMessage: "Admin: Please update the app to the latest version.",
-    messages: [
-      {
-        sender: "client",
-        text: "I’m not receiving notifications.",
-        time: "2025-08-08 14:00",
-      },
-      {
-        sender: "admin",
-        text: "Please update the app to the latest version.",
-        time: "2025-08-08 14:05",
-      },
-    ],
-  },
-  {
-    id: 9,
-    subject: "Service Request",
-    status: "opened",
-    lastMessage: "Admin: Please specify your preferred time.",
-    messages: [
-      {
-        sender: "client",
-        text: "Can I book a nurse for tomorrow evening?",
-        time: "2025-08-07 20:30",
-      },
-      {
-        sender: "admin",
-        text: "Please specify your preferred time.",
-        time: "2025-08-07 20:35",
-      },
-    ],
-  },
-  {
-    id: 10,
-    subject: "Wrong Charge",
-    status: "closed",
-    lastMessage: "Admin: The extra charge has been refunded.",
-    messages: [
-      {
-        sender: "client",
-        text: "I was charged more than expected.",
-        time: "2025-08-06 16:00",
-      },
-      {
-        sender: "admin",
-        text: "The extra charge has been refunded.",
-        time: "2025-08-06 16:10",
-      },
-    ],
-  },
-  {
-    id: 11,
-    subject: "Care Duration Extension",
-    status: "opened",
-    lastMessage: "Admin: Extension approved for 2 more hours.",
-    messages: [
-      {
-        sender: "client",
-        text: "Can I extend my current care duration?",
-        time: "2025-08-05 09:00",
-      },
-      {
-        sender: "admin",
-        text: "Extension approved for 2 more hours.",
-        time: "2025-08-05 09:05",
-      },
-    ],
-  },
-  {
-    id: 12,
-    subject: "Password Reset",
-    status: "closed",
-    lastMessage: "Client: Thank you, I can log in now.",
-    messages: [
-      {
-        sender: "client",
-        text: "I forgot my password.",
-        time: "2025-08-04 07:00",
-      },
-      {
-        sender: "admin",
-        text: "We have reset your password. Please check your email.",
-        time: "2025-08-04 07:05",
-      },
-      {
-        sender: "client",
-        text: "Thank you, I can log in now.",
-        time: "2025-08-04 07:10",
-      },
-    ],
-  },
-  {
-    id: 13,
-    subject: "Shift Confirmation",
-    status: "opened",
-    lastMessage: "Admin: Your shift has been confirmed.",
-    messages: [
-      {
-        sender: "client",
-        text: "Has my shift for next week been confirmed?",
-        time: "2025-08-03 10:00",
-      },
-      {
-        sender: "admin",
-        text: "Your shift has been confirmed.",
-        time: "2025-08-03 10:05",
-      },
-    ],
-  },
-  {
-    id: 14,
-    subject: "Emergency Support",
-    status: "opened",
-    lastMessage: "Admin: We’ve dispatched a nurse to your location.",
-    messages: [
-      {
-        sender: "client",
-        text: "I need urgent assistance.",
-        time: "2025-08-02 23:50",
-      },
-      {
-        sender: "admin",
-        text: "We’ve dispatched a nurse to your location.",
-        time: "2025-08-02 23:55",
-      },
-    ],
-  },
-  {
-    id: 15,
-    subject: "Feedback Submission",
-    status: "closed",
-    lastMessage: "Admin: Thank you for your feedback.",
-    messages: [
-      {
-        sender: "client",
-        text: "I’d like to share some feedback.",
-        time: "2025-08-01 18:00",
-      },
-      {
-        sender: "admin",
-        text: "Thank you for your feedback.",
-        time: "2025-08-01 18:05",
-      },
-    ],
-  },
-];
+import SupportTicketModal from "./supportUi-kit/SupportTicketModal";
+import MobileChatModal from "./supportUi-kit/MobileChatModal";
+import {
+  createSupportTicket,
+  getSupportTicketAndMessages,
+  sendSupportTicketReply,
+} from "@service/request/client/ticket";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { createSupportTicketSchema } from "@schema/client/ticket";
+import toast from "react-hot-toast";
 
 const Support = () => {
-  const [tickets, setTickets] = useState(initialTickets);
-  const [selectedTicketId, setSelectedTicketId] = useState(
-    tickets[0]?.id || null
-  );
+  const [selectedTicketId, setSelectedTicketId] = useState(null);
   const [showNewTicketModal, setShowNewTicketModal] = useState(false);
-  const [newSubject, setNewSubject] = useState("");
-  const [newMessage, setNewMessage] = useState("");
   const [reply, setReply] = useState("");
-  const [showMobileTicketList, setShowMobileTicketList] = useState(false);
+  const [showMobileChatModal, setShowMobileChatModal] = useState(false);
 
+  // Refs for desktop chat auto-scroll
+  const messagesEndRef = useRef(null);
+  const desktopMessagesContainerRef = useRef(null);
+  const queryClient = useQueryClient();
+
+  // Fetch support tickets
+  const {
+    data: ticketsData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["supportTickets"],
+    queryFn: getSupportTicketAndMessages,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+
+  const tickets = ticketsData?.data || [];
   const selectedTicket = tickets.find((t) => t.id === selectedTicketId);
 
-  const handleCreateTicket = (e) => {
-    e.preventDefault();
-    if (!newSubject.trim() || !newMessage.trim()) return;
-    const newTicket = {
-      id: Date.now(),
-      subject: newSubject,
-      status: "opened",
-      lastMessage: `Client: ${newMessage}`,
-      messages: [
-        { sender: "client", text: newMessage, time: new Date().toISOString() },
-      ],
+  // Transform ticket data to include the initial message and format messages properly
+  const getFormattedSelectedTicket = () => {
+    if (!selectedTicket) return null;
+
+    // Create the initial message from the ticket creation
+    const initialMessage = {
+      id: `initial-${selectedTicket.id}`,
+      sender: "client",
+      text: selectedTicket.message,
+      time: selectedTicket.created_at,
     };
-    setTickets([newTicket, ...tickets]);
-    setSelectedTicketId(newTicket.id);
-    setShowNewTicketModal(false);
-    setNewSubject("");
-    setNewMessage("");
+
+    // Transform the messages from the API format
+    const formattedMessages =
+      selectedTicket.messages?.map((msg) => ({
+        id: msg.uuid,
+        sender: msg.sender_type === "admin" ? "admin" : "client",
+        text: msg.message,
+        time: msg.created_at,
+      })) || [];
+
+    // Combine initial message with subsequent messages
+    const allMessages = [initialMessage, ...formattedMessages];
+
+    return {
+      ...selectedTicket,
+      messages: allMessages,
+      // Check if admin has replied (if there are any admin messages)
+      hasAdminReply: formattedMessages.some((msg) => msg.sender === "admin"),
+      status:
+        selectedTicket.status?.toLowerCase() === "open" ? "opened" : "closed",
+    };
   };
 
-  const handleSendReply = (e) => {
+  const formattedSelectedTicket = getFormattedSelectedTicket();
+
+  // Set first ticket as selected when data loads
+  useEffect(() => {
+    if (tickets.length > 0 && !selectedTicketId) {
+      setSelectedTicketId(tickets[0].id);
+    }
+  }, [tickets, selectedTicketId]);
+
+  // Create support ticket mutation
+  const createTicketMutation = useMutation({
+    mutationFn: createSupportTicket,
+    onSuccess: (data) => {
+      toast.success("Support ticket created successfully!");
+      queryClient.invalidateQueries(["supportTickets"]);
+      setSelectedTicketId(data.data.id);
+      setShowNewTicketModal(false);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to create support ticket");
+    },
+  });
+
+  // Send reply mutation
+  const sendReplyMutation = useMutation({
+    mutationFn: ({ ticketId, message }) =>
+      sendSupportTicketReply(ticketId, message),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["supportTickets"]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to send reply");
+    },
+  }); // Auto-scroll to bottom when messages change
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  };
+
+  // Scroll to bottom when messages change or ticket is selected (desktop)
+  useEffect(() => {
+    if (formattedSelectedTicket?.messages?.length > 0) {
+      // Small delay to ensure DOM is updated
+      setTimeout(scrollToBottom, 100);
+    }
+  }, [formattedSelectedTicket?.messages?.length, selectedTicketId]);
+
+  const handleCreateTicket = (values) => {
+    createTicketMutation.mutate(values);
+  };
+
+  const handleSendReply = (replyText) => {
+    if (!selectedTicketId || !replyText.trim()) return;
+
+    sendReplyMutation.mutate({
+      ticketId: selectedTicketId,
+      message: replyText.trim(),
+    });
+  };
+
+  const handleDesktopSendReply = (e) => {
     e.preventDefault();
     if (!reply.trim()) return;
-    const updatedTickets = tickets.map((t) => {
-      if (t.id === selectedTicketId && t.status === "opened") {
-        const newMsg = {
-          sender: "client",
-          text: reply,
-          time: new Date().toISOString(),
-        };
-        return {
-          ...t,
-          lastMessage: `Client: ${reply}`,
-          messages: [...t.messages, newMsg],
-        };
-      }
-      return t;
-    });
-    setTickets(updatedTickets);
+    handleSendReply(reply);
     setReply("");
+
+    // Scroll to bottom after sending message
+    setTimeout(scrollToBottom, 200);
+  };
+
+  // Avatar component for desktop chat
+  const Avatar = ({ sender }) => {
+    return (
+      <div
+        className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-white text-xs md:text-sm ${
+          sender === "client" ? "bg-carer-blue" : "bg-green-500"
+        }`}
+      >
+        {sender === "client" ? <FaUser /> : <FaUserMd />}
+      </div>
+    );
   };
 
   return (
     <div className="pageContent">
-      <div className="flex flex-col md:flex-row h-full overflow-y-auto xl:h-[690px] bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div className="flex flex-col md:flex-row overflow-y-auto xl:h-[690px] bg-white rounded-2xl shadow-lg overflow-hidden">
         {/* Mobile: Ticket List always at top, fixed height, scrollable */}
         <div className="w-full md:w-80 bg-gray-50 border-b md:border-b-0 md:border-r flex flex-col">
           <div className="flex items-center justify-between p-4 border-b w-full">
@@ -366,21 +181,34 @@ const Support = () => {
               <FaPlus className="mr-1" /> New
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto w-full md:h-auto h-[180px]">
-            {tickets.length === 0 ? (
+          <div className="flex-1 overflow-y-auto w-full md:h-auto">
+            {isLoading ? (
+              <div className="p-6 text-center text-gray-400">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-carer-blue mx-auto mb-2"></div>
+                Loading tickets...
+              </div>
+            ) : error ? (
+              <div className="p-6 text-center text-red-500">
+                <FaEnvelopeOpenText className="mx-auto text-3xl mb-2" />
+                Error loading tickets: {error.message}
+              </div>
+            ) : tickets.length === 0 ? (
               <div className="p-6 text-center text-gray-400">
                 <FaEnvelopeOpenText className="mx-auto text-3xl mb-2" />
                 No support tickets yet.
               </div>
             ) : (
-              <ul className="h-[150px] md:h-full overflow-y-auto w-full">
+              <ul className="h-[80vh] md:h-full overflow-y-auto w-full">
                 {tickets.map((ticket) => (
                   <li
                     key={ticket.id}
                     className={`cursor-pointer px-4 py-3 border-b flex flex-col hover:bg-blue-50 transition-colors ${
                       selectedTicketId === ticket.id ? "bg-blue-100" : ""
                     }`}
-                    onClick={() => setSelectedTicketId(ticket.id)}
+                    onClick={() => {
+                      setSelectedTicketId(ticket.id);
+                      setShowMobileChatModal(true);
+                    }}
                   >
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-dark-blue text-sm md:text-base">
@@ -388,7 +216,7 @@ const Support = () => {
                       </span>
                       <span
                         className={`text-xs px-2 py-1 rounded-full font-medium ml-2 ${
-                          ticket.status === "opened"
+                          ticket.status?.toLowerCase() === "open"
                             ? "bg-green-100 text-green-700"
                             : "bg-gray-200 text-gray-500"
                         }`}
@@ -397,7 +225,16 @@ const Support = () => {
                       </span>
                     </div>
                     <span className="text-xs text-gray-500 mt-1 truncate">
-                      {ticket.lastMessage}
+                      {ticket.messages?.length > 0
+                        ? `${
+                            ticket.messages[ticket.messages.length - 1]
+                              .sender_type === "admin"
+                              ? "Admin"
+                              : "You"
+                          }: ${
+                            ticket.messages[ticket.messages.length - 1].message
+                          }`
+                        : `You: ${ticket.message}`}
                     </span>
                   </li>
                 ))}
@@ -405,39 +242,45 @@ const Support = () => {
             )}
           </div>
         </div>
-        {/* Chat Panel */}
-        <div className="flex-1 flex flex-col md:ml-0 ml-0">
+        {/* Chat Panel - Hidden on Mobile */}
+        <div className="hidden md:flex flex-1 flex-col md:ml-0 ml-0">
           {/* Chat Header */}
           <div className="p-4 border-b flex items-center justify-between">
             <div>
               <h3 className="font-bold text-dark-blue text-sm md:text-lg">
-                {selectedTicket?.subject || "Select a ticket"}
+                {formattedSelectedTicket?.subject || "Select a ticket"}
               </h3>
               <span
                 className={`text-xs px-2 py-1 rounded-full font-medium ml-2 ${
-                  selectedTicket?.status === "opened"
+                  formattedSelectedTicket?.status === "opened"
                     ? "bg-green-100 text-green-700"
                     : "bg-gray-200 text-gray-500"
                 }`}
               >
-                {selectedTicket?.status}
+                {formattedSelectedTicket?.status}
               </span>
             </div>
           </div>
           {/* Chat Messages */}
-          <div className="w-full h-[370px] lg:h-[600px] overflow-y-auto p-3 md:p-6 space-y-4 bg-gray-50">
-            {selectedTicket?.messages?.map((msg, idx) => (
+          <div
+            ref={desktopMessagesContainerRef}
+            className="w-full h-[370px] lg:h-[600px] overflow-y-auto p-3 md:p-6 space-y-4 bg-gray-50"
+          >
+            {formattedSelectedTicket?.messages?.map((msg, idx) => (
               <div
-                key={idx}
-                className={`flex ${
+                key={msg.id || idx}
+                className={`flex items-end space-x-2 ${
                   msg.sender === "client" ? "justify-end" : "justify-start"
                 }`}
               >
+                {/* Avatar for admin messages (left side) */}
+                {msg.sender === "admin" && <Avatar sender={msg.sender} />}
+
                 <div
-                  className={`max-w-[90%] md:max-w-[70%] px-3 md:px-4 py-2 rounded-lg shadow text-xs md:text-sm ${
+                  className={`max-w-[80%] md:max-w-[70%] px-3 md:px-4 py-2 rounded-lg shadow text-xs md:text-sm ${
                     msg.sender === "client"
-                      ? "bg-carer-blue text-white"
-                      : "bg-white text-dark-blue border"
+                      ? "bg-carer-blue text-white rounded-br-none"
+                      : "bg-white text-dark-blue border rounded-bl-none"
                   }`}
                 >
                   {msg.text}
@@ -445,32 +288,48 @@ const Support = () => {
                     {new Date(msg.time).toLocaleString()}
                   </div>
                 </div>
+
+                {/* Avatar for client messages (right side) */}
+                {msg.sender === "client" && <Avatar sender={msg.sender} />}
               </div>
             ))}
+            {/* Invisible element at the bottom to scroll to */}
+            <div ref={messagesEndRef} className="h-1" />
           </div>
           {/* Chat Input */}
           <div className="p-3 md:p-4 border-t bg-white">
-            {selectedTicket?.status === "opened" ? (
-              <form
-                className="flex flex-col md:flex-row gap-2"
-                onSubmit={handleSendReply}
-              >
-                <input
-                  type="text"
-                  value={reply}
-                  onChange={(e) => setReply(e.target.value)}
-                  placeholder="Type your message..."
-                  className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-carer-blue text-xs md:text-base"
-                  disabled={false}
-                />
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-carer-blue text-white rounded-lg hover:bg-haven-blue flex items-center justify-center text-xs md:text-base"
-                  disabled={!reply.trim()}
+            {formattedSelectedTicket?.status === "opened" ? (
+              formattedSelectedTicket?.hasAdminReply ? (
+                <form
+                  className="flex flex-col md:flex-row gap-2"
+                  onSubmit={handleDesktopSendReply}
                 >
-                  <FaPaperPlane />
-                </button>
-              </form>
+                  <input
+                    type="text"
+                    value={reply}
+                    onChange={(e) => setReply(e.target.value)}
+                    placeholder="Type your message..."
+                    className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-carer-blue text-xs md:text-base"
+                  />
+                  <button
+                    type="submit"
+                    className="px-5 py-2 bg-carer-blue text-white rounded-lg hover:bg-haven-blue flex items-center justify-center text-xs md:text-base disabled:opacity-50"
+                    disabled={!reply.trim() || sendReplyMutation.isPending}
+                  >
+                    {sendReplyMutation.isPending ? (
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    ) : (
+                      <FaPaperPlane />
+                    )}
+                  </button>
+                </form>
+              ) : (
+                <div className="flex items-center text-gray-400 text-xs md:text-base">
+                  <FaLock className="mr-2" />
+                  Waiting for admin response. You can reply once admin responds
+                  to your ticket.
+                </div>
+              )
             ) : (
               <div className="flex items-center text-gray-400 text-xs md:text-base">
                 <FaLock className="mr-2" />
@@ -479,57 +338,23 @@ const Support = () => {
             )}
           </div>
         </div>
-        {/* New Ticket Modal */}
-        {showNewTicketModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
-              <h2 className="text-xl font-bold mb-4 text-dark-blue">
-                Create Support Ticket
-              </h2>
-              <form onSubmit={handleCreateTicket}>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    value={newSubject}
-                    onChange={(e) => setNewSubject(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-carer-blue text-xs md:text-base"
-                    required
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    rows={4}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-carer-blue text-xs md:text-base"
-                    required
-                  />
-                </div>
-                <div className="flex space-x-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowNewTicketModal(false)}
-                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-xs md:text-base"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 px-4 py-2 bg-carer-blue text-white rounded-lg hover:bg-haven-blue text-xs md:text-base"
-                  >
-                    Create Ticket
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
+
+        {/* Modal Components */}
+        <SupportTicketModal
+          showNewTicketModal={showNewTicketModal}
+          setShowNewTicketModal={setShowNewTicketModal}
+          onCreateTicket={handleCreateTicket}
+          isLoading={createTicketMutation.isPending}
+          validationSchema={createSupportTicketSchema}
+        />
+
+        <MobileChatModal
+          showMobileChatModal={showMobileChatModal}
+          setShowMobileChatModal={setShowMobileChatModal}
+          selectedTicket={formattedSelectedTicket}
+          onSendReply={handleSendReply}
+          isLoading={sendReplyMutation.isPending}
+        />
       </div>
     </div>
   );
