@@ -115,7 +115,7 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
         <MediumBtn
           onClick={onSubmit}
           text="Submit Booking"
-          color="darkblue"
+          color="carerBlue"
           loading={isLoading}
           loadingText="Submitting Appointment..."
         />

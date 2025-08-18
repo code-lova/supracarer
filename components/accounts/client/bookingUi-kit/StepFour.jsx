@@ -152,7 +152,7 @@ const StepFour = ({
       <div className="flex justify-between w-full max-w-3xl mt-6">
         <MediumBtn text="Back" color="gray" onClick={goToPrevStep} />
 
-        <MediumBtn text="Preview" color="darkblue" onClick={handlePreview} />
+        <MediumBtn text="Preview" color="carerBlue" onClick={handlePreview} />
       </div>
     </div>
   );

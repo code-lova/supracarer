@@ -56,6 +56,10 @@ const colorVariants = {
     base: "bg-slate-gray2",
     hover: "hover:bg-gray-300 hover:text-slate-gray2",
   },
+  carerBlue: {
+    base: "bg-carer-blue",
+    hover: "hover:bg-dark-gray-blue",
+  }
 };
 
 export const SmallBtn = ({

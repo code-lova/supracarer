@@ -102,7 +102,7 @@ const Booking = () => {
 
   return (
     <div className="pageContent">
-      <div className="xl:h-[690px] bg-white rounded-2xl shadow-lg px-5 py-3">
+      <div className="xl:h-[690px] bg-gray-50 rounded-2xl shadow-lg px-5 py-3">
         {/* rest o the form here  */}
         {!isPreviewing ? (
           <StepWrapper
