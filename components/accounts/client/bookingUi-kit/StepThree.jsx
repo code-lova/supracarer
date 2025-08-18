@@ -153,7 +153,7 @@ const StepThree = ({ values, handleChange, goToNextStep, goToPrevStep }) => {
       <div className="flex justify-between w-full max-w-3xl mt-6">
         <MediumBtn text="Back" color="gray" onClick={goToPrevStep} />
 
-        <MediumBtn text="Next" color="darkblue" onClick={handleNext} />
+        <MediumBtn text="Next" color="carerBlue" onClick={handleNext} />
       </div>
     </div>
   );

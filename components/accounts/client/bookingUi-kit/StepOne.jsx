@@ -244,7 +244,7 @@ const StepOne = ({ values, goToNextStep, setFormValues }) => {
         </div>
 
         <div className="mt-6 text-center">
-          <MediumBtn text="Next" color="darkblue" type="submit" />
+          <MediumBtn text="Next" color="carerBlue" type="submit" />
         </div>
       </form>
     </div>

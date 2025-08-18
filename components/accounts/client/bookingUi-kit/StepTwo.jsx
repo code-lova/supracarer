@@ -128,7 +128,7 @@ const StepTwo = ({
 
         <MediumBtn
           text="Next"
-          color="darkblue"
+          color="carerBlue"
           onClick={handleValidationAndNext}
         />
       </div>
