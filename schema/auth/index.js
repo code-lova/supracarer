@@ -77,3 +77,30 @@ export const verifyEmailSchema = yup.object().shape({
     .length(6, "Code must be 6 characters")
     .required("Verification code required"),
 });
+
+export const changePasswordSchema = yup.object().shape({
+  currentPassword: yup.string().required("Current password is required"),
+  newPassword: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(/[A-Z]/, "Must contain an uppercase letter")
+    .matches(/[a-z]/, "Must contain a lowercase letter")
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    )
+    .required("New password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), null], "Passwords must match")
+    .required("Confirm new password is required"),
+});
+
+export const verify2FASchema = yup.object().shape({
+  code: yup
+    .string()
+    .required("Verification code is required")
+    .length(6, "Verification code must be 6 digits")
+    .matches(/^\d+$/, "Verification code must contain only numbers"),
+});
