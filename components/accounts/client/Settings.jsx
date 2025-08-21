@@ -131,11 +131,10 @@ const Settings = () => {
   const logoutAllDevicesMutation = useMutation({
     mutationFn: logoutAllDeviceRequest,
     onSuccess: async () => {
-      toast.success("Successfully logged out from all devices");
       // Clear query cache and sign out
+      await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
       queryClient.clear();
       setUser(null);
-      await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
     },
     onError: (err) => {
       toast.error(err.message || "Failed to logout from all devices");
