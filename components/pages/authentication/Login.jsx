@@ -41,75 +41,51 @@ const Login = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setLoading(true);
-
     try {
-      // First, check credentials with backend
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Real-User-Agent": navigator.userAgent,
-          },
-          body: JSON.stringify({
-            email: values.email,
-            password: values.password,
-            userAgent: navigator.userAgent,
-          }),
-        }
-      );
+      // Use NextAuth signIn for initial login
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: values.email,
+        userAgent: navigator.userAgent,
+        password: values.password,
+      });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Invalid credentials");
-      }
-
-      // Check if user has 2FA enabled
-      if (data.requires_2fa) {
-        // Store credentials and 2FA data for later use
+      // If NextAuth returns 2FA_REQUIRED, use the twoFactorData from result (do NOT call /login again)
+      if (result?.error === "2FA_REQUIRED") {
         setPendingCredentials({
           email: values.email,
           password: values.password,
         });
-        setTwoFactorData(data);
+        setTwoFactorData(result.twoFactorData);
         setShowTwoFactor(true);
         setLoading(false);
-        toast.success(data.message || "Verification code sent to your email");
+        toast.success(
+          result.twoFactorData || "Verification code sent to your email"
+        );
+      } else if (result?.error === "2FA_REQUIRED") {
+        toast.error("2FA verification required, but no data returned");
+        setLoading(false);
+      } else if (result?.error) {
+        toast.error(
+          result.error === "Invalid credentials"
+            ? "Invalid email or password"
+            : result.error
+        );
+        setLoading(false);
       } else {
-        // Proceed with normal login through NextAuth
-        const result = await signIn("credentials", {
-          redirect: false,
-          email: values.email,
-          userAgent: navigator.userAgent,
-          password: values.password,
-        });
-
-        if (result?.error) {
-          if (result.error === "2FA_REQUIRED") {
-            // This shouldn't happen here, but just in case
-            toast.error("2FA verification required");
-          } else {
-            toast.error("Invalid email or password");
-          }
-          setLoading(false);
-        } else {
-          toast.success("Login successful");
-          refetchUser();
-        }
+        toast.success("Login successful");
+        refetchUser();
       }
     } catch (error) {
       toast.error(error.message || "Login failed");
       setLoading(false);
     }
-
     setSubmitting(false);
   };
 
   const handle2FASuccess = async (verificationData) => {
     setLoading(true);
-    
+
     try {
       // If the verification data contains user information and token, use it directly
       if (verificationData.user && verificationData.accessToken) {
@@ -193,7 +169,9 @@ const Login = () => {
             Welcome Back
           </h1>
         </div>
-        <h2 className="text-2xl font-bold mb-6 text-center text-haven-blue">Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-haven-blue">
+          Login
+        </h2>
 
         <Formik
           initialValues={{ email: "", password: "" }}
