@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { FaHeartPulse } from "react-icons/fa6";
 import { stepOneValidationSchema } from "@schema/client/booking/ValidationSchema";
-import { MediumBtn } from "@components/core/button";
+import { MediumBtn, NormalBtn } from "@components/core/button";
 
-const StepOne = ({ values, goToNextStep, setFormValues }) => {
+const StepOne = ({ values, goToNextStep, setFormValues, userDetails }) => {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -242,10 +242,16 @@ const StepOne = ({ values, goToNextStep, setFormValues }) => {
             </>
           )}
         </div>
-
-        <div className="mt-6 text-center">
-          <MediumBtn text="Next" color="carerBlue" type="submit" />
-        </div>
+        {userDetails && userDetails?.address ? (
+          <div className="mt-6 text-center">
+            <MediumBtn text="Next" color="carerBlue" type="submit" />
+          </div>
+        ) : (
+          <div className="mt-12 text-center flex flex-col">
+            <span className="text-sm text-red-500 font-normal pb-3">Please update your profile first to continue </span>
+            <NormalBtn href="/client/profile" children="Update Profile" />
+          </div>
+        )}
       </form>
     </div>
   );

@@ -4,6 +4,7 @@ import { FaStar, FaTimes } from "react-icons/fa";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { validateCompleteAppointment } from "@schema/client/booking/ValidationSchema";
+import { MediumBtn } from "@components/core/button";
 
 const CompleteAppointmentModal = ({
   isOpen,
@@ -121,25 +122,21 @@ const CompleteAppointmentModal = ({
               </div>
               {/* Action Buttons */}
               <div className="flex space-x-3 pt-4">
-                <button
+                <MediumBtn
+                  text="Cancel"
                   type="button"
+                  color="gray"
+                  loading={isLoading || isSubmitting}
                   onClick={onClose}
-                  disabled={isLoading || isSubmitting}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors disabled:opacity-50"
-                >
-                  Cancel
-                </button>
-                <button
+                />
+
+                <MediumBtn
+                  text="Submit & Complete"
                   type="submit"
-                  disabled={isLoading || isSubmitting}
-                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                >
-                  {isLoading || isSubmitting ? (
-                    <span>Submitting...</span>
-                  ) : (
-                    <span>Submit & Complete</span>
-                  )}
-                </button>
+                  color="green"
+                  loadingText="Submitting..."
+                  loading={isLoading || isSubmitting}
+                />
               </div>
             </Form>
           )}

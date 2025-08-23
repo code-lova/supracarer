@@ -59,7 +59,11 @@ const colorVariants = {
   carerBlue: {
     base: "bg-carer-blue",
     hover: "hover:bg-dark-gray-blue",
-  }
+  },
+  orange: {
+    base: "bg-orange-500",
+    hover: "hover:bg-orange-600",
+  },
 };
 
 export const SmallBtn = ({
@@ -83,14 +87,22 @@ export const SmallBtn = ({
   );
 };
 
-export const MediumBtn = ({ loading, text, type, onClick, loadingText, color = "green", }) => {
+export const MediumBtn = ({
+  loading,
+  text,
+  type,
+  onClick,
+  loadingText,
+  color = "green",
+  icon,
+}) => {
   const { base, hover } = colorVariants[color] || colorVariants.darkblue;
   return (
     <button
       type={type}
       disabled={loading}
       onClick={onClick}
-      className={`px-4 py-2 ${base} ${hover} text-white rounded-sm text-md`}
+      className={`px-4 py-2 ${base} ${hover} text-white rounded-sm text-md disabled:opacity-50 disabled:cursor-not-allowed`}
     >
       {loading ? (
         <div className="flex items-center">
@@ -98,7 +110,10 @@ export const MediumBtn = ({ loading, text, type, onClick, loadingText, color = "
           {loadingText}
         </div>
       ) : (
-        text
+        <span className="flex items-center text-sm">
+          {icon && <span>{icon}</span>}
+          {text}
+        </span>
       )}
     </button>
   );

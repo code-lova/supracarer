@@ -9,8 +9,12 @@ import BookingSummary from "./bookingUi-kit/BookingSummary";
 import { bookAppointment } from "@service/request/client/bookingApt";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
+import { useUserContext } from "@context/userContext";
+
 
 const Booking = () => {
+  const { user } = useUserContext();
+  const userDetails = user?.data;
   const [step, setStep] = useState(0);
   const [isPreviewing, setIsPreviewing] = useState(false);
   const [formValues, setFormValues] = useState({
@@ -114,6 +118,7 @@ const Booking = () => {
                 values={formValues}
                 goToNextStep={goToNextStep}
                 setFormValues={setFormValues}
+                userDetails={userDetails}
               />
             )}
             {step === 1 && (
