@@ -57,7 +57,7 @@ const Sidebar = () => {
                 />
               </Link>
               <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                2
+                4
               </span>
             </div>
             {/* ☰ Hamburger menu */}

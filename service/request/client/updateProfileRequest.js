@@ -2,7 +2,7 @@ import { fetchWithAuth } from "@utils/fetchWithAuth";
 
 export const updateClientProfile = async (payload) => {
   const response = await fetchWithAuth(
-    `${process.env.NEXT_PUBLIC_API_URL}/client`,
+    `${process.env.NEXT_PUBLIC_API_URL}/profile-update`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },

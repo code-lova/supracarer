@@ -1,4 +1,5 @@
 "use client";
+import { MediumBtn } from "@components/core/button";
 import React from "react";
 import {
   FaTimes,
@@ -378,71 +379,53 @@ const AppointmentDetailsModal = ({
         {/* Footer */}
         <div className="bg-gray-50 px-6 py-4 border-t sticky bottom-0">
           <div className="flex justify-end space-x-3">
-            <button
+            <MediumBtn
+              text="Close"
+              type="button"
+              color="gray"
+              loading={isCancelling || isDeleting}
               onClick={onClose}
-              className="px-6 py-2 bg-gray-300 text-dark-gray-blue rounded-lg hover:bg-gray-400 transition-colors"
-              disabled={isCancelling || isDeleting}
-            >
-              Close
-            </button>
+            />
 
             {/* Cancel Button - Only show for Pending appointments */}
             {appointment.status === "Pending" && (
-              <button
+              <MediumBtn
                 onClick={() => onCancelAppointment(appointment.uuid)}
-                disabled={isCancelling || isDeleting}
-                className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-              >
-                {isCancelling ? (
-                  <>
-                    <FaSpinner className="mr-2 animate-spin" />
-                    Cancelling...
-                  </>
-                ) : (
-                  <>
-                    <FaBan className="mr-2" />
-                    Cancel Booking
-                  </>
-                )}
-              </button>
+                loading={isCancelling || isDeleting}
+                loadingText="Cancelling..."
+                text="Cancel Booking"
+                color="orange"
+                icon={<FaBan className="mr-2" />}
+              />
             )}
 
             {/* Delete Button - Only show for Cancelled appointments */}
             {appointment.status === "Cancelled" && (
-              <button
+              <MediumBtn
                 onClick={() => onDeleteAppointment(appointment.uuid)}
-                disabled={isCancelling || isDeleting}
-                className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-              >
-                {isDeleting ? (
-                  <>
-                    <FaSpinner className="mr-2 animate-spin" />
-                    Deleting...
-                  </>
-                ) : (
-                  <>
-                    <FaTrash className="mr-2" />
-                    Delete Booking
-                  </>
-                )}
-              </button>
+                loading={isCancelling || isDeleting}
+                loadingText="Deleting..."
+                text="Delete Booking"
+                color="red"
+                icon={<FaTrash className="mr-2" />}
+              />
             )}
 
             {/* Done Button - Only show for Ongoing appointments */}
             {appointment.status === "Ongoing" && (
-              <button
+              <MediumBtn
                 onClick={() =>
                   onCompleteAppointment(
                     appointment.uuid,
                     appointment.health_worker?.name
                   )
                 }
-                disabled={isCancelling || isDeleting}
-                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-              >
-                <FaStar className="mr-2" />
-                Done
-              </button>
+                loading={isCancelling || isDeleting}
+                text="Done"
+                loadingText="Submitting..."
+                color="green"
+                icon={<FaStar className="mr-2" />}
+              />
             )}
 
             {/* Contact Health Worker Button - Only show when worker is assigned and confirmed */}

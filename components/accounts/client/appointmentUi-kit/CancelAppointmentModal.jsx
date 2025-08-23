@@ -1,4 +1,5 @@
 "use client";
+import { MediumBtn } from "@components/core/button";
 import React, { useState } from "react";
 import { FaTimes, FaBan, FaExclamationTriangle } from "react-icons/fa";
 
@@ -125,31 +126,22 @@ const CancelAppointmentModal = ({
 
           {/* Action Buttons */}
           <div className="flex space-x-3 pt-4">
-            <button
+            <MediumBtn
+              text="Keep Appointment"
               type="button"
+              color="gray"
+              loading={isLoading}
               onClick={handleClose}
-              disabled={isLoading}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 text-base rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors disabled:opacity-50"
-            >
-              Keep Appointment
-            </button>
-            <button
+            />
+
+            <MediumBtn
+              loading={isLoading}
+              loadingText="Cancelling..."
+              text="Cancel"
+              color="red"
               type="submit"
-              disabled={isLoading || !reason.trim()}
-              className="flex-1 px-4 py-2 bg-red-600 text-white text-base rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-            >
-              {isLoading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Cancelling...</span>
-                </>
-              ) : (
-                <>
-                  <FaBan className="text-sm" />
-                  <span>Cancel</span>
-                </>
-              )}
-            </button>
+              icon={<FaBan className="text-sm" />}
+            />
           </div>
         </form>
       </div>

@@ -50,6 +50,7 @@ module.exports = {
         "dark-pink-border": "#db2777",
         "light-blue-bg": "#eff6ff",
         "dark-blue-border": "#2563eb",
+        "danger-red": "#cc3366",
         
       },
       boxShadow: {

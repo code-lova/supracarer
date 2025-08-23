@@ -24,6 +24,7 @@ import {
   deleteBooking,
   completeBooking,
 } from "@service/request/client/bookingApt";
+import { MediumBtn } from "@components/core/button";
 
 const Appointments = () => {
   const queryClient = useQueryClient();
@@ -55,7 +56,7 @@ const Appointments = () => {
         per_page: itemsPerPage,
       }),
     retry: 2,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 60 * 1000, // 1 minute
     keepPreviousData: true, // Keep previous data while fetching new data
   });
 
@@ -346,41 +347,38 @@ const Appointments = () => {
                         )}
                       </div>
 
-                      <div className="flex space-x-2">
-                        <button
+                      <div className="flex item-center justify-center space-x-2">
+                        <MediumBtn
                           onClick={() => handleViewDetails(appointment)}
-                          className="flex-1 bg-carer-blue text-white py-2 px-4 rounded-lg hover:bg-haven-blue transition-colors flex items-center justify-center"
-                        >
-                          <FaEye className="mr-2" />
-                          View Details
-                        </button>
+                          text="View Details"
+                          color="carerBlue"
+                          icon={<FaEye className="mr-1" />}
+                        />
 
                         {/* Quick Cancel Button for Pending appointments */}
                         {appointment.status === "Pending" && (
-                          <button
+                          <MediumBtn
                             onClick={() =>
                               handleCancelAppointment(appointment.uuid)
                             }
-                            disabled={cancelBookingMutation.isLoading}
-                            className="bg-orange-500 text-white py-2 px-3 rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            title="Cancel"
-                          >
-                            <FaBan />
-                          </button>
+                            loading={cancelBookingMutation.isLoading}
+                            text="Cancel"
+                            color="orange"
+                            icon={<FaBan className="mr-1" />}
+                          />
                         )}
 
                         {/* Quick Delete Button for Cancelled appointments */}
                         {appointment.status === "Cancelled" && (
-                          <button
+                          <MediumBtn
                             onClick={() =>
                               handleDeleteAppointment(appointment.uuid)
                             }
-                            disabled={deleteBookingMutation.isLoading}
-                            className="bg-red-500 text-white py-2 px-3 rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            title="Delete"
-                          >
-                            <FaTrash />
-                          </button>
+                            loading={deleteBookingMutation.isLoading}
+                            text="Delete"
+                            color="red"
+                            icon={<FaTrash className="mr-1" />}
+                          />
                         )}
                       </div>
                     </div>
@@ -493,41 +491,38 @@ const Appointments = () => {
                           </td>
                           <td className="px-4 py-4 text-center">
                             <div className="flex items-center justify-center space-x-2">
-                              <button
+                              {/* View Details Button */}
+                              <MediumBtn
                                 onClick={() => handleViewDetails(appointment)}
-                                className="bg-carer-blue text-white px-3 py-2 rounded-lg hover:bg-haven-blue transition-colors flex items-center"
-                                title="View Details"
-                              >
-                                <FaEye className="mr-1" />
-                                View
-                              </button>
+                                text="View"
+                                color="carerBlue"
+                                icon={<FaEye className="mr-1" />}
+                              />
 
                               {/* Quick Cancel Button for Pending appointments */}
                               {appointment.status === "Pending" && (
-                                <button
+                                <MediumBtn
                                   onClick={() =>
                                     handleCancelAppointment(appointment.uuid)
                                   }
-                                  disabled={cancelBookingMutation.isLoading}
-                                  className="bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                                  title="Cancel Appointment"
-                                >
-                                  <FaBan />
-                                </button>
+                                  loading={cancelBookingMutation.isLoading}
+                                  text="Cancel"
+                                  color="orange"
+                                  icon={<FaBan />}
+                                />
                               )}
 
                               {/* Quick Delete Button for Cancelled appointments */}
                               {appointment.status === "Cancelled" && (
-                                <button
+                                <MediumBtn
                                   onClick={() =>
                                     handleDeleteAppointment(appointment.uuid)
                                   }
-                                  disabled={deleteBookingMutation.isLoading}
-                                  className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                                  title="Delete Appointment"
-                                >
-                                  <FaTrash />
-                                </button>
+                                  loading={deleteBookingMutation.isLoading}
+                                  text="Delete"
+                                  color="red"
+                                  icon={<FaTrash className="mr-1" />}
+                                />
                               )}
                             </div>
                           </td>
