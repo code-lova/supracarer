@@ -120,7 +120,7 @@ const Sidebar = () => {
             onClick={handleLogout}
           >
             {/* Logout Icon - larger size for consistency */}
-            <FaSignOutAlt className="text-xl md:text-xl" />
+            <FaSignOutAlt className="text-xl" />
             {loading ? "Logging Out..." : "Logout"}
           </li>
         </ul>
