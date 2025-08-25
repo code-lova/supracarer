@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { getAuthUser, getClientUser } from "@service/request/user/getAuthUser";
+import { getAuthUser, getClientUser, getAdminUser } from "@service/request/user/getAuthUser";
+import { isFunction } from "@node_modules/formik/dist";
 
 export const AUTH = "auth";
 
@@ -22,8 +23,10 @@ const useUser = (opts = {}) => {
       try {
         if (role === "client") {
           return await getClientUser();
-        } else {
+        } else if (role === "healthworker") {
           return await getAuthUser(); // default to healthworker or admin, etc.
+        } else if (role === "admin") {
+          return await getAdminUser();
         }
       } catch {
         return null;

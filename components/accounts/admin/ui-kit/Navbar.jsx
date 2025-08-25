@@ -1,4 +1,7 @@
+"use client";
 import React, { useState, useRef } from "react";
+import { useUserContext } from "@context/userContext";
+
 import {
   FaBars,
   FaBell,
@@ -25,6 +28,8 @@ const tickets = [
 ];
 
 export default function Navbar({ onMenuClick }) {
+  const { user } = useUserContext();
+  const userDetails = user?.data;
   const [showBell, setShowBell] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -150,16 +155,32 @@ export default function Navbar({ onMenuClick }) {
             className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-full"
             aria-label="Profile"
           >
-            <img
+            {userDetails?.image ? (
+              <img
+                src={userDetails?.image}
+                alt="Profile"
+                className="w-8 h-8 rounded-full border-2 border-light-blue-bg"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-haven-blue flex items-center justify-center text-white text-md font-bold border-2 border-light-blue-bg">
+                {userDetails?.fullname === "Administrator"
+                  ? "AD"
+                  : userDetails?.fullname?.[0]?.toUpperCase() || "U"}
+              </div>
+            )}
+
+            {/* <img
               src="https://media.istockphoto.com/id/1078140842/photo/portrait-of-successful-male-high-school-teacher.jpg?s=612x612&w=0&k=20&c=J2uaW3eihYm72aJlqrd1LKuWgEaNpEJaqNTRM7g9oI4="
               alt="admin"
               className="w-8 h-8 rounded-full"
-            />
+            /> */}
             <FaChevronDown size={16} />
           </button>
           {showProfile && (
             <div className="absolute right-0 mt-2 w-48 bg-white text-haven-blue shadow-lg rounded z-50">
-              <div className="p-3 border-b font-semibold">Admin Name</div>
+              <div className="p-3 border-b font-semibold">
+                {userDetails?.fullname}
+              </div>
               <ul>
                 <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer">
                   Profile

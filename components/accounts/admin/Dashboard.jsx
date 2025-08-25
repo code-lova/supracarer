@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import StatsCards from "./dashboard-kit/StatsCards";
 import LineGraphChart from "./dashboard-kit/LineGraphChart";
