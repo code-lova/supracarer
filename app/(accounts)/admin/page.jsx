@@ -1,12 +1,8 @@
-import Admin from '@components/accounts/admin/Admin';
-import React from 'react'
+import React from "react";
+import Dashboard from "@components/accounts/admin/Dashboard";
 
 const Page = () => {
-  return (
-    <div>
-        <Admin />
-    </div>
-  )
-}
+  return <Dashboard />;
+};
 
 export default Page;
