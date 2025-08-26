@@ -12,7 +12,7 @@ export const updateUserPassword = async (passwordData) => {
     }
   );
 
-   if (!response.ok) {
+  if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     if (response.status === 422 && errorData.errors)
       throw new Error(Object.values(errorData.errors).flat().join(" "));
