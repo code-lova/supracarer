@@ -18,6 +18,10 @@ const statusStyleMap = {
   done: "bg-gray-100 text-gray-800",
   cancelled: "bg-red-100 text-red-800",
   processing: "bg-blue-100 text-blue-800",
+  verified: "bg-green-100 text-green-800",
+  unverified: "bg-gray-100 text-gray-800",
+  active: "bg-green-100 text-green-800",
+  blocked: "bg-red-100 text-red-800",
 };
 
 const sizeClassMap = {
@@ -34,6 +38,10 @@ const statusIconMap = {
   done: FiCheckCircle,
   cancelled: FiXCircle,
   processing: FiLoader,
+  verified: FiCheckCircle,
+  unverified: FiAlertCircle,
+  active: FiThumbsUp,
+  blocked: FiXCircle,
 };
 
 const StatusPill = ({

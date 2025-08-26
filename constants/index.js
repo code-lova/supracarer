@@ -828,41 +828,6 @@ export const hourRateServiceOptions = {
   ],
 };
 
-export const mockPatients = [
-  {
-    id: 1,
-    name: "Ama Mensah",
-    age: 34,
-    email: "ama.mensah@email.com",
-    image: "/assets/images/patient1.jpg",
-    details: "Ama is a diabetic patient requiring daily monitoring.",
-  },
-  {
-    id: 2,
-    name: "Kwame Boateng",
-    age: 42,
-    email: "kwame.boateng@email.com",
-    image: "/assets/images/patient2.jpg",
-    details: "Kwame is hypertensive and needs regular checkups.",
-  },
-  {
-    id: 3,
-    name: "Efua Owusu",
-    age: 29,
-    email: "efua.owusu@email.com",
-    image: "/assets/images/patient3.jpg",
-    details: "Efua is recovering from surgery and needs wound care.",
-  },
-  {
-    id: 4,
-    name: "Yaw Asante",
-    age: 51,
-    email: "yaw.asante@email.com",
-    image: "/assets/images/patient4.jpg",
-    details:
-      "Yaw is elderly and requires companionship and medication reminders.",
-  },
-];
 
 export const supportSubjects = [
   "Account Verification Issue",

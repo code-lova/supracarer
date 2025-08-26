@@ -9,6 +9,19 @@
   scroll-behavior: smooth;
   font-family: "Open Sans", Arial, sans-serif;
 }
+@keyframes slidein-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-slidein-right {
+  animation: slidein-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
 
 .main {
   width: 100vw;
@@ -62,13 +75,12 @@
   border-width: 4px;
   border-style: solid;
   border-color: transparent;
-  border-top-color: #3bb3a8;   /* tranquil-teal */
+  border-top-color: #3bb3a8; /* tranquil-teal */
   border-right-color: #0077b6; /* carer-blue */
   border-bottom-color: #3bb3a8;
   border-left-color: #0077b6;
   animation: spin 1s linear infinite;
 }
-
 
 @keyframes spin {
   0% {
@@ -257,7 +269,7 @@
     @apply border border-gray-300 text-slate-gray rounded px-4 py-2 text-sm shadow-sm outline-none focus:ring-custom-green focus:border-tranquil-teal;
   }
 
-   .steper-form-input {
+  .steper-form-input {
     @apply w-full border border-gray-300 text-slate-gray rounded px-4 py-2 text-sm shadow-sm outline-none focus:ring-carer-blue focus:border-carer-blue;
   }
 }

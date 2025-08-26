@@ -92,7 +92,6 @@ const Appointments = () => {
       toast.success("Appointment deleted successfully");
     },
     onError: (error) => {
-      console.error("Error deleting appointment:", error.message);
       // Show error toast
       toast.error(error.message || "Failed to delete appointment");
     },
