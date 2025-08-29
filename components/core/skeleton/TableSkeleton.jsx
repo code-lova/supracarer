@@ -42,27 +42,27 @@ const TableSkeleton = ({ rows = 5, className = "" }) => {
       <div className="hidden md:block">
         <table className="w-full">
           <thead className="sticky top-0 z-10">
-            <tr className="bg-gradient-to-r from-carer-blue to-blue-500">
+            <tr className="bg-slate-gray2">
               <th className="px-4 py-4 text-left rounded-tl-lg">
-                <div className="h-4 bg-blue-400 rounded w-20"></div>
+                <div className="h-4 bg-slate-gray rounded w-20"></div>
               </th>
               <th className="px-4 py-4 text-left">
-                <div className="h-4 bg-blue-400 rounded w-16"></div>
+                <div className="h-4 bg-slate-gray rounded w-16"></div>
               </th>
               <th className="px-4 py-4 text-left">
-                <div className="h-4 bg-blue-400 rounded w-20"></div>
+                <div className="h-4 bg-slate-gray rounded w-20"></div>
               </th>
               <th className="px-4 py-4 text-left">
-                <div className="h-4 bg-blue-400 rounded w-24"></div>
+                <div className="h-4 bg-slate-gray rounded w-24"></div>
               </th>
               <th className="px-4 py-4 text-left">
-                <div className="h-4 bg-blue-400 rounded w-18"></div>
+                <div className="h-4 bg-slate-gray rounded w-18"></div>
               </th>
               <th className="px-4 py-4 text-left">
-                <div className="h-4 bg-blue-400 rounded w-20"></div>
+                <div className="h-4 bg-slate-gray rounded w-20"></div>
               </th>
               <th className="px-4 py-4 text-center rounded-tr-lg">
-                <div className="h-4 bg-blue-400 rounded w-16 mx-auto"></div>
+                <div className="h-4 bg-slate-gray rounded w-16 mx-auto"></div>
               </th>
             </tr>
           </thead>

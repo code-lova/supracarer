@@ -35,9 +35,9 @@ const links = [
     href: "/admin/booking-requests",
   },
   {
-    name: "Appointments",
+    name: "Support Tickets",
     icon: <FaHourglassHalf size={20} />,
-    href: "/admin/processing-request",
+    href: "/admin/support-ticket",
   },
   {
     name: "Profile",

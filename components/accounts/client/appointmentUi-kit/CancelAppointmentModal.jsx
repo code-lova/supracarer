@@ -130,7 +130,6 @@ const CancelAppointmentModal = ({
               text="Keep Appointment"
               type="button"
               color="gray"
-              loading={isLoading}
               onClick={handleClose}
             />
 

@@ -95,12 +95,13 @@ export const MediumBtn = ({
   loadingText,
   color = "green",
   icon,
+  disabled,
 }) => {
   const { base, hover } = colorVariants[color] || colorVariants.darkblue;
   return (
     <button
       type={type}
-      disabled={loading}
+      disabled={loading || disabled}
       onClick={onClick}
       className={`px-4 py-2 ${base} ${hover} text-white rounded-sm text-md disabled:opacity-50 disabled:cursor-not-allowed`}
     >
