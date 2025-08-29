@@ -72,7 +72,7 @@ const TablePagination = ({
                 onClick={() => onPageChange(page)}
                 className={`px-3 py-2 rounded-lg border text-sm ${
                   currentPage === page
-                    ? "bg-carer-blue text-white border-carer-blue"
+                    ? "bg-slate-gray2 text-white border-slate-gray2"
                     : "bg-white text-gray-600 hover:bg-gray-50 border-gray-300"
                 }`}
               >
@@ -87,7 +87,7 @@ const TablePagination = ({
                 disabled={page === "..."}
                 className={`px-3 py-2 rounded-lg border text-sm ${
                   currentPage === page
-                    ? "bg-carer-blue text-white border-carer-blue"
+                    ? "bg-slate-gray2 text-white border-slate-gray2"
                     : page === "..."
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
                     : "bg-white text-gray-600 hover:bg-gray-50 border-gray-300"

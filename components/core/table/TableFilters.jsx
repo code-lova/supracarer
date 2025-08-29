@@ -13,7 +13,7 @@ const TableFilters = ({
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-6 p-4 bg-gray-50 rounded-lg flex-shrink-0">
       <div className="flex items-center space-x-2">
-        <FaFilter className="text-carer-blue" />
+        <FaFilter className="text-haven-blue" />
         <label className="text-sm font-medium text-gray-700">
           Filter by Status:
         </label>
@@ -31,7 +31,7 @@ const TableFilters = ({
       </div>
 
       <div className="flex items-center space-x-2">
-        <FaSort className="text-carer-blue" />
+        <FaSort className="text-haven-blue" />
         <label className="text-sm font-medium text-gray-700">Sort by:</label>
         <select
           value={sortBy}
@@ -53,9 +53,9 @@ const TableFilters = ({
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+              className={`px-3 py-1 rounded-xl text-xs font-medium transition-colors ${
                 statusFilter === status
-                  ? "bg-carer-blue text-white"
+                  ? "bg-slate-gray2 text-white"
                   : "bg-white text-gray-600 border border-gray-300 hover:bg-gray-100"
               }`}
             >

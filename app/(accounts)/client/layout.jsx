@@ -6,15 +6,15 @@ import { useUserContext } from "@context/userContext";
 import LoadingStateUI from "@components/core/loading";
 
 const ClientLayout = ({ children }) => {
-  const { isLoading } = useUserContext();
+  // const { isLoading } = useUserContext();
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <LoadingStateUI />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <LoadingStateUI />
+  //     </div>
+  //   );
+  // }
   return (
     <div className="client-bg">
       <Sidebar />

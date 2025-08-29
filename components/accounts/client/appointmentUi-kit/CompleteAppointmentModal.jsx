@@ -126,7 +126,6 @@ const CompleteAppointmentModal = ({
                   text="Cancel"
                   type="button"
                   color="gray"
-                  loading={isLoading || isSubmitting}
                   onClick={onClose}
                 />
 

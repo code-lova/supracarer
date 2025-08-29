@@ -1,5 +1,6 @@
 "use client";
 import { MediumBtn } from "@components/core/button";
+import DateFormatter from "@components/core/DateFormatter";
 import React from "react";
 import {
   FaTimes,
@@ -28,20 +29,25 @@ const AppointmentDetailsModal = ({
   isCancelling = false,
   isDeleting = false,
 }) => {
+  const handleCancelAppointment = (uuid) => {
+    // Call the parent function - the parent handles async states via React Query
+    onCancelAppointment(uuid);
+    // Don't close the modal here - let the parent close it via the mutation onSuccess
+  };
+
+  const handleDeleteAppointment = (uuid) => {
+    // Call the parent function - the parent handles async states via React Query
+    onDeleteAppointment(uuid);
+    // Don't close the modal here - let the parent close it via the mutation onSuccess
+  };
+
+  const handleCompleteAppointment = (uuid, healthWorkerName) => {
+    // Call the parent function - the parent handles async states via React Query
+    onCompleteAppointment(uuid, healthWorkerName);
+    // Don't close the modal here - let the parent close it via the mutation onSuccess
+  };
+
   if (!isOpen || !appointment) return null;
-
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const formatTime = (time, period) => {
-    return `${time} ${period}`;
-  };
 
   return (
     <>
@@ -54,7 +60,7 @@ const AppointmentDetailsModal = ({
       {/* Modal */}
       <div className="fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl z-50 transform transition-transform duration-300 overflow-y-auto">
         {/* Header */}
-        <div className="bg-gradient-to-r from-carer-blue to-blue-400 text-white p-6 sticky top-0 z-10">
+        <div className="bg-slate-gray2 text-white p-6 sticky top-0 z-10">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl font-bold">Booking Details</h2>
@@ -89,7 +95,8 @@ const AppointmentDetailsModal = ({
               {appointment.status}
             </span>
             <span className="text-gray-500 text-sm">
-              Created: {formatDate(appointment.created_at)}
+              Created:{" "}
+              <DateFormatter date={appointment.created_at} format="long" />
             </span>
           </div>
 
@@ -105,13 +112,13 @@ const AppointmentDetailsModal = ({
                   Start Date & Time
                 </label>
                 <p className="text-dark-gray-blue font-medium">
-                  {formatDate(appointment.start_date)}
+                  <DateFormatter date={appointment.start_date} format="long" />
                 </p>
                 <p className="text-dark-gray-blue">
-                  {formatTime(
-                    appointment.start_time,
-                    appointment.start_time_period
-                  )}
+                  <DateFormatter
+                    time={appointment.start_time}
+                    timePeriod={appointment.start_time_period}
+                  />
                 </p>
               </div>
               <div>
@@ -119,13 +126,13 @@ const AppointmentDetailsModal = ({
                   End Date & Time
                 </label>
                 <p className="text-dark-gray-blue font-medium">
-                  {formatDate(appointment.end_date)}
+                  <DateFormatter date={appointment.end_date} format="long" />
                 </p>
                 <p className="text-dark-gray-blue">
-                  {formatTime(
-                    appointment.end_time,
-                    appointment.end_time_period
-                  )}
+                  <DateFormatter
+                    time={appointment.end_time}
+                    timePeriod={appointment.end_time_period}
+                  />
                 </p>
               </div>
             </div>
@@ -192,10 +199,10 @@ const AppointmentDetailsModal = ({
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-slate-gray">
-                        Country
+                        Region
                       </label>
                       <p className="text-dark-gray-blue">
-                        {appointment.health_worker.country || "Not specified"}
+                        {appointment.health_worker.region || "Not specified"}
                       </p>
                     </div>
                     <div>
@@ -390,8 +397,8 @@ const AppointmentDetailsModal = ({
             {/* Cancel Button - Only show for Pending appointments */}
             {appointment.status === "Pending" && (
               <MediumBtn
-                onClick={() => onCancelAppointment(appointment.uuid)}
-                loading={isCancelling || isDeleting}
+                onClick={() => handleCancelAppointment(appointment.uuid)}
+                loading={isCancelling}
                 loadingText="Cancelling..."
                 text="Cancel Booking"
                 color="orange"
@@ -402,8 +409,8 @@ const AppointmentDetailsModal = ({
             {/* Delete Button - Only show for Cancelled appointments */}
             {appointment.status === "Cancelled" && (
               <MediumBtn
-                onClick={() => onDeleteAppointment(appointment.uuid)}
-                loading={isCancelling || isDeleting}
+                onClick={() => handleDeleteAppointment(appointment.uuid)}
+                loading={isDeleting}
                 loadingText="Deleting..."
                 text="Delete Booking"
                 color="red"
@@ -415,12 +422,12 @@ const AppointmentDetailsModal = ({
             {appointment.status === "Ongoing" && (
               <MediumBtn
                 onClick={() =>
-                  onCompleteAppointment(
+                  handleCompleteAppointment(
                     appointment.uuid,
                     appointment.health_worker?.name
                   )
                 }
-                loading={isCancelling || isDeleting}
+                loading={false}
                 text="Done"
                 loadingText="Submitting..."
                 color="green"

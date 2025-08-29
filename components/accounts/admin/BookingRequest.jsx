@@ -7,10 +7,14 @@ import {
   FaStethoscope,
   FaBan,
   FaTrash,
+  FaUserNurse,
+  FaSearch,
+  FaTimes,
+  FaUserEdit,
 } from "react-icons/fa";
-import AppointmentDetailsModal from "./appointmentUi-kit/AppointmentDetailsModal";
-import CancelAppointmentModal from "./appointmentUi-kit/CancelAppointmentModal";
-import CompleteAppointmentModal from "./appointmentUi-kit/CompleteAppointmentModal";
+
+import CancelAppointmentModal from "../client/appointmentUi-kit/CancelAppointmentModal";
+import CompleteAppointmentModal from "../client/appointmentUi-kit/CompleteAppointmentModal";
 import StatusPill from "@components/core/StatusPill";
 import DateFormatter from "@components/core/DateFormatter";
 import EmptyState from "@components/core/EmptyState";
@@ -19,14 +23,18 @@ import { TableFilters, TablePagination } from "@components/core/table";
 import toast from "react-hot-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  showBooking,
-  cancelBooking,
-  deleteBooking,
-  completeBooking,
-} from "@service/request/client/bookingApt";
+  showAllBookingRequests,
+  processBookingRequest,
+  completeBookingRequest,
+  cancelBookingRequest,
+  deleteBookingRequest,
+} from "@service/request/admin/booking";
 import { MediumBtn } from "@components/core/button";
+import AppointmentDetailsModal from "../client/appointmentUi-kit/AppointmentDetailsModal";
+import ThreeDotDropdown from "@components/core/button/ThreeDotDropdown";
+import HealthWorkerModal from "./bookingUi-kit/HealthWorkerModal";
 
-const Appointments = () => {
+const BookingRequest = () => {
   const queryClient = useQueryClient();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,6 +42,9 @@ const Appointments = () => {
   const [appointmentToCancel, setAppointmentToCancel] = useState(null);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
   const [appointmentToComplete, setAppointmentToComplete] = useState(null);
+  const [isHealthWorkerModalOpen, setIsHealthWorkerModalOpen] = useState(false);
+  const [appointmentToMatch, setAppointmentToMatch] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,52 +58,44 @@ const Appointments = () => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["appointments", statusFilter, sortBy, currentPage],
+    queryKey: ["appointments", statusFilter, sortBy, currentPage, searchQuery],
     queryFn: () =>
-      showBooking({
+      showAllBookingRequests({
         status: statusFilter,
         sort: sortBy,
         page: currentPage,
         per_page: itemsPerPage,
+        search: searchQuery || undefined,
       }),
     retry: 2,
-    staleTime: 60 * 1000, // 1 minute
-    keepPreviousData: true, // Keep previous data while fetching new data
+    staleTime: 60 * 1000,
+    keepPreviousData: true,
   });
 
   // Cancel booking mutation
   const cancelBookingMutation = useMutation({
-    mutationFn: ({ uuid, reason }) => cancelBooking(uuid, reason),
+    mutationFn: ({ uuid, reason }) => cancelBookingRequest(uuid, reason),
     onSuccess: () => {
-      // Invalidate and refetch appointments data
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
-      // Close modals
       handleCloseModal();
       setIsCancelModalOpen(false);
       setAppointmentToCancel(null);
-      // Show success toast
       toast.success("Appointment cancelled successfully");
     },
     onError: (error) => {
-      console.error("Error cancelling appointment:", error.message);
-      // Show error toast
       toast.error(error.message || "Failed to cancel appointment");
     },
   });
 
   // Delete booking mutation
   const deleteBookingMutation = useMutation({
-    mutationFn: deleteBooking,
+    mutationFn: deleteBookingRequest,
     onSuccess: () => {
-      // Invalidate and refetch appointments data
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
-      // Close modal if open
       handleCloseModal();
-      // Show success toast
       toast.success("Appointment deleted successfully");
     },
     onError: (error) => {
-      // Show error toast
       toast.error(error.message || "Failed to delete appointment");
     },
   });
@@ -100,7 +103,7 @@ const Appointments = () => {
   // Complete booking mutation
   const completeBookingMutation = useMutation({
     mutationFn: ({ uuid, rating, review }) =>
-      completeBooking(uuid, rating, review),
+      completeBookingRequest(uuid, rating, review),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
       handleCloseCompleteModal();
@@ -112,59 +115,58 @@ const Appointments = () => {
     },
   });
 
+  // Assign health worker mutation
+  const assignWorkerMutation = useMutation({
+    mutationFn: ({ bookingUuid, healthWorkerUuid }) =>
+      processBookingRequest(bookingUuid, healthWorkerUuid),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      queryClient.invalidateQueries({ queryKey: ["healthWorkers"] });
+      handleCloseHealthWorkerModal();
+      toast.success("Health worker assigned successfully!");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to assign health worker");
+    },
+  });
+
   // Extract appointments from the API response and transform the data structure
   const appointments = React.useMemo(() => {
     if (!appointmentsData?.data) return [];
-
-    // Handle both single appointment and array of appointments
     const rawData = Array.isArray(appointmentsData.data)
       ? appointmentsData.data
       : [appointmentsData.data];
-
-    // Transform the data to match our component's expected structure
     return rawData.map((appointment, index) => ({
       ...appointment,
-      id: (currentPage - 1) * itemsPerPage + index + 1, // Auto-increment ID based on pagination
+      id: (currentPage - 1) * itemsPerPage + index + 1,
       medical_services: appointment.others?.[0]?.medical_services || [],
       other_extra_services: appointment.others?.[0]?.other_extra_service || [],
-      // Include health worker details if available
       health_worker: appointment.health_worker || null,
     }));
   }, [appointmentsData, currentPage, itemsPerPage]);
 
-  // Get pagination info from API response
   const totalItems = appointmentsData?.meta?.total || 0;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // Since data is already filtered and sorted on the server, we use it directly
   const currentAppointments = appointments;
 
-  // Reset to first page when filters change
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [statusFilter, sortBy]);
+  }, [statusFilter, sortBy, searchQuery]);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
+  const handlePageChange = (page) => setCurrentPage(page);
   const handleViewDetails = (appointment) => {
     setSelectedAppointment(appointment);
     setIsModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedAppointment(null);
   };
-
   const handleCancelAppointment = (bookingUuid) => {
-    // Find the appointment to get details for the modal
     const appointment = appointments?.find((apt) => apt.uuid === bookingUuid);
     setAppointmentToCancel(appointment);
     setIsCancelModalOpen(true);
   };
-
   const handleConfirmCancellation = (reason) => {
     if (appointmentToCancel) {
       cancelBookingMutation.mutate({
@@ -210,6 +212,33 @@ const Appointments = () => {
     setAppointmentToComplete(null);
   };
 
+  const handleMatchBooking = (appointment) => {
+    setAppointmentToMatch(appointment);
+    setIsHealthWorkerModalOpen(true);
+  };
+
+  const handleCloseHealthWorkerModal = () => {
+    setIsHealthWorkerModalOpen(false);
+    setAppointmentToMatch(null);
+  };
+
+  const handleSelectWorker = (worker) => {
+    if (appointmentToMatch && worker) {
+      assignWorkerMutation.mutate({
+        bookingUuid: appointmentToMatch.uuid,
+        healthWorkerUuid: worker.uuid,
+      });
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
+
   const statusOptions = [
     "All",
     "Pending",
@@ -227,12 +256,58 @@ const Appointments = () => {
   ];
   const quickFilterStatuses = ["All", "Pending", "Confirmed", "Ongoing"];
 
+  // Function to generate dropdown actions for each appointment
+  const getActionsBtn = (appointment) =>
+    [
+      {
+        label: "View Details",
+        icon: <FaEye />,
+        onClick: () => handleViewDetails(appointment),
+      },
+      {
+        label: "Match Booking",
+        icon: <FaUserNurse />,
+        onClick: () => handleMatchBooking(appointment),
+        // only show if appointment is pending
+        hidden: appointment.status !== "Pending",
+      },
+      {
+        label: "Reassign Worker",
+        icon: <FaUserEdit />,
+        onClick: () => handleMatchBooking(appointment),
+        // only show if appointment is processing or confirmed and has assigned worker
+        hidden: !["Processing", "Confirmed"].includes(appointment.status) || !appointment.health_worker,
+      },
+      {
+        label: "Cancel",
+        icon: <FaBan />,
+        danger: true,
+        onClick:
+          appointment.status === "Pending"
+            ? () => handleCancelAppointment(appointment.uuid)
+            : undefined,
+        // Only show if appointment is Pending
+        hidden: appointment.status !== "Pending",
+      },
+      {
+        label: "Delete",
+        icon: <FaTrash />,
+        danger: true,
+        onClick:
+          appointment.status === "Cancelled"
+            ? () => handleDeleteAppointment(appointment.uuid)
+            : undefined,
+        // Only show if appointment is Cancelled
+        hidden: appointment.status !== "Cancelled",
+      },
+    ].filter((action) => !action.hidden);
+
   return (
-    <div className="pageContent">
+    <div className="w-full max-w-8xl mx-auto px-2 sm:px-4 md:px-1 py-2">
       <div className="xl:h-[690px] bg-white rounded-2xl shadow-lg px-5 py-6 flex flex-col">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
           <h1 className="text-2xl font-bold text-dark-blue mb-4 md:mb-0">
-            My Appointments
+            Booking Requests
           </h1>
           <div className="text-sm text-gray-600">
             Total Bookings:{" "}
@@ -247,10 +322,41 @@ const Appointments = () => {
                 </span>
               </span>
             )}
+            {searchQuery && (
+              <span className="ml-2">
+                | Search:{" "}
+                <span className="font-semibold text-carer-blue">
+                  "{searchQuery}"
+                </span>
+              </span>
+            )}
           </div>
         </div>
 
-        {/* Filter and Sort Controls */}
+        {/* Search Field */}
+        <div className="mb-4">
+          <div className="relative max-w-md">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaSearch className="h-4 w-4 text-gray-400" />
+            </div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search by booking reference..."
+              className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder-gray-500"
+            />
+            {searchQuery && (
+              <button
+                onClick={handleClearSearch}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <FaTimes className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+        </div>
+
         <TableFilters
           statusFilter={statusFilter}
           setStatusFilter={setStatusFilter}
@@ -261,12 +367,9 @@ const Appointments = () => {
           quickFilterStatuses={quickFilterStatuses}
         />
 
-        {/* Content Area - Flex grow to fill remaining space */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Loading State */}
           {isLoading && <TableSkeleton rows={5} className="flex-1" />}
 
-          {/* Error State */}
           {isError && (
             <EmptyState
               icon={FaCalendarAlt}
@@ -279,11 +382,10 @@ const Appointments = () => {
             />
           )}
 
-          {/* Content - Only show when not loading and no error */}
           {!isLoading && !isError && (
             <>
               {/* Mobile View */}
-              <div className="block md:hidden flex-1 overflow-y-auto">
+              <div className="block md:hidden max-h-[68vh] flex-1 overflow-y-auto">
                 <div className="space-y-4 pr-2">
                   {currentAppointments.map((appointment) => (
                     <div
@@ -295,7 +397,6 @@ const Appointments = () => {
                           <h3 className="font-semibold text-dark-blue">
                             Booking #{appointment.booking_reference}
                           </h3>
-
                           <p className="text-sm text-slate-gray">
                             Created:{" "}
                             <DateFormatter
@@ -349,31 +450,46 @@ const Appointments = () => {
                       <div className="flex item-center justify-center space-x-2">
                         <MediumBtn
                           onClick={() => handleViewDetails(appointment)}
-                          text="View Details"
+                          text="View"
                           color="gray"
                           icon={<FaEye className="mr-1" />}
                         />
 
-                        {/* Quick Cancel Button for Pending appointments */}
                         {appointment.status === "Pending" && (
+                          <>
+                            <MediumBtn
+                              onClick={() => handleMatchBooking(appointment)}
+                              text="Match"
+                              color="blue"
+                              icon={<FaUserNurse className="mr-1" />}
+                            />
+                            <MediumBtn
+                              onClick={() =>
+                                handleCancelAppointment(appointment.uuid)
+                              }
+                              loading={cancelBookingMutation.isPending}
+                              text="Cancel"
+                              color="orange"
+                              icon={<FaBan className="mr-1" />}
+                            />
+                          </>
+                        )}
+
+                        {["Processing", "Confirmed"].includes(appointment.status) && appointment.health_worker && (
                           <MediumBtn
-                            onClick={() =>
-                              handleCancelAppointment(appointment.uuid)
-                            }
-                            loading={cancelBookingMutation.isLoading}
-                            text="Cancel"
-                            color="orange"
-                            icon={<FaBan className="mr-1" />}
+                            onClick={() => handleMatchBooking(appointment)}
+                            text="Reassign"
+                            color="blue"
+                            icon={<FaUserEdit className="mr-1" />}
                           />
                         )}
 
-                        {/* Quick Delete Button for Cancelled appointments */}
                         {appointment.status === "Cancelled" && (
                           <MediumBtn
                             onClick={() =>
                               handleDeleteAppointment(appointment.uuid)
                             }
-                            loading={deleteBookingMutation.isLoading}
+                            loading={deleteBookingMutation.isPending}
                             text="Delete"
                             color="red"
                             icon={<FaTrash className="mr-1" />}
@@ -479,50 +595,24 @@ const Appointments = () => {
                           <td className="px-4 py-4">
                             <div className="space-y-1">
                               <div className="text-sm font-medium">
-                                {appointment.requesting_for}
+                                {appointment?.user.name}
                               </div>
-                              {appointment.requesting_for === "Someone" && (
+                              {appointment.requesting_for === "Someone" ? (
                                 <div className="text-xs text-slate-gray">
-                                  {appointment.someone_name}
+                                  Someone: {appointment.someone_name}
+                                </div>
+                              ) : (
+                                <div className="text-xs text-slate-gray">
+                                  {appointment.requesting_for}
                                 </div>
                               )}
                             </div>
                           </td>
                           <td className="px-4 py-4 text-center">
                             <div className="flex items-center justify-center space-x-2">
-                              {/* View Details Button */}
-                              <MediumBtn
-                                onClick={() => handleViewDetails(appointment)}
-                                text="View"
-                                color="gray"
-                                icon={<FaEye className="mr-1" />}
+                              <ThreeDotDropdown
+                                options={getActionsBtn(appointment)}
                               />
-
-                              {/* Quick Cancel Button for Pending appointments */}
-                              {appointment.status === "Pending" && (
-                                <MediumBtn
-                                  onClick={() =>
-                                    handleCancelAppointment(appointment.uuid)
-                                  }
-                                  loading={cancelBookingMutation.isLoading}
-                                  text="Cancel"
-                                  color="orange"
-                                  icon={<FaBan />}
-                                />
-                              )}
-
-                              {/* Quick Delete Button for Cancelled appointments */}
-                              {appointment.status === "Cancelled" && (
-                                <MediumBtn
-                                  onClick={() =>
-                                    handleDeleteAppointment(appointment.uuid)
-                                  }
-                                  loading={deleteBookingMutation.isLoading}
-                                  text="Delete"
-                                  color="red"
-                                  icon={<FaTrash className="mr-1" />}
-                                />
-                              )}
                             </div>
                           </td>
                         </tr>
@@ -532,25 +622,36 @@ const Appointments = () => {
                 </div>
               </div>
 
-              {/* Empty State */}
               {appointments.length === 0 && (
                 <EmptyState
                   icon={FaCalendarAlt}
                   title={
-                    statusFilter === "All"
+                    searchQuery
+                      ? "No Appointments Found"
+                      : statusFilter === "All"
                       ? "No Appointments Found"
                       : `No ${statusFilter} Appointments`
                   }
                   description={
-                    statusFilter === "All"
+                    searchQuery
+                      ? `No appointments found matching "${searchQuery}". Try adjusting your search terms.`
+                      : statusFilter === "All"
                       ? "You haven't made any booking requests yet."
                       : `You don't have any ${statusFilter.toLowerCase()} appointments.`
                   }
                   actionLabel={
-                    statusFilter !== "All" ? "View All Appointments" : null
+                    searchQuery
+                      ? "Clear Search"
+                      : statusFilter !== "All"
+                      ? "View All Appointments"
+                      : null
                   }
                   onAction={
-                    statusFilter !== "All" ? () => setStatusFilter("All") : null
+                    searchQuery
+                      ? handleClearSearch
+                      : statusFilter !== "All"
+                      ? () => setStatusFilter("All")
+                      : null
                   }
                 />
               )}
@@ -558,7 +659,6 @@ const Appointments = () => {
           )}
         </div>
 
-        {/* Pagination */}
         {!isLoading &&
           !isError &&
           appointments.length > 0 &&
@@ -574,7 +674,6 @@ const Appointments = () => {
           )}
       </div>
 
-      {/* Appointment Details Modal */}
       <AppointmentDetailsModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -586,7 +685,6 @@ const Appointments = () => {
         isDeleting={deleteBookingMutation.isPending}
       />
 
-      {/* Cancel Appointment Modal */}
       <CancelAppointmentModal
         isOpen={isCancelModalOpen}
         onClose={handleCloseCancelModal}
@@ -599,7 +697,6 @@ const Appointments = () => {
         }
       />
 
-      {/* Complete Appointment Modal */}
       <CompleteAppointmentModal
         isOpen={isCompleteModalOpen}
         onClose={handleCloseCompleteModal}
@@ -607,8 +704,17 @@ const Appointments = () => {
         isLoading={completeBookingMutation.isPending}
         healthWorkerName={appointmentToComplete?.healthWorkerName}
       />
+
+      <HealthWorkerModal
+        isOpen={isHealthWorkerModalOpen}
+        onClose={handleCloseHealthWorkerModal}
+        onSelectWorker={handleSelectWorker}
+        selectedAppointment={appointmentToMatch}
+        isAssigning={assignWorkerMutation.isPending}
+        isReassignment={appointmentToMatch?.health_worker ? true : false}
+      />
     </div>
   );
 };
 
-export default Appointments;
+export default BookingRequest;

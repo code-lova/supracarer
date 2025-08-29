@@ -117,6 +117,29 @@
   background: transparent;
 }
 
+.scrollbar-visible {
+  scrollbar-width: auto; /* Firefox */
+  -ms-overflow-style: auto; /* IE/Edge */
+}
+
+.scrollbar-visible::-webkit-scrollbar {
+  display: block; /* Chrome/Safari */
+  width: 8px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
 @layer components {
   .app {
     max-width: 1740px;

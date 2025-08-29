@@ -5,8 +5,10 @@ const DateFormatter = ({
   format = "short",
   className = "",
   showTime = false,
+  time,
+  timePeriod,
 }) => {
-  if (!date) return null;
+  if (!date && !time) return null;
 
   const formatDate = (dateString, formatType) => {
     const dateObj = new Date(dateString);
@@ -50,6 +52,33 @@ const DateFormatter = ({
         });
     }
   };
+
+  // New function to format time with period
+  const formatTime = (timeString, period) => {
+    if (!timeString) return "";
+
+    // If period is provided, use it directly
+    if (period) {
+      return `${timeString} ${period.toUpperCase()}`;
+    }
+
+    // Otherwise, try to parse and format the time
+    try {
+      // If timeString is already in HH:MM format
+      const [hours, minutes] = timeString.split(":");
+      const hour24 = parseInt(hours, 10);
+      const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
+      const ampm = hour24 >= 12 ? "PM" : "AM";
+      return `${hour12}:${minutes} ${ampm}`;
+    } catch {
+      return timeString; // Return as-is if parsing fails
+    }
+  };
+
+  // If only time formatting is needed
+  if (time && !date) {
+    return <span className={className}>{formatTime(time, timePeriod)}</span>;
+  }
 
   const formattedDate = formatDate(date, format);
   const formattedTime = showTime ? formatDate(date, "time") : null;
