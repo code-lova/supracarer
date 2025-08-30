@@ -96,26 +96,52 @@ export const MediumBtn = ({
   color = "green",
   icon,
   disabled,
+  href,
+  target,
+  rel,
 }) => {
   const { base, hover } = colorVariants[color] || colorVariants.darkblue;
+
+  const commonClasses = `px-4 py-2 ${base} ${hover} text-white rounded-sm text-md disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center`;
+
+  const content = loading ? (
+    <div className="flex items-center">
+      <div className="loader mr-2" />
+      {loadingText}
+    </div>
+  ) : (
+    <span className="flex items-center text-sm">
+      {icon && <span>{icon}</span>}
+      {text}
+    </span>
+  );
+
+  // If href is provided, render as link
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        className={`${commonClasses} ${
+          loading || disabled ? "pointer-events-none" : ""
+        }`}
+        onClick={onClick}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  // Default button behavior
   return (
     <button
       type={type}
       disabled={loading || disabled}
       onClick={onClick}
-      className={`px-4 py-2 ${base} ${hover} text-white rounded-sm text-md disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={commonClasses}
     >
-      {loading ? (
-        <div className="flex items-center">
-          <div className="loader mr-2" />
-          {loadingText}
-        </div>
-      ) : (
-        <span className="flex items-center text-sm">
-          {icon && <span>{icon}</span>}
-          {text}
-        </span>
-      )}
+      {content}
     </button>
   );
 };
