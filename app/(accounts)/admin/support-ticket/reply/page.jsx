@@ -1,9 +1,14 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import TicketReply from "@components/accounts/admin/TicketReply";
+import TicketReplySkeleton from "@components/core/skeleton/TicketReplySkeleton";
 
-const TicketReplyPage = () => {
-  return <TicketReply />;
+const page = () => {
+  return (
+    <Suspense fallback={<TicketReplySkeleton />}>
+      <TicketReply />
+    </Suspense>
+  );
 };
 
-export default TicketReplyPage;
+export default page;
