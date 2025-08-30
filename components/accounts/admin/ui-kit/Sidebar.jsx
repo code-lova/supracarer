@@ -11,6 +11,7 @@ import {
   FaTrashAlt,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { FaRankingStar, FaMessage } from "react-icons/fa6";
 import Link from "next/link";
 import Image from "next/image";
 import { logoutRequest } from "@/service/request/auth/logoutRequest";
@@ -48,6 +49,16 @@ const links = [
     name: "Settings",
     icon: <FaCog size={20} />,
     href: "/admin/settings",
+  },
+  {
+    name: "Ratings & Reviews",
+    icon: <FaRankingStar size={20} />,
+    href: "/admin/ratings-reviews",
+  },
+  {
+    name: "Messages",
+    icon: <FaMessage size={20} />,
+    href: "/admin/messages",
   },
   {
     name: "Deleted Accounts",
