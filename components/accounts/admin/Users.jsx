@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import TableSkeleton from "../../core/skeleton/TableSkeleton";
 import { FiUser, FiMail, FiBriefcase } from "react-icons/fi";
 import { createPortal } from "react-dom";
 import { FaEllipsisV } from "react-icons/fa";
