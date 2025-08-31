@@ -20,7 +20,7 @@ import {
   PrivacyTab,
   DeleteAccountModal,
   Disable2FAModal,
-} from "../client/settingsUi-kit";
+} from "./settingsUi-kit";
 import { FaBell, FaShieldAlt, FaCog, FaUser } from "react-icons/fa";
 
 const Settings = () => {
@@ -316,7 +316,7 @@ const Settings = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center px-3 py-3 text-sm font-medium rounded-md transition-colors ${
                       activeTab === tab.id
-                        ? "bg-carer-blue text-white"
+                        ? "bg-haven-blue text-white"
                         : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                     }`}
                   >
