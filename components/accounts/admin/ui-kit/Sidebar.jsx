@@ -12,6 +12,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { FaRankingStar, FaMessage } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
 import { logoutRequest } from "@/service/request/auth/logoutRequest";
@@ -59,6 +60,11 @@ const links = [
     name: "Messages",
     icon: <FaMessage size={20} />,
     href: "/admin/messages",
+  },
+    {
+    name: "Send Email",
+    icon: <MdEmail size={20} />,
+    href: "/admin/send-emails",
   },
   {
     name: "Deleted Accounts",
