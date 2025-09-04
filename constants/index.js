@@ -1,7 +1,6 @@
 import { Doctor } from "@components/core/icon/doctor";
 import { Elderly } from "@components/core/icon/elderly";
 import { Nurse } from "@components/core/icon/nurse";
-import { FaInfoCircle, FaBalanceScale } from "react-icons/fa";
 import {
   FaHandsHelping,
   FaShieldAlt,
@@ -15,8 +14,18 @@ import {
   FaHeadset,
   FaBookOpen,
   FaCog,
-  FaClipboardList
+  FaClipboardList,
+  FaInfoCircle, 
+  FaBalanceScale,
 } from "react-icons/fa";
+import {
+  FiMail,
+  FiUsers,
+  FiTarget,
+  FiMessageSquare,
+  FiCheckCircle,
+  FiAlertCircle,
+} from "react-icons/fi";
 import { SiLootcrate, SiOnlyoffice } from "react-icons/si";
 
 import {
@@ -97,7 +106,7 @@ export const clientDashboardLinks = [
     title: "Support",
     icon: FaHeadset,
   },
-   {
+  {
     id: "profile",
     link: "/client/profile",
     title: "Profile",
@@ -828,7 +837,6 @@ export const hourRateServiceOptions = {
   ],
 };
 
-
 export const supportSubjects = [
   "Account Verification Issue",
   "Unable to Update Rates",
@@ -863,4 +871,57 @@ export const extraServicesOptions = [
   "Telemedicine with Physician Assistant / Doctor",
   "Weekly family update report",
   "Relief nurse cover for off days",
+];
+
+// Email category options with templates
+export const emailCategories = [
+  {
+    value: "general",
+    label: "General Notification",
+    icon: FiMail,
+    template:
+      "We hope this message finds you in good health. We wanted to reach out to you regarding an important matter that requires your attention.\n\n[Your message content here]\n\nIf you have any questions or need assistance, please don't hesitate to contact our support team. We're here to help you every step of the way.\n\nThank you for being a valued member of the SupraCarer community.\n\nBest regards,\nThe SupraCarer Team",
+    subjectSuggestion: "Important Information from SupraCarer",
+  },
+  {
+    value: "promotional",
+    label: "Health Promotional Email",
+    icon: FiTarget,
+    template:
+      "Your health and wellbeing are our top priorities. We're excited to share some valuable health tips and promotional offers designed specifically for you.\n\n🌟 Special Health Promotion:\n[Promotion details here]\n\n💡 Health Tip of the Week:\n[Health tip content here]\n\nTake advantage of these exclusive offers and continue your journey toward better health with SupraCarer.\n\nStay healthy,\nThe SupraCarer Health Team",
+    subjectSuggestion: "🌟 Special Health Promotion & Wellness Tips",
+  },
+  {
+    value: "notification",
+    label: "System Notification",
+    icon: FiAlertCircle,
+    template:
+      "This is an important notification regarding your SupraCarer account.\n\n📢 System Update:\n[Notification details here]\n\nAction Required: [If any action is needed]\n\nThis notification is to ensure you stay informed about important changes or updates that may affect your experience with our platform.\n\nFor technical support, please contact our IT team at support@supracarer.com.\n\nBest regards,\nSupraCarer System Administration",
+    subjectSuggestion: "📢 Important System Notification - Action Required",
+  },
+  {
+    value: "reminder",
+    label: "Appointment Reminder",
+    icon: FiCheckCircle,
+    template:
+      "This is a friendly reminder about your upcoming appointment with SupraCarer.\n\n📅 Appointment Details:\nDate: [Date]\nTime: [Time]\nHealthcare Provider: [Provider Name]\nLocation/Type: [Location or Virtual]\n\n📝 Preparation Notes:\n- Please arrive 15 minutes early\n- Bring a valid ID and any relevant medical documents\n- For virtual appointments, ensure you have a stable internet connection\n\nIf you need to reschedule or have any questions, please contact us at least 24 hours before your appointment.\n\nWe look forward to seeing you soon.\n\nWarm regards,\nThe SupraCarer Care Team",
+    subjectSuggestion: "📅 Reminder: Your Upcoming SupraCarer Appointment",
+  },
+  {
+    value: "welcome",
+    label: "Welcome Email",
+    icon: FiUsers,
+    template:
+      "🎉 Welcome to SupraCarer! We're thrilled to have you join our healthcare community.\n\nYou've taken an important step toward better health management, and we're here to support you every step of the way.\n\n🚀 Getting Started:\n1. Complete your profile setup\n2. Explore our healthcare services\n3. Book your first appointment\n4. Health Workers update their guided rate system\n\n💬 Need Help?\nOur customer support team is available 24/7 to assist you. Feel free to reach out anytime at support@supracarer.com.\n\nWe're excited to be part of your healthcare journey!\n\nWelcome aboard,\nThe SupraCarer Team",
+    subjectSuggestion:
+      "🎉 Welcome to SupraCarer - Your Health Journey Starts Here!",
+  },
+  {
+    value: "update",
+    label: "Platform Update",
+    icon: FiMessageSquare,
+    template:
+      "We're constantly working to improve your SupraCarer experience. Here's what's new in our latest platform update:\n\n🆕 New Features:\n[List new features here]\n\n🔧 Improvements:\n[List improvements here]\n\n🐛 Bug Fixes:\n[List fixes here]\n\nThese updates are now live and ready for you to explore. Log in to your account to experience the enhanced features.\n\nAs always, we value your feedback. If you have any suggestions or encounter any issues, please let us know.\n\nThank you for your continued trust in SupraCarer.\n\nBest regards,\nThe SupraCarer Development Team",
+    subjectSuggestion: "🆕 SupraCarer Platform Update - New Features Available",
+  },
 ];
