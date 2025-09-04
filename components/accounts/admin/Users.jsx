@@ -2,98 +2,19 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { FiUser, FiMail, FiBriefcase } from "react-icons/fi";
-import { createPortal } from "react-dom";
-import { FaEllipsisV } from "react-icons/fa";
+import { FaEye, FaBan } from "react-icons/fa";
 import StatusPill from "../../core/StatusPill";
 import UserDetailsModal from "./users-ui-kit/UserDetailsModal";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchAllUsers, updateUser } from "@service/request/admin/user";
+import {
+  fetchAllUsers,
+  updateUser,
+  blockUser,
+} from "@service/request/admin/user";
 import { FiRefreshCw } from "react-icons/fi";
 import toast from "react-hot-toast";
 import AdminTableSkeleton from "@components/core/skeleton/AdminTableSkeleton";
-
-function ActionDropdown({ user, onView }) {
-  const [open, setOpen] = useState(false);
-  const [dropdownStyle, setDropdownStyle] = useState({});
-  const btnRef = useRef();
-
-  useEffect(() => {
-    function handleClick(e) {
-      if (open && btnRef.current) {
-        const dropdown = document.getElementById("dropdown-menu");
-        if (
-          !btnRef.current.contains(e.target) &&
-          (!dropdown || !dropdown.contains(e.target))
-        ) {
-          setOpen(false);
-        }
-      }
-    }
-    if (open) {
-      document.addEventListener("mousedown", handleClick);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (open && btnRef.current) {
-      const rect = btnRef.current.getBoundingClientRect();
-      setDropdownStyle({
-        position: "absolute",
-        top: rect.bottom + window.scrollY + 4,
-        left: rect.left + window.scrollX,
-        zIndex: 9999,
-        minWidth: 140,
-      });
-    }
-  }, [open]);
-
-  return (
-    <>
-      <button
-        className="p-2 rounded hover:bg-gray-100"
-        ref={btnRef}
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Actions"
-      >
-        <FaEllipsisV />
-      </button>
-      {open &&
-        createPortal(
-          <div
-            id="dropdown-menu"
-            style={dropdownStyle}
-            className="bg-white shadow-lg rounded text-sm"
-          >
-            <button
-              className="block w-full text-left px-4 py-2 hover:bg-gray-50"
-              onClick={() => setOpen(false)}
-            >
-              Send Email
-            </button>
-            <button
-              className="block w-full text-left px-4 py-2 hover:bg-gray-50"
-              onClick={() => {
-                setOpen(false);
-                if (onView) onView(user);
-              }}
-            >
-              View
-            </button>
-            <button
-              className="block w-full text-left px-4 py-2 hover:bg-gray-50 text-red-600"
-              onClick={() => setOpen(false)}
-            >
-              Block
-            </button>
-          </div>,
-          document.body
-        )}
-    </>
-  );
-}
+import ThreeDotDropdown from "@components/core/button/ThreeDotDropdown";
 
 export default function Users() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -149,16 +70,30 @@ export default function Users() {
     },
   });
 
+  const blockUserMutation = useMutation({
+    mutationFn: (userData) => blockUser(userData.uuid),
+    onSuccess: (data, variables) => {
+      // Use the original user's status to determine the action performed
+      const wasActive = variables.originalStatus === "1";
+      const action = wasActive ? "blocked" : "unblocked";
+      toast.success(`User ${action} successfully`);
+      queryClient.invalidateQueries(["users"]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to block/unblock user");
+    },
+  });
+
   const columns = useMemo(
     () => [
       {
         name: "Name",
         selector: (row) => row.name,
         sortable: true,
-        width: "220px",
+        width: "300px",
         cell: (row) => (
           <span className="flex items-center gap-1">
-            <FiUser className="text-slate-gray"/>
+            <FiUser className="text-slate-gray" />
             <span className="text-haven-blue">{row.name}</span>
           </span>
         ),
@@ -167,7 +102,7 @@ export default function Users() {
         name: "Email",
         selector: (row) => row.email,
         sortable: true,
-        width: "260px",
+        width: "290px",
         cell: (row) => (
           <span className="flex items-center">
             <span className="text-haven-blue">{row.email}</span>
@@ -202,6 +137,7 @@ export default function Users() {
         name: "Status",
         selector: (row) => row.is_active,
         sortable: true,
+        width: "120px",
         cell: (row) => (
           <StatusPill
             status={row.is_active === "1" ? "Active" : "Blocked"}
@@ -211,20 +147,56 @@ export default function Users() {
       },
       {
         name: "Actions",
-        cell: (row) => (
-          <ActionDropdown
-            user={row}
-            onView={(user) => {
-              setSelectedUser(user);
-              setModalOpen(true);
-            }}
-          />
-        ),
-        ignoreRowClick: true,
+        cell: (row) => {
+          const dropdownOptions = [
+            {
+              label: "Send Email",
+              href: `/admin/send-emails`,
+              icon: <FiMail className="w-4 h-4" />,
+            },
+            {
+              label: "View",
+              onClick: () => handleViewUser(row),
+              icon: <FaEye className="w-4 h-4" />,
+            },
+            {
+              label: row.is_active === "1" ? "Block" : "Unblock",
+              onClick: () => handleBlockUser(row),
+              icon: <FaBan className="w-4 h-4" />,
+              disabled: blockUserMutation.isLoading,
+            },
+          ];
+
+          return (
+            <ThreeDotDropdown
+              options={dropdownOptions}
+              menuId={`user-dropdown-${row.uuid || row.id}`}
+            />
+          );
+        },
       },
     ],
     []
   );
+
+  // Action handlers
+  const handleViewUser = (user) => {
+    setSelectedUser(user);
+    setModalOpen(true);
+  };
+
+  const handleBlockUser = (user) => {
+    const action = user.is_active === "1" ? "block" : "unblock";
+    const confirmMessage = `Are you sure you want to ${action} ${user.name}?`;
+
+    if (window.confirm(confirmMessage)) {
+      // Pass user data including original status for correct toast message
+      blockUserMutation.mutate({
+        uuid: user.uuid,
+        originalStatus: user.is_active,
+      });
+    }
+  };
 
   const customStyles = useMemo(
     () => ({
@@ -323,7 +295,7 @@ export default function Users() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         onUpdate={(values) => {
-          updateMutation.mutate({ id: selectedUser.id, values });
+          updateMutation.mutate({ id: selectedUser.uuid, values });
         }}
         isLoading={updateMutation.isLoading}
         error={updateMutation.error}

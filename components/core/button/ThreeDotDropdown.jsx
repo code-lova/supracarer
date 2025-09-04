@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { FaEllipsisV } from "react-icons/fa";
+import Link from "next/link";
 
 /**
  * A reusable three-dot dropdown menu.
  *
  * Props:
- * - options: Array of { label: string, onClick: function, icon?: JSX.Element, danger?: boolean }
+ * - options: Array of { label: string, onClick?: function, href?: string, icon?: JSX.Element, danger?: boolean, disabled?: boolean }
  * - buttonClass: string (optional, additional classes for trigger button)
  * - dropdownClass: string (optional, additional classes for dropdown)
  * - menuId: string (optional, unique id for dropdown, defaults to "dropdown-menu")
@@ -77,22 +78,45 @@ const ThreeDotDropdown = ({
             style={dropdownStyle}
             className={`bg-white shadow-lg rounded text-sm ${dropdownClass}`}
           >
-            {options.map((option, idx) => (
-              <button
-                key={idx}
-                type="button"
-                className={`flex w-full text-left px-4 py-2 hover:bg-gray-50 items-center gap-2 ${
-                  option.danger ? "text-red-600" : ""
-                }`}
-                onClick={() => {
-                  setOpen(false);
-                  if (typeof option.onClick === "function") option.onClick();
-                }}
-              >
-                {option.icon && <span>{option.icon}</span>}
-                <span>{option.label}</span>
-              </button>
-            ))}
+            {options.map((option, idx) => {
+              // If option has href, render as Link
+              if (option.href) {
+                return (
+                  <Link
+                    key={idx}
+                    href={option.href}
+                    className={`flex w-full text-left px-4 py-2 hover:bg-gray-50 items-center gap-2 ${
+                      option.danger ? "text-red-600" : ""
+                    } ${option.disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                    onClick={() => setOpen(false)}
+                  >
+                    {option.icon && <span>{option.icon}</span>}
+                    <span>{option.label}</span>
+                  </Link>
+                );
+              }
+
+              // Otherwise, render as button
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  disabled={option.disabled}
+                  className={`flex w-full text-left px-4 py-2 hover:bg-gray-50 items-center gap-2 ${
+                    option.danger ? "text-red-600" : ""
+                  } ${option.disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                  onClick={() => {
+                    setOpen(false);
+                    if (typeof option.onClick === "function" && !option.disabled) {
+                      option.onClick();
+                    }
+                  }}
+                >
+                  {option.icon && <span>{option.icon}</span>}
+                  <span>{option.label}</span>
+                </button>
+              );
+            })}
           </div>,
           document.body
         )}
