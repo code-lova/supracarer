@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { FiUser, FiMail, FiBriefcase } from "react-icons/fi";
 import { FaEye, FaBan } from "react-icons/fa";
@@ -15,6 +15,7 @@ import { FiRefreshCw } from "react-icons/fi";
 import toast from "react-hot-toast";
 import AdminTableSkeleton from "@components/core/skeleton/AdminTableSkeleton";
 import ThreeDotDropdown from "@components/core/button/ThreeDotDropdown";
+import ErrorState from "@components/core/ErrorState";
 
 export default function Users() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -268,16 +269,13 @@ export default function Users() {
           {isLoading || isFetching ? (
             <AdminTableSkeleton rows={4} />
           ) : isError ? (
-            <div className="text-center py-10 text-red-500 flex flex-col items-center gap-2">
-              <span>Error loading users.</span>
-              <span className="text-xs text-gray-500">{error?.message}</span>
-              <button
-                className="flex items-center gap-1 px-3 py-2 rounded bg-haven-blue text-white hover:bg-blue-700 mt-2"
-                onClick={() => refetch()}
-              >
-                <FiRefreshCw className="inline-block mr-1" /> Retry
-              </button>
-            </div>
+            <ErrorState
+              icon={FiRefreshCw}
+              title="Error loading users."
+              error={error}
+              onAction={refetch}
+              className="py-12"
+            />
           ) : (
             <DataTable
               columns={columns}
