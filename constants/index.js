@@ -15,7 +15,7 @@ import {
   FaBookOpen,
   FaCog,
   FaClipboardList,
-  FaInfoCircle, 
+  FaInfoCircle,
   FaBalanceScale,
 } from "react-icons/fa";
 import {
@@ -924,4 +924,31 @@ export const emailCategories = [
       "We're constantly working to improve your SupraCarer experience. Here's what's new in our latest platform update:\n\n🆕 New Features:\n[List new features here]\n\n🔧 Improvements:\n[List improvements here]\n\n🐛 Bug Fixes:\n[List fixes here]\n\nThese updates are now live and ready for you to explore. Log in to your account to experience the enhanced features.\n\nAs always, we value your feedback. If you have any suggestions or encounter any issues, please let us know.\n\nThank you for your continued trust in SupraCarer.\n\nBest regards,\nThe SupraCarer Development Team",
     subjectSuggestion: "🆕 SupraCarer Platform Update - New Features Available",
   },
+];
+
+// Define status colors mapping
+export const STATUS_COLORS = {
+  Pending: "#facc15",
+  Processing: "#3b82f6",
+  Confirmed: "#22c55e",
+  Ongoing: "#a78bfa",
+  Cancel: "#ef4444",
+  Done: "#6b7280",
+};
+
+// Month options for filter
+export const MONTHS = [
+  { value: null, label: "All Months" },
+  { value: 1, label: "January" },
+  { value: 2, label: "February" },
+  { value: 3, label: "March" },
+  { value: 4, label: "April" },
+  { value: 5, label: "May" },
+  { value: 6, label: "June" },
+  { value: 7, label: "July" },
+  { value: 8, label: "August" },
+  { value: 9, label: "September" },
+  { value: 10, label: "October" },
+  { value: 11, label: "November" },
+  { value: 12, label: "December" },
 ];

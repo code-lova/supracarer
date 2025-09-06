@@ -34,7 +34,7 @@ const DeletedAccount = () => {
     queryFn: () => getDeletedAccount(queryParams),
     keepPreviousData: true,
     retry: false,
-    staleTime: 60 * 1000, // 1 minute
+    staleTime: 5 * 60 * 1000, // 5 minute
   });
 
   // Support both array and object response
