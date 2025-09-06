@@ -6,6 +6,13 @@
 .pnp.js
 .yarn/install-state.gz
 
+# Google Analytics credentials
+/credentials
+*.json
+!package.json
+!tsconfig.json
+!jsconfig.json
+
 # testing
 /coverage
 
