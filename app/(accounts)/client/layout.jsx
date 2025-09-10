@@ -2,28 +2,42 @@
 import React from "react";
 import NavigationBar from "@components/accounts/client/ui-kit/NavigationBar";
 import Sidebar from "@components/accounts/client/ui-kit/Sidebar";
+import ProfileWarningModal from "@components/core/modal/ProfileWarningModal";
 import { useUserContext } from "@context/userContext";
 import LoadingStateUI from "@components/core/loading";
 
 const ClientLayout = ({ children }) => {
-  // const { isLoading } = useUserContext();
+  const { isLoading, isRefreshing, hasData } = useUserContext();
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center">
-  //       <LoadingStateUI />
-  //     </div>
-  //   );
-  // }
+  if (isLoading && !hasData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingStateUI />
+      </div>
+    );
+  }
+
   return (
-    <div className="client-bg">
+    <div className="min-h-screen bg-gray-50">
+      {/* Loading indicator */}
+      {isRefreshing && (
+        <div className="fixed top-0 left-0 right-0 h-1 bg-blue-500 animate-pulse z-50" />
+      )}
+
+      {/* Profile Warning Modal */}
+      <ProfileWarningModal userType="client" />
+
+      {/* Sidebar */}
       <Sidebar />
-      <NavigationBar />
-      <section className="px-2 md:px-4 lg:ml-[270px] min-h-screen">
-        <div className="flex flex-col md:flex-row justify-between">
-          {children}
-        </div>
-      </section>
+
+      {/* Main Content */}
+      <div className="lg:ml-72">
+        {/* Navigation Bar */}
+        <NavigationBar />
+
+        {/* Page Content */}
+        <main className="p-4 lg:p-6">{children}</main>
+      </div>
     </div>
   );
 };

@@ -30,7 +30,7 @@ const ProfileCard = () => {
               <img
                 src={userDetails?.image_url}
                 alt="Profile"
-                className="w-28 h-28 rounded-full border-2 border-tranquil-teal"
+                className="w-28 h-28 object-cover rounded-full border-2 border-tranquil-teal"
               />
             ) : (
               <div className="w-28 h-28 rounded-full bg-ever-green flex items-center justify-center text-white text-4xl font-bold border-2 border-tranquil-teal">

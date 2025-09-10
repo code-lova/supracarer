@@ -15,7 +15,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 w-full mb-6 mt-[98px] lg:mt-[80px] px-2">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 w-full mt-[10px] lg:mt-[5px] px-2">
         {!userDetails?.address && (
           <div className="lg:hidden flex item-center space-x-1 bg-yellow-100 px-3 py-2 rounded">
             <PiWarningFill className="text-yellow-600" size={25} />

@@ -3,7 +3,6 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getGoogleAnalytics } from "@service/request/admin/analytics";
 import ErrorState from "@components/core/ErrorState";
-import NumberFormater from "@components/core/NumberFormater";
 import {
   FaChartLine,
   FaUserCheck,

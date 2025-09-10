@@ -2,19 +2,19 @@
 import React, { useState, useRef } from "react";
 import { useUserContext } from "@context/userContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { updateHealthWorkerSchema } from "@schema/healthworker/profile";
 import { countries, region, religion, gender } from "@constants/index";
 import { useMutation } from "@tanstack/react-query";
-import { updateClientProfile } from "@service/request/client/updateProfileRequest";
-import { clientProfileSchema } from "@schema/client/profile";
+import { updateHealthWorkerprofile } from "@service/request/healthworker/updateProfileRequest";
 import toast from "react-hot-toast";
-import { MediumBtn } from "@components/core/button";
+import { MediumBtn, NormalBtn } from "@components/core/button";
 import { updateUserLocation } from "@service/request/user/updateUserLocation";
 import { FaEdit } from "react-icons/fa";
 import { uploadToCloudinary } from "@utils/uploadToCloudinary";
-import { updateUserImage } from "@service/request/user/updateUserImage";
 import { validateImageFile } from "@utils/validateImageFile";
-import Age from "@components/core/Age";
+import { updateUserImage } from "@service/request/user/updateUserImage";
 import TimeAgo from "@components/core/TimeAgo";
+import Age from "@components/core/Age";
 import WordCountTextarea from "@components/core/WordCountTextarea";
 
 const Profile = () => {
@@ -87,6 +87,7 @@ const Profile = () => {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           };
+          setLocation(coords);
           locationMutation.mutate(coords);
         },
         (error) => {
@@ -99,7 +100,7 @@ const Profile = () => {
 
   //Mutation for updating user details
   const mutation = useMutation({
-    mutationFn: updateClientProfile,
+    mutationFn: updateHealthWorkerprofile,
     onSuccess: () => {
       toast.success("Profile Update Successfully");
       refetchUser();
@@ -112,18 +113,19 @@ const Profile = () => {
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
+
   return (
     <>
-      <div className="pageContent">
+      <div className="pageContainer">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
           {/* Left Column (1/3) */}
           <div className="space-y-2">
             {/* User Info Card */}
-            <div className="bg-gray-50 shadow-lg rounded-xl p-4 flex flex-col items-center relative">
-              <div className="w-32 h-32 rounded-full flex items-center justify-center text-carer-blue text-4xl font-bold border-2 border-carer-blue relative">
+            <div className="bg-white shadow-lg rounded-2xl p-4 flex flex-col items-center relative">
+              <div className="w-32 h-32 rounded-full flex items-center justify-center text-ever-green text-4xl font-bold border-2 border-tranquil-teal relative">
                 {/* FaEdit icon inside the image div, positioned bottom right */}
                 <button
-                  className="absolute right-1 bottom-1 bg-carer-blue rounded-full p-2"
+                  className="absolute right-1 bottom-1 bg-ever-green rounded-full p-2"
                   type="button"
                   aria-label="Edit profile image"
                   onClick={() => {
@@ -137,13 +139,13 @@ const Profile = () => {
                   <img
                     src={previewImage}
                     alt="Preview"
-                    className="w-28 h-28 rounded-full border-1 border-carer-blue object-cover"
+                    className="w-28 h-28 rounded-full border-1 border-tranquil-teal object-cover"
                   />
-                ) : userDetails?.image ? (
+                ) : userDetails?.image_url ? (
                   <img
-                    src={userDetails?.image}
+                    src={userDetails?.image_url}
                     alt="Profile"
-                    className="w-28 h-28 rounded-full border-1 border-carer-blue object-cover"
+                    className="w-28 h-28 object-cover rounded-full border-1 border-tranquil-teal"
                   />
                 ) : (
                   <span>
@@ -178,14 +180,17 @@ const Profile = () => {
                 />
               </div>
 
-              <h3 className="text-xl font-bold text-dark-blue mt-3">
+              <h3 className="text-xl font-bold text-tranquil-teal mt-3">
                 {userDetails?.fullname}
               </h3>
+              <p className="text-sm capitalize text-slate-gray font-bold">
+                {userDetails?.practitioner}
+              </p>
             </div>
 
             {/* Details Card */}
-            <div className="bg-gray-50 shadow-lg rounded-xl p-4 h-[405px]">
-              <h4 className="text-lg font-bold mb-4 text-dark-blue">
+            <div className="bg-white shadow-lg rounded-xl p-4 h-[405px] overflow-y-auto">
+              <h4 className="text-lg font-bold mb-4 text-tranquil-teal">
                 Personal Details
               </h4>
               <ul className="text-sm text-slate-gray space-y-3">
@@ -223,8 +228,8 @@ const Profile = () => {
 
           {/* Right Column (2/3) */}
           <div className="lg:col-span-2 ">
-            <div className="bg-gray-50 shadow-lg rounded-xl p-6 h-[698px] overflow-y-auto">
-              <h4 className="text-lg font-bold text-dark-blue mb-6">
+            <div className="bg-white shadow-lg rounded-2xl p-6 h-[669px] mb-4 overflow-x-auto">
+              <h4 className="text-lg font-bold text-tranquil-teal mb-6">
                 Update Profile Information
               </h4>
               {!consentGiven && (
@@ -232,10 +237,9 @@ const Profile = () => {
                   <p className="text-sm text-yellow-700 mb-6">
                     📍 To improve your match experience, allow location access.
                   </p>
-                  <MediumBtn
+                  <NormalBtn
                     onClick={handleLocationPermission}
-                    text="Allow Location"
-                    color="carerBlue"
+                    children="Allow Location"
                   />
                 </div>
               )}
@@ -248,13 +252,13 @@ const Profile = () => {
                   date_of_birth: userDetails?.date_of_birth || "",
                   country: userDetails?.country || "",
                   region: userDetails?.region || "",
+                  working_hours: userDetails?.working_hours || "",
                   address: userDetails?.address || "",
                   religion: userDetails?.religion || "",
                   gender: userDetails?.gender || "",
-                  about: userDetails?.about || "",
+                  about: userDetails?.about_me || "",
                 }}
-                enableReinitialize={true}
-                validationSchema={clientProfileSchema}
+                validationSchema={updateHealthWorkerSchema}
                 onSubmit={handleSubmit}
               >
                 {({ dirty, values, setFieldValue }) => (
@@ -347,7 +351,21 @@ const Profile = () => {
                         className="text-red-600 text-xs"
                       />
                     </div>
-
+                    <div>
+                      <label className="block text-sm font-medium">
+                        Working Hours
+                      </label>
+                      <Field
+                        name="working_hours"
+                        placeholder="e.g. 8am - 6pm"
+                        className="login-form-input"
+                      />
+                      <ErrorMessage
+                        name="working_hours"
+                        component="div"
+                        className="text-red-600 text-xs"
+                      />
+                    </div>
                     <div>
                       <label className="block text-sm font-medium">
                         Religion(Optional)
@@ -407,15 +425,15 @@ const Profile = () => {
                         onChange={(text) => setFieldValue("about", text)}
                         maxWords={50}
                         rows={4}
-                        placeholder="Say something about yourself, what makes you special..."
+                        placeholder="Tell us about yourself, your experience, and what makes you special..."
                       />
                     </div>
-                    <div className="md:col-span-2 mx-auto py-8">
+                    <div className="md:col-span-2 mx-auto py-4">
                       <MediumBtn
                         loading={mutation.isPending}
                         loadingText="Updating..."
                         text="Update Profile"
-                        color="carerBlue"
+                        color="darkblue"
                         type="submit"
                         disabled={!dirty || mutation.isPending}
                       />

@@ -5,138 +5,148 @@ import Image from "next/image";
 import { logoutRequest } from "@/service/request/auth/logoutRequest";
 import { signOut as nextAuthSignOut } from "next-auth/react";
 import { clientDashboardLinks } from "@constants/index";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaTimes, FaBars } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserContext } from "@/context/userContext";
-import { FaAlignRight } from "react-icons/fa6";
-import { RiCloseLargeFill } from "react-icons/ri";
-import { FaBell } from "react-icons/fa";
+import clsx from "clsx";
 
 const Sidebar = () => {
-  const [toggle, setToggle] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const pathname = usePathname();
-  const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
-  const { setUser } = useUserContext();
-
-  const toggleDrawer = () => setToggle(!toggle);
 
   const handleLogout = async () => {
-    setLoading(true);
+    setIsLoggingOut(true);
     try {
       await logoutRequest();
-    } catch (e) {
-      // Optionally handle error, but proceed with sign out regardless
+    } catch (error) {
+      console.error("Logout error:", error);
     }
-    await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
     queryClient.clear();
-    setUser(null);
+    await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
   };
 
   return (
-    <div>
-      <aside className="bg-white fixed shadow-md lg:shadow-xl rounded-md md:rounded-xl z-50 top-0 left-0 w-full lg:px-2  lg:py-6 lg:w-[270px] lg:h-full lg:fixed lg:text-haven-blue">
-        <div className="flex justify-between items-center mt-4 lg:flex-col lg:items-start lg:-mt-1">
-          <Link href="/health-service">
+    <>
+      {/* Mobile Hamburger Button - Only show when sidebar is closed */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className={clsx(
+            "lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg",
+            "bg-white shadow-md border text-carer-blue hover:bg-gray-50"
+          )}
+        >
+          <FaBars size={20} />
+        </button>
+      )}
+
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={clsx(
+          "fixed top-0 left-0 h-screen bg-white shadow-lg z-50 transition-transform duration-300",
+          "w-72 flex flex-col",
+          // Mobile: slide in from left
+          "lg:transform-none",
+          isOpen
+            ? "transform translate-x-0"
+            : "transform -translate-x-full lg:translate-x-0"
+        )}
+      >
+        {/* Logo Section */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <Link
+            href="/client"
+            onClick={() => setIsOpen(false)}
+            className="flex-1"
+          >
             <Image
               src="/assets/images/logo.png"
-              width={180}
-              height={50}
+              width={160}
+              height={45}
               alt="Supracarer logo"
-              className="mx-auto px-4"
+              className="mx-auto"
             />
           </Link>
-          <div className="hidden xl:block w-full bg-gray-200 h-[2px] font-bold mt-2"></div>
-          <div className="flex justify-between space-x-6 items-center lg:hidden mr-3">
-            <div className="relative">
-              <Link href="/health-service/profile">
-                <FaBell
-                  className="text-carer-blue cursor-pointer"
-                  size={27}
-                />
-              </Link>
-              <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                4
-              </span>
-            </div>
-            {/* ☰ Hamburger menu */}
-            <div
-              className="cursor-pointer lg:hidden"
-              onClick={() => setToggle(!toggle)}
-            >
-              {toggle ? (
-                <RiCloseLargeFill
-                  className="text-carer-blue cursor-pointer font-semibold"
-                  size={30}
-                />
-              ) : (
-                <FaAlignRight
-                  className="text-carer-blue cursor-pointer"
-                  size={27}
-                />
-              )}
-            </div>
-          </div>
+          <button
+            onClick={() => setIsOpen(false)}
+            className={clsx(
+              "lg:hidden p-2 rounded-lg ml-4",
+              "text-gray-600 hover:bg-gray-100 hover:text-gray-800 transition-colors"
+            )}
+          >
+            <FaTimes size={20} />
+          </button>
         </div>
 
-        <ul
-          className={`${
-            toggle ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          } bg-mobile-nav transition-all duration-300 overflow-hidden`}
-        >
-          {Array.isArray(clientDashboardLinks) &&
-            clientDashboardLinks.map((nav) => {
+        {/* Navigation Links */}
+        <nav className="flex-1 py-6">
+          <ul className="space-y-2 px-4">
+            {clientDashboardLinks?.map((nav) => {
               const Icon = nav.icon;
               const isActive = pathname === nav.link;
 
               return (
-                <li key={nav.id} className="mt-1">
+                <li key={nav.id}>
                   <Link
                     href={nav.link}
-                    onClick={toggleDrawer}
-                    className={`flex items-center gap-2 py-3 px-3 font-semibold text-[15px] transition-colors duration-300 w-full
-                    ${isActive ? "text-carer-blue" : "text-slate-gray hover:text-dark-gray-blue transitioning"}`}
+                    onClick={() => setIsOpen(false)}
+                    className={clsx(
+                      "flex items-center gap-3 px-4 py-3 rounded-lg transition-all",
+                      "text-sm font-medium",
+                      isActive
+                        ? "bg-carer-blue text-white shadow-md"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-carer-blue"
+                    )}
                   >
-                    {/* Icon - increased size, padded, and styled when active */}
-                    <Icon
-                      className={`text-2xl md:text-3xl p-1 transition-all duration-300
-                      ${
-                        isActive
-                          ? "bg-carer-blue rounded-md text-white"
-                          : "bg-transparent"
-                      }`}
-                    />
+                    <Icon className="text-lg" />
                     <span>{nav.title}</span>
                   </Link>
                 </li>
               );
-          })}
+            })}
+          </ul>
+        </nav>
 
-          {/* Logout Item */}
-          <li
-            className={`flex items-center gap-3 text-[15px] font-semibold py-3 px-4 cursor-pointer
-            ${loading ? "opacity-50 pointer-events-none" : ""} text-slate-gray`}
+        {/* SupraBot Section */}
+        <div className="p-4 border-t border-gray-200 space-y-4">
+          <button
             onClick={handleLogout}
+            disabled={isLoggingOut}
+            className={clsx(
+              "flex items-center gap-3 w-full px-4 py-3 rounded-lg transition-all",
+              "text-sm font-medium",
+              "text-gray-600 hover:bg-red-50 hover:text-red-600",
+              "disabled:opacity-50 disabled:cursor-not-allowed"
+            )}
           >
-            {/* Logout Icon - larger size for consistency */}
-            <FaSignOutAlt className="text-xl" />
-            {loading ? "Logging Out..." : "Logout"}
-          </li>
-        </ul>
-
-        <div className="mt-16 hidden lg:flex flex-col items-center bg-gradient-to-br from-teal-100/20 via-blue-100/20 to-transparent z-0 w-full h-[200px] rounded-xl p-4 text-gray-500 text-sm font-semibold">
-          <p className="text-carer-blue font-bold">SupraBot Coming Soon...</p>
-          <Image
-            src="/assets/images/bot.webp"
-            width={200}
-            height={200}
-            alt="suprabot"
-            className=" object-contain -mt-3"
-          />
+            <FaSignOutAlt className="text-lg" />
+            <span>{isLoggingOut ? "Logging Out..." : "Logout"}</span>
+          </button>
+          <div className="bg-gradient-to-br from-blue-50 to-teal-50 rounded-lg p-4 text-center">
+            <p className="text-carer-blue font-semibold text-sm mb-2">
+              SupraBot Coming Soon
+            </p>
+            <Image
+              src="/assets/images/bot.webp"
+              width={80}
+              height={80}
+              alt="SupraBot"
+              className="mx-auto opacity-80"
+            />
+          </div>
         </div>
       </aside>
-    </div>
+    </>
   );
 };
 

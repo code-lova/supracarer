@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { getAuthUser, getClientUser, getAdminUser } from "@service/request/user/getAuthUser";
-import { isFunction } from "@node_modules/formik/dist";
+import {
+  getAuthUser,
+  getClientUser,
+  getAdminUser,
+} from "@service/request/user/getAuthUser";
 
 export const AUTH = "auth";
 
@@ -9,13 +12,14 @@ const useUser = (opts = {}) => {
   const { data: session, status } = useSession();
 
   const role = session?.user?.role ?? null;
-
   const enabled = status === "authenticated" && !!role;
 
   const {
     data = null,
     refetch,
     isLoading,
+    isFetching,
+    isError,
     ...rest
   } = useQuery({
     queryKey: [AUTH, role],
@@ -24,21 +28,39 @@ const useUser = (opts = {}) => {
         if (role === "client") {
           return await getClientUser();
         } else if (role === "healthworker") {
-          return await getAuthUser(); // default to healthworker or admin, etc.
+          return await getAuthUser();
         } else if (role === "admin") {
           return await getAdminUser();
         }
-      } catch {
+      } catch (error) {
+        console.error("User fetch error:", error);
         return null;
       }
     },
-    enabled, // only run if authenticated and role is known
-    refetchOnWindowFocus: true,
-    staleTime: 5 * 60 * 1000,
+    enabled,
+    // Enhanced caching configuration for better UX
+    staleTime: 10 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
+    refetchInterval: false,
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    // Keep previous data while fetching new data (prevents loading flicker)
+    placeholderData: (previousData) => previousData,
     ...opts,
   });
 
-  return { user: data, refetch, isLoading: enabled && isLoading, ...rest };
+  return {
+    user: data,
+    refetch,
+    isLoading: enabled && isLoading && !data,
+    isFetching: enabled && isFetching,
+    isRefreshing: enabled && isFetching && !!data,
+    hasData: !!data,
+    isError,
+    ...rest,
+  };
 };
 
 export default useUser;

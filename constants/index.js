@@ -6,6 +6,7 @@ import {
   FaShieldAlt,
   FaStar,
   FaUsers,
+  FaUser,
   FaLightbulb,
   FaHandshake,
   FaHome,
@@ -17,6 +18,7 @@ import {
   FaClipboardList,
   FaInfoCircle,
   FaBalanceScale,
+  FaBell,
 } from "react-icons/fa";
 import {
   FiMail,
@@ -149,6 +151,12 @@ export const HealthDashboardLinks = [
     link: "/health-service/support",
     title: "Support",
     icon: FaHeadset,
+  },
+  {
+    id: "profile",
+    link: "/health-service/profile",
+    title: "Profile",
+    icon: FaUserEdit,
   },
   {
     id: "settings",
@@ -951,4 +959,79 @@ export const MONTHS = [
   { value: 10, label: "October" },
   { value: 11, label: "November" },
   { value: 12, label: "December" },
+];
+
+//For settings page
+
+export const tabs = [
+  {
+    id: "security",
+    label: "Security",
+    icon: <FaShieldAlt />,
+    description: "Password and account security",
+  },
+  {
+    id: "notifications",
+    label: "Notifications",
+    icon: <FaBell />,
+    description: "Manage your notification preferences",
+  },
+  {
+    id: "account",
+    label: "Account",
+    icon: <FaUser />,
+    description: "Account settings and preferences",
+  },
+  {
+    id: "privacy",
+    label: "Privacy",
+    icon: <FaCog />,
+    description: "Privacy and data settings",
+  },
+];
+
+export const NotificationTabMenu = [
+  {
+    key: "email_notifications",
+    label: "Email Notifications",
+    description: "Receive updates via email",
+  },
+  {
+    key: "push_notifications",
+    label: "Push Notifications",
+    description: "Browser push notifications",
+  },
+  {
+    key: "booking_reminders",
+    label: "Booking Reminders",
+    description: "Reminders about upcoming appointments",
+  },
+  {
+    key: "marketing_updates",
+    label: "Marketing Updates",
+    description: "Health news and promotional content",
+  },
+];
+
+export const PrivacyTabMenu = [
+  {
+    key: "profile_visibility",
+    label: "Profile Visibility",
+    description: "Control who can see your profile",
+  },
+  {
+    key: "activity_status",
+    label: "Activity Status",
+    description: "Show when you were last active",
+  },
+  {
+    key: "data_collection",
+    label: "Data Collection",
+    description: "Allow data collection for service improvement",
+  },
+  {
+    key: "third_party_cookies",
+    label: "Third-party Cookies",
+    description: "Allow third-party tracking cookies",
+  },
 ];

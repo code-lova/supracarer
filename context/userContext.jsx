@@ -1,49 +1,54 @@
 "use client";
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import React, { createContext, useContext, useMemo } from "react";
+import { useSession } from "next-auth/react";
 import useUser from "@/hooks/useUser";
-
 
 const UserContext = createContext(undefined);
 
 export const UserProvider = ({ children }) => {
-  const { user, isLoading: isUserLoading, refetch } = useUser();
-  const [userState, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { status: sessionStatus } = useSession();
+  const {
+    user,
+    isLoading: userLoading,
+    isFetching,
+    isRefreshing,
+    hasData,
+    refetch,
+    isError,
+  } = useUser();
 
-  // Initialize userState when useUser finishes loading
-  useEffect(() => {
-    if (!isUserLoading) {
-      setUser(user || null);
-      setIsLoading(false);
-    }
-  }, [user, isUserLoading]);
+  const contextValue = useMemo(() => {
+    const isSessionLoading = sessionStatus === "loading";
+    const isUserLoading = userLoading;
+    const isInitialLoading = isSessionLoading || isUserLoading;
 
-  // Manual refetch helper
-  const refetchUser = async () => {
-    try {
-      const { data } = await refetch();
-      setUser(data || null);
-    } catch {
-      setUser(null); // Reset state if the fetch fails
-    }
-  };
+    return {
+      user,
+      // Different loading states for different UX needs
+      isLoading: isInitialLoading,
+      isRefreshing,
+      isFetching,
+      hasData,
+      isAuthenticated: sessionStatus === "authenticated" && !!user,
+      isError,
+      refetchUser: refetch,
+      // Legacy support - you can gradually migrate away from setUser
+      setUser: () =>
+        console.warn("setUser is deprecated, use refetchUser instead"),
+    };
+  }, [
+    user,
+    sessionStatus,
+    userLoading,
+    isFetching,
+    isRefreshing,
+    hasData,
+    refetch,
+    isError,
+  ]);
 
   return (
-    <UserContext.Provider
-      value={{
-        user: userState,
-        isLoading,
-        refetchUser,
-        setUser,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 };
 

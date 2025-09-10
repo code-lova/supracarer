@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useUserContext } from "@context/userContext";
 import LoadingStateUI from "@components/core/loading";
 import TwoFactorAuth from "./TwoFactorAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const { data: session, status } = useSession();
@@ -19,6 +20,7 @@ const Login = () => {
   const [showTwoFactor, setShowTwoFactor] = useState(false);
   const [pendingCredentials, setPendingCredentials] = useState(null);
   const [twoFactorData, setTwoFactorData] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Redirect logged-in users to their respective dashboard
   useEffect(() => {
@@ -207,12 +209,25 @@ const Login = () => {
                 >
                   Password
                 </label>
-                <Field
-                  type="password"
-                  name="password"
-                  className="login-form-input"
-                  placeholder="••••••••"
-                />
+                <div className="relative">
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    className="login-form-input"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <FaEyeSlash className="text-gray-400" />
+                    ) : (
+                      <FaEye className="text-gray-400" />
+                    )}
+                  </button>
+                </div>
                 <ErrorMessage
                   name="password"
                   component="div"
