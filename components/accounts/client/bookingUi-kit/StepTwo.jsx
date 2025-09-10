@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { StepTwoValidationSchema } from "@schema/client/booking/ValidationSchema";
 import { MediumBtn } from "@components/core/button";
 import { medicalServicesOptions, extraServicesOptions } from "@constants";
+import WordCountTextarea from "@components/core/WordCountTextarea";
 
 const StepTwo = ({
   values,
@@ -99,17 +100,26 @@ const StepTwo = ({
 
         {/* Special Notes */}
         <div className="md:col-span-2">
-          <label className="block mb-2 text-sm font-medium text-gray-700">
-            Special Notes (Language preference, mobility needs, special diets,
-            religious considerations, pets at home, etc.)
-          </label>
-          <textarea
+          <WordCountTextarea
             name="special_notes"
+            label="Special Notes (Language preference, mobility needs, special diets, religious considerations, pets at home, etc.)"
+            value={values.special_notes || ""}
+            onChange={(text) => {
+              // Lets use a synthetic event to match handleChange expectations
+              const syntheticEvent = {
+                target: {
+                  name: "special_notes",
+                  value: text,
+                  type: "textarea",
+                },
+              };
+              handleChange(syntheticEvent);
+            }}
+            maxWords={100}
             rows={6}
-            value={values.special_notes}
-            onChange={handleChange}
             placeholder="Let us know anything important..."
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            showErrorMessage={false}
           />
           {errors.special_notes && (
             <p className="text-sm text-red-600 mt-1">{errors.special_notes}</p>

@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import { NotificationSkeleton } from "@components/core/skeleton/settings";
+import { NotificationTabMenu } from "@constants";
 
 const NotificationsTab = ({
   settings,
@@ -15,43 +17,10 @@ const NotificationsTab = ({
         </h3>
 
         {settingsLoading ? (
-          <div className="space-y-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="animate-pulse">
-                <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                  <div>
-                    <div className="h-4 bg-gray-200 rounded w-32 mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-48"></div>
-                  </div>
-                  <div className="h-6 bg-gray-200 rounded w-11"></div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <NotificationSkeleton />
         ) : (
           <div className="space-y-4">
-            {[
-              {
-                key: "email_notifications",
-                label: "Email Notifications",
-                description: "Receive updates via email",
-              },
-              {
-                key: "push_notifications",
-                label: "Push Notifications",
-                description: "Browser push notifications",
-              },
-              {
-                key: "booking_reminders",
-                label: "Booking Reminders",
-                description: "Reminders about upcoming appointments",
-              },
-              {
-                key: "marketing_updates",
-                label: "Marketing Updates",
-                description: "Health news and promotional content",
-              },
-            ].map((item, index) => (
+            {NotificationTabMenu.map((item, index) => (
               <div
                 key={index}
                 className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0"

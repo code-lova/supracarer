@@ -53,7 +53,7 @@ export const StepTwoValidationSchema = Yup.object().shape({
   special_notes: Yup.string()
     .required("Special notes are required")
     .min(20, "Special notes must be at least 20 characters")
-    .max(1000, "Special notes must not exceed 1000 characters"),
+    .max(600, "Special notes must not exceed 600 characters"),
 });
 
 //Step three validation schema

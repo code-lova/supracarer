@@ -21,7 +21,7 @@ import {
   DeleteAccountModal,
   Disable2FAModal,
 } from "./settingsUi-kit";
-import { FaBell, FaShieldAlt, FaCog, FaUser } from "react-icons/fa";
+import { tabs } from "@constants";
 
 const Settings = () => {
   const { user, refetchUser, setUser } = useUserContext();
@@ -209,32 +209,6 @@ const Settings = () => {
     });
   };
 
-  const tabs = [
-    {
-      id: "security",
-      label: "Security",
-      icon: <FaShieldAlt />,
-      description: "Password and account security",
-    },
-    {
-      id: "notifications",
-      label: "Notifications",
-      icon: <FaBell />,
-      description: "Manage your notification preferences",
-    },
-    {
-      id: "account",
-      label: "Account",
-      icon: <FaUser />,
-      description: "Account settings and preferences",
-    },
-    {
-      id: "privacy",
-      label: "Privacy",
-      icon: <FaCog />,
-      description: "Privacy and data settings",
-    },
-  ];
 
   const renderTabContent = () => {
     switch (activeTab) {

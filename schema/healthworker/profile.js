@@ -22,5 +22,5 @@ export const updateHealthWorkerSchema = Yup.object().shape({
   gender: Yup.string()
     .oneOf(["Male", "Female", "Non-binary", "Transgender", "Bigender"])
     .required("Required"),
-  about: Yup.string().max(1000).required("Say something about yourself"),
+  about: Yup.string().min(20).max(500).required("Say something about yourself"),
 });

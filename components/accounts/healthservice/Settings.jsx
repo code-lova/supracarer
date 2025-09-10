@@ -1,421 +1,341 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { useUserContext } from "@context/userContext";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { updateHealthWorkerSchema } from "@schema/healthworker/profile";
-import { countries, region, religion, gender } from "@constants/index";
-import { useMutation } from "@tanstack/react-query";
-import { updateHealthWorkerprofile } from "@service/request/healthworker/updateProfileRequest";
+import React, { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import LoaderButton from "@components/core/LoaderButton";
-import { NormalBtn } from "@components/core/button";
-import { updateUserLocation } from "@service/request/user/updateUserLocation";
-import { FaEdit } from "react-icons/fa";
-import { uploadToCloudinary } from "@utils/uploadToCloudinary";
-import { updateUserImage } from "@service/request/user/updateUserImage";
+import { changePasswordSchema } from "@schema/auth";
+import { deleteUserProfileSchema } from "@schema/user";
+import { updateUserPassword } from "@service/request/user/updateUserPassword";
+import { enable2Fa, disable2Fa } from "@service/request/user/settings/2faAuth";
+import { getUserSession } from "@service/request/user/settings/sessions";
+import { logoutAllDeviceRequest } from "@service/request/auth/logoutAllDevices";
+import { togglUserSettings } from "@service/request/user/settings/toggleSettings";
+import { getUserSettings } from "@service/request/user/settings/getUserSettings";
+import { deleteUserProfile } from "@service/request/user/settings/deleteProfile";
+import { useUserContext } from "@context/userContext";
+import { signOut as nextAuthSignOut } from "next-auth/react";
+import {
+  SecurityTab,
+  NotificationsTab,
+  AccountTab,
+  PrivacyTab,
+  DeleteAccountModal,
+  Disable2FAModal,
+} from "./settingsUi-kit";
+import { tabs } from "@constants";
 
 const Settings = () => {
-  const { user, refetchUser } = useUserContext();
+  const { user, refetchUser, setUser } = useUserContext();
   const userDetails = user?.data;
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
-  const [consentGiven, setConsentGiven] = useState(
-    userDetails?.latitude && userDetails?.longitude
-  );
-  // Image upload preview state
-  const [previewImage, setPreviewImage] = useState(null);
-  const fileInputRef = useRef(null);
+  const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState("security");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDisable2FAModal, setShowDisable2FAModal] = useState(false);
 
-  // Mutation for updating user image in backend
-  const imageMutation = useMutation({
-    mutationFn: updateUserImage,
+  // Fetch user settings from backend
+  const {
+    data: userSettings,
+    isLoading: settingsLoading,
+    refetch: refetchSettings,
+  } = useQuery({
+    queryKey: ["userSettings"],
+    queryFn: getUserSettings,
+    enabled: activeTab === "notifications" || activeTab === "privacy", // Fetch when settings tabs are active
+  });
+
+  // Settings state for notifications and privacy - initialize from backend data
+  const [settings, setSettings] = useState({
+    email_notifications: true,
+    push_notifications: true,
+    booking_reminders: true,
+    marketing_updates: false,
+    profile_visibility: true,
+    activity_status: true,
+    data_collection: false,
+    third_party_cookies: false,
+  });
+
+  // Update local settings when backend data is loaded
+  React.useEffect(() => {
+    if (userSettings?.data) {
+      setSettings(userSettings.data);
+    }
+  }, [userSettings]);
+
+  // Fetch user sessions
+  const { data: userSessions, isLoading: sessionsLoading } = useQuery({
+    queryKey: ["userSessions"],
+    queryFn: getUserSession,
+    enabled: activeTab === "security", // Only fetch when security tab is active
+  });
+
+  // Password update mutation
+  const passwordMutation = useMutation({
+    mutationFn: updateUserPassword,
     onSuccess: () => {
-      toast.success("Profile image updated successfully");
-      refetchUser();
+      toast.success("Password updated successfully");
     },
     onError: (err) => {
-      toast.error(err.message || "Failed to update profile image");
+      toast.error(err.message || "Failed to update password");
     },
   });
 
-  // Upload image to Cloudinary and backend
-  const handleImageUpload = async (file) => {
-    try {
-      toast.loading("Uploading image...");
-      const cloudinaryRes = await uploadToCloudinary(file);
-      toast.dismiss();
-      setPreviewImage(cloudinaryRes.secure_url);
-      // Send to backend
-      imageMutation.mutate({
-        image: cloudinaryRes.secure_url,
-        image_public_id: cloudinaryRes.public_id,
-      });
-    } catch (err) {
-      toast.dismiss();
-      toast.error(err.message || "Image upload failed");
+  // 2FA enable mutation
+  const enable2FaMutation = useMutation({
+    mutationFn: enable2Fa,
+    onSuccess: () => {
+      toast.success("2FA enabled successfully");
+      refetchUser(); // Refresh user data to get updated 2FA status
+    },
+    onError: (err) => {
+      toast.error(err.message || "Failed to enable 2FA");
+    },
+  });
+
+  // 2FA disable mutation
+  const disable2FaMutation = useMutation({
+    mutationFn: disable2Fa,
+    onSuccess: () => {
+      toast.success("2FA disabled successfully");
+      refetchUser(); // Refresh user data to get updated 2FA status
+    },
+    onError: (err) => {
+      toast.error(err.message || "Failed to disable 2FA");
+    },
+  });
+
+  const handle2FAToggle = () => {
+    if (userDetails?.two_fa_enabled) {
+      // Show password confirmation modal for disabling 2FA
+      setShowDisable2FAModal(true);
+    } else {
+      // Enable 2FA directly
+      enable2FaMutation.mutate();
     }
   };
 
-  const locationMutation = useMutation({
-    mutationFn: updateUserLocation,
-    onSuccess: () => {
-      toast.success("Location set successfully");
-      setConsentGiven(true);
-      refetchUser();
+  const handleDisable2FAConfirm = (password) => {
+    disable2FaMutation.mutate(password, {
+      onSuccess: () => {
+        setShowDisable2FAModal(false);
+      },
+      onError: () => {
+        // Keep modal open on error so user can try again
+      },
+    });
+  };
+
+  // Logout all devices mutation
+  const logoutAllDevicesMutation = useMutation({
+    mutationFn: logoutAllDeviceRequest,
+    onSuccess: async () => {
+      // Clear query cache and sign out
+      await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
+      queryClient.clear();
+      setUser(null);
     },
-    onError: () => toast.error("Failed to update location"),
+    onError: (err) => {
+      toast.error(err.message || "Failed to logout from all devices");
+    },
   });
 
-  const handleLocationPermission = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const coords = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
-          setLocation(coords);
-          locationMutation.mutate(coords);
-        },
-        (error) => {
-          console.error("Location access denied or error:", error);
-          toast.error("Location access denied");
-        }
-      );
+  // Delete account mutation
+  const deleteAccountMutation = useMutation({
+    mutationFn: deleteUserProfile,
+    onSuccess: async () => {
+      toast.success("Account deleted successfully");
+      // Clear query cache and sign out
+      queryClient.clear();
+      setUser(null);
+      await nextAuthSignOut({ callbackUrl: "/", redirect: true });
+    },
+    onError: (err) => {
+      toast.error(err.message || "Failed to delete account");
+    },
+  });
+
+  const handleLogoutAllDevices = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to logout from all devices? You will be redirected to login."
+      )
+    ) {
+      logoutAllDevicesMutation.mutate();
     }
   };
 
-  //Mutation for updating user details
-  const mutation = useMutation({
-    mutationFn: updateHealthWorkerprofile,
+  const handleDeleteAccount = (values, { resetForm }) => {
+    deleteAccountMutation.mutate(values.reason, {
+      onSuccess: () => {
+        setShowDeleteModal(false);
+        resetForm();
+      },
+    });
+  };
+
+  // Settings update mutation
+  const settingsMutation = useMutation({
+    mutationFn: (settingsData) => togglUserSettings(settingsData),
     onSuccess: () => {
-      toast.success("Profile Update Successfully");
-      refetchUser();
+      toast.success("Updated");
+      refetchSettings(); // Refresh settings data to stay in sync
     },
     onError: (err) => {
-      toast.error(err.message || "An error occurred while updating profile.");
+      toast.error(err.message || "Failed to update settings");
+      // Revert the local state on error
+      refetchSettings();
     },
   });
 
-  const handleSubmit = (payload) => {
-    mutation.mutate(payload);
+  const handleSettingToggle = (settingKey, value) => {
+    // Optimistically update the UI
+    const newSettings = { ...settings, [settingKey]: value };
+    setSettings(newSettings);
+
+    // Send only the changed setting to the backend
+    settingsMutation.mutate({ [settingKey]: value });
+  };
+
+  const handlePasswordUpdate = (values, { resetForm }) => {
+    passwordMutation.mutate(values, {
+      onSuccess: () => {
+        resetForm();
+        setShowCurrentPassword(false);
+        setShowNewPassword(false);
+        setShowConfirmPassword(false);
+      },
+    });
+  };
+
+ 
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "security":
+        return (
+          <SecurityTab
+            userDetails={userDetails}
+            showCurrentPassword={showCurrentPassword}
+            setShowCurrentPassword={setShowCurrentPassword}
+            showNewPassword={showNewPassword}
+            setShowNewPassword={setShowNewPassword}
+            showConfirmPassword={showConfirmPassword}
+            setShowConfirmPassword={setShowConfirmPassword}
+            passwordMutation={passwordMutation}
+            handlePasswordUpdate={handlePasswordUpdate}
+            enable2FaMutation={enable2FaMutation}
+            disable2FaMutation={disable2FaMutation}
+            handle2FAToggle={handle2FAToggle}
+            userSessions={userSessions}
+            sessionsLoading={sessionsLoading}
+            handleLogoutAllDevices={handleLogoutAllDevices}
+            logoutAllDevicesMutation={logoutAllDevicesMutation}
+            changePasswordSchema={changePasswordSchema}
+          />
+        );
+
+      case "notifications":
+        return (
+          <NotificationsTab
+            settings={settings}
+            settingsLoading={settingsLoading}
+            handleSettingToggle={handleSettingToggle}
+            settingsMutation={settingsMutation}
+          />
+        );
+
+      case "account":
+        return (
+          <AccountTab
+            userDetails={userDetails}
+            setShowDeleteModal={setShowDeleteModal}
+          />
+        );
+
+      case "privacy":
+        return (
+          <PrivacyTab
+            settings={settings}
+            settingsLoading={settingsLoading}
+            handleSettingToggle={handleSettingToggle}
+            settingsMutation={settingsMutation}
+          />
+        );
+
+      default:
+        return null;
+    }
   };
 
   return (
-    <>
-      <div className="pageContainer">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
-          {/* Left Column (1/3) */}
-          <div className="space-y-2">
-            {/* User Info Card */}
-            <div className="bg-white shadow-lg rounded-2xl p-4 flex flex-col items-center relative">
-              <div className="w-32 h-32 rounded-full flex items-center justify-center text-ever-green text-4xl font-bold border-2 border-tranquil-teal relative">
-                {/* FaEdit icon inside the image div, positioned bottom right */}
-                <button
-                  className="absolute right-1 bottom-1 bg-ever-green rounded-full p-2"
-                  type="button"
-                  aria-label="Edit profile image"
-                  onClick={() => {
-                    if (fileInputRef.current) fileInputRef.current.click();
-                  }}
-                >
-                  <FaEdit className="text-sm text-white" />
-                </button>
-                {/* Image preview logic */}
-                {previewImage ? (
-                  <img
-                    src={previewImage}
-                    alt="Preview"
-                    className="w-28 h-28 rounded-full border-1 border-tranquil-teal object-cover"
-                  />
-                ) : userDetails?.image_url ? (
-                  <img
-                    src={userDetails?.image_url}
-                    alt="Profile"
-                    className="w-28 h-28 rounded-full border-1 border-tranquil-teal object-cover"
-                  />
-                ) : (
-                  <span>
-                    {userDetails?.fullname?.[0]?.toUpperCase() || "U"}
-                  </span>
-                )}
-                {/* Hidden file input for image upload */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={async (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      // Preview locally
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        setPreviewImage(reader.result);
-                      };
-                      reader.readAsDataURL(file);
-                      // Upload to Cloudinary and backend
-                      await handleImageUpload(file);
-                    }
-                  }}
-                />
-              </div>
-
-              <h3 className="text-xl font-bold text-tranquil-teal mt-3">
-                {userDetails?.fullname}
-              </h3>
-              <p className="text-sm capitalize text-slate-gray font-bold">
-                {userDetails?.practitioner}
-              </p>
-            </div>
-
-            {/* Details Card */}
-            <div className="bg-white shadow-lg rounded-2xl p-4 h-[445px]">
-              <h4 className="text-lg font-bold mb-2 text-tranquil-teal">
-                Personal Details
-              </h4>
-              <ul className="text-sm text-slate-gray space-y-2">
-                <li>
-                  <strong>Phone:</strong> {userDetails?.phone}
-                </li>
-                <li>
-                  <strong>Gender:</strong> Male
-                </li>
-                <li>
-                  <strong>Age:</strong> 32
-                </li>
-                <li>
-                  <strong>State:</strong> Lagos
-                </li>
-                <li>
-                  <strong>Address:</strong> 15 Allen Avenue, Ikeja
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Right Column (2/3) */}
-          <div className="lg:col-span-2 ">
-            <div className="bg-white shadow-lg rounded-2xl p-6 h-[669px] mb-4 overflow-x-auto">
-              <h4 className="text-lg font-bold text-tranquil-teal mb-6">
-                Update Profile Information
-              </h4>
-              {!consentGiven && location && (
-                <div className="mb-4 bg-yellow-100 p-3 rounded">
-                  <p className="text-sm text-yellow-700 mb-6">
-                    📍 To improve your match experience, allow location access.
-                  </p>
-                  <NormalBtn
-                    onClick={handleLocationPermission}
-                    children="Allow Location"
-                  />
-                </div>
-              )}
-
-              <Formik
-                initialValues={{
-                  name: userDetails?.fullname || "",
-                  email: userDetails?.email || "",
-                  phone: userDetails?.phone || "",
-                  date_of_birth: userDetails?.date_of_birth || "",
-                  country: userDetails?.country || "",
-                  region: userDetails?.region || "",
-                  working_hours: userDetails?.working_hours || "",
-                  address: userDetails?.address || "",
-                  religion: userDetails?.religion || "",
-                  gender: userDetails?.gender || "",
-                  about: userDetails?.about_me || "",
-                }}
-                validationSchema={updateHealthWorkerSchema}
-                onSubmit={handleSubmit}
-              >
-                {() => (
-                  <Form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Full Name
-                      </label>
-                      <Field name="name" className="login-form-input" />
-                      <ErrorMessage
-                        name="name"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">Email</label>
-                      <Field name="email" className="login-form-input" />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">Phone</label>
-                      <Field name="phone" className="login-form-input" />
-                      <ErrorMessage
-                        name="phone"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Date of Birth
-                      </label>
-                      <Field
-                        type="date"
-                        name="date_of_birth"
-                        className="login-form-input"
-                      />
-                      <ErrorMessage
-                        name="date_of_birth"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Country
-                      </label>
-                      <Field
-                        as="select"
-                        name="country"
-                        className="login-form-input"
-                      >
-                        <option value="">Select country</option>
-                        {countries.map((c, idx) => (
-                          <option key={idx} value={c}>
-                            {c}
-                          </option>
-                        ))}
-                      </Field>
-                      <ErrorMessage
-                        name="country"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Region/State
-                      </label>
-                      <Field
-                        as="select"
-                        name="region"
-                        className="login-form-input"
-                      >
-                        <option value="">Select region</option>
-                        {region.map((r, idx) => (
-                          <option key={idx} value={r}>
-                            {r}
-                          </option>
-                        ))}
-                      </Field>
-                      <ErrorMessage
-                        name="region"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Working Hours
-                      </label>
-                      <Field
-                        name="working_hours"
-                        placeholder="e.g. 8am - 6pm"
-                        className="login-form-input"
-                      />
-                      <ErrorMessage
-                        name="working_hours"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Religion(Optional)
-                      </label>
-                      <Field
-                        as="select"
-                        name="religion"
-                        className="login-form-input"
-                      >
-                        <option value="">Select religion</option>
-                        {religion.map((r, idx) => (
-                          <option key={idx} value={r}>
-                            {r}
-                          </option>
-                        ))}
-                      </Field>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Gender
-                      </label>
-                      <Field
-                        as="select"
-                        name="gender"
-                        className="login-form-input"
-                      >
-                        <option value="">Select gender</option>
-                        {gender.map((g, idx) => (
-                          <option key={idx} value={g}>
-                            {g}
-                          </option>
-                        ))}
-                      </Field>
-                      <ErrorMessage
-                        name="gender"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium">
-                        Address
-                      </label>
-                      <Field name="address" className="login-form-input" />
-                      <ErrorMessage
-                        name="address"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium">
-                        About You
-                      </label>
-                      <Field
-                        as="textarea"
-                        name="about"
-                        rows={3}
-                        className="login-form-input"
-                      />
-                      <ErrorMessage
-                        name="about"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <LoaderButton
-                        loading={mutation.isPending}
-                        loadingText="Updating..."
-                        text="Update Profile"
-                        type="submit"
-                      />
-                    </div>
-                  </Form>
-                )}
-              </Formik>
-            </div>
-          </div>
+    <div className="pageContent">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
+          <p className="text-gray-600 mt-2">
+            Manage your account settings and preferences
+          </p>
         </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Sidebar Tabs */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+              <nav className="space-y-1 p-2">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`w-full flex items-center px-3 py-3 text-sm font-medium rounded-md transition-colors ${
+                      activeTab === tab.id
+                        ? "bg-tranquil-teal text-white"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    }`}
+                  >
+                    <span className="mr-3 text-base">{tab.icon}</span>
+                    <div className="text-left">
+                      <div className="font-medium">{tab.label}</div>
+                      <div
+                        className={`text-xs mt-1 ${
+                          activeTab === tab.id
+                            ? "text-white"
+                            : "text-gray-500"
+                        }`}
+                      >
+                        {tab.description}
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="lg:col-span-3">{renderTabContent()}</div>
+        </div>
+
+        {/* Delete Account Modal */}
+        <DeleteAccountModal
+          showDeleteModal={showDeleteModal}
+          setShowDeleteModal={setShowDeleteModal}
+          deleteUserProfileSchema={deleteUserProfileSchema}
+          handleDeleteAccount={handleDeleteAccount}
+          deleteAccountMutation={deleteAccountMutation}
+        />
+
+        {/* Disable 2FA Modal */}
+        <Disable2FAModal
+          showModal={showDisable2FAModal}
+          setShowModal={setShowDisable2FAModal}
+          onConfirm={handleDisable2FAConfirm}
+          isLoading={disable2FaMutation.isPending}
+        />
       </div>
-    </>
+    </div>
   );
 };
 

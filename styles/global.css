@@ -35,7 +35,6 @@
 
 .bg-dashboard {
   width: 100vw;
-  min-height: 100vh;
   background-color: rgb(247, 247, 247);
 }
 
@@ -218,11 +217,11 @@
   }
 
   .pageContainer {
-    @apply w-full h-full mt-[95px];
+    @apply w-full h-full mt-[10px];
   }
 
   .pageContent {
-    @apply w-full h-full mt-[98px] lg:mt-[80px];
+    @apply w-full h-full mt-[10px] lg:mt-[5px];
   }
 
   /* for abut us page  */

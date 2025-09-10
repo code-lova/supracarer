@@ -23,7 +23,7 @@ const DetailsCard = () => {
               <CurrentDateTime showDateTime={true} textClass="text-white" />
             </div>
 
-            <div className=" w-[130px] md:w-full">
+            <div className=" w-[200px] md:w-full">
               <h1 className="text-[13px] md:text-xl lg:text-3xl md:mt-0 font-bold text-white">
                 Good Day,
               </h1>
