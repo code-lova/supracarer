@@ -61,7 +61,7 @@ const links = [
     icon: <FaMessage size={20} />,
     href: "/admin/messages",
   },
-    {
+  {
     name: "Send Email",
     icon: <MdEmail size={20} />,
     href: "/admin/send-emails",
@@ -142,6 +142,12 @@ export default function Sidebar({ open, onClose }) {
                   scroll={false}
                   tabIndex={isActive ? -1 : 0}
                   aria-disabled={isActive}
+                  onClick={() => {
+                    // Close sidebar on mobile when link is clicked
+                    if (onClose && window.innerWidth < 768) {
+                      onClose();
+                    }
+                  }}
                 >
                   {link.icon}
                   <span>{link.name}</span>
@@ -158,7 +164,6 @@ export default function Sidebar({ open, onClose }) {
             loading ? "opacity-50 pointer-events-none" : ""
           } text-slate-gray2`}
           onClick={handleLogout}
-
         >
           <FaSignOutAlt size={20} />
           <span>{loading ? "Logging Out..." : "Logout"}</span>

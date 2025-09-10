@@ -169,11 +169,6 @@ export default function Navbar({ onMenuClick }) {
               </div>
             )}
 
-            {/* <img
-              src="https://media.istockphoto.com/id/1078140842/photo/portrait-of-successful-male-high-school-teacher.jpg?s=612x612&w=0&k=20&c=J2uaW3eihYm72aJlqrd1LKuWgEaNpEJaqNTRM7g9oI4="
-              alt="admin"
-              className="w-8 h-8 rounded-full"
-            /> */}
             <FaChevronDown size={16} />
           </button>
           {showProfile && (
