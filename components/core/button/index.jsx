@@ -69,20 +69,56 @@ const colorVariants = {
 export const SmallBtn = ({
   onClick,
   color = "green",
-  children = "",
   type = "button",
   icon = null,
+  loading,
+  loadingText,
+  disabled,
+  text,
+  href,
+  rel,
 }) => {
   const { base, hover } = colorVariants[color] || colorVariants.green;
 
+  const commonClasses = `px-3 py-1 ${base} ${hover} text-white rounded-sm text-xs flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`;
+
+  const content = loading ? (
+    <div className="flex items-center gap-2">
+      <div className="loader" />
+      {loadingText}
+    </div>
+  ) : (
+    <>
+      {icon && <span>{icon}</span>}
+      <span>{text}</span>
+    </>
+  );
+
+  // If href is provided, render as link
+  if (href) {
+    return (
+      <Link
+        href={href}
+        rel={rel}
+        className={`${commonClasses} ${
+          loading || disabled ? "pointer-events-none" : ""
+        }`}
+        onClick={onClick}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  // Default button behavior
   return (
     <button
       type={type}
+      disabled={loading || disabled}
       onClick={onClick}
-      className={`px-3 py-1 ${base} ${hover} text-white rounded-sm text-xs flex items-center gap-2`}
+      className={commonClasses}
     >
-      {icon && <span>{icon}</span>}
-      <span>{children}</span>
+      {content}
     </button>
   );
 };
@@ -97,7 +133,6 @@ export const MediumBtn = ({
   icon,
   disabled,
   href,
-  target,
   rel,
 }) => {
   const { base, hover } = colorVariants[color] || colorVariants.darkblue;
@@ -119,9 +154,8 @@ export const MediumBtn = ({
   // If href is provided, render as link
   if (href) {
     return (
-      <a
+      <Link
         href={href}
-        target={target}
         rel={rel}
         className={`${commonClasses} ${
           loading || disabled ? "pointer-events-none" : ""
@@ -129,7 +163,7 @@ export const MediumBtn = ({
         onClick={onClick}
       >
         {content}
-      </a>
+      </Link>
     );
   }
 

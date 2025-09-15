@@ -44,6 +44,21 @@ const DateFormatter = ({
           minute: "2-digit",
           hour12: true,
         });
+      case "relative":
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        if (dateObj.toDateString() === today.toDateString()) {
+          return "Today";
+        } else if (dateObj.toDateString() === yesterday.toDateString()) {
+          return "Yesterday";
+        } else {
+          return dateObj.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+          });
+        }
       default:
         return dateObj.toLocaleDateString("en-US", {
           month: "short",

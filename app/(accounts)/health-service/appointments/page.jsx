@@ -1,8 +1,8 @@
-import Appointments from "@components/accounts/healthservice/Appointments";
 import React from "react";
+import ClientAppointments from "@components/accounts/healthservice/ClientAppointments";
 
 const page = () => {
-  return <Appointments />;
+  return <ClientAppointments />;
 };
 
 export default page;

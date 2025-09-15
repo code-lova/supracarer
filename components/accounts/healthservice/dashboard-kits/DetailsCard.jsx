@@ -15,7 +15,7 @@ const DetailsCard = () => {
       <div className="w-full h-[200px] md:h-[260px] border-2 bg-tranquil-teal rounded-3xl shadow-md px-4 py-4">
         <div className="flex item-center justify-between gap-4 md:gap-9">
           <div className="flex flex-col justify-between gap-6 h-full">
-            <div className="flex items-center justify-between px-2 md:px-4 py-2 bg-ever-green rounded-lg w-[160px] md:w-[185px]">
+            <div className="flex items-center justify-between px-2 md:px-4 py-2 bg-ever-green rounded-lg w-[180px] md:w-[185px]">
               <FaRegCalendarAlt
                 className="text-white cursor-pointer hover:text-tranquil-teal"
                 size={16}
@@ -23,7 +23,7 @@ const DetailsCard = () => {
               <CurrentDateTime showDateTime={true} textClass="text-white" />
             </div>
 
-            <div className=" w-[200px] md:w-full">
+            <div className=" w-[220px] md:w-full">
               <h1 className="text-[13px] md:text-xl lg:text-3xl md:mt-0 font-bold text-white">
                 Good Day,
               </h1>

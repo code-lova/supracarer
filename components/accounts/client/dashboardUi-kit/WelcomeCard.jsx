@@ -12,14 +12,14 @@ const WelcomeCard = ({ userDetails }) => {
           <div className="flex-1">
             {userDetails && (
               <h3 className="text-white font-semibold text-sm md:text-sm">
-                Welcome Back! {userDetails.fullname || "UserName"}
+                Hello, {userDetails.fullname || "UserName"}
               </h3>
             )}
             <div className="w-[300px] text-white font-bold text-sm lg:text-3xl mt-3">
               <p>Check Your Health Regularly</p>
             </div>
 
-            <Link href="/client/booking" passHref>
+            <Link href="/client/appointment" passHref>
               <button className="mt-4 flex items-center gap-2 bg-white text-carer-blue font-semibold py-2 px-5 rounded-xl hover:bg-carer-blue hover:text-white transition duration-300 ease-in-out">
                 <span>Book Appointment</span>
                 <FaRegCalendarAlt size={18} className="text-inherit" />

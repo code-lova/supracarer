@@ -18,25 +18,18 @@ const ClientLayout = ({ children }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen w-full bg-gray-50">
       {/* Loading indicator */}
       {isRefreshing && (
         <div className="fixed top-0 left-0 right-0 h-1 bg-blue-500 animate-pulse z-50" />
       )}
-
       {/* Profile Warning Modal */}
       <ProfileWarningModal userType="client" />
-
-      {/* Sidebar */}
       <Sidebar />
-
-      {/* Main Content */}
       <div className="lg:ml-72">
-        {/* Navigation Bar */}
         <NavigationBar />
-
         {/* Page Content */}
-        <main className="p-4 lg:p-6">{children}</main>
+        <main className="p-4 lg:py-6 lg:px-3 min-h-screen">{children}</main>
       </div>
     </div>
   );

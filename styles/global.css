@@ -34,8 +34,8 @@
 }
 
 .bg-dashboard {
-  width: 100vw;
   background-color: rgb(247, 247, 247);
+  min-height: 100%;
 }
 
 .client-bg {
