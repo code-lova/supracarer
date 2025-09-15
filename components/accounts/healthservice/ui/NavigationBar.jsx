@@ -16,6 +16,7 @@ import { useUserContext } from "@context/userContext";
 import { logoutRequest } from "@/service/request/auth/logoutRequest";
 import { signOut as nextAuthSignOut } from "next-auth/react";
 import { useQueryClient } from "@tanstack/react-query";
+import DateFormatter from "@components/core/DateFormatter";
 
 const NavigationBar = () => {
   const { user } = useUserContext();
@@ -73,9 +74,9 @@ const NavigationBar = () => {
   ];
 
   return (
-    <header className="hidden lg:flex sticky top-0 z-30 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 px-6 py-4">
+    <header className="hidden lg:flex sticky top-0 z-30 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 px-6 py-2">
       <div className="flex items-center justify-between w-full max-w-full">
-        <div className="flex-1">
+        <div className="flex-1 ml-[270px]">
           {needsProfileUpdate ? (
             <div className="flex items-center gap-2 mb-2">
               <PiWarningFill
@@ -98,16 +99,11 @@ const NavigationBar = () => {
             </div>
           ) : (
             <>
-              <h1 className="text-xl font-semibold text-gray-800">
+              <h1 className="text-md font-semibold text-tranquil-teal">
                 Welcome back, {userDetails?.fullname || "Health Worker"}! 👋
               </h1>
               <p className="text-sm text-gray-500 mt-1">
-                {new Date().toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                <DateFormatter date={new Date()} format="long" />
               </p>
             </>
           )}

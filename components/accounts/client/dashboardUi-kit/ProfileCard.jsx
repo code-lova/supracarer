@@ -2,10 +2,11 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import TimeAgo from "@components/core/TimeAgo";
 import { FaCalendarAlt, FaMapMarkerAlt, FaPencilAlt } from "react-icons/fa";
-import { format, parseISO, isValid } from "date-fns";
 import StatusPill from "@components/core/StatusPill";
 import { showClientNextApt } from "@service/request/client/dashboard";
 import ProfileCardSkeleton from "@components/core/skeleton/ProfileCardSkeleton";
+import ProfileCompleteness from "@components/core/ProfileCompleteness";
+import DateFormatter from "@components/core/DateFormatter";
 
 const ProfileCard = ({ userDetails }) => {
   const { data, isLoading, isError } = useQuery({
@@ -21,7 +22,7 @@ const ProfileCard = ({ userDetails }) => {
     return <ProfileCardSkeleton />;
   }
   return (
-    <div className="bg-white w-full rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[280px]">
+    <div className="bg-white w-full rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[365px] ">
       <div className="flex items-center justify-between border-b-2 w-full h-[50px] px-4">
         <h3 className="text-dark-blue font-semibold text-lg">My Profile</h3>
         <FaPencilAlt
@@ -29,9 +30,9 @@ const ProfileCard = ({ userDetails }) => {
           size={16}
         />
       </div>
-      <div className="px-3">
+      <div className="px-3 h-full overflow-y-auto">
         <div className="px-1 py-1">
-          <div className="w-full flex items-center space-x-4 mb-6">
+          <div className="w-full flex items-center space-x-4 mb-4">
             {userDetails?.image ? (
               <img
                 src={userDetails?.image}
@@ -66,8 +67,13 @@ const ProfileCard = ({ userDetails }) => {
           </div>
         </div>
 
-        <div className="w-full h-[1px] bg-gray-200 mt-2 mb-4"></div>
-
+        <div className="w-full h-[1px] bg-gray-200 mt-2 mb-3"></div>
+        <div className="mt-2 mb-3">
+          <ProfileCompleteness
+            userDetails={userDetails}
+            userType="client"
+          />
+        </div>
         {/* Show appointment.label here */}
         {appointment && appointment.label ? (
           <h3 className="text-dark-blue font-semibold text-xs">
@@ -79,7 +85,7 @@ const ProfileCard = ({ userDetails }) => {
           </h3>
         )}
 
-        <div className="space-y-3 pr-2 mt-5">
+        <div className="space-y-3 pr-2 mt-2">
           {isError ? (
             <div className="text-red-500 text-xs">
               Failed to load appointment.
@@ -89,12 +95,7 @@ const ProfileCard = ({ userDetails }) => {
               <div className="flex item-center justify-between space-x-5">
                 <div className="flex items-center text-xs text-slate-gray bg-white rounded-md border border-carer-blue px-2 py-1 w-fit">
                   <FaCalendarAlt className="mr-2 text-blue-500" />
-                  {isValid(parseISO(appointment.start_date))
-                    ? format(parseISO(appointment.start_date), "MMMM d, yyyy")
-                    : "Invalid Date"}
-                  {appointment.start_time && appointment.start_time_period
-                    ? ` – ${appointment.start_time} ${appointment.start_time_period}`
-                    : ""}
+                  <DateFormatter date={appointment.start_date} format="long"/>
                 </div>
                 <div>
                   <StatusPill status={appointment.status} size="sm" />

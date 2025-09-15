@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaPencilAlt } from "react-icons/fa";
 import { useUserContext } from "@context/userContext";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import ProfileCompleteness from "@components/core/ProfileCompleteness";
 
 const ProfileCard = () => {
   const { user } = useUserContext();
@@ -11,7 +12,7 @@ const ProfileCard = () => {
 
   return (
     <>
-      <div className="bg-white w-full h-[279px] border-2 rounded-2xl shadow-md">
+      <div className="bg-white w-full h-auto border-2 rounded-2xl shadow-md">
         <div className="bg-tranquil-teal w-full h-[55px] rounded-xl flex items-center justify-between px-4">
           <h2 className="text-md font-bold text-white">My Profile</h2>
           <Link
@@ -49,7 +50,6 @@ const ProfileCard = () => {
                 <FaMapMarkerAlt className="text-tranquil-teal" />
                 <span>
                   {userDetails?.region || "Not Set"}, {userDetails?.country}
-
                 </span>
               </div>
             </div>
@@ -57,9 +57,7 @@ const ProfileCard = () => {
 
           <div className="w-[330px] flex items-center justify-between space-x-1">
             <div className="grid grid-cols-1 gap-1 w-full text-center">
-              <h2 className="text-slate-gray text-xs font-bold">
-                Gender
-              </h2>
+              <h2 className="text-slate-gray text-xs font-bold">Gender</h2>
               <p className="text-xs text-tranquil-teal font-semibold">
                 {userDetails?.gender || "Not provided"}
               </p>
@@ -78,6 +76,13 @@ const ProfileCard = () => {
                 {userDetails?.phone || "Not provided"}
               </p>
             </div>
+          </div>
+
+          <div className="mt-4">
+            <ProfileCompleteness
+              userDetails={userDetails}
+              userType="health-service"
+            />
           </div>
         </div>
       </div>

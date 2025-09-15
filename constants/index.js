@@ -99,7 +99,7 @@ export const clientDashboardLinks = [
   {
     id: "booking",
     link: "/client/booking",
-    title: "Booking",
+    title: "Book Appointment",
     icon: FaBookOpen,
   },
   {
@@ -129,15 +129,15 @@ export const HealthDashboardLinks = [
     icon: FaHome,
   },
   {
-    id: "appointments",
-    link: "/health-service/appointments",
-    title: "Appointments",
+    id: "request",
+    link: "/health-service/booking-request",
+    title: "Booking Requst",
     icon: SiOnlyoffice,
   },
   {
-    id: "client",
-    link: "/health-service/clients",
-    title: "Clients",
+    id: "appointments",
+    link: "/health-service/appointments",
+    title: "Appointments",
     icon: FaUserFriends,
   },
   {
@@ -848,7 +848,7 @@ export const hourRateServiceOptions = {
 export const supportSubjects = [
   "Account Verification Issue",
   "Unable to Update Rates",
-  "Problem with Booking a Client",
+  "Booking Request Issue",
   "Client Did Not Show Up",
   "Missing Payment",
   "Shift Conflict",
@@ -1034,4 +1034,42 @@ export const PrivacyTabMenu = [
     label: "Third-party Cookies",
     description: "Allow third-party tracking cookies",
   },
+];
+
+export const healthWorkerFields = [
+  "country",
+  "region",
+  "address",
+  "religion",
+  "about_me",
+  "image_url",
+  "latitude",
+  "longitude",
+  "has_guided_rate_system",
+];
+
+export const clientFields = [
+  "country",
+  "region",
+  "address",
+  "religion",
+  "about",
+  "image",
+  "latitude",
+  "longitude",
+];
+
+export const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];

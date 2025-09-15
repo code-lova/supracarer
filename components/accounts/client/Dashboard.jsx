@@ -28,19 +28,11 @@ const Dashboard = () => {
         {/* Left Section (2/3 Width) */}
         <div className="w-full h-auto md:h-[660px] md:col-span-2">
           <div className="grid grid-cols-1 gap-4 mb-1">
-            {/* Welcome Card */}
             <WelcomeCard userDetails={userDetails} />
-
-            {/* Two Cards in a Row */}
             <div className="grid grid-col-1 lg:grid-cols-2 gap-2">
-              {/* Total appointments */}
               <AppointmentCard />
-
-              {/* Health Tips */}
               <HealthTipsCard />
             </div>
-
-            {/* Activity Chart/Stats card */}
             <div className="grid grid-cols-1 md:grid-cols-3">
               <ActivityStatsCard />
             </div>
@@ -49,11 +41,8 @@ const Dashboard = () => {
 
         {/* Right Sidebar (1/3 Width) */}
         <div className="w-full h-auto md:h-[660px] mt-6 xl:mt-0">
-          <div className="w-full grid grid-cols-1 gap-4">
-            {/* Profile and current appointment card with skeleton loader */}
+          <div className="w-full grid grid-cols-1 gap-2">
             <ProfileCard userDetails={userDetails} />
-
-            {/* Available Nurses with image, star rating, name, practioner with skeleton loader */}
             <AvailablePractioners />
           </div>
         </div>
