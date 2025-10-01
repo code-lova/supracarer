@@ -1,4 +1,5 @@
 "use client";
+import DateFormatter from "@components/core/DateFormatter";
 import React, { useState, useRef, useEffect } from "react";
 import {
   FaArrowLeft,
@@ -123,8 +124,12 @@ const MobileChatModal = ({
                 }`}
               >
                 {msg.text}
-                <div className="text-xs text-gray-400 mt-1 text-right">
-                  {new Date(msg.time).toLocaleString()}
+                <div
+                  className={`text-xs ${
+                    msg.sender === "client" ? "text-gray-200" : "text-gray-500"
+                  } mt-2 text-right`}
+                >
+                  <DateFormatter date={msg.time} format="datetime" />
                 </div>
               </div>
 
@@ -136,7 +141,6 @@ const MobileChatModal = ({
           <div ref={messagesEndRef} className="h-1" />
         </div>
 
-        {/* Chat Input - Absolutely positioned at bottom */}
         {/* Chat Input - Absolutely positioned at bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-black">
           {selectedTicket?.status === "opened" ? (

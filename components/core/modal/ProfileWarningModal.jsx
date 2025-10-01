@@ -9,44 +9,98 @@ const ProfileWarningModal = ({ userType = "health-service" }) => {
   const [showModal, setShowModal] = useState(false);
   const userDetails = user?.data;
 
-  // Check if profile needs updates based on user type
-  const needsProfileUpdate =
-    userType === "health-service"
-      ? !userDetails?.address || userDetails?.has_guided_rate_system === false
-      : !userDetails?.address; // Client only checks address
+  // Check profile completion status
+  const hasCompleteProfile = Boolean(userDetails?.address);
+  const hasGuidedRateSystem = userDetails?.has_guided_rate_system === true;
+
+  // Check if this is a first-time login - based on profile completion status
+  const isFirstTimeLogin =
+    typeof window !== "undefined" &&
+    localStorage.getItem("firstTimeLogin") !== "false" &&
+    !hasCompleteProfile;
+
+  // Set the flag appropriately based on user data
+  useEffect(() => {
+    if (typeof window !== "undefined" && userDetails) {
+      const currentFlag = localStorage.getItem("firstTimeLogin");
+
+      // If user has complete profile and guided rate system, mark as not first-time
+      if (
+        hasCompleteProfile &&
+        hasGuidedRateSystem &&
+        currentFlag !== "false"
+      ) {
+        localStorage.setItem("firstTimeLogin", "false");
+      }
+      // If user has incomplete profile and no flag set, mark as first-time
+      else if (!hasCompleteProfile && !currentFlag) {
+        localStorage.setItem("firstTimeLogin", "true");
+      }
+    }
+  }, [userDetails, hasCompleteProfile, hasGuidedRateSystem]);
+
+  // Determine what needs to be completed
+  const needsProfileUpdate = !hasCompleteProfile;
+  const needsGuidedRateSetup =
+    userType === "health-service" && hasCompleteProfile && !hasGuidedRateSystem;
+
+  // For first-time users or incomplete profiles, force profile completion
+  const forceProfileUpdate =
+    isFirstTimeLogin && (needsProfileUpdate || needsGuidedRateSetup);
 
   // Show modal on mount if needed
   useEffect(() => {
-    if (needsProfileUpdate) {
+    if (forceProfileUpdate) {
       const timer = setTimeout(() => {
         setShowModal(true);
       }, 1000); // Show after 1 second
       return () => clearTimeout(timer);
     }
-  }, [needsProfileUpdate]);
+  }, [forceProfileUpdate]);
 
-  // Don't render if profile is complete
-  if (!needsProfileUpdate || !showModal) {
+  // Don't render if profile is complete and guided rate system is set (or not needed)
+  if (!forceProfileUpdate || !showModal) {
     return null;
   }
 
-  const profileLink =
-    userType === "health-service"
-      ? "/health-service/profile"
-      : "/client/profile";
-  const warningItems = [];
+  // Determine navigation target and content
+  const getNavigationDetails = () => {
+    if (needsProfileUpdate) {
+      return {
+        link:
+          userType === "health-service"
+            ? "/health-service/profile"
+            : "/client/profile",
+        buttonText: isFirstTimeLogin ? "Complete Profile" : "Update Profile",
+        title: isFirstTimeLogin
+          ? "Welcome to SupraCarer!"
+          : "Profile Update Needed",
+        description: isFirstTimeLogin
+          ? "Let's get you set up for success. Please complete your profile first:"
+          : "Please complete your profile for the best experience:",
+        warningItems: [
+          isFirstTimeLogin
+            ? "Step 1: Complete your profile information"
+            : "Missing address information",
+        ],
+      };
+    } else if (needsGuidedRateSetup) {
+      return {
+        link: "/health-service/guided-rate-system",
+        buttonText: "Setup Rate System",
+        title: "Complete Your Setup",
+        description:
+          "Great! Your profile is complete. Now let's set up your guided rate system:",
+        warningItems: [
+          "Step 2: Configure your guided rate system",
+          "Set your service rates and availability",
+        ],
+      };
+    }
+  };
 
-  // Add relevant warning items based on user type
-  if (!userDetails?.address) {
-    warningItems.push("Missing address information");
-  }
-
-  if (
-    userType === "health-service" &&
-    userDetails?.has_guided_rate_system === false
-  ) {
-    warningItems.push("Guided Rate System not configured");
-  }
+  const navDetails = getNavigationDetails();
+  if (!navDetails) return null;
 
   return (
     <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -58,13 +112,13 @@ const ProfileWarningModal = ({ userType = "health-service" }) => {
           />
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Profile Update Needed
+              {navDetails.title}
             </h3>
             <p className="text-sm text-gray-600 mb-4">
-              Please complete your profile for the best experience:
+              {navDetails.description}
             </p>
             <ul className="space-y-2 text-sm text-gray-700 mb-6">
-              {warningItems.map((item, index) => (
+              {navDetails.warningItems.map((item, index) => (
                 <li key={index} className="flex items-center gap-2">
                   <span className="w-1 h-1 bg-yellow-500 rounded-full"></span>
                   {item}
@@ -73,18 +127,20 @@ const ProfileWarningModal = ({ userType = "health-service" }) => {
             </ul>
             <div className="flex gap-3">
               <Link
-                href={profileLink}
+                href={navDetails.link}
                 onClick={() => setShowModal(false)}
                 className="flex-1 bg-haven-blue text-white text-center py-2 px-4 rounded-lg text-sm font-medium hover:bg-carer-blue/90 transition-colors"
               >
-                Update Profile
+                {navDetails.buttonText}
               </Link>
-              <button
-                onClick={() => setShowModal(false)}
-                className="px-4 py-2 text-gray-600 text-sm font-medium hover:text-gray-800 transition-colors"
-              >
-                Later
-              </button>
+              {!isFirstTimeLogin && (
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 text-gray-600 text-sm font-medium hover:text-gray-800 transition-colors"
+                >
+                  Later
+                </button>
+              )}
             </div>
           </div>
         </div>

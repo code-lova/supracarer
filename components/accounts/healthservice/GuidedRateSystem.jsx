@@ -44,6 +44,7 @@ const GuidedRateSystem = () => {
         queryKey: ["user-grs", userDetails?.id],
       });
       refetchUser();
+      localStorage.setItem("firstTimeLogin", "false");
     },
     onError: (err) => {
       toast.error(err.message || "Failed to update rate");

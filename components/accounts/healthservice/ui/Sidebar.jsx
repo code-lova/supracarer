@@ -18,19 +18,33 @@ import {
 } from "react-icons/fa";
 import { RiCloseLargeFill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { useUserContext } from "@/context/userContext";
+import NotificationDropdown from "@components/core/NotificationDropdown";
+import { getUnreadCount } from "@service/request/user/getNotifications";
 
 const Sidebar = () => {
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
+  const notificationRef = useRef(null);
   const dropdownRef = useRef(null);
   const pathname = usePathname();
   const queryClient = useQueryClient();
   const { user } = useUserContext();
   const userDetails = user?.data;
+
+  // Fetch unread count for badge
+  const { data: unreadResponse } = useQuery({
+    queryKey: ["unread-count"],
+    queryFn: getUnreadCount,
+    refetchInterval: 30000, // Refetch every 30 seconds
+  });
+
+  // Get unread notification count
+  const unreadCount = unreadResponse?.data?.unread_count || 0;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -93,18 +107,29 @@ const Sidebar = () => {
 
           <div className="flex items-center gap-3">
             {/* Notifications */}
-            <Link
-              href="/health-service/notifications"
-              className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              <FaBell
-                className="text-gray-600 hover:text-tranquil-teal transition-colors"
-                size={22}
+            <div className="relative">
+              <button
+                ref={notificationRef}
+                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors group"
+              >
+                <FaBell className="h-5 w-5 text-gray-600 group-hover:text-tranquil-teal transition-colors" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
+                    <span className="text-xs font-bold text-white">
+                      {unreadCount > 99 ? "99+" : unreadCount}
+                    </span>
+                  </span>
+                )}
+              </button>
+
+              <NotificationDropdown
+                isOpen={isNotificationOpen}
+                onClose={() => setIsNotificationOpen(false)}
+                triggerRef={notificationRef}
+                userRole="health-service"
               />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                6
-              </span>
-            </Link>
+            </div>
 
             {/* Profile with Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -112,9 +137,9 @@ const Sidebar = () => {
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors group"
               >
-                {userDetails?.image ? (
+                {userDetails?.image_url ? (
                   <img
-                    src={userDetails?.image}
+                    src={userDetails?.image_url}
                     alt={userDetails.fullname || "Profile"}
                     className="w-8 h-8 rounded-full object-cover"
                   />

@@ -15,17 +15,31 @@ import { PiWarningFill } from "react-icons/pi";
 import { useUserContext } from "@context/userContext";
 import { logoutRequest } from "@/service/request/auth/logoutRequest";
 import { signOut as nextAuthSignOut } from "next-auth/react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { getUnreadCount } from "@service/request/user/getNotifications";
+import NotificationDropdown from "@components/core/NotificationDropdown";
 
 const NavigationBar = () => {
   const { user } = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef(null);
+  const notificationRef = useRef(null);
   const queryClient = useQueryClient();
 
   const userDetails = user?.data;
+
+  // Fetch unread count for badge
+  const { data: unreadResponse } = useQuery({
+    queryKey: ["unread-count"],
+    queryFn: getUnreadCount,
+    refetchInterval: 30000, // Refetch every 30 seconds
+  });
+
+  // Get unread notification count
+  const unreadCount = unreadResponse?.data?.unread_count || 0;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -127,18 +141,32 @@ const NavigationBar = () => {
             </button>
 
             {/* Notifications */}
-            <Link
-              href="/client/notifications"
-              className="relative p-2 hover:bg-gray-100 rounded-lg"
-            >
-              <FaBell
-                className="text-gray-600 hover:text-carer-blue"
-                size={16}
+            <div className="relative">
+              <button
+                ref={notificationRef}
+                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors group"
+              >
+                <FaBell
+                  className="text-carer-blue group-hover:text-haven-blue transition-colors"
+                  size={18}
+                />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center">
+                    <span className="text-xs font-bold text-white">
+                      {unreadCount > 99 ? "99+" : unreadCount}
+                    </span>
+                  </span>
+                )}
+              </button>
+
+              <NotificationDropdown
+                isOpen={isNotificationOpen}
+                onClose={() => setIsNotificationOpen(false)}
+                triggerRef={notificationRef}
+                userRole="client"
               />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                1
-              </span>
-            </Link>
+            </div>
 
             {/* Settings (Desktop Only) */}
             <Link

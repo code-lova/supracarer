@@ -22,7 +22,7 @@ const ProfileCard = ({ userDetails }) => {
     return <ProfileCardSkeleton />;
   }
   return (
-    <div className="bg-white w-full rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[365px] ">
+    <div className="bg-white w-full rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[365px]">
       <div className="flex items-center justify-between border-b-2 w-full h-[50px] px-4">
         <h3 className="text-dark-blue font-semibold text-lg">My Profile</h3>
         <FaPencilAlt

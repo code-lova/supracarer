@@ -1,6 +1,10 @@
 "use client";
 import { MediumBtn } from "@components/core/button";
 import DateFormatter from "@components/core/DateFormatter";
+import {
+  useUserRole,
+  getUnassignedHealthWorkerMessage,
+} from "@utils/userRoleUtils";
 import React from "react";
 import {
   FaTimes,
@@ -29,6 +33,7 @@ const AppointmentDetailsModal = ({
   isCancelling = false,
   isDeleting = false,
 }) => {
+  const { role } = useUserRole();
   const handleCancelAppointment = (uuid) => {
     // Call the parent function - the parent handles async states via React Query
     onCancelAppointment(uuid);
@@ -234,9 +239,7 @@ const AppointmentDetailsModal = ({
                 Health Worker Assignment
               </h3>
               <p className="text-gray-600">
-                A health worker has not been assigned to this appointment yet.
-                You will be notified once an admin assigns a suitable health
-                worker.
+                {getUnassignedHealthWorkerMessage(role)}
               </p>
             </div>
           )}

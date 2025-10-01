@@ -38,12 +38,15 @@ const ProfileCompleteness = ({ userDetails, userType = "health-service" }) => {
   // Determine status and styling based on completion percentage
   const getStatusInfo = (percentage) => {
     if (percentage >= 80) {
+      const colorScheme = userType === "client" ? "carer-blue" : "custom-green";
+      const bgColor = userType === "client" ? "bg-blue-50" : "bg-green-50";
+
       return {
         icon: FaCheckCircle,
-        iconColor: "text-custom-green",
-        bgColor: "bg-green-50",
-        borderColor: "border-custom-green",
-        textColor: "text-custom-green",
+        iconColor: `text-${colorScheme}`,
+        bgColor: bgColor,
+        borderColor: `border-${colorScheme}`,
+        textColor: `text-${colorScheme}`,
         status: "Complete",
       };
     } else if (percentage >= 50) {
@@ -96,7 +99,9 @@ const ProfileCompleteness = ({ userDetails, userType = "health-service" }) => {
         <div
           className={`h-2 rounded-full transition-all duration-300 ${
             completionPercentage >= 80
-              ? "bg-custom-green"
+              ? userType === "client"
+                ? "bg-carer-blue"
+                : "bg-custom-green"
               : completionPercentage >= 50
               ? "bg-orange-500"
               : "bg-red-500"

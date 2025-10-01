@@ -8,6 +8,7 @@ import LoaderButton from "@components/core/LoaderButton";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { resetPasswordRequest } from "@service/request/auth/resetPasswordRequest";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,8 @@ const ResetPassword = () => {
   const [code, setCode] = useState(null);
   const [exp, setExp] = useState(null);
   const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useRouter();
 
@@ -108,12 +111,25 @@ const ResetPassword = () => {
                   >
                     Password
                   </label>
-                  <Field
-                    type="password"
-                    name="password"
-                    className="login-form-input"
-                    placeholder="••••••••"
-                  />
+                  <div className="relative">
+                    <Field
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      className="login-form-input"
+                      placeholder="••••••••"
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <FaEyeSlash className="text-gray-400" />
+                      ) : (
+                        <FaEye className="text-gray-400" />
+                      )}
+                    </button>
+                  </div>
                   <ErrorMessage
                     name="password"
                     component="div"
@@ -128,12 +144,25 @@ const ResetPassword = () => {
                   >
                     Confirm Password
                   </label>
-                  <Field
-                    name="confirmPassword"
-                    type="password"
-                    className="login-form-input"
-                    placeholder="••••••••"
-                  />
+                  <div className="relative">
+                    <Field
+                      name="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="login-form-input"
+                      placeholder="••••••••"
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                      {showConfirmPassword ? (
+                        <FaEyeSlash className="text-gray-400" />
+                      ) : (
+                        <FaEye className="text-gray-400" />
+                      )}
+                    </button>
+                  </div>
                   <ErrorMessage
                     name="confirmPassword"
                     component="div"

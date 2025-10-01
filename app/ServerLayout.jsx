@@ -38,6 +38,9 @@ export default function ServerLayout({ children }) {
               gtag('js', new Date());
               gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
                 page_path: window.location.pathname,
+                cookie_flags: 'SameSite=None;Secure',
+                cookie_expires: 63072000, // 2 years in seconds
+                send_page_view: false // Prevent duplicate page views
               });
             `,
           }}

@@ -67,6 +67,8 @@ const handler = NextAuth({
                   !userAgent && { "X-Real-User-Agent": credentials.userAgent }),
               },
               body: JSON.stringify(requestBody),
+              // Add 10 second timeout to prevent hanging
+              signal: AbortSignal.timeout(10000),
             }
           );
 
@@ -86,7 +88,7 @@ const handler = NextAuth({
             throw new Error("User data missing in response");
           }
 
-          return {
+          const userSessionData = {
             id: data.user.id,
             fullname: data.user.fullname,
             email: data.user.email,
@@ -95,6 +97,8 @@ const handler = NextAuth({
             accessToken: data.accessToken,
             accessTokenExpires: Date.now() + 24 * 60 * 60 * 1000,
           };
+
+          return userSessionData;
         } catch (error) {
           throw new Error(error.message || "Login failed");
         }

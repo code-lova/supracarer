@@ -27,13 +27,12 @@ const RecentAppointmentsCard = () => {
   // Error state
   if (error) {
     return (
-      <div className="bg-white w-full h-[200px] border-2 rounded-2xl shadow-md">
+      <div className="bg-white w-full h-[200px] overflow-y-auto border-2 rounded-2xl shadow-md">
         <div className="h-full flex items-center justify-center p-4">
           <ErrorState
             title="Failed to load appointments"
             description={error.message || "Unable to fetch recent appointments"}
             onAction={refetch}
-            icon={FaCalendarAlt}
             size="sm"
           />
         </div>
@@ -46,7 +45,7 @@ const RecentAppointmentsCard = () => {
   // Empty state
   if (appointmentsData.length === 0) {
     return (
-      <div className="bg-white w-full h-[200px] border-2 rounded-2xl shadow-md">
+      <div className="bg-white w-full h-[200px] overflow-y-auto border-2 rounded-2xl shadow-md">
         <div className="h-full flex items-center justify-center p-4">
           <EmptyState
             title="No recent appointments"

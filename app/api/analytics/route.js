@@ -4,6 +4,9 @@ import {
 } from "../../../lib/googleAnalytics";
 import { getServerSession } from "next-auth/next";
 
+// Force dynamic rendering for this route
+export const dynamic = "force-dynamic";
+
 export async function GET(request) {
   try {
     // Optional: Add authentication check

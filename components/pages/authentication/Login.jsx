@@ -76,7 +76,9 @@ const Login = () => {
         setLoading(false);
       } else {
         toast.success("Login successful");
-        refetchUser();
+        // Note: refetchUser() removed - NextAuth session should handle user data
+        // User context will automatically update when session changes
+        // First-time login flag will be managed by the ProfileWarningModal based on actual user data
       }
     } catch (error) {
       toast.error(error.message || "Login failed");
@@ -119,11 +121,12 @@ const Login = () => {
       }
 
       toast.success("Login successful");
-      refetchUser();
+      // Note: refetchUser() removed - NextAuth session should handle user data
       // Clean up state
       setShowTwoFactor(false);
       setPendingCredentials(null);
       setTwoFactorData(null);
+      // First-time login flag will be managed by the ProfileWarningModal based on actual user data
     } catch (error) {
       console.error("2FA success handler error:", error);
       toast.error(error.message || "Login failed after verification");
@@ -141,13 +144,11 @@ const Login = () => {
     setLoading(false);
   };
 
-  if (
-    (status === "loading" && status !== "authenticated") ||
-    status === "authenticated"
-  ) {
+  // Show loading screen when actively logging in
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <LoadingStateUI />
+        <LoadingStateUI label="Logging you in..." />
       </div>
     );
   }

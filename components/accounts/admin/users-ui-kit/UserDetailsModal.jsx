@@ -82,17 +82,17 @@ export default function UserDetailsModal({
         }`}
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-4">
+        <div className="fixed w-full top-0 z-10 bg-white border-b border-gray-200 px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                <FaUserCircle className="text-blue-600 text-xl" />
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                <FaUserCircle className="text-blue-600 text-lg" />
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-lg font-semibold text-gray-900">
                   User Details
                 </h2>
-                <p className="text-sm text-gray-500">ID: {user.id}</p>
+                <p className="text-xs text-gray-500">ID: {user.id}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -101,44 +101,44 @@ export default function UserDetailsModal({
                 className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                 title={editMode ? "View Mode" : "Edit Mode"}
               >
-                <FaEdit className="w-5 h-5" />
+                <FaEdit className="w-4 h-4" />
               </button>
               <button
                 onClick={onClose}
                 className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                 title="Close"
               >
-                <FiX className="w-5 h-5" />
+                <FiX className="w-4 h-4" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="h-full overflow-y-auto pb-20">
-          <div className="p-6">
+        <div className="h-full overflow-y-auto pb-16 mt-14">
+          <div className="p-4">
             {!editMode ? (
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* User Avatar & Basic Info */}
-                <div className="text-center pb-6 border-b border-gray-100">
+                <div className="text-center pb-4 border-b border-gray-100">
                   {user.image ? (
                     <img
                       src={user.image}
                       alt={user.name}
-                      className="w-24 h-24 rounded-full mx-auto shadow-lg object-cover mb-4"
+                      className="w-20 h-20 rounded-full mx-auto shadow-lg object-cover mb-3"
                     />
                   ) : (
-                    <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-                      <FaUserCircle className="text-4xl text-gray-400" />
+                    <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
+                      <FaUserCircle className="text-3xl text-gray-400" />
                     </div>
                   )}
-                  <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">
                     {user.name}
                   </h3>
-                  <p className="text-gray-600 mb-2">{user.email}</p>
-                  <div className="flex items-center justify-center gap-4 text-sm">
+                  <p className="text-gray-600 mb-2 text-sm">{user.email}</p>
+                  <div className="flex items-center justify-center gap-2 text-sm">
                     <span
-                      className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+                      className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
                         user.is_active === "1"
                           ? "bg-green-100 text-green-800"
                           : "bg-red-100 text-red-800"
@@ -147,7 +147,7 @@ export default function UserDetailsModal({
                       {user.is_active === "1" ? "Active" : "Inactive"}
                     </span>
                     <span
-                      className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+                      className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
                         user.email_verified_at
                           ? "bg-blue-100 text-blue-800"
                           : "bg-yellow-100 text-yellow-800"
@@ -159,13 +159,13 @@ export default function UserDetailsModal({
                 </div>
 
                 {/* User Information Grid */}
-                <div className="space-y-6">
+                <div className="space-y-4">
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">
+                    <h4 className="text-base font-semibold text-gray-900 mb-3">
                       Personal Information
                     </h4>
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="grid grid-cols-1 gap-3">
+                      <div className="bg-gray-50 p-3 rounded-lg">
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                           Role
                         </label>
@@ -175,7 +175,7 @@ export default function UserDetailsModal({
                       </div>
 
                       {user.role === "healthworker" && user.practitioner && (
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Practitioner
                           </label>
@@ -185,8 +185,8 @@ export default function UserDetailsModal({
                         </div>
                       )}
 
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Phone
                           </label>
@@ -194,7 +194,7 @@ export default function UserDetailsModal({
                             {user.phone || "N/A"}
                           </p>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Gender
                           </label>
@@ -204,8 +204,8 @@ export default function UserDetailsModal({
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Country
                           </label>
@@ -213,7 +213,7 @@ export default function UserDetailsModal({
                             {user.country || "N/A"}
                           </p>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Region
                           </label>
@@ -223,7 +223,7 @@ export default function UserDetailsModal({
                         </div>
                       </div>
 
-                      <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="bg-gray-50 p-3 rounded-lg">
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                           Religion
                         </label>
@@ -232,7 +232,7 @@ export default function UserDetailsModal({
                         </p>
                       </div>
 
-                      <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="bg-gray-50 p-3 rounded-lg">
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                           Date of Birth
                         </label>
@@ -247,7 +247,7 @@ export default function UserDetailsModal({
                       </div>
 
                       {user.role === "healthworker" && user.working_hours && (
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Working Hours
                           </label>
@@ -257,7 +257,7 @@ export default function UserDetailsModal({
                         </div>
                       )}
 
-                      <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="bg-gray-50 p-3 rounded-lg">
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                           Address
                         </label>
@@ -267,7 +267,7 @@ export default function UserDetailsModal({
                       </div>
 
                       {user.about && (
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             About
                           </label>
@@ -281,12 +281,12 @@ export default function UserDetailsModal({
 
                   {/* Account Information */}
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">
+                    <h4 className="text-base font-semibold text-gray-900 mb-3">
                       Account Information
                     </h4>
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="grid grid-cols-1 gap-3">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Last Login
                           </label>
@@ -298,7 +298,7 @@ export default function UserDetailsModal({
                             )}
                           </p>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             2FA
                           </label>
@@ -308,8 +308,8 @@ export default function UserDetailsModal({
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Member Since
                           </label>
@@ -320,7 +320,7 @@ export default function UserDetailsModal({
                             />
                           </p>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="bg-gray-50 p-3 rounded-lg">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                             Last Updated
                           </label>
@@ -337,10 +337,10 @@ export default function UserDetailsModal({
 
                   {/* Technical Details */}
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">
+                    <h4 className="text-base font-semibold text-gray-900 mb-3">
                       Technical Details
                     </h4>
-                    <div className="bg-gray-50 p-4 rounded-lg space-y-2 text-xs">
+                    <div className="bg-gray-50 p-3 rounded-lg space-y-2 text-xs">
                       <div className="flex justify-between">
                         <span className="text-gray-500">UUID:</span>
                         <span className="font-mono text-gray-700">

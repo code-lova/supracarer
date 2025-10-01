@@ -19,7 +19,6 @@
     "js-cookie": "^3.0.5",
     "next": "^14.2.15",
     "next-auth": "^4.24.11",
-    "nodemailer": "^6.9.15",
     "react": "^18",
     "react-data-table-component": "^7.7.0",
     "react-dom": "^18",
@@ -30,7 +29,6 @@
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",
-    "@types/nodemailer": "^6.4.15",
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
   }

@@ -23,7 +23,7 @@ const AppointmentChart = () => {
     queryKey: ["monthly-app-stats", statusFilter],
     queryFn: () => fetchMonthlyAppStats({ status: statusFilter }),
     refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 2 * 60 * 1000, // 2 minutes
   });
 
   // Loading skeleton

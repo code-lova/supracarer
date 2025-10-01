@@ -15,20 +15,34 @@ import { PiWarningFill } from "react-icons/pi";
 import { useUserContext } from "@context/userContext";
 import { logoutRequest } from "@/service/request/auth/logoutRequest";
 import { signOut as nextAuthSignOut } from "next-auth/react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { getUnreadCount } from "@service/request/user/getNotifications";
 import DateFormatter from "@components/core/DateFormatter";
+import NotificationDropdown from "@components/core/NotificationDropdown";
 
 const NavigationBar = () => {
   const { user } = useUserContext();
   const userDetails = user?.data;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const dropdownRef = useRef(null);
+  const notificationRef = useRef(null);
   const queryClient = useQueryClient();
+
+  // Fetch unread count for badge
+  const { data: unreadResponse } = useQuery({
+    queryKey: ["unread-count"],
+    queryFn: getUnreadCount,
+    refetchInterval: 30000, // Refetch every 30 seconds
+  });
 
   // Check if profile needs updates
   const needsProfileUpdate =
     !userDetails?.address || userDetails?.has_guided_rate_system === false;
+
+  // Get unread notification count
+  const unreadCount = unreadResponse?.data?.unread_count || 0;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -124,15 +138,29 @@ const NavigationBar = () => {
           </div>
 
           {/* Notifications */}
-          <Link
-            href="/health-service/notifications"
-            className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors group"
-          >
-            <FaBell className="h-5 w-5 text-gray-600 group-hover:text-tranquil-teal transition-colors" />
-            <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
-              <span className="text-xs font-bold text-white">3</span>
-            </span>
-          </Link>
+          <div className="relative">
+            <button
+              ref={notificationRef}
+              onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+              className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors group"
+            >
+              <FaBell className="h-5 w-5 text-gray-600 group-hover:text-tranquil-teal transition-colors" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-bold text-white">
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                </span>
+              )}
+            </button>
+
+            <NotificationDropdown
+              isOpen={isNotificationOpen}
+              onClose={() => setIsNotificationOpen(false)}
+              triggerRef={notificationRef}
+              userRole="health-service"
+            />
+          </div>
 
           {/* Settings */}
           <Link
@@ -148,9 +176,9 @@ const NavigationBar = () => {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors group"
             >
-              {userDetails?.image ? (
+              {userDetails?.image_url ? (
                 <img
-                  src={userDetails?.image}
+                  src={userDetails?.image_url}
                   alt={userDetails.fullname || "Profile"}
                   className="w-8 h-8 rounded-full object-cover"
                 />
