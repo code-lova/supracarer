@@ -7,6 +7,8 @@ import Navbar from "@components/pages/Navbar";
 import { usePathname } from "next/navigation";
 import ServerLayout from "./ServerLayout";
 import { showNavbarPaths } from "@utils/navbarPaths";
+import { UserProvider } from "@context/userContext";
+import { SessionTimeoutProvider } from "@providers/SessionTimeoutProvider";
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
@@ -15,16 +17,16 @@ const RootLayout = ({ children }) => {
 
   return (
     <ServerLayout>
-      <div className="main">
-        <div className="gradient"></div>
-      </div>
-
       <main className="app">
         <SessionProvider>
           <ReactQueryProvider>
-            {shouldShowNavbar && <Navbar />}
-            {children}
-            <Toaster />
+            <UserProvider>
+              <SessionTimeoutProvider>
+                {shouldShowNavbar && <Navbar />}
+                {children}
+                <Toaster />
+              </SessionTimeoutProvider>
+            </UserProvider>
           </ReactQueryProvider>
         </SessionProvider>
       </main>

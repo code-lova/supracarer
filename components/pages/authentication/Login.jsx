@@ -7,22 +7,30 @@ import { loginSchema } from "@schema/auth";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/core/LoaderButton";
 import { useRouter } from "next/navigation";
-
+import { useUserContext } from "@context/userContext";
+import LoadingStateUI from "@components/core/loading";
+import TwoFactorAuth from "./TwoFactorAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const { data: session, status } = useSession();
+  const { refetchUser } = useUserContext();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
+  const [pendingCredentials, setPendingCredentials] = useState(null);
+  const [twoFactorData, setTwoFactorData] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Redirect logged-in users to their respective dashboard
   useEffect(() => {
     if (status === "authenticated") {
-      switch (session.user.role) {
+      switch (session?.user?.role) {
         case "client":
           router.push("/client");
           break;
-        case "nurse":
-          router.push("/nurse");
+        case "healthworker":
+          router.push("/health-service");
           break;
         case "admin":
           router.push("/admin");
@@ -35,33 +43,138 @@ const Login = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setLoading(true);
+    try {
+      // Use NextAuth signIn for initial login
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: values.email,
+        userAgent: navigator.userAgent,
+        password: values.password,
+      });
 
-    const result = await signIn("credentials", {
-      redirect: false, // Prevent NextAuth from handling redirects
-      email: values.email,
-      password: values.password,
-    });
-
-    if (result?.error) {
-      toast.error("Invalid email or password");
+      // If NextAuth returns 2FA_REQUIRED, use the twoFactorData from result (do NOT call /login again)
+      if (result?.error === "2FA_REQUIRED") {
+        setPendingCredentials({
+          email: values.email,
+          password: values.password,
+        });
+        setTwoFactorData(result.twoFactorData);
+        setShowTwoFactor(true);
+        setLoading(false);
+        toast.success(
+          result.twoFactorData || "Verification code sent to your email"
+        );
+      } else if (result?.error === "2FA_REQUIRED") {
+        toast.error("2FA verification required, but no data returned");
+        setLoading(false);
+      } else if (result?.error) {
+        toast.error(
+          result.error === "Invalid credentials"
+            ? "Invalid email or password"
+            : result.error
+        );
+        setLoading(false);
+      } else {
+        toast.success("Login successful");
+        // Note: refetchUser() removed - NextAuth session should handle user data
+        // User context will automatically update when session changes
+        // First-time login flag will be managed by the ProfileWarningModal based on actual user data
+      }
+    } catch (error) {
+      toast.error(error.message || "Login failed");
       setLoading(false);
-    } else {
-      toast.success("Login successful");
-      // Redirect logic is now handled in useEffect
     }
-
     setSubmitting(false);
   };
+
+  const handle2FASuccess = async (verificationData) => {
+    setLoading(true);
+
+    try {
+      // If the verification data contains user information and token, use it directly
+      if (verificationData.user && verificationData.accessToken) {
+        // Create a session using the verification response data
+        const result = await signIn("credentials", {
+          redirect: false,
+          email: verificationData.user.email,
+          // Pass the verification data to NextAuth
+          userDataFromVerification: JSON.stringify(verificationData),
+          skipBackendCall: true,
+        });
+
+        if (result?.error) {
+          throw new Error("Session creation failed");
+        }
+      } else {
+        // Fallback: try the normal login flow
+        const result = await signIn("credentials", {
+          redirect: false,
+          email: pendingCredentials.email,
+          userAgent: navigator.userAgent,
+          password: pendingCredentials.password,
+          verified2FA: true,
+        });
+
+        if (result?.error) {
+          throw new Error("Login failed after verification");
+        }
+      }
+
+      toast.success("Login successful");
+      // Note: refetchUser() removed - NextAuth session should handle user data
+      // Clean up state
+      setShowTwoFactor(false);
+      setPendingCredentials(null);
+      setTwoFactorData(null);
+      // First-time login flag will be managed by the ProfileWarningModal based on actual user data
+    } catch (error) {
+      console.error("2FA success handler error:", error);
+      toast.error(error.message || "Login failed after verification");
+      setLoading(false);
+      setShowTwoFactor(false);
+      setPendingCredentials(null);
+      setTwoFactorData(null);
+    }
+  };
+
+  const handleBackToLogin = () => {
+    setShowTwoFactor(false);
+    setPendingCredentials(null);
+    setTwoFactorData(null);
+    setLoading(false);
+  };
+
+  // Show loading screen when actively logging in
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingStateUI label="Logging you in..." />
+      </div>
+    );
+  }
+
+  // Show 2FA form if user has 2FA enabled
+  if (showTwoFactor) {
+    return (
+      <TwoFactorAuth
+        onVerificationSuccess={handle2FASuccess}
+        userEmail={twoFactorData?.meta?.email || pendingCredentials?.email}
+        onBack={handleBackToLogin}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <div className="flex flex-row items-center justify-center">
-          <h1 className="text-2xl font-bold mb-1 text-center uppercase blue_gradient">
+          <h1 className="text-2xl font-bold mb-1 text-center uppercase text-custom-green">
             Welcome Back
           </h1>
         </div>
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-haven-blue">
+          Login
+        </h2>
 
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -97,12 +210,25 @@ const Login = () => {
                 >
                   Password
                 </label>
-                <Field
-                  type="password"
-                  name="password"
-                  className="login-form-input"
-                  placeholder="••••••••"
-                />
+                <div className="relative">
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    className="login-form-input"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <FaEyeSlash className="text-gray-400" />
+                    ) : (
+                      <FaEye className="text-gray-400" />
+                    )}
+                  </button>
+                </div>
                 <ErrorMessage
                   name="password"
                   component="div"
@@ -138,7 +264,6 @@ const Login = () => {
                 loadingText="Processing..."
                 type="submit"
                 text="Login account"
-                className="login-btn"
               />
             </Form>
           )}

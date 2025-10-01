@@ -1,15 +1,34 @@
 import { Doctor } from "@components/core/icon/doctor";
 import { Elderly } from "@components/core/icon/elderly";
 import { Nurse } from "@components/core/icon/nurse";
-import { FaInfoCircle, FaBalanceScale } from "react-icons/fa";
 import {
   FaHandsHelping,
   FaShieldAlt,
   FaStar,
   FaUsers,
+  FaUser,
   FaLightbulb,
   FaHandshake,
+  FaHome,
+  FaUserFriends,
+  FaUserEdit,
+  FaHeadset,
+  FaBookOpen,
+  FaCog,
+  FaClipboardList,
+  FaInfoCircle,
+  FaBalanceScale,
+  FaBell,
 } from "react-icons/fa";
+import {
+  FiMail,
+  FiUsers,
+  FiTarget,
+  FiMessageSquare,
+  FiCheckCircle,
+  FiAlertCircle,
+} from "react-icons/fi";
+import { SiLootcrate, SiOnlyoffice } from "react-icons/si";
 
 import {
   Linkedin,
@@ -64,58 +83,86 @@ export const navLinks = [
     title: "Contact Us",
   },
 ];
-export const DashboardLinks = [
+export const clientDashboardLinks = [
   {
     id: "client",
     link: "/client",
-    title: "Home",
+    title: "Dashboard",
+    icon: FaHome,
   },
   {
-    id: "notification",
-    link: "/client/notifications",
-    title: "Notifications",
+    id: "appointment",
+    link: "/client/appointment",
+    title: "Appointments",
+    icon: FaClipboardList,
   },
   {
     id: "booking",
     link: "/client/booking",
-    title: "Book an appointment",
+    title: "Book Appointment",
+    icon: FaBookOpen,
   },
   {
-    id: "contact",
-    link: "/client/contact",
-    title: "Contact Us",
+    id: "support",
+    link: "/client/support",
+    title: "Support",
+    icon: FaHeadset,
+  },
+  {
+    id: "profile",
+    link: "/client/profile",
+    title: "Profile",
+    icon: FaUserEdit,
   },
   {
     id: "settings",
     link: "/client/settings",
     title: "Settings",
+    icon: FaCog,
   },
 ];
-export const NurseDashboardLinks = [
+export const HealthDashboardLinks = [
   {
-    id: "nurse",
-    link: "/nurse",
-    title: "Home",
+    id: "health",
+    link: "/health-service",
+    title: "Dashboard",
+    icon: FaHome,
   },
   {
-    id: "notification",
-    link: "/nurse/notifications",
-    title: "Notifications",
+    id: "request",
+    link: "/health-service/booking-request",
+    title: "Booking Requst",
+    icon: SiOnlyoffice,
   },
   {
-    id: "client",
-    link: "/nurse/clients",
-    title: "Clients",
+    id: "appointments",
+    link: "/health-service/appointments",
+    title: "Appointments",
+    icon: FaUserFriends,
   },
   {
-    id: "contact",
-    link: "/nurse/contact",
-    title: "Contact Support",
+    id: "grs",
+    link: "/health-service/guided-rate-system",
+    title: "Guided Rate System",
+    icon: SiLootcrate,
+  },
+  {
+    id: "support",
+    link: "/health-service/support",
+    title: "Support",
+    icon: FaHeadset,
+  },
+  {
+    id: "profile",
+    link: "/health-service/profile",
+    title: "Profile",
+    icon: FaUserEdit,
   },
   {
     id: "settings",
-    link: "/nurse/settings",
+    link: "/health-service/settings",
     title: "Settings",
+    icon: FaCog,
   },
 ];
 export const AdminDashboardLinks = [
@@ -714,4 +761,315 @@ export const coreValues = [
     description:
       "We build long-term relationships through reliability, confidentiality, and respect.",
   },
+];
+
+// For profile update form
+export const countries = [
+  "Ghana",
+  "Nigeria",
+  "Kenya",
+  "South Africa",
+  "United States",
+  "United Kingdom",
+  "Canada",
+  "Germany",
+  "France",
+  "India",
+];
+
+export const region = [
+  "Ahafo",
+  "Ashanti",
+  "Bono",
+  "Bono East",
+  "Central",
+  "Eastern",
+  "Greater Accra",
+  "North East",
+  "Northern",
+  "Oti",
+  "Savannah",
+  "Upper East",
+  "Upper West",
+  "Volta",
+  "Western",
+  "Western North",
+];
+
+export const religion = [
+  "Christianity",
+  "Islam",
+  "Traditional African Religion",
+  "Hinduism",
+  "Buddhism",
+  "Atheism",
+  "Other",
+];
+
+export const gender = [
+  "Male",
+  "Female",
+  "Non-binary",
+  "Transgender",
+  "Bigender",
+];
+
+export const shiftRateBands = {
+  "8-hour(Live-out)": { min: 120, max: 200 },
+  "12-hour(Live-out)": { min: 150, max: 250 },
+  "24-hour(Live-in)": { min: 300, max: 400 },
+};
+
+export const shiftServiceType = [
+  "Nurse Escort",
+  "Aged Care",
+  "Companionship Care",
+  "Mental Health Support",
+  "Hypertensive Care",
+  "Stroke Care",
+  "Diabetic Care",
+  "Catheter Care",
+  "Medication Management",
+];
+
+export const hourRateServiceOptions = {
+  RN: [
+    { name: "Catheter Care", min: 80, max: 120 },
+    { name: "Wound Dressing(Once Daily)", min: 90, max: 130 },
+    { name: "Chronic Disease Monitoring", min: 70, max: 100 },
+  ],
+  NAC: [
+    { name: "Catheter Care", min: 60, max: 90 },
+    { name: "Wound Dressing(Once Daily)", min: 70, max: 100 },
+    { name: "Chronic Disease Monitoring", min: 50, max: 80 },
+  ],
+};
+
+export const supportSubjects = [
+  "Account Verification Issue",
+  "Unable to Update Rates",
+  "Booking Request Issue",
+  "Client Did Not Show Up",
+  "Missing Payment",
+  "Shift Conflict",
+  "Feedback about App",
+  "Technical Error or Bug",
+  "Request for Feature",
+];
+
+export const medicalServicesOptions = [
+  "Catheter Care",
+  "Wound Dressing(Once Daily)",
+  "Chronic Disease Monitoring",
+  "Nurse Escort",
+  "Aged Care",
+  "Companionship Care",
+  "Mental Health Support",
+  "Hypertensive Care",
+  "Stroke Care",
+  "Diabetic Care",
+  "Medication Management",
+];
+
+export const extraServicesOptions = [
+  "Physiotherapy",
+  "Dietitian consultation",
+  "Clinical Psychologist sessions",
+  "Home lab tests",
+  "Telemedicine with Physician Assistant / Doctor",
+  "Weekly family update report",
+  "Relief nurse cover for off days",
+];
+
+// Email category options with templates
+export const emailCategories = [
+  {
+    value: "general",
+    label: "General Notification",
+    icon: FiMail,
+    template:
+      "We hope this message finds you in good health. We wanted to reach out to you regarding an important matter that requires your attention.\n\n[Your message content here]\n\nIf you have any questions or need assistance, please don't hesitate to contact our support team. We're here to help you every step of the way.\n\nThank you for being a valued member of the SupraCarer community.\n\nBest regards,\nThe SupraCarer Team",
+    subjectSuggestion: "Important Information from SupraCarer",
+  },
+  {
+    value: "promotional",
+    label: "Health Promotional Email",
+    icon: FiTarget,
+    template:
+      "Your health and wellbeing are our top priorities. We're excited to share some valuable health tips and promotional offers designed specifically for you.\n\n🌟 Special Health Promotion:\n[Promotion details here]\n\n💡 Health Tip of the Week:\n[Health tip content here]\n\nTake advantage of these exclusive offers and continue your journey toward better health with SupraCarer.\n\nStay healthy,\nThe SupraCarer Health Team",
+    subjectSuggestion: "🌟 Special Health Promotion & Wellness Tips",
+  },
+  {
+    value: "notification",
+    label: "System Notification",
+    icon: FiAlertCircle,
+    template:
+      "This is an important notification regarding your SupraCarer account.\n\n📢 System Update:\n[Notification details here]\n\nAction Required: [If any action is needed]\n\nThis notification is to ensure you stay informed about important changes or updates that may affect your experience with our platform.\n\nFor technical support, please contact our IT team at support@supracarer.com.\n\nBest regards,\nSupraCarer System Administration",
+    subjectSuggestion: "📢 Important System Notification - Action Required",
+  },
+  {
+    value: "reminder",
+    label: "Appointment Reminder",
+    icon: FiCheckCircle,
+    template:
+      "This is a friendly reminder about your upcoming appointment with SupraCarer.\n\n📅 Appointment Details:\nDate: [Date]\nTime: [Time]\nHealthcare Provider: [Provider Name]\nLocation/Type: [Location or Virtual]\n\n📝 Preparation Notes:\n- Please arrive 15 minutes early\n- Bring a valid ID and any relevant medical documents\n- For virtual appointments, ensure you have a stable internet connection\n\nIf you need to reschedule or have any questions, please contact us at least 24 hours before your appointment.\n\nWe look forward to seeing you soon.\n\nWarm regards,\nThe SupraCarer Care Team",
+    subjectSuggestion: "📅 Reminder: Your Upcoming SupraCarer Appointment",
+  },
+  {
+    value: "welcome",
+    label: "Welcome Email",
+    icon: FiUsers,
+    template:
+      "🎉 Welcome to SupraCarer! We're thrilled to have you join our healthcare community.\n\nYou've taken an important step toward better health management, and we're here to support you every step of the way.\n\n🚀 Getting Started:\n1. Complete your profile setup\n2. Explore our healthcare services\n3. Book your first appointment\n4. Health Workers update their guided rate system\n\n💬 Need Help?\nOur customer support team is available 24/7 to assist you. Feel free to reach out anytime at support@supracarer.com.\n\nWe're excited to be part of your healthcare journey!\n\nWelcome aboard,\nThe SupraCarer Team",
+    subjectSuggestion:
+      "🎉 Welcome to SupraCarer - Your Health Journey Starts Here!",
+  },
+  {
+    value: "update",
+    label: "Platform Update",
+    icon: FiMessageSquare,
+    template:
+      "We're constantly working to improve your SupraCarer experience. Here's what's new in our latest platform update:\n\n🆕 New Features:\n[List new features here]\n\n🔧 Improvements:\n[List improvements here]\n\n🐛 Bug Fixes:\n[List fixes here]\n\nThese updates are now live and ready for you to explore. Log in to your account to experience the enhanced features.\n\nAs always, we value your feedback. If you have any suggestions or encounter any issues, please let us know.\n\nThank you for your continued trust in SupraCarer.\n\nBest regards,\nThe SupraCarer Development Team",
+    subjectSuggestion: "🆕 SupraCarer Platform Update - New Features Available",
+  },
+];
+
+// Define status colors mapping
+export const STATUS_COLORS = {
+  Pending: "#facc15",
+  Processing: "#3b82f6",
+  Confirmed: "#22c55e",
+  Ongoing: "#a78bfa",
+  Cancel: "#ef4444",
+  Done: "#6b7280",
+};
+
+// Month options for filter
+export const MONTHS = [
+  { value: null, label: "All Months" },
+  { value: 1, label: "January" },
+  { value: 2, label: "February" },
+  { value: 3, label: "March" },
+  { value: 4, label: "April" },
+  { value: 5, label: "May" },
+  { value: 6, label: "June" },
+  { value: 7, label: "July" },
+  { value: 8, label: "August" },
+  { value: 9, label: "September" },
+  { value: 10, label: "October" },
+  { value: 11, label: "November" },
+  { value: 12, label: "December" },
+];
+
+//For settings page
+
+export const tabs = [
+  {
+    id: "security",
+    label: "Security",
+    icon: <FaShieldAlt />,
+    description: "Password and account security",
+  },
+  {
+    id: "notifications",
+    label: "Notifications",
+    icon: <FaBell />,
+    description: "Manage your notification preferences",
+  },
+  {
+    id: "account",
+    label: "Account",
+    icon: <FaUser />,
+    description: "Account settings and preferences",
+  },
+  {
+    id: "privacy",
+    label: "Privacy",
+    icon: <FaCog />,
+    description: "Privacy and data settings",
+  },
+];
+
+export const NotificationTabMenu = [
+  {
+    key: "email_notifications",
+    label: "Email Notifications",
+    description: "Receive updates via email",
+  },
+  {
+    key: "push_notifications",
+    label: "Push Notifications",
+    description: "Browser push notifications",
+  },
+  {
+    key: "booking_reminders",
+    label: "Booking Reminders",
+    description: "Reminders about upcoming appointments",
+  },
+  {
+    key: "marketing_updates",
+    label: "Marketing Updates",
+    description: "Health news and promotional content",
+  },
+];
+
+export const PrivacyTabMenu = [
+  {
+    key: "profile_visibility",
+    label: "Profile Visibility",
+    description: "Control who can see your profile",
+  },
+  {
+    key: "activity_status",
+    label: "Activity Status",
+    description: "Show when you were last active",
+  },
+  {
+    key: "data_collection",
+    label: "Data Collection",
+    description: "Allow data collection for service improvement",
+  },
+  {
+    key: "third_party_cookies",
+    label: "Third-party Cookies",
+    description: "Allow third-party tracking cookies",
+  },
+];
+
+export const healthWorkerFields = [
+  "country",
+  "region",
+  "address",
+  "religion",
+  "about_me",
+  "image_url",
+  "latitude",
+  "longitude",
+  "has_guided_rate_system",
+];
+
+export const clientFields = [
+  "country",
+  "region",
+  "address",
+  "religion",
+  "about",
+  "image",
+  "latitude",
+  "longitude",
+];
+
+export const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];

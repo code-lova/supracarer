@@ -1,12 +1,8 @@
-import Client from '@components/accounts/client/Client'
-import React from 'react'
+import React from "react";
+import Dashboard from "@components/accounts/client/Dashboard";
 
 const page = () => {
-  return (
-    <div>
-        <Client />
-    </div>
-  )
-}
+  return <Dashboard />;
+};
 
-export default page
+export default page;

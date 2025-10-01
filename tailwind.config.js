@@ -42,6 +42,16 @@ module.exports = {
         "custom-white": "#ffff",
         "custom-dark": "#121211",
         "tranquil-teal": "#088272",
+        "light-green": "#E9F3ED",
+        "dark-blue": "#1e3a8a",
+        "dark-gray-blue":	"#1e293b",
+        "slate-gray2":	"#475569",
+        "light-pink-bg": "#fdf2f8",
+        "dark-pink-border": "#db2777",
+        "light-blue-bg": "#eff6ff",
+        "dark-blue-border": "#2563eb",
+        "danger-red": "#cc3366",
+        
       },
       boxShadow: {
         '3xl': '0 10px 40px rgba(0, 0, 0, 0.1)',

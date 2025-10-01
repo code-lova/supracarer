@@ -1,201 +1,178 @@
 "use client";
 import React, { useState } from "react";
-import Aside from "./Aside";
-import Header from "./Header";
+import StepWrapper from "./bookingUi-kit/StepWrapper";
+import StepOne from "./bookingUi-kit/StepOne";
+import StepTwo from "./bookingUi-kit/StepTwo";
+import StepThree from "./bookingUi-kit/StepThree";
+import StepFour from "./bookingUi-kit/StepFour";
+import BookingSummary from "./bookingUi-kit/BookingSummary";
+import { bookAppointment } from "@service/request/client/bookingApt";
+import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import { useUserContext } from "@context/userContext";
+import { FaBriefcaseMedical } from "react-icons/fa6";
+
 
 const Booking = () => {
-  const [formData, setFormData] = useState({
-    clientName: "",
-    contactPhone: "",
-    contactEmail: "",
-    address: "",
-    patientAge: "",
-    patientGender: "",
-    medicalCondition: "",
-    serviceRequired: "",
-    appointmentDate: "",
-    appointmentTime: "",
-    duration: "",
-    specialRequests: "",
+  const { user } = useUserContext();
+  const userDetails = user?.data;
+  const [step, setStep] = useState(0);
+  const [isPreviewing, setIsPreviewing] = useState(false);
+  const [formValues, setFormValues] = useState({
+    care_duration: "",
+    care_duration_value: "",
+    care_type: "",
+    accommodation: "No",
+    meal: "No",
+    num_of_meals: "",
+    medical_services: [],
+    other_extra_service: [],
+    special_notes: "",
+    start_date: "",
+    end_date: "",
+    start_time: "",
+    start_time_period: "AM",
+    end_time: "",
+    end_time_period: "AM",
+    requesting_for: "",
+    someone_name: "",
+    someone_email: "",
+    someone_phone: "",
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      setFormValues((prev) => {
+        const updated = checked
+          ? [...prev[name], value]
+          : prev[name].filter((item) => item !== value);
+        return {
+          ...prev,
+          [name]: updated,
+        };
+      });
+    } else {
+      setFormValues({
+        ...formValues,
+        [name]: value,
+      });
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
+  const goToNextStep = () => setStep((prev) => prev + 1);
+  const goToPrevStep = () => setStep((prev) => prev - 1);
+  const goToPreview = () => setIsPreviewing(true);
+  const backToForm = () => setIsPreviewing(false);
+
+  const mutate = useMutation({
+    mutationFn: bookAppointment,
+    onSuccess: () => {
+      toast.success("Appointment booked successfully!");
+      // Clear form values and return to step one
+      setFormValues({
+        care_duration: "",
+        care_duration_value: "",
+        care_type: "",
+        accommodation: "No",
+        meal: "No",
+        num_of_meals: "",
+        medical_services: [],
+        other_extra_services: [],
+        special_notes: "",
+        start_date: "",
+        end_date: "",
+        start_time: "",
+        start_time_period: "AM",
+        end_time: "",
+        end_time_period: "AM",
+        requesting_for: "",
+        someone_name: "",
+        someone_email: "",
+        someone_phone: "",
+      });
+      setStep(0);
+      setIsPreviewing(false);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Error booking appointment");
+    },
+  });
+
+  const handleSubmit = () => {
+    console.log("Submitting form data:", formValues);
+    mutate.mutate(formValues);
   };
+
   return (
-    <div className="lg:ml-[200px]">
-      <Aside />
-      <Header />
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-6">
-          Book an Appointment
-        </h1>
-        <form
-          onSubmit={handleSubmit}
-          className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6"
-        >
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Full Name</label>
-            <input
-              type="text"
-              name="clientName"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.clientName}
-              onChange={handleChange}
-              required
-            />
+    <div className="pageContent">
+      {/* Header Section */}
+      <div className="mb-8 mt-3">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-haven-blue to-carer-blue rounded-xl flex items-center justify-center shadow-lg">
+            <FaBriefcaseMedical className="text-white text-xl" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-gray-700 mb-2">Phone Number</label>
-              <input
-                type="tel"
-                name="contactPhone"
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.contactPhone}
-                onChange={handleChange}
-                required
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Appointment Bookings</h1>
+            <p className="text-gray-600 text-sm">
+              Make your appointment bookings easily.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="xl:h-[690px] bg-gray-50 rounded-2xl shadow-lg px-5 py-3">
+        {/* rest o the form here  */}
+        {!isPreviewing ? (
+          <StepWrapper
+            steps={["Basic Info", "Care Details", "Schedule", "Requester Info"]}
+            currentStep={step}
+          >
+            {step === 0 && (
+              <StepOne
+                values={formValues}
+                goToNextStep={goToNextStep}
+                setFormValues={setFormValues}
+                userDetails={userDetails}
               />
-            </div>
-            <div>
-              <label className="block text-gray-700 mb-2">Email Address</label>
-              <input
-                type="email"
-                name="contactEmail"
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.contactEmail}
-                onChange={handleChange}
-                required
+            )}
+            {step === 1 && (
+              <StepTwo
+                values={formValues}
+                handleChange={handleChange}
+                goToNextStep={goToNextStep}
+                goToPrevStep={goToPrevStep}
+                setFormValues={setFormValues}
               />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Address</label>
-            <input
-              type="text"
-              name="address"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-gray-700 mb-2">Age</label>
-              <input
-                type="number"
-                name="patientAge"
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.patientAge}
-                onChange={handleChange}
+            )}
+            {step === 2 && (
+              <StepThree
+                values={formValues}
+                handleChange={handleChange}
+                goToNextStep={goToNextStep}
+                goToPrevStep={goToPrevStep}
               />
-            </div>
-            <div>
-              <label className="block text-gray-700 mb-2">Gender</label>
-              <select
-                name="patientGender"
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.patientGender}
-                onChange={handleChange}
-              >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Non-binary">Non-binary</option>
-                <option value="Prefer not to say">Prefer not to say</option>
-              </select>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">
-              Medical Condition
-            </label>
-            <textarea
-              name="medicalCondition"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.medicalCondition}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Service Required</label>
-            <select
-              name="serviceRequired"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.serviceRequired}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select a Service</option>
-              <option value="Wound Care">Wound Care</option>
-              <option value="Catheter Care">Catheter Care</option>
-              <option value="Mental Health Support">
-                Mental Health Support
-              </option>
-              <option value="NCD Management">NCD Management</option>
-              <option value="Patient Escort">Patient Escort</option>
-            </select>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-gray-700 mb-2">Preferred Date</label>
-              <input
-                type="date"
-                name="appointmentDate"
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.appointmentDate}
-                onChange={handleChange}
-                required
+            )}
+            {step === 3 && (
+              <StepFour
+                values={formValues}
+                handleChange={handleChange}
+                setFormValues={setFormValues}
+                goToPrevStep={goToPrevStep}
+                goToPreview={goToPreview}
               />
-            </div>
-            <div>
-              <label className="block text-gray-700 mb-2">Preferred Time</label>
-              <input
-                type="time"
-                name="appointmentTime"
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.appointmentTime}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">
-              Duration (in hours)
-            </label>
-            <input
-              type="number"
-              name="duration"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.duration}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Special Requests</label>
-            <textarea
-              name="specialRequests"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={formData.specialRequests}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit" className="login-btn font-bold">
-            Book Appointment
-          </button>
-        </form>
+            )}
+          </StepWrapper>
+        ) : (
+          <BookingSummary
+            formValues={formValues}
+            onBack={backToForm}
+            onSubmit={handleSubmit}
+            isLoading={mutate.isPending}
+          />
+        )}
       </div>
     </div>
   );
 };
-
 export default Booking;

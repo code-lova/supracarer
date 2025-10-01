@@ -1,40 +1,49 @@
 import { useEffect, useState } from "react";
 
-const RESEND_DELAY = 3 * 60 * 1000; // 3 minutes in ms
-
-export const useResendCountdown = (storageKey = "verificationStartTime") => {
-  const [timeLeft, setTimeLeft] = useState(0);
+export const useResendCountdown = (initialDelay = 60) => {
+  const [countdown, setCountdown] = useState(0);
+  const [isCountdownActive, setIsCountdownActive] = useState(false);
 
   useEffect(() => {
-    let start = localStorage.getItem(storageKey);
-    if (!start) {
-      start = Date.now();
-      localStorage.setItem(storageKey, start);
+    let interval;
+    if (isCountdownActive && countdown > 0) {
+      interval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            setIsCountdownActive(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
     }
 
-    const updateCountdown = () => {
-      const elapsed = Date.now() - start;
-      const remaining = Math.max(0, RESEND_DELAY - elapsed);
-      setTimeLeft(remaining);
+    return () => {
+      if (interval) clearInterval(interval);
     };
+  }, [isCountdownActive, countdown]);
 
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-
-    return () => clearInterval(interval);
-  }, [storageKey]);
+  const startCountdown = (delay = initialDelay) => {
+    setCountdown(delay);
+    setIsCountdownActive(true);
+  };
 
   const resetCountdown = () => {
-    const now = Date.now();
-    localStorage.setItem(storageKey, now);
-    setTimeLeft(RESEND_DELAY);
+    setCountdown(0);
+    setIsCountdownActive(false);
   };
 
-  const formatTime = (ms) => {
-    const minutes = Math.floor(ms / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
-  return { timeLeft, resetCountdown, formatTime };
+  return {
+    countdown,
+    isCountdownActive,
+    startCountdown,
+    resetCountdown,
+    formatTime,
+  };
 };

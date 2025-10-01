@@ -9,6 +9,19 @@
   scroll-behavior: smooth;
   font-family: "Open Sans", Arial, sans-serif;
 }
+@keyframes slidein-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-slidein-right {
+  animation: slidein-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
 
 .main {
   width: 100vw;
@@ -20,38 +33,15 @@
   pointer-events: none;
 }
 
-.main:after {
-  content: "";
-  background-image: url("/assets/images/grid.svg");
-  z-index: 1;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  opacity: 0.4;
-  filter: invert(1);
+.bg-dashboard {
+  background-color: rgb(247, 247, 247);
+  min-height: 100%;
 }
 
-.gradient {
-  height: fit-content;
-  z-index: 3;
-  width: 100%;
-  max-width: 640px;
-  background-image: radial-gradient(
-      at 27% 37%,
-      hsla(215, 98%, 61%, 1) 0px,
-      transparent 0%
-    ),
-    radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
-    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
-    radial-gradient(at 79% 53%, rgb(238, 165, 212) 0px, transparent 50%);
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  filter: blur(100px) saturate(150%);
-  top: 80px;
-  opacity: 0.15;
+.client-bg {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #ededed;
 }
 
 .custom-dot {
@@ -79,6 +69,18 @@
   animation: spin 1s linear infinite;
 }
 
+.multi-spinner {
+  border-radius: 9999px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #3bb3a8; /* tranquil-teal */
+  border-right-color: #0077b6; /* carer-blue */
+  border-bottom-color: #3bb3a8;
+  border-left-color: #0077b6;
+  animation: spin 1s linear infinite;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -86,6 +88,55 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff #fff; /* green and white */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #16a34a;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-visible {
+  scrollbar-width: auto; /* Firefox */
+  -ms-overflow-style: auto; /* IE/Edge */
+}
+
+.scrollbar-visible::-webkit-scrollbar {
+  display: block; /* Chrome/Safari */
+  width: 8px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }
 
 @layer components {
@@ -99,13 +150,13 @@
   }
 
   .transitioning {
-    @apply transition duration-300 ease-in-out transform hover:scale-105;
+    @apply transition-transform duration-1000 ease-in-out hover:scale-105;
   }
 }
 
 @layer utilities {
   .padding {
-    @apply px-6 py-6 md:py-4 xl:px-[100px] ;
+    @apply px-6 py-6 md:py-4 xl:px-[100px];
   }
 
   .blue_gradient {
@@ -129,7 +180,7 @@
   }
 
   .bg-mobile-nav {
-    @apply cursor-pointer px-8 py-2 rounded-md lg:opacity-100 lg:max-h-full lg:block lg:pt-8  bg-gray-800 lg:bg-gray-800 transition-all duration-500 ease-in-out overflow-hidden;
+    @apply cursor-pointer px-4 py-4 rounded-sm lg:opacity-100 lg:max-h-full lg:block lg:pt-8  bg-transparent transition-all duration-500 ease-in-out overflow-hidden;
   }
 
   .bg-mobile-nav2 {
@@ -165,6 +216,14 @@
     @apply mx-7 md:mx-28;
   }
 
+  .pageContainer {
+    @apply w-full h-full mt-[10px];
+  }
+
+  .pageContent {
+    @apply w-full h-full mt-[10px] lg:mt-[5px];
+  }
+
   /* for abut us page  */
   .greenVerticalTextBox {
     @apply hidden md:flex items-center justify-center absolute -left-6 top-1/2 transform -translate-y-1/2 bg-carer-green text-white w-[70px] h-[500px] py-6 px-2 text-center  rounded-full border-4 border-white shadow-2xl z-10;
@@ -196,10 +255,6 @@
     @apply ring-2 ring-carer-blue;
   }
 
-  .download-btn {
-    @apply p-3 rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500;
-  }
-
   .faq-heading-bg {
     @apply flex items-center justify-between font-semibold p-4 rounded-md cursor-pointer transition-colors duration-300;
   }
@@ -224,11 +279,19 @@
     @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-500 text-white py-4 px-4 rounded;
   }
 
-  .login-btn {
-    @apply w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white py-4 px-4 rounded;
+  .loader-button {
+    @apply flex items-center justify-center text-white bg-haven-blue w-full rounded-sm px-4 py-4 transition-colors duration-300 hover:bg-tranquil-teal focus:outline-none focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .login-form-input {
-    @apply mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm outline-none focus:ring-custom-green focus:border-pink-500;
+    @apply mt-1 block w-full text-slate-gray text-sm p-2 border border-gray-300 rounded-xl shadow-sm outline-none focus:ring-custom-green focus:border-tranquil-teal;
+  }
+
+  .form-input {
+    @apply border border-gray-300 text-slate-gray rounded px-4 py-2 text-sm shadow-sm outline-none focus:ring-custom-green focus:border-tranquil-teal;
+  }
+
+  .steper-form-input {
+    @apply w-full border border-gray-300 text-slate-gray rounded px-4 py-2 text-sm shadow-sm outline-none focus:ring-carer-blue focus:border-carer-blue;
   }
 }

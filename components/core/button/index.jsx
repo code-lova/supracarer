@@ -38,3 +38,144 @@ export const NormalBtn = ({
     </button>
   );
 };
+
+const colorVariants = {
+  green: {
+    base: "bg-custom-green",
+    hover: "hover:bg-tranquil-teal",
+  },
+  red: {
+    base: "bg-red-600",
+    hover: "hover:bg-red-700",
+  },
+  darkblue: {
+    base: "bg-haven-blue",
+    hover: "hover:bg-tranquil-teal",
+  },
+  gray: {
+    base: "bg-slate-gray2",
+    hover: "hover:bg-gray-300 hover:text-slate-gray2",
+  },
+  carerBlue: {
+    base: "bg-carer-blue",
+    hover: "hover:bg-dark-gray-blue",
+  },
+  orange: {
+    base: "bg-orange-500",
+    hover: "hover:bg-orange-600",
+  },
+};
+
+export const SmallBtn = ({
+  onClick,
+  color = "green",
+  type = "button",
+  icon = null,
+  loading,
+  loadingText,
+  disabled,
+  text,
+  href,
+  rel,
+}) => {
+  const { base, hover } = colorVariants[color] || colorVariants.green;
+
+  const commonClasses = `px-3 py-1 ${base} ${hover} text-white rounded-sm text-xs flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`;
+
+  const content = loading ? (
+    <div className="flex items-center gap-2">
+      <div className="loader" />
+      {loadingText}
+    </div>
+  ) : (
+    <>
+      {icon && <span>{icon}</span>}
+      <span>{text}</span>
+    </>
+  );
+
+  // If href is provided, render as link
+  if (href) {
+    return (
+      <Link
+        href={href}
+        rel={rel}
+        className={`${commonClasses} ${
+          loading || disabled ? "pointer-events-none" : ""
+        }`}
+        onClick={onClick}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  // Default button behavior
+  return (
+    <button
+      type={type}
+      disabled={loading || disabled}
+      onClick={onClick}
+      className={commonClasses}
+    >
+      {content}
+    </button>
+  );
+};
+
+export const MediumBtn = ({
+  loading,
+  text,
+  type,
+  onClick,
+  loadingText,
+  color = "green",
+  icon,
+  disabled,
+  href,
+  rel,
+}) => {
+  const { base, hover } = colorVariants[color] || colorVariants.darkblue;
+
+  const commonClasses = `px-4 py-2 ${base} ${hover} text-white rounded-sm text-md disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center`;
+
+  const content = loading ? (
+    <div className="flex items-center">
+      <div className="loader mr-2" />
+      {loadingText}
+    </div>
+  ) : (
+    <span className="flex items-center text-sm">
+      {icon && <span>{icon}</span>}
+      {text}
+    </span>
+  );
+
+  // If href is provided, render as link
+  if (href) {
+    return (
+      <Link
+        href={href}
+        rel={rel}
+        className={`${commonClasses} ${
+          loading || disabled ? "pointer-events-none" : ""
+        }`}
+        onClick={onClick}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  // Default button behavior
+  return (
+    <button
+      type={type}
+      disabled={loading || disabled}
+      onClick={onClick}
+      className={commonClasses}
+    >
+      {content}
+    </button>
+  );
+};
