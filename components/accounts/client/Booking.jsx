@@ -10,6 +10,7 @@ import { bookAppointment } from "@service/request/client/bookingApt";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useUserContext } from "@context/userContext";
+import { FaBriefcaseMedical } from "react-icons/fa6";
 
 
 const Booking = () => {
@@ -106,6 +107,20 @@ const Booking = () => {
 
   return (
     <div className="pageContent">
+      {/* Header Section */}
+      <div className="mb-8 mt-3">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-haven-blue to-carer-blue rounded-xl flex items-center justify-center shadow-lg">
+            <FaBriefcaseMedical className="text-white text-xl" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Appointment Bookings</h1>
+            <p className="text-gray-600 text-sm">
+              Make your appointment bookings easily.
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="xl:h-[690px] bg-gray-50 rounded-2xl shadow-lg px-5 py-3">
         {/* rest o the form here  */}
         {!isPreviewing ? (

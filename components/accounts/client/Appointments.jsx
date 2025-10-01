@@ -229,6 +229,20 @@ const Appointments = () => {
 
   return (
     <div className="pageContent">
+      {/* Header Section */}
+      <div className="mb-8 mt-3">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-haven-blue to-carer-blue rounded-xl flex items-center justify-center shadow-lg">
+            <FaStethoscope className="text-white text-xl" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Appointments</h1>
+            <p className="text-gray-600 text-sm">
+              View all your booking appointments made.
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="xl:h-[690px] bg-white rounded-2xl shadow-lg px-5 py-6 flex flex-col">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
           <h1 className="text-2xl font-bold text-dark-blue mb-4 md:mb-0">

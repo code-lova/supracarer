@@ -57,7 +57,7 @@ const ClientAppointments = () => {
   } = useQuery({
     queryKey: ["healthWorkerAppointments", queryParams],
     queryFn: () => getHealthWorkerAppointments(queryParams),
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60, // 1 minutes
     enabled: searchTerm.length > 0 || showAllAppointments, // Only fetch when searching or showing all
   });
 
@@ -320,6 +320,22 @@ const ClientAppointments = () => {
 
   return (
     <div className="pageContainer">
+      {/* Header Section */}
+      <div className="mb-8 mt-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-tranquil-teal to-custom-green rounded-xl flex items-center justify-center shadow-lg">
+            <FaUserMd className="text-white text-xl" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">
+              Appointments
+            </h1>
+            <p className="text-gray-600 text-sm">
+              View all your appointments you have accepted
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="w-full bg-white rounded-3xl shadow-md px-5 py-6 mb-6 md:mb-0">
         <h2 className="text-xl font-bold text-tranquil-teal mb-6 flex items-center justify-between">
           <span>My Appointments</span>

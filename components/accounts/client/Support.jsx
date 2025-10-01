@@ -18,6 +18,8 @@ import {
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { createSupportTicketSchema } from "@schema/client/ticket";
 import toast from "react-hot-toast";
+import { IoIosChatboxes } from "react-icons/io";
+import DateFormatter from "@components/core/DateFormatter";
 
 const Support = () => {
   const [selectedTicketId, setSelectedTicketId] = useState(null);
@@ -167,6 +169,20 @@ const Support = () => {
 
   return (
     <div className="pageContent">
+      {/* Header Section */}
+      <div className="mb-8 mt-3">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-haven-blue to-carer-blue rounded-xl flex items-center justify-center shadow-lg">
+            <IoIosChatboxes className="text-white text-xl" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Client Support</h1>
+            <p className="text-gray-600 text-sm">
+              Ask your questions or report issues here we reply within 24 hours.
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="flex flex-col md:flex-row overflow-y-auto xl:h-[690px] bg-white rounded-2xl shadow-lg overflow-hidden">
         {/* Mobile: Ticket List always at top, fixed height, scrollable */}
         <div className="w-full md:w-80 bg-gray-50 border-b md:border-b-0 md:border-r flex flex-col">
@@ -284,8 +300,14 @@ const Support = () => {
                   }`}
                 >
                   {msg.text}
-                  <div className="text-xs text-gray-300 mt-1 text-right">
-                    {new Date(msg.time).toLocaleString()}
+                  <div
+                    className={`text-xs ${
+                      msg.sender === "client"
+                        ? "text-gray-200"
+                        : "text-gray-500"
+                    } mt-2 text-right`}
+                  >
+                    <DateFormatter date={msg.time} format="datetime" />
                   </div>
                 </div>
 

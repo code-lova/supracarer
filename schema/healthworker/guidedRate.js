@@ -33,6 +33,6 @@ export const guidedRateSchema = Yup.object().shape({
     .required("Service type is required"),
 
   guided_rate_justification: Yup.string()
-    .max(500, "Justification too long")
+    .max(50, "Justification too long")
     .notRequired(),
 });

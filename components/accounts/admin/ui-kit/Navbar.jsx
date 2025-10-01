@@ -1,6 +1,10 @@
 "use client";
 import React, { useState, useRef } from "react";
 import { useUserContext } from "@context/userContext";
+import { useQuery } from "@tanstack/react-query";
+import { getUnreadCount } from "@service/request/user/getNotifications";
+import NotificationDropdown from "@components/core/NotificationDropdown";
+import Link from "next/link";
 
 import {
   FaBars,
@@ -10,41 +14,28 @@ import {
   FaSearch,
 } from "react-icons/fa";
 
-const notifications = [
-  {
-    id: 1,
-    text: "New user registered",
-    image: "https://via.placeholder.com/32",
-  },
-  {
-    id: 2,
-    text: "Booking request received",
-    image: "https://via.placeholder.com/32",
-  },
-];
-const tickets = [
-  { id: 1, subject: "Password reset", image: "https://via.placeholder.com/32" },
-  { id: 2, subject: "Account issue", image: "https://via.placeholder.com/32" },
-];
-
 export default function Navbar({ onMenuClick }) {
   const { user } = useUserContext();
   const userDetails = user?.data;
-  const [showBell, setShowBell] = useState(false);
-  const [showChat, setShowChat] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
+  // Fetch unread count for badge
+  const { data: unreadResponse } = useQuery({
+    queryKey: ["unread-count"],
+    queryFn: getUnreadCount,
+    refetchInterval: 30000, // Refetch every 30 seconds
+  });
+
+  // Get unread notification count
+  const unreadCount = unreadResponse?.data?.unread_count || 0;
+
   // Simple click outside to close dropdowns
-  const bellRef = useRef();
-  const chatRef = useRef();
+  const notificationRef = useRef();
   const profileRef = useRef();
 
   React.useEffect(() => {
     function handleClick(e) {
-      if (bellRef.current && !bellRef.current.contains(e.target))
-        setShowBell(false);
-      if (chatRef.current && !chatRef.current.contains(e.target))
-        setShowChat(false);
       if (profileRef.current && !profileRef.current.contains(e.target))
         setShowProfile(false);
     }
@@ -84,70 +75,36 @@ export default function Navbar({ onMenuClick }) {
 
       {/* Center/Right: Bell, Chat, Profile */}
       <div className="flex items-center gap-4">
-        {/* Bell Icon */}
-        <div className="relative" ref={bellRef}>
+        {/* Bell Icon - Notification Dropdown */}
+        <div className="relative" ref={notificationRef}>
           <button
-            onClick={() => setShowBell((v) => !v)}
+            onClick={() => setIsNotificationOpen(!isNotificationOpen)}
             className="p-2 bg-light-blue-bg rounded-md relative"
             aria-label="Notifications"
           >
             <FaBell size={20} className="text-haven-blue" />
             {/* Notification dot */}
-            <span className="absolute top-1 right-2 w-2.5 h-2.5 bg-danger-red rounded-full border-2 border-white"></span>
+            {unreadCount > 0 && (
+              <span className="absolute top-1 right-2 w-2.5 h-2.5 bg-danger-red rounded-full border-2 border-white"></span>
+            )}
           </button>
-          {showBell && (
-            <div className="absolute right-0 mt-2 w-64 bg-white text-haven-blue shadow-lg rounded z-50">
-              <div className="p-3 border-b font-semibold">Notifications</div>
-              <ul>
-                {notifications.map((n) => (
-                  <li
-                    key={n.id}
-                    className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50"
-                  >
-                    <img
-                      src={n.image}
-                      alt="notif"
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <span className="text-sm">{n.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+
+          <NotificationDropdown
+            isOpen={isNotificationOpen}
+            onClose={() => setIsNotificationOpen(false)}
+            triggerRef={notificationRef}
+            userRole="admin"
+          />
         </div>
-        {/* Chat Icon */}
-        <div className="relative" ref={chatRef}>
-          <button
-            onClick={() => setShowChat((v) => !v)}
-            className="p-2 bg-light-blue-bg rounded-md relative"
-            aria-label="Tickets"
-          >
-            <FaComments size={20} className="text-haven-blue" />
-            {/* Notification dot */}
-            <span className="absolute top-1 right-2 w-2.5 h-2.5 bg-danger-red rounded-full border-2 border-white"></span>
-          </button>
-          {showChat && (
-            <div className="absolute right-0 mt-2 w-64 bg-white text-haven-blue shadow-lg rounded z-50">
-              <div className="p-3 border-b font-semibold">Ticket Requests</div>
-              <ul>
-                {tickets.map((t) => (
-                  <li
-                    key={t.id}
-                    className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50"
-                  >
-                    <img
-                      src={t.image}
-                      alt="ticket"
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <span className="text-sm">{t.subject}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+        {/* Chat Icon - Link to Support Tickets */}
+        <Link
+          href="/admin/support-ticket"
+          className="p-2 bg-light-blue-bg rounded-md relative hover:bg-blue-100 transition-colors"
+          aria-label="Support Tickets"
+        >
+          <FaComments size={20} className="text-haven-blue" />
+          {/* You can add a notification dot here if needed for support tickets */}
+        </Link>
         {/* Profile */}
         <div className="relative" ref={profileRef}>
           <button

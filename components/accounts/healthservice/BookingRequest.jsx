@@ -77,9 +77,8 @@ const BookingRequest = () => {
   if (isLoading) {
     return (
       <div className="pageContainer">
-        <div className="bg-white h-[85vh] rounded-3xl shadow-lg p-6 mb-6">
-          {/* Header Section */}
-          <div className="mb-8">
+        <div className="bg-white h-full rounded-3xl shadow-lg p-6 mb-6">
+          <div className="mb-2">
             <h1 className="text-2xl lg:text-3xl font-bold text-ever-green mb-2">
               Assigned Booking Requests
             </h1>
@@ -89,7 +88,7 @@ const BookingRequest = () => {
           </div>
 
           {/* Loading State */}
-          <div className="flex flex-col items-center justify-center py-20">
+          <div className="flex flex-col items-center justify-center">
             <LoadingStateUI />
             <p className="text-slate-gray mt-4 text-lg">
               Loading booking requests...
@@ -131,6 +130,22 @@ const BookingRequest = () => {
 
   return (
     <div className="pageContainer">
+      {/* Header Section */}
+      <div className="mb-8 mt-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-tranquil-teal to-custom-green rounded-xl flex items-center justify-center shadow-lg">
+            <FaCalendarAlt className="text-white text-xl" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">
+              Booking Request
+            </h1>
+            <p className="text-gray-600 text-sm">
+              View all assigned booking request
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="bg-white h-[85vh] rounded-3xl shadow-lg p-6 mb-6">
         {/* Header Section */}
         <div className="mb-8">

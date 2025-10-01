@@ -37,7 +37,7 @@ const ForgotPassword = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <div className="flex flex-row items-center justify-center">
-          <h1 className="text-2xl font-bold mb-1 text-center uppercase blue_gradient">
+          <h1 className="text-2xl font-bold mb-6 text-center uppercase text-custom-green">
             Forgot Password
           </h1>
         </div>
@@ -53,9 +53,9 @@ const ForgotPassword = () => {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-slate-gray"
                   >
-                    Email
+                    Email Address
                   </label>
                   <Field
                     type="email"

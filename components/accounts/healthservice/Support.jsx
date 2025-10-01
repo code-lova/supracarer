@@ -8,6 +8,7 @@ import { SupportMessageSchema } from "@schema/healthworker/support";
 import {
   createNewSupport,
   getUserSupportMessages,
+  getSupportLimit,
 } from "@service/request/healthworker/support";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
@@ -20,6 +21,8 @@ import { IoIosChatboxes } from "react-icons/io";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import DateFormatter from "@components/core/DateFormatter";
 import WordCountTextarea from "@components/core/WordCountTextarea";
+import { MdOutlineSupportAgent } from "react-icons/md";
+import SupportLimitsCard from "./SupportLimitsCard";
 
 const Support = () => {
   const [openMessageId, setOpenMessageId] = useState(null);
@@ -34,6 +37,14 @@ const Support = () => {
     staleTime: 5 * 60 * 1000,
   });
 
+  // Fetch support limits
+  const { data: limitsData, isLoading: limitsLoading } = useQuery({
+    queryKey: ["support-limits"],
+    queryFn: getSupportLimit,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
+  });
+
   const tickets = Array.isArray(data?.tickets) ? data.tickets : [];
 
   const mutation = useMutation({
@@ -41,16 +52,19 @@ const Support = () => {
     onSuccess: () => {
       toast.success("Message sent successfully!");
       queryClient.invalidateQueries(["support"]);
+      queryClient.invalidateQueries(["support-limits"]);
     },
     onError: (error) => {
-      toast.error(error.message || "Failded to create ticket");
+      toast.error(error.message || "Failed to create ticket");
     },
   });
 
   const handleSubmit = (values, { resetForm }) => {
-    console.log("Support Form Data: ", values);
-    mutation.mutate(values);
-    resetForm();
+    mutation.mutate(values, {
+      onSuccess: () => {
+        resetForm();
+      },
+    });
   };
 
   const totalPages = Math.ceil(tickets.length / messagesPerPage);
@@ -89,7 +103,21 @@ const Support = () => {
 
   return (
     <div className="pageContainer">
-      <div className="w-full h-full xl:h-[669px] bg-white rounded-3xl shadow-md px-6 py-8 md:col-span-2">
+      {/* Header Section */}
+      <div className="mb-8 mt-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-tranquil-teal to-custom-green rounded-xl flex items-center justify-center shadow-lg">
+            <MdOutlineSupportAgent className="text-white text-xl" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Support</h1>
+            <p className="text-gray-600 text-sm">
+              View all your support tickets and their status
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="w-full h-full bg-white rounded-3xl shadow-md px-6 py-8 md:col-span-2">
         {/* Header Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-tranquil-teal mb-2">
@@ -101,6 +129,11 @@ const Support = () => {
               Check your email inbox for replies
             </p>
           </div>
+        </div>
+
+        {/* Support Limits Section */}
+        <div className="mb-8">
+          <SupportLimitsCard limits={limitsData} isLoading={limitsLoading} />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -125,58 +158,92 @@ const Support = () => {
               validationSchema={SupportMessageSchema}
               onSubmit={handleSubmit}
             >
-              {({ values, setFieldValue }) => (
-                <Form className="space-y-6">
-                  {/* Subject Dropdown */}
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="block text-sm font-semibold text-gray-700 mb-2"
-                    >
-                      Subject
-                    </label>
-                    <Field
-                      as="select"
-                      name="subject"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200"
-                    >
-                      <option value="">Select a subject</option>
-                      {supportSubjects.map((subject, index) => (
-                        <option key={index} value={subject}>
-                          {subject}
-                        </option>
-                      ))}
-                    </Field>
-                    <ErrorMessage
-                      name="subject"
-                      component="div"
-                      className="text-xs text-red-500"
-                    />
-                  </div>
+              {({ values, setFieldValue }) => {
+                const remainingRequests = limitsData?.remaining_requests || 0;
+                const canCreateTicket = limitsData?.can_create_ticket !== false;
 
-                  {/* Message Box */}
-                  <div>
-                    <WordCountTextarea
-                      name="message"
-                      label="Message"
-                      value={values.message}
-                      onChange={(text) => setFieldValue("message", text)}
-                      maxWords={50}
-                      rows={4}
-                      placeholder="Describe your issue or concern in detail..."
-                    />
-                  </div>
+                // Determine the reason for disabling
+                const hasPendingTicket =
+                  !canCreateTicket && remainingRequests > 0;
+                const exceededLimit =
+                  !canCreateTicket && remainingRequests === 0;
 
-                  <MediumBtn
-                    text="Create Ticket"
-                    color="darkblue"
-                    loading={mutation.isPending}
-                    loadingText="Creating Ticket..."
-                    type="submit"
-                    className="w-full"
-                  />
-                </Form>
-              )}
+                return (
+                  <Form className="space-y-6">
+                    {/* Subject Dropdown */}
+                    <div>
+                      <label
+                        htmlFor="subject"
+                        className="block text-sm font-semibold text-gray-700 mb-2"
+                      >
+                        Subject
+                      </label>
+                      <Field
+                        as="select"
+                        name="subject"
+                        disabled={!canCreateTicket}
+                        className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-none transition-all duration-200 ${
+                          !canCreateTicket
+                            ? "border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed"
+                            : "border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent"
+                        }`}
+                      >
+                        <option value="">Select a subject</option>
+                        {supportSubjects.map((subject, index) => (
+                          <option key={index} value={subject}>
+                            {subject}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage
+                        name="subject"
+                        component="div"
+                        className="text-xs text-red-500"
+                      />
+                    </div>
+
+                    {/* Message Box */}
+                    <div>
+                      <WordCountTextarea
+                        name="message"
+                        label="Message"
+                        value={values.message}
+                        onChange={(text) => setFieldValue("message", text)}
+                        maxWords={50}
+                        rows={4}
+                        placeholder={
+                          hasPendingTicket
+                            ? "You have a pending ticket. Please wait for a response before creating a new one."
+                            : exceededLimit
+                            ? "Daily limit reached. Please try again tomorrow."
+                            : remainingRequests <= 3 && remainingRequests > 0
+                            ? `You have ${remainingRequests} requests remaining today.`
+                            : "Describe your issue or concern in detail..."
+                        }
+                        disabled={!canCreateTicket}
+                      />
+                    </div>
+
+                    <MediumBtn
+                      text={
+                        hasPendingTicket
+                          ? "Pending Ticket"
+                          : exceededLimit
+                          ? "Daily Limit Reached"
+                          : remainingRequests <= 3 && remainingRequests > 0
+                          ? "Create Ticket"
+                          : "Create Ticket"
+                      }
+                      color={!canCreateTicket ? "gray" : "darkblue"}
+                      loading={mutation.isPending}
+                      loadingText="Creating Ticket..."
+                      type="submit"
+                      disabled={!canCreateTicket}
+                      className="w-full"
+                    />
+                  </Form>
+                );
+              }}
             </Formik>
           </div>
 

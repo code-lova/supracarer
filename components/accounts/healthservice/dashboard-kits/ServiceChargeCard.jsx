@@ -30,7 +30,7 @@ const ServiceChargeCard = () => {
   // Error state
   if (error) {
     return (
-      <div className="bg-white w-full h-[100px] border-2 rounded-2xl shadow-md px-3 py-1">
+      <div className="bg-white w-full h-[100px] overflow-y-auto border-2 rounded-2xl shadow-md px-3 py-1">
         <div className="h-full flex items-center justify-center">
           <ErrorState
             title="Failed to load rate"
@@ -51,14 +51,15 @@ const ServiceChargeCard = () => {
   // Empty state - no guided rate set
   if (!grsData) {
     return (
-      <div className="bg-white w-full h-[100px] border-2 rounded-2xl shadow-md px-3 py-1">
-        <div className="h-full flex items-center justify-center">
-          <EmptyState
-            title="No rate set"
-            description="Configure your guided rate system to start earning"
-            icon={FaCog}
-            size="sm"
-          />
+      <div className="bg-white w-full h-[100px] overflow-y-auto border-2 rounded-2xl shadow-md px-3 py-1">
+        <div className="h-full flex items-center justify-between gap-2">
+          <FaCog className="text-tranquil-teal text-4xl lg:text-6xl" />
+          <div className="text-center text-slate-gray">
+            <h3 className="text-sm font-semibold mb-2">GRS Not Set</h3>
+            <p className="font-medium text-xs">
+              Configure your guided rate system to start earning
+            </p>
+          </div>
         </div>
       </div>
     );

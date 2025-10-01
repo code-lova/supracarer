@@ -9,10 +9,15 @@ import { clientProfileSchema } from "@schema/client/profile";
 import toast from "react-hot-toast";
 import { MediumBtn } from "@components/core/button";
 import { updateUserLocation } from "@service/request/user/updateUserLocation";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaHouseUser } from "react-icons/fa";
 import { uploadToCloudinary } from "@utils/uploadToCloudinary";
 import { updateUserImage } from "@service/request/user/updateUserImage";
 import { validateImageFile } from "@utils/validateImageFile";
+import {
+  getLocationFromIP,
+  geocodeAddress,
+  getCurrentLocation,
+} from "@utils/locationUtils";
 import Age from "@components/core/Age";
 import TimeAgo from "@components/core/TimeAgo";
 import WordCountTextarea from "@components/core/WordCountTextarea";
@@ -21,6 +26,8 @@ const Profile = () => {
   const { user, refetchUser } = useUserContext();
   const userDetails = user?.data;
   const [consentGiven, setConsentGiven] = useState(false);
+  const [showLocationOptions, setShowLocationOptions] = useState(false);
+  const [manualAddress, setManualAddress] = useState("");
 
   // Check if user has location data and update consentGiven state
   React.useEffect(() => {
@@ -72,28 +79,48 @@ const Profile = () => {
   const locationMutation = useMutation({
     mutationFn: updateUserLocation,
     onSuccess: () => {
-      toast.success("Location set successfully");
       setConsentGiven(true);
       refetchUser();
     },
     onError: () => toast.error("Failed to update location"),
   });
 
+  // Handle GPS location with automatic IP fallback
   const handleLocationPermission = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const coords = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
-          locationMutation.mutate(coords);
-        },
-        (error) => {
-          console.error("Location access denied or error:", error);
-          toast.error("Location access denied");
-        }
-      );
+    getCurrentLocation(
+      // On GPS success
+      (coords) => {
+        locationMutation.mutate(coords);
+        toast.success("Location set successfully using GPS");
+      },
+      // IP fallback function
+      handleIPLocation
+    );
+  };
+
+  // Handle IP-based location
+  const handleIPLocation = async () => {
+    const result = await getLocationFromIP();
+    if (result.success) {
+      locationMutation.mutate(result.coords);
+      toast.success("IP geolocation set successfully");
+      setShowLocationOptions(false);
+    } else {
+      toast.error(result.error);
+      setShowLocationOptions(true);
+    }
+  };
+
+  // Handle manual address entry
+  const handleManualLocation = async (address) => {
+    const result = await geocodeAddress(address);
+    if (result.success) {
+      locationMutation.mutate(result.coords);
+      toast.success("Location set successfully manually");
+      setShowLocationOptions(false);
+      setManualAddress("");
+    } else {
+      toast.error(result.error);
     }
   };
 
@@ -103,6 +130,13 @@ const Profile = () => {
     onSuccess: () => {
       toast.success("Profile Update Successfully");
       refetchUser();
+      const isFirstTimeLogin = localStorage.getItem("firstTimeLogin");
+      if (isFirstTimeLogin === "true") {
+        localStorage.setItem("firstTimeLogin", "false");
+        toast.success("Profile updated successfully! You're all set.", {
+          duration: 3000,
+        });
+      }
     },
     onError: (err) => {
       toast.error(err.message || "An error occurred while updating profile.");
@@ -115,6 +149,22 @@ const Profile = () => {
   return (
     <>
       <div className="pageContent">
+        {/* Header Section */}
+        <div className="mb-8 mt-3">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-haven-blue to-carer-blue rounded-xl flex items-center justify-center shadow-lg">
+              <FaHouseUser className="text-white text-xl" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">
+                Profile Setup
+              </h1>
+              <p className="text-gray-600 text-sm">
+                Configure your profile setting to get matched with a patient
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
           {/* Left Column (1/3) */}
           <div className="space-y-2">
@@ -223,20 +273,66 @@ const Profile = () => {
 
           {/* Right Column (2/3) */}
           <div className="lg:col-span-2 ">
-            <div className="bg-gray-50 shadow-lg rounded-xl p-6 h-[698px] overflow-y-auto">
+            <div className="bg-gray-50 shadow-lg rounded-xl p-6 h-[90vh] overflow-y-auto">
               <h4 className="text-lg font-bold text-dark-blue mb-6">
                 Update Profile Information
               </h4>
               {!consentGiven && (
-                <div className="mb-4 bg-yellow-100 p-3 rounded">
-                  <p className="text-sm text-yellow-700 mb-6">
-                    📍 To improve your match experience, allow location access.
+                <div className="mb-4 bg-yellow-100 p-4 rounded-lg">
+                  <p className="text-sm text-yellow-700 mb-4">
+                    📍 To improve your match experience, we need your location.
                   </p>
-                  <MediumBtn
-                    onClick={handleLocationPermission}
-                    text="Allow Location"
-                    color="carerBlue"
-                  />
+
+                  <div className="space-y-3">
+                    <MediumBtn
+                      onClick={handleLocationPermission}
+                      text="Allow Location Access"
+                      color="carerBlue"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowLocationOptions(!showLocationOptions)
+                      }
+                      className="block w-full px-4 py-2 text-sm text-gray-600 hover:text-gray-800 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
+                    >
+                      {showLocationOptions ? "Hide" : "Enter"} Location Manually
+                    </button>
+                  </div>
+
+                  {showLocationOptions && (
+                    <div className="mt-4">
+                      <div className="p-3 bg-white rounded border">
+                        <h5 className="font-medium mb-2">Enter Your Address</h5>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            placeholder="Enter your city, region, or full address"
+                            value={manualAddress}
+                            onChange={(e) => setManualAddress(e.target.value)}
+                            className="flex-1 px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onKeyPress={(e) => {
+                              if (e.key === "Enter") {
+                                handleManualLocation(manualAddress);
+                              }
+                            }}
+                          />
+                          <button
+                            onClick={() => handleManualLocation(manualAddress)}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={!manualAddress.trim()}
+                          >
+                            Set Location
+                          </button>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-2">
+                          Example: "Accra, Ghana" or "Kumasi Central, Ashanti
+                          Region"
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 

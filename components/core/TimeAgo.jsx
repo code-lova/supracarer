@@ -61,7 +61,7 @@ const TimeAgo = ({ timestamp, format = "date-fns" }) => {
     timeAgo = "Invalid date";
   }
 
-  return <span>{timeAgo}</span>;
+  return <span className="text-xs">{timeAgo}</span>;
 };
 
 export default TimeAgo;
