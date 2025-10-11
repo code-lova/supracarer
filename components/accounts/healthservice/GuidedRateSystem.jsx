@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import { FaDoorOpen } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import GrsLoaderSkeleton from "@components/core/skeleton/grs/GrsLoaderSkeleton";
+import WordCountTextarea from "@components/core/WordCountTextarea";
 
 const GuidedRateSystem = () => {
   const { user, refetchUser } = useUserContext();
@@ -75,15 +76,21 @@ const GuidedRateSystem = () => {
             <FaDoorOpen className="text-white text-xl" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Guided Rate System</h1>
-            <p className="text-gray-600 text-sm">Configure your service rates and preferences</p>
+            <h1 className="text-2xl font-bold text-gray-800">
+              Guided Rate System
+            </h1>
+            <p className="text-gray-600 text-sm">
+              Configure your service rates and preferences
+            </p>
           </div>
         </div>
         <div className="flex items-center bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 rounded-xl p-4 shadow-sm">
           <div className="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center mr-3">
             <span className="text-white font-bold text-sm">!</span>
           </div>
-          <span className="text-yellow-800 font-medium">Platform fee of 20% will be deducted from your set rate</span>
+          <span className="text-yellow-800 font-medium">
+            Platform fee of 20% will be deducted from your set rate
+          </span>
         </div>
       </div>
 
@@ -99,7 +106,8 @@ const GuidedRateSystem = () => {
                 Rate Overview
               </h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                View and manage your current guided rate settings for health services
+                View and manage your current guided rate settings for health
+                services
               </p>
             </div>
           </div>
@@ -164,7 +172,9 @@ const GuidedRateSystem = () => {
                     </div>
                   </div>
                   <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                    <span className="font-medium text-gray-700 text-sm">Duration</span>
+                    <span className="font-medium text-gray-700 text-sm">
+                      Duration
+                    </span>
                     <span className="font-semibold text-tranquil-teal text-sm bg-tranquil-teal/10 px-3 py-1 rounded-lg">
                       {grsData.grs.care_duration}
                     </span>
@@ -185,7 +195,9 @@ const GuidedRateSystem = () => {
                           </span>
                         ))
                       ) : (
-                        <span className="text-gray-400 italic text-sm">No services selected</span>
+                        <span className="text-gray-400 italic text-sm">
+                          No services selected
+                        </span>
                       )}
                     </div>
                   </div>
@@ -206,8 +218,12 @@ const GuidedRateSystem = () => {
                 <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
                   <FaUserDoctor className="text-gray-400 text-xl" />
                 </div>
-                <p className="text-gray-500 font-medium">No guided rate set yet</p>
-                <p className="text-gray-400 text-sm mt-1">Configure your rate using the form</p>
+                <p className="text-gray-500 font-medium">
+                  No guided rate set yet
+                </p>
+                <p className="text-gray-400 text-sm mt-1">
+                  Configure your rate using the form
+                </p>
               </div>
             )}
           </div>
@@ -223,7 +239,9 @@ const GuidedRateSystem = () => {
                 <h2 className="text-xl font-bold text-gray-800">
                   Configure Rate Settings
                 </h2>
-                <p className="text-gray-600 text-sm">Set your service rates and preferences</p>
+                <p className="text-gray-600 text-sm">
+                  Set your service rates and preferences
+                </p>
               </div>
             </div>
           </div>
@@ -250,8 +268,12 @@ const GuidedRateSystem = () => {
                     hourRateServiceOptions[nurseType] || []
                   ).filter((opt) => values.service_types.includes(opt.name));
                   if (selectedOptions.length > 1) {
-                    minRate = Math.min(...selectedOptions.map((opt) => opt.min));
-                    maxRate = Math.max(...selectedOptions.map((opt) => opt.max));
+                    minRate = Math.min(
+                      ...selectedOptions.map((opt) => opt.min)
+                    );
+                    maxRate = Math.max(
+                      ...selectedOptions.map((opt) => opt.max)
+                    );
                   } else if (selectedOptions.length === 1) {
                     minRate = selectedOptions[0].min;
                     maxRate = selectedOptions[0].max;
@@ -416,7 +438,10 @@ const GuidedRateSystem = () => {
                                           (s) => s !== service
                                         )
                                       : [...values.service_types, service];
-                                    setFieldValue("service_types", newSelection);
+                                    setFieldValue(
+                                      "service_types",
+                                      newSelection
+                                    );
                                   }}
                                 >
                                   {service}
@@ -445,7 +470,8 @@ const GuidedRateSystem = () => {
                               </label>
                               <div className="grid grid-cols-2 gap-3">
                                 {(
-                                  hourRateServiceOptions[values.nurse_type] || []
+                                  hourRateServiceOptions[values.nurse_type] ||
+                                  []
                                 ).map((option) => (
                                   <div
                                     key={option.name}
@@ -460,7 +486,9 @@ const GuidedRateSystem = () => {
                                         option.name
                                       );
                                       const updated = exists
-                                        ? current.filter((s) => s !== option.name)
+                                        ? current.filter(
+                                            (s) => s !== option.name
+                                          )
                                         : [...current, option.name];
                                       setFieldValue("service_types", updated);
                                     }}
@@ -499,7 +527,9 @@ const GuidedRateSystem = () => {
                                         option.name
                                       );
                                       const updated = exists
-                                        ? current.filter((s) => s !== option.name)
+                                        ? current.filter(
+                                            (s) => s !== option.name
+                                          )
                                         : [...current, option.name];
                                       setFieldValue("service_types", updated);
                                     }}
@@ -563,7 +593,15 @@ const GuidedRateSystem = () => {
                               }
                               className="w-full h-3 bg-gradient-to-r from-tranquil-teal/20 to-custom-green/20 rounded-lg appearance-none cursor-pointer slider"
                               style={{
-                                background: `linear-gradient(to right, #088272 0%, #088272 ${((values.guided_rate - minRate) / (maxRate - minRate)) * 100}%, #e5e7eb ${((values.guided_rate - minRate) / (maxRate - minRate)) * 100}%, #e5e7eb 100%)`
+                                background: `linear-gradient(to right, #088272 0%, #088272 ${
+                                  ((values.guided_rate - minRate) /
+                                    (maxRate - minRate)) *
+                                  100
+                                }%, #e5e7eb ${
+                                  ((values.guided_rate - minRate) /
+                                    (maxRate - minRate)) *
+                                  100
+                                }%, #e5e7eb 100%)`,
                               }}
                             />
                           </div>
@@ -582,15 +620,16 @@ const GuidedRateSystem = () => {
 
                     {/* Justification */}
                     <div className="bg-gray-50 rounded-xl p-5 border border-gray-200">
-                      <label className="block text-sm font-semibold text-gray-800 mb-3">
-                        Rate Justification (Optional)
-                      </label>
-                      <Field
-                        as="textarea"
+                      <WordCountTextarea
                         name="guided_rate_justification"
-                        rows={3}
+                        label="Rate Justification (Optional)"
+                        value={values.guided_rate_justification}
+                        onChange={(text) =>
+                          setFieldValue("guided_rate_justification", text)
+                        }
+                        maxWords={50}
+                        rows={4}
                         placeholder="Briefly explain why you choose this rate..."
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 resize-none bg-white"
                       />
                     </div>
 
