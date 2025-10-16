@@ -374,7 +374,7 @@ const Nurses = () => {
             <p className="text-lg text-gray-600 mb-6">
               Ready to start your journey?
             </p>
-            <NormalBtn href="/signup" children="Join Our Team Today" />
+            <NormalBtn href="/signup">Join Our Team Today</NormalBtn>
           </div>
         </div>
       </div>
