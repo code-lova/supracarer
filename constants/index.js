@@ -6,6 +6,7 @@ import {
   FaShieldAlt,
   FaStar,
   FaUsers,
+  FaUserPlus,
   FaUser,
   FaLightbulb,
   FaHandshake,
@@ -282,36 +283,47 @@ export const keyBenefits = [
   },
 ];
 
-export const howItWorks = [
+
+export const howItWorkSteps = [
   {
-    id: "Step 1",
-    name: "User Registration and Profile Setup:",
+    id: 1,
+    title: "User Registration",
     description:
-      "Clients and caregivers register on the app and set up their profiles, including location, health needs, and expertise.",
+      "Create your account in minutes. Sign up as a client seeking care or as a healthcare professional ready to provide services.",
+    icon: FaUserPlus,
+    color: "tranquil-teal",
   },
   {
-    id: "Step 2",
-    name: "Service Request Initiation:",
+    id: 2,
+    title: "Service Request",
     description:
-      "Clients initiate a service request by inputting their location, specific needs, and urgency level.",
+      "Clients initiate a service request by inputting their location, specific healthcare needs, and urgency level for immediate matching.",
+    icon: FaClipboardList,
+    color: "custom-green",
   },
   {
-    id: "Step 3",
-    name: "Matching Process:",
+    id: 3,
+    title: "Smart Matching",
     description:
-      "Supracarer matches the client with the most suitable caregiver based on proximity, expertise, and availability.",
+      "Clients are matched with the best healthcare professionals by location, expertise, and availability.",
+    icon: FaHandshake,
+    color: "haven-blue",
   },
   {
-    id: "Step 4",
-    name: "Notification and Confirmation:",
+    id: 4,
+    title: "Notification",
     description:
-      "Both the client and the caregiver receive notifications about the match. The caregiver confirms the appointment.",
+      "Both client and healthcare worker get instant appointment notifications; the healthcare worker confirms availability.",
+    icon: FaBell,
+    color: "carer-blue",
   },
   {
-    id: "Step 5",
-    name: "Care Delivery and Feedback:",
+    id: 5,
+    title: "Care & Feedback",
     description:
-      "The caregiver provides the required care, and both parties can leave feedback in the app to improve future matching and service quality.",
+      "Healthcare workers deliver exceptional care. After each service, both parties can leave feedback to help improve our platform.",
+    icon: FaHeart,
+    color: "custom-green",
   },
 ];
 
