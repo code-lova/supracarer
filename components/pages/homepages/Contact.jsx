@@ -1,6 +1,5 @@
 import React from "react";
 import Footer from "@components/landing/Footer";
-import Image from "next/image";
 import FeatureBg from "../FeatureBg";
 import ContactUs from "@components/landing/ContactUs";
 import Subscription from "@components/landing/Subscription";
