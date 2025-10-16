@@ -6,6 +6,7 @@ export const showNavbarPaths = [
   "/features",
   "/how-it-works",
   "/blog",
+  "/for-nurses",
   "/services",
   "/faq",
 ];

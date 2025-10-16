@@ -19,7 +19,19 @@ import {
   FaInfoCircle,
   FaBalanceScale,
   FaBell,
+  FaHeart,
+  FaCalendarAlt,
+  FaDollarSign,
+  FaGraduationCap,
+  FaClock,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaCheckCircle,
+  FaUserMd,
+  FaClipboardCheck,
+  FaBriefcaseMedical,
 } from "react-icons/fa";
+import { MdSupportAgent, MdVerified } from "react-icons/md";
 import {
   FiMail,
   FiUsers,
@@ -73,9 +85,9 @@ export const navLinks = [
     title: "How it works",
   },
   {
-    id: "blog",
-    link: "/blog",
-    title: "Blog",
+    id: "nurses",
+    link: "/for-nurses",
+    title: "Nurses",
   },
   {
     id: "contact",
@@ -1072,4 +1084,153 @@ export const monthNames = [
   "October",
   "November",
   "December",
+];
+
+//For nurses page
+
+export const benefits = [
+  {
+    icon: FaCalendarAlt,
+    title: "Flexible Scheduling",
+    description:
+      "Choose your own hours and work when it suits your lifestyle. Full control over your schedule.",
+    color: "tranquil-teal",
+    available: true,
+  },
+  {
+    icon: FaDollarSign,
+    title: "Competitive Pay",
+    description:
+      "Earn competitive rates with immediate payment requests. Get paid right after completing each session - no waiting for weekly payouts.",
+    color: "custom-green",
+    available: true,
+  },
+  {
+    icon: FaShieldAlt,
+    title: "Insurance & Protection",
+    description:
+      "Comprehensive insurance coverage and professional liability protection for peace of mind.",
+    color: "tranquil-teal",
+    available: true,
+  },
+  {
+    icon: MdSupportAgent,
+    title: "24/7 Support",
+    description:
+      "Round-the-clock support team available to help you with any questions or concerns.",
+    color: "haven-blue",
+    available: true,
+  },
+  {
+    icon: FaGraduationCap,
+    title: "Professional Development",
+    description:
+      "Access training programs, certifications, and continuous learning opportunities. (Coming Soon)",
+    color: "carer-blue",
+    available: false,
+  },
+  {
+    icon: FaUsers,
+    title: "Supportive Community",
+    description:
+      "Join a network of healthcare professionals to share experiences and learn from each other. (Coming Soon)",
+    color: "custom-green",
+    available: false,
+  },
+];
+
+export const requirements = [
+  {
+    icon: FaUserMd,
+    title: "Valid Nursing License",
+    description: "Current RN or LPN license in good standing",
+  },
+  {
+    icon: FaGraduationCap,
+    title: "Education",
+    description: "Nursing degree from an accredited institution",
+  },
+  {
+    icon: FaClock,
+    title: "Experience",
+    description: "Minimum 1 year of clinical experience preferred",
+  },
+  {
+    icon: FaCheckCircle,
+    title: "Background Check",
+    description: "Clean background check and drug screening",
+  },
+];
+
+export const applicationSteps = [
+  {
+    step: "01",
+    title: "Create Your Profile",
+    description:
+      "Sign up and complete your professional profile with your credentials and experience.",
+    icon: FaClipboardCheck,
+    available: true,
+  },
+  {
+    step: "02",
+    title: "Document Verification",
+    description:
+      "Submit your nursing license, certifications, and complete background check. (Coming Soon)",
+    icon: MdVerified,
+    available: false,
+  },
+  {
+    step: "03",
+    title: "Orientation",
+    description:
+      "Complete our online orientation program and learn about our platform and processes. (Coming Soon)",
+    icon: FaGraduationCap,
+    available: false,
+  },
+  {
+    step: "04",
+    title: "Start Working",
+    description:
+      "Get notified for new appointments, accept offers, and start making a difference in patients' lives.",
+    icon: FaBriefcaseMedical,
+    available: true,
+  },
+];
+
+export const dayInLife = [
+  {
+    time: "Step 1",
+    activity:
+      "Receive email notification for new appointment with all details (appointment time, patient info, care requirements)",
+    icon: FaPhone,
+    color: "tranquil-teal",
+  },
+  {
+    time: "Step 2",
+    activity:
+      "Log in to your dashboard and review the appointment details. Accept or decline based on your availability",
+    icon: FaCalendarAlt,
+    color: "haven-blue",
+  },
+  {
+    time: "Step 3",
+    activity:
+      "Arrive at client's home at the scheduled appointment time, ready to provide quality care",
+    icon: FaMapMarkerAlt,
+    color: "custom-green",
+  },
+  {
+    time: "Step 4",
+    activity:
+      "Provide the required home care services: medication management, health monitoring, personal care, companionship",
+    icon: FaHeart,
+    color: "carer-blue",
+  },
+  {
+    time: "Step 5",
+    activity:
+      "Complete appointment, request review from patient to confirm care service for confirmation",
+    icon: FaCheckCircle,
+    color: "tranquil-teal",
+  },
 ];
