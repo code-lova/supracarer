@@ -10,6 +10,7 @@ import {
   FaLightbulb,
   FaHandshake,
   FaHome,
+  FaEnvelope,
   FaUserFriends,
   FaUserEdit,
   FaHeadset,
@@ -30,6 +31,8 @@ import {
   FaUserMd,
   FaClipboardCheck,
   FaBriefcaseMedical,
+  FaSmile,
+  FaLifeRing,
 } from "react-icons/fa";
 import { MdSupportAgent, MdVerified } from "react-icons/md";
 import {
@@ -688,45 +691,51 @@ export const abtWhatWeOffer = [
   },
 ];
 
-export const contactDetails = [
+export const contactInfo = [
   {
     id: 1,
-    title: "Phone: ",
-    details: "(+233)-54-914-8087",
-    icon: (
-      <Image
-        src="/assets/icons/icons8-phone-48.png"
-        width={40}
-        height={40}
-        alt="phone"
-      />
-    ),
+    icon: FaPhone,
+    title: "Phone",
+    detail: "(+233) 54-914-8087",
+    description: "Mon-Fri from 8am to 5pm",
+    color: "tranquil-teal",
   },
   {
     id: 2,
-    title: "Email: ",
-    details: "info@supracarer.com",
-    icon: (
-      <Image
-        src="/assets/icons/icons8-envelope-48.png"
-        width={40}
-        height={40}
-        alt="email"
-      />
-    ),
+    icon: FaEnvelope,
+    title: "Email",
+    detail: "info@supracarer.com",
+    description: "We'll respond within 24 hours",
+    color: "custom-green",
   },
   {
     id: 3,
-    title: "Address: ",
-    details: "ALX Ghana One Airport Square, Accra.",
-    icon: (
-      <Image
-        src="/assets/icons/icons8-place-marker-50.png"
-        width={40}
-        height={40}
-        alt="address"
-      />
-    ),
+    icon: FaMapMarkerAlt,
+    title: "Office",
+    detail: "ALX Ghana One Airport Square",
+    description: "Accra, Ghana",
+    color: "haven-blue",
+  },
+];
+
+export const contactStats = [
+  {
+    number: "24hrs",
+    label: "Response Time",
+    icon: FaClock,
+    color: "tranquil-teal",
+  },
+  {
+    number: "100%",
+    label: "Satisfaction Rate",
+    icon: FaSmile,
+    color: "custom-green",
+  },
+  {
+    number: "24/7",
+    label: "Support Available",
+    icon: FaLifeRing,
+    color: "haven-blue",
   },
 ];
 
