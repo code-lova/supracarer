@@ -15,7 +15,7 @@ const Faq = () => {
   const generalFaqs = faqs.filter((faq) => faq.role === "general").slice(0, 3);
 
   return (
-    <div className="ml-4 mb-12 bg-gradient-to-r from-transparent to-gray-200 py-20">
+    <div className="ml-4 mb-12 bg-white">
       <h1 className="capitalize text-tranquil-teal text-base font-bold text-center">
         Frequently Asked Questions
       </h1>
