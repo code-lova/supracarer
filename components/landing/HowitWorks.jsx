@@ -1,6 +1,6 @@
 import React from "react";
-import { FaArrowRight, FaCheckCircle, FaMobileAlt } from "react-icons/fa";
-import { howItWorkSteps } from "@constants";
+import { FaArrowRight, FaMobileAlt } from "react-icons/fa";
+import { howItWorkSteps, keyBenefits } from "@constants";
 
 const HowitWorks = () => {
   return (
@@ -175,31 +175,9 @@ const HowitWorks = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: FaCheckCircle,
-                title: "Quick Matching",
-                description:
-                  "Get matched with healthcare professionals in minutes",
-                color: "tranquil-teal",
-              },
-              {
-                icon: FaCheckCircle,
-                title: "Verified Professionals",
-                description:
-                  "All healthcare workers are certified and verified",
-                color: "custom-green",
-              },
-              {
-                icon: FaCheckCircle,
-                title: "24/7 Support",
-                description:
-                  "Round-the-clock customer support for your peace of mind",
-                color: "haven-blue",
-              },
-            ].map((benefit, index) => (
+            {keyBenefits.map((benefit) => (
               <div
-                key={index}
+                key={benefit.id}
                 className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300"
               >
                 <div className="flex justify-center mb-4">
