@@ -236,53 +236,53 @@ export const features = [
 export const keyBenefits = [
   {
     id: 1,
-    title: "Personalized, All-in-One Holistic Health Solution:",
-    desc: {
-      paragraph1:
-        "Whether you're focused on physical, mental, or emotional well-being, Supracarer offers an integrated platform that addresses all aspects of your health.",
-      paragraph2:
-        "Your wellness plan is tailored to your unique goals, preferences, and lifestyle, ensuring a completely personalized experience.",
-    },
+    title: "Smart Matching System",
+    color: "tranquil-teal",
+    icon: FaUserMd,
+    description:
+      "We take the guesswork out of finding care. Our platform carefully matches families with qualified healthcare professionals based on location, expertise, and availability for optimal care.",
   },
   {
     id: 2,
-    title: "Access to Certified Practitioners from Various Health Disciplines:",
-    desc: {
-      paragraph1:
-        "Connect with trusted experts including nutritionists, mental health counselors, yoga instructors, and more, all in one place.",
-      paragraph2:
-        "Benefit from a range of specialties designed to support holistic wellness.",
-    },
+    title: "Flexible Work Opportunities",
+    color: "custom-green",
+    icon: FaCalendarAlt,
+    description:
+      "Health professionals choose their own schedule and work when it suits them, with full control over availability.",
+  },
+  {
+    id: 3,
+    title: "Instant Payment Processing",
+    color: "haven-blue",
+    icon: FaDollarSign,
+    description:
+      "Healthcare workers can request immediate payment after each session without waiting for weekly or monthly payouts.",
   },
   {
     id: 4,
-    title: "Seamless Appointment Scheduling:",
-    desc: {
-      paragraph1:
-        "Easily book appointments with certified practitioners directly through the platform. No more hassle with finding and managing multiple contacts.",
-      paragraph2: "",
-    },
+    title: "Verified & Trusted Professionals",
+    color: "carer-blue",
+    icon: MdVerified,
+    description:
+      "Families have peace of mind knowing all healthcare professionals are certified, experienced, and background-checked.",
   },
   {
     id: 5,
-    title: "Tailored Health Advice from Day One:",
-    desc: {
-      paragraph1:
-        "Supracarer starts working for you the moment you sign up by offering customized tips and insights that match your individual health profile.",
-      paragraph2: "",
-    },
+    title: "24/7 Support & Safety",
+    color: "tranquil-teal",
+    icon: FaShieldAlt,
+    description:
+      "Round-the-clock support for both families and professionals with comprehensive insurance coverage and safety protocols.",
   },
   {
     id: 6,
-    title: "Flexible and Convenient:",
-    desc: {
-      paragraph1:
-        "Manage your wellness journey on your own terms, whether you prefer mobile, desktop, or tablet. Stay connected and track your progress from anywhere.",
-      paragraph2: "",
-    },
+    title: "Easy Booking & Communication",
+    color: "custom-green",
+    icon: FaClipboardCheck,
+    description:
+      "Simple appointment scheduling, real-time notifications, and seamless communication between families and healthcare providers.",
   },
 ];
-
 
 export const howItWorkSteps = [
   {
@@ -535,23 +535,23 @@ export const faqs = [
   // Caregiver FAQs
   {
     id: 6,
-    question: "How do I join Supracarer as a caregiver?",
+    question: "How do I join Supracarer as a Health Professional?",
     answer:
-      "You can apply directly through our platform. Once you submit your credentials and pass verification, we will onboard you and start matching you with suitable clients.",
+      "You can apply directly through our platform. Once you submit your credentials and pass verification, we will onboard you and start matching you with suitable families.",
     role: "caregiver",
   },
   {
     id: 7,
     question: "Do I need specific qualifications?",
     answer:
-      "Yes. All caregivers must have professional healthcare certifications and valid IDs. We prioritize caregivers with experience in elder care, nursing, or similar fields.",
+      "Yes. All health care professionals must have professional healthcare certifications and valid IDs. We prioritize health care professionals with experience in elder care, nursing, or similar fields.",
     role: "caregiver",
   },
   {
     id: 8,
-    question: "How are caregivers matched with clients?",
+    question: "How are health care professionals matched with families?",
     answer:
-      "We use an AI-driven algorithm to match caregivers with clients based on their health conditions, preferences, and proximity. This ensures high compatibility and satisfaction.",
+      "Supracarer matches health care professionals with families based on their health conditions, preferences, and proximity. This ensures high compatibility and satisfaction.",
     role: "caregiver",
   },
   {
@@ -565,7 +565,7 @@ export const faqs = [
     id: 10,
     question: "Can I set my availability?",
     answer:
-      "Yes, caregivers can set their working hours and availability from their dashboard, giving you full control over your schedule.",
+      "Yes, health care professionals can set their working hours and availability from their dashboard, giving you full control over your schedule.",
     role: "caregiver",
   },
   // General FAQs
@@ -573,21 +573,21 @@ export const faqs = [
     id: 11,
     question: "What is Proximity-Based Matching and how does it benefit me?",
     answer:
-      "We match clients to our nurses and caregivers who are nearby. This ensures that caregivers can reach you quickly in case of emergencies, reducing travel time and costs, and providing prompt assistance.",
+      "We match families to our health care professionals who are nearby. This ensures that health care professionals can reach you quickly in case of emergencies, reducing travel time and costs, and providing prompt assistance.",
     role: "general",
   },
   {
     id: 12,
     question: "How does Needs and Expertise Matching work in Supracarer?",
     answer:
-      "Needs and Expertise Matching match you to our trusted caregivers based on their skills and your specific healthcare needs. This includes matching based on medical conditions, required skill sets, and previous experience, ensuring you receive the most suitable care.",
+      "Needs and Expertise Matching match you to our trusted health care professionals based on their skills and your specific healthcare needs. This includes matching based on medical conditions, required skill sets, and previous experience, ensuring you receive the most suitable care.",
     role: "general",
   },
   {
     id: 13,
     question: "What is Dynamic Availability and Urgency Matching?",
     answer:
-      "Dynamic Availability and Urgency Matching constantly updates caregivers availability and matches them with you based on the urgency of care required. It prioritizes urgent needs, ensuring that caregivers are assigned to clients who need immediate attention.",
+      "Dynamic Availability and Urgency Matching constantly updates health care professionals availability and matches them with you based on the urgency of care required. It prioritizes urgent needs, ensuring that health care professionals are assigned to families who need immediate attention.",
     role: "general",
   },
 ];
