@@ -34,7 +34,23 @@ import {
   FaBriefcaseMedical,
   FaSmile,
   FaLifeRing,
+  FaPills,
+  FaBath,
+  FaWalking,
+  FaHeartbeat,
+  FaUserNurse,
+  FaStethoscope,
+  FaPrescriptionBottle,
+  FaThermometerHalf,
+  FaBed,
+  FaChartLine,
+  FaMobileAlt,
 } from "react-icons/fa";
+import {
+  FaHandHoldingHand,
+  FaHandHoldingHeart,
+  FaHandHoldingMedical,
+} from "react-icons/fa6";
 import { MdSupportAgent, MdVerified } from "react-icons/md";
 import {
   FiMail,
@@ -52,7 +68,6 @@ import {
   Twitter,
   FacebookRect,
 } from "@components/core/icon/socials";
-import Image from "next/image";
 
 export const navLinks = [
   {
@@ -75,6 +90,24 @@ export const navLinks = [
         title: "Our Values",
         link: "/values",
         icon: <FaBalanceScale />,
+      },
+      {
+        id: "elderly",
+        title: "For the elderly",
+        link: "/for-elderly",
+        icon: <FaHandHoldingHand />,
+      },
+      {
+        id: "sick",
+        title: "For the Sick",
+        link: "/for-the-sick",
+        icon: <FaHandHoldingHeart />,
+      },
+      {
+        id: "health professionals",
+        title: "For Health Care",
+        link: "/for-health-professionals",
+        icon: <FaHandHoldingMedical />,
       },
     ],
   },
@@ -327,29 +360,6 @@ export const howItWorkSteps = [
   },
 ];
 
-export const aboutUs = [
-  {
-    id: "1",
-    statement:
-      "A homecare app that easily connects families with qualified home care healthcare professionals, ensuring a simple and efficient process. ",
-  },
-  {
-    id: "2",
-    statement:
-      "We are dedicated to helping individuals and families find trusted, compassionate caregivers and nurses who provide high-quality support tailored to their specific needs.",
-  },
-  {
-    id: "3",
-    statement:
-      "We offer round-the-clock services, with our customer support team available whenever you need assistance.",
-  },
-  {
-    id: "4",
-    statement:
-      "At Supracarer, we recognise the critical need for personalized healthcare in the home environment.",
-  },
-];
-
 export const mission = [
   {
     title: "Our Mission",
@@ -371,31 +381,43 @@ export const team = [
     id: "1",
     image: "/assets/images/founder.webp",
     name: "Kwabena Owusu",
-    position: "Founder",
+    position: "Founder/C.E.O",
+    linkedin: "https://linkedin.com/in/kwabenaowusu",
   },
   {
     id: "2",
-    image: "/assets/images/co-founder.webp",
+    image: "/assets/images/cto-founder.webp",
     name: "Jeremiah Ebizo",
-    position: "Co-Founder/CTO",
+    position: "Co-Founder/Tech Lead",
+    linkedin: "https://www.linkedin.com/in/jeremiah-ebizo/",
   },
   {
     id: "3",
-    image: "/assets/images/founders-adviser.webp",
-    name: "Mawuena Abena Dossah",
-    position: "Founder's Advisor",
-  },
-  {
-    id: "4",
-    image: "/assets/images/head-of-finance.webp",
-    name: "Nancy Pepprah",
-    position: "Head of Finance",
-  },
-  {
-    id: "5",
     image: "/assets/images/brand-designer.webp",
     name: "Joshua Acquah Addo",
     position: "Brand Designer",
+    linkedin: "https://www.linkedin.com/in/joshua-acquah-addo",
+  },
+  {
+    id: "4",
+    image: "/assets/images/strategic_financial_advisor.webp",
+    name: "Deborah Williams Ibidapo",
+    position: "Strategic & Financial Advisor",
+    linkedin: "",
+  },
+  {
+    id: "5",
+    image: "/assets/images/operation_content_lead.webp",
+    name: "Maryam Said Boakye",
+    position: "Operations & Content Lead",
+    linkedin: "https://www.linkedin.com/in/maryam-said-boakye",
+  },
+  {
+    id: "6",
+    image: "/assets/images/ai_consultant.webp",
+    name: "Sceptre Onyewuchi",
+    position: "AI Consultant",
+    linkedin: "https://www.linkedin.com/in/stanley-onyewuchi",
   },
 ];
 
@@ -668,7 +690,8 @@ export const abtWhatWeOffer = [
   {
     id: 1,
     name: "For The Elderly",
-    image: "/assets/images/02.webp",
+    image: "/assets/images/002.webp",
+    link: "/for-elderly",
     icon: (
       <Elderly
         color="#006838"
@@ -681,6 +704,7 @@ export const abtWhatWeOffer = [
     id: 2,
     name: "For The Sick",
     image: "/assets/images/10500.webp",
+    link: "/for-the-sick",
     icon: (
       <Nurse
         color="#006838"
@@ -691,15 +715,16 @@ export const abtWhatWeOffer = [
   },
   {
     id: 3,
-    name: "For Nurses and Caregivers",
-    image: "/assets/images/nurses.webp",
+    name: "For Health Care Professionals",
+    image: "/assets/images/group_nurse.webp",
+    link: "/for-health-professionals",
     icon: (
       <Doctor
         color="#006838"
         className="w-12 h-12 transition-all duration-300"
       />
     ),
-    text: "Connect with families in need and ​get full paying job offers that meet ​your field of studies.",
+    text: "Connect with families in need and ​get full paying job offers.",
   },
 ];
 
@@ -1107,7 +1132,7 @@ export const monthNames = [
   "December",
 ];
 
-//For nurses page
+//For nurses page and others
 
 export const benefits = [
   {
@@ -1127,10 +1152,10 @@ export const benefits = [
     available: true,
   },
   {
-    icon: FaShieldAlt,
-    title: "Insurance & Protection",
+    icon: FaHandshake,
+    title: "Home Care (Contract)",
     description:
-      "Comprehensive insurance coverage and professional liability protection for peace of mind.",
+      "Home care services are provided on a contract basis with clear terms, agreed schedules, and liability coverage.",
     color: "tranquil-teal",
     available: true,
   },
@@ -1164,22 +1189,42 @@ export const requirements = [
   {
     icon: FaUserMd,
     title: "Valid Nursing License",
-    description: "Current RN or LPN license in good standing",
+    description: "Current NMC license in good standing",
   },
   {
     icon: FaGraduationCap,
     title: "Education",
-    description: "Nursing degree from an accredited institution",
+    description: "Nursing Certificate, Diploma or Degree from an accredited institution",
   },
   {
     icon: FaClock,
     title: "Experience",
     description: "Minimum 1 year of clinical experience preferred",
   },
+];
+
+export const nurseAppFeatures = [
   {
-    icon: FaCheckCircle,
-    title: "Background Check",
-    description: "Clean background check and drug screening",
+    icon: FaMobileAlt,
+    title: "Easy-to-Use App",
+    description:
+      "Manage appointments, payments, and client communication in one place",
+  },
+  {
+    icon: FaChartLine,
+    title: "Track Your Ratings",
+    description:
+      "Real-time tracking in dashboard to see star ratings and feedback",
+  },
+  {
+    icon: FaHandshake,
+    title: "Direct Client Connection",
+    description: "Build meaningful relationships with families you serve",
+  },
+  {
+    icon: FaClock,
+    title: "Instant Notifications",
+    description: "Get notified immediately about new appointment requests",
   },
 ];
 
@@ -1253,5 +1298,205 @@ export const dayInLife = [
       "Complete appointment, request review from patient to confirm care service for confirmation",
     icon: FaCheckCircle,
     color: "tranquil-teal",
+  },
+];
+
+export const whatDrivesUs = [
+  {
+    icon: FaHeart,
+    title: "Compassion",
+    description:
+      "We care deeply about the wellbeing of families and healthcare professionals alike",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaShieldAlt,
+    title: "Trust & Safety",
+    description:
+      "Verified professionals and secure processes for peace of mind",
+    color: "custom-green",
+  },
+  {
+    icon: FaHandsHelping,
+    title: "Community",
+    description:
+      "Building meaningful connections between families and caregivers",
+    color: "haven-blue",
+  },
+];
+
+export const simpleProcessForElderly = [
+  {
+    step: "01",
+    title: "Tell Us Your Needs",
+    description:
+      "Share information about your loved one's care requirements and schedule preferences",
+  },
+  {
+    step: "02",
+    title: "Get Matched",
+    description:
+      "We connect you with qualified health care professionals who match your specific needs and location",
+  },
+  {
+    step: "03",
+    title: "Start Care",
+    description:
+      "Begin receiving compassionate, professional care in the comfort of home",
+  },
+];
+
+export const elderlyBenefits = [
+  {
+    icon: FaHeart,
+    title: "Compassionate Care",
+    description:
+      "Dedicated health care professionals who treat your loved ones with dignity, respect, and genuine compassion.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaHome,
+    title: "Comfort of Home",
+    description:
+      "Allow your elderly family members to age gracefully in the familiar comfort of their own home.",
+    color: "custom-green",
+  },
+  {
+    icon: FaUserMd,
+    title: "Professional Expertise",
+    description:
+      "Qualified nurses with specialized training in elderly care and medical support.",
+    color: "haven-blue",
+  },
+  {
+    icon: FaClock,
+    title: "Flexible Scheduling",
+    description:
+      "Choose from hourly, daily, or live-in care options that fit your family's needs and budget.",
+    color: "carer-blue",
+  },
+  {
+    icon: FaShieldAlt,
+    title: "Safety & Security",
+    description:
+      "Background-checked professionals and 24/7 monitoring for complete peace of mind.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaHandHoldingHeart,
+    title: "Family Support",
+    description:
+      "Regular updates and communication to keep family members informed and involved in care.",
+    color: "custom-green",
+  },
+];
+
+export const elderlyServices = [
+  {
+    icon: FaPills,
+    title: "Medication Management",
+    description: "Timely medication reminders and administration tracking",
+  },
+  {
+    icon: FaBath,
+    title: "Personal Care",
+    description: "Assistance with grooming, and daily hygiene",
+  },
+  {
+    icon: FaWalking,
+    title: "Mobility Support",
+    description: "Help with walking, exercises, and physical therapy routines",
+  },
+];
+
+export const simpleProcessForSick = [
+  {
+    step: "01",
+    title: "Share Medical Needs",
+    description:
+      "Provide information about the patient's condition, medical requirements, and care schedule",
+  },
+  {
+    step: "02",
+    title: "Get Matched with Nurses",
+    description:
+      "We connect you with licensed nurses experienced in your specific care needs",
+  },
+  {
+    step: "03",
+    title: "Begin Medical Care",
+    description:
+      "Start receiving professional medical care and monitoring in the comfort of home",
+  },
+];
+
+export const benefitsForSick = [
+  {
+    icon: FaHeartbeat,
+    title: "Skilled Medical Care",
+    description:
+      "Professional nurses and healthcare providers with expertise in managing acute and chronic illnesses.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaHome,
+    title: "Recovery at Home",
+    description:
+      "Receive quality medical care in the comfort and safety of your own home during recovery.",
+    color: "custom-green",
+  },
+  {
+    icon: FaUserNurse,
+    title: "Registered Nurses",
+    description:
+      "Licensed nurses trained in post-operative care, wound management, and chronic disease monitoring.",
+    color: "haven-blue",
+  },
+  {
+    icon: FaClock,
+    title: "24/7 Availability",
+    description:
+      "Round-the-clock care options available for patients requiring continuous medical monitoring.",
+    color: "carer-blue",
+  },
+  {
+    icon: FaShieldAlt,
+    title: "Safe & Sterile",
+    description:
+      "Strict infection control protocols and proper medical equipment for safe home healthcare.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaStethoscope,
+    title: "Medical Monitoring",
+    description:
+      "Regular health assessments, vital signs monitoring, and coordination with your doctors.",
+    color: "custom-green",
+  },
+];
+
+export const benefitForServices = [
+  {
+    icon: FaPrescriptionBottle,
+    title: "Medication Administration",
+    description: "Proper medication management, IV therapy, and injections",
+  },
+  {
+    icon: FaHandHoldingMedical,
+    title: "Wound Care",
+    description:
+      "Professional wound dressing, catheter care, and infection prevention",
+  },
+  {
+    icon: FaThermometerHalf,
+    title: "Vital Signs Monitoring",
+    description:
+      "Regular monitoring of blood pressure, temperature, and oxygen levels",
+  },
+  {
+    icon: FaBed,
+    title: "Post-Operative Care",
+    description:
+      "Recovery support after surgery with skilled nursing supervision",
   },
 ];

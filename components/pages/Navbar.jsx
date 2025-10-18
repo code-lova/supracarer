@@ -28,10 +28,10 @@ const Navbar = () => {
             <div className="flex item-center space-x-1">
               <OutlineEmail />
               <Link
-                href={`mailto:${emailDetail?.details}`}
+                href={`mailto:${emailDetail?.detail}`}
                 className="text-xs md:text-sm"
               >
-                {emailDetail?.details}
+                {emailDetail?.detail}
               </Link>
             </div>
             <div className="flex item-center space-x-1">
@@ -41,10 +41,10 @@ const Navbar = () => {
             <div className="flex item-center space-x-1">
               <BaselinePhoneInTalk />
               <Link
-                href={`tel:${phoneDetail?.details}`}
+                href={`tel:${phoneDetail?.detail}`}
                 className="text-xs md:text-sm"
               >
-                {phoneDetail?.details}
+                {phoneDetail?.detail}
               </Link>
             </div>
           </div>

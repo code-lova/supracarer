@@ -64,37 +64,33 @@ const Footer = () => {
                   <Link href="/features">Features</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <Link href="">Download App</Link>
+                  <Link href="/how-it-works">How it works</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <Link href="/contact">Support</Link>
+                  <Link href="/contact-us">Support</Link>
                 </li>
               </ul>
             </div>
 
-             <div>
+            <div>
               <h1 className="font-bold text-ever-green underline text-lg">
                 Professionals
               </h1>
               <ul className="p-3">
                 <li className="hover:underline xl:transitioning">
-                  <p>Doctors</p>
+                  <Link href="/for-nurses">For Nurses</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <p>Physician Assistants</p>
+                  <Link href="/for-the-sick">The Sick</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <p>Nutritionists</p>
+                  <Link href="/for-elderly">The Elderly</Link>
                 </li>
                 <li className="hover:underline xl:transitioning">
-                  <p>Physiotherapists</p>
-                </li>
-                <li className="hover:underline xl:transitioning">
-                  <p>Clinical Psychologists</p>
+                  <Link href="/for-health-professionals">Health Professionals</Link>
                 </li>
               </ul>
             </div>
-
           </div>
         </div>
 
@@ -105,16 +101,16 @@ const Footer = () => {
 
           <div className="flex space-x-2 mt-4">
             <p className="font-bold">Address:</p>
-            <p>{addressDetail?.details}</p>
+            <p>{addressDetail?.detail}</p>
           </div>
           <div className="flex space-x-2 mt-4">
-            <Link href={`mailto:${emailDetail?.details}`} className="font-bold">
-              Email: {emailDetail?.details}
+            <Link href={`mailto:${emailDetail?.detail}`} className="font-bold">
+              Email: {emailDetail?.detail}
             </Link>
           </div>
           <div className="flex space-x-2 mt-4">
-            <Link href={`tel:${phoneDetail?.details}`} className="font-bold">
-              Phone: {phoneDetail?.details}
+            <Link href={`tel:${phoneDetail?.detail}`} className="font-bold">
+              Phone: {phoneDetail?.detail}
             </Link>
           </div>
         </div>
