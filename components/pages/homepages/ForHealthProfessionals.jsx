@@ -181,12 +181,12 @@ const ForHealthProfessionals = () => {
             </div>
 
             {/* Image */}
-            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative h-[350px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/assets/images/supracarer_nurse.webp"
                 alt="Healthcare professional using platform"
                 fill
-                className="object-cover"
+                className="object-fit md:object-cover"
                 style={{ objectPosition: "center 10%" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>

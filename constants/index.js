@@ -32,6 +32,7 @@ import {
   FaUserMd,
   FaClipboardCheck,
   FaBriefcaseMedical,
+  FaCalendarCheck,
   FaSmile,
   FaLifeRing,
   FaPills,
@@ -517,78 +518,78 @@ export const pricingPlan = [
 ];
 
 export const faqs = [
-  // Client FAQs
+  // Families and Individuals FAQs
   {
     id: 1,
     question: "How does Supracarer work?",
     answer:
-      "Supracarer connects families with highly qualified and compassionate caregivers through our smart matching system. Simply register, create a service request, and get matched with a caregiver tailored to your needs.",
-    role: "client",
+      "Supracarer connects families with highly qualified and compassionate healthcare professionals through our smart matching system. Simply register, create a service request, and get matched with a healthcare professional tailored to your needs.",
+    role: "families and individuals",
   },
   {
     id: 2,
     question: "Is Supracarer available 24/7?",
     answer:
       "Yes, we offer round-the-clock care services and support. Whether you need urgent assistance or are planning ahead, our team is here to help anytime.",
-    role: "client",
+    role: "families and individuals",
   },
   {
     id: 3,
-    question: "Can I choose my caregiver?",
+    question: "Can I choose my healthcare professional?",
     answer:
-      "Our platform carefully matches you with professionals based on your preferences, care needs, and location. You can review profiles before confirming.",
-    role: "client",
+      "Our platform carefully matches you with healthcare professionals based on your preferences, care needs, and location. You can review profiles before confirming.",
+    role: "families and individuals",
   },
   {
     id: 4,
     question: "Is my personal and health information secure?",
     answer:
       "Absolutely. At Supracarer, we follow strict data protection policies to ensure all your health and personal information remains confidential and secure.",
-    role: "client",
+    role: "families and individuals",
   },
   {
     id: 5,
     question: "What types of services can I book?",
     answer:
       "You can book a range of services including elderly care, post-operative support, disability care, and wellness check-ins. We tailor each service to fit your lifestyle.",
-    role: "client",
+    role: "families and individuals",
   },
 
-  // Caregiver FAQs
+  // Healthcare Professionals FAQs
   {
     id: 6,
-    question: "How do I join Supracarer as a Health Professional?",
+    question: "How do I join Supracarer as a Healthcare Professional?",
     answer:
       "You can apply directly through our platform. Once you submit your credentials and pass verification, we will onboard you and start matching you with suitable families.",
-    role: "caregiver",
+    role: "healthcare professionals",
   },
   {
     id: 7,
     question: "Do I need specific qualifications?",
     answer:
-      "Yes. All health care professionals must have professional healthcare certifications and valid IDs. We prioritize health care professionals with experience in elder care, nursing, or similar fields.",
-    role: "caregiver",
+      "Yes. All healthcare professionals must have professional healthcare certifications and valid IDs. We prioritize healthcare professionals with experience in elder care, nursing, or similar fields.",
+    role: "healthcare professionals",
   },
   {
     id: 8,
-    question: "How are health care professionals matched with families?",
+    question: "How are healthcare professionals matched with families?",
     answer:
-      "Supracarer matches health care professionals with families based on their health conditions, preferences, and proximity. This ensures high compatibility and satisfaction.",
-    role: "caregiver",
+      "Supracarer matches healthcare professionals with families based on their health conditions, preferences, and proximity. This ensures high compatibility and satisfaction.",
+    role: "healthcare professionals",
   },
   {
     id: 9,
     question: "When and how do I get paid?",
     answer:
-      "Payments are processed weekly or bi-weekly through your preferred payment method, after services are confirmed by the client.",
-    role: "caregiver",
+      "Payments are processed weekly or bi-weekly through your preferred payment method, after services are confirmed by families.",
+    role: "healthcare professionals",
   },
   {
     id: 10,
     question: "Can I set my availability?",
     answer:
-      "Yes, health care professionals can set their working hours and availability from their dashboard, giving you full control over your schedule.",
-    role: "caregiver",
+      "Yes, healthcare professionals can set their working hours and availability from their dashboard, giving you full control over your schedule.",
+    role: "healthcare professionals",
   },
   // General FAQs
   {
@@ -741,7 +742,7 @@ export const contactInfo = [
     id: 2,
     icon: FaEnvelope,
     title: "Email",
-    detail: "info@supracarer.com",
+    detail: "support@supracarer.com",
     description: "We'll respond within 24 hours",
     color: "custom-green",
   },
@@ -1194,7 +1195,8 @@ export const requirements = [
   {
     icon: FaGraduationCap,
     title: "Education",
-    description: "Nursing Certificate, Diploma or Degree from an accredited institution",
+    description:
+      "Nursing Certificate, Diploma or Degree from an accredited institution",
   },
   {
     icon: FaClock,
@@ -1306,21 +1308,21 @@ export const whatDrivesUs = [
     icon: FaHeart,
     title: "Compassion",
     description:
-      "We care deeply about the wellbeing of families and healthcare professionals alike",
+      "We care deeply about the wellbeing of families and healthcare professionals alike.",
     color: "tranquil-teal",
   },
   {
     icon: FaShieldAlt,
     title: "Trust & Safety",
     description:
-      "Verified professionals and secure processes for peace of mind",
+      "Verified professionals and secure processes for peace of mind.",
     color: "custom-green",
   },
   {
     icon: FaHandsHelping,
     title: "Community",
     description:
-      "Building meaningful connections between families and caregivers",
+      "Building meaningful connections between families and health workers.",
     color: "haven-blue",
   },
 ];
@@ -1498,5 +1500,227 @@ export const benefitForServices = [
     title: "Post-Operative Care",
     description:
       "Recovery support after surgery with skilled nursing supervision",
+  },
+];
+
+export const slides = [
+  {
+    id: 1,
+    image: "/assets/images/002.webp", // Placeholder - replace with actual image
+    title: "Compassionate Care for Your Elderly Loved Ones",
+    subtitle: "Professional Elderly Care Services",
+    description:
+      "Connect with experienced nurses who provide personalized, compassionate care for seniors in the comfort of their homes.",
+    primaryCta: {
+      text: "Book Care Now",
+      href: "/signin",
+    },
+    secondaryCta: {
+      text: "Learn More",
+      href: "/for-elderly",
+    },
+    badge: "For Elderly",
+  },
+  {
+    id: 2,
+    image: "/assets/images/for_the_sick.webp", // Placeholder - replace with actual image
+    title: "Professional Medical Care at Home",
+    subtitle: "Skilled Nursing Services",
+    description:
+      "Access qualified registered nurses for post-operative care, chronic disease management, and specialized medical support at home.",
+    primaryCta: {
+      text: "Book Nurse Now",
+      href: "/signin",
+    },
+    secondaryCta: {
+      text: "View Services",
+      href: "/for-the-sick",
+    },
+    badge: "For The Sick",
+  },
+  {
+    id: 3,
+    image: "/assets/images/nurses-hero.webp", // Placeholder - replace with actual image
+    title: "Join Our Network of Healthcare Professionals",
+    subtitle: "Flexible Work, Competitive Pay",
+    description:
+      "Set your own schedule, choose your clients, and get paid immediately. Join a community of healthcare professionals transforming homecare.",
+    primaryCta: {
+      text: "Join Our Network",
+      href: "/signup",
+    },
+    secondaryCta: {
+      text: "Learn More",
+      href: "/for-health-professionals",
+    },
+    badge: "For Healthcare Professionals",
+  },
+  {
+    id: 4,
+    image: "/assets/images/for_family.webp", // Placeholder - replace with actual image
+    title: "Peace of Mind for Your Family",
+    subtitle: "Trusted Healthcare at Home",
+    description:
+      "Experience the Supracarer difference - connecting families with verified healthcare professionals for comprehensive home care services.",
+    primaryCta: {
+      text: "Get Care Now",
+      href: "/signin",
+    },
+    secondaryCta: {
+      text: "How It Works",
+      href: "/how-it-works",
+    },
+    badge: "For Families",
+  },
+];
+
+export const steps = [
+  {
+    id: 1,
+    icon: FaUserPlus,
+    title: "Sign Up & Complete Your Profile",
+    description:
+      "Create your account in minutes, complete your profile with care needs and preferences, and enable location permissions to activate our intelligent smart matching system.",
+    image: "/assets/images/signup.webp",
+    color: "tranquil-teal",
+    iconBg: "bg-tranquil-teal",
+    borderColor: "border-tranquil-teal",
+    gradient: "from-tranquil-teal/10 to-transparent",
+  },
+  {
+    id: 2,
+    icon: FaCalendarCheck,
+    title: "Book Your Care Appointment",
+    description:
+      "Schedule your care appointment directly from your account. Receive real-time email notifications with status updates at every stage of your appointment confirmation.",
+    image: "/assets/images/booking_appt.webp",
+    color: "custom-green",
+    iconBg: "bg-custom-green",
+    borderColor: "border-custom-green",
+    gradient: "from-custom-green/10 to-transparent",
+  },
+  {
+    id: 3,
+    icon: FaHandHoldingHeart,
+    title: "Get Matched & Receive Care",
+    description:
+      "We carefully match you with a qualified healthcare professional who meets your specific appointment requirements. Get notified immediately once matched and receive compassionate care at home.",
+    image: "/assets/images/supracarer_nurse.webp",
+    color: "haven-blue",
+    iconBg: "bg-haven-blue",
+    borderColor: "border-haven-blue",
+    gradient: "from-haven-blue/10 to-transparent",
+  },
+];
+
+export const trustReasons = [
+  {
+    id: 1,
+    icon: MdVerified,
+    title: "Verified Professionals",
+    description:
+      "Every healthcare professional undergoes rigorous background checks, license verification, and skills assessment before joining our platform.",
+    image: "/assets/images/verified.jpg",
+    stats: "100% Verified",
+    color: "tranquil-teal",
+    iconBg: "bg-tranquil-teal",
+    gradient: "from-tranquil-teal/10 to-transparent",
+  },
+  {
+    id: 2,
+    icon: FaShieldAlt,
+    title: "Safety & Security",
+    description:
+      "Your safety is our priority. We provide data encryption, secure payment processing, and 24/7 monitoring for peace of mind.",
+    image: "/assets/images/security.jpg",
+    stats: "24/7 Protected",
+    color: "custom-green",
+    iconBg: "bg-custom-green",
+    gradient: "from-custom-green/10 to-transparent",
+  },
+  {
+    id: 3,
+    icon: FaHeart,
+    title: "Compassionate Care",
+    description:
+      "Our professionals are not just skilled—they're compassionate caregivers who treat your loved ones with dignity, respect, and genuine care.",
+    image: "/assets/images/compassionate-care.jpg",
+    stats: "5-Star Rated",
+    color: "haven-blue",
+    iconBg: "bg-haven-blue",
+    gradient: "from-haven-blue/10 to-transparent",
+  },
+  {
+    id: 4,
+    icon: FaClock,
+    title: "Flexible & Reliable",
+    description:
+      "Book care on your schedule—one-time, recurring, or emergency appointments. Our professionals arrive on time, every time.",
+    image: "/assets/images/flexible-schedule.jpg",
+    stats: "On-Time Guarantee",
+    color: "carer-blue",
+    iconBg: "bg-carer-blue",
+    gradient: "from-carer-blue/10 to-transparent",
+  },
+  {
+    id: 5,
+    icon: FaDollarSign,
+    title: "Transparent Pricing",
+    description:
+      "No hidden fees or surprises. See upfront costs, choose your rate, and pay securely through our platform with complete transparency.",
+    image: "/assets/images/transparent-pricing.jpg",
+    stats: "Fair & Clear",
+    color: "tranquil-teal",
+    iconBg: "bg-tranquil-teal",
+    gradient: "from-tranquil-teal/10 to-transparent",
+  },
+  {
+    id: 6,
+    icon: FaHeadset,
+    title: "Dedicated Support",
+    description:
+      "Our support team is always here to help. Get assistance anytime through phone, chat, or email—we're committed to your satisfaction.",
+    image: "/assets/images/customer-support.jpg",
+    stats: "Always Available",
+    color: "custom-green",
+    iconBg: "bg-custom-green",
+    gradient: "from-custom-green/10 to-transparent",
+  },
+];
+
+export const badges = [
+  {
+    id: 1,
+    icon: FaUserNurse,
+    title: "Nurse Founded",
+    description: "Built by healthcare professionals who understand your needs",
+    color: "tranquil-teal",
+    bgGradient: "from-tranquil-teal/10 to-tranquil-teal/5",
+    iconBg: "bg-tranquil-teal/10",
+    iconColor: "text-tranquil-teal",
+    borderColor: "border-tranquil-teal/20",
+  },
+  {
+    id: 2,
+    icon: FaHeart,
+    title: "Trusted by Families",
+    description: "Verified professionals delivering compassionate care",
+    color: "custom-green",
+    bgGradient: "from-custom-green/10 to-custom-green/5",
+    iconBg: "bg-custom-green/10",
+    iconColor: "text-custom-green",
+    borderColor: "border-custom-green/20",
+    badge: <MdVerified className="text-custom-green" />,
+  },
+  {
+    id: 3,
+    icon: FaDollarSign,
+    title: "Transparent Pricing",
+    description: "No hidden fees, just honest and fair pricing",
+    color: "haven-blue",
+    bgGradient: "from-haven-blue/10 to-haven-blue/5",
+    iconBg: "bg-haven-blue/10",
+    iconColor: "text-haven-blue",
+    borderColor: "border-haven-blue/20",
   },
 ];

@@ -9,7 +9,7 @@ const Contact = () => {
     <section>
       <FeatureBg
         heading="Get in touch With Supracarer"
-        subheading="For more information on Supracarer, please send us an inquiry"
+        subheading="For more information on Supracarer, feel free to reach out to us"
       />
 
       <ContactUs />

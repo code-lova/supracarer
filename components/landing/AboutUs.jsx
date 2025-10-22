@@ -6,91 +6,97 @@ import { NormalBtn } from "@components/core/button";
 
 const AboutUs = () => {
   return (
-    <div className="pageSection my-20 md:my-28">
-      <div className="flex flex-col-reverse md:flex-row justify-center md:justify-between gap-8 md:gap-2 mt-8">
-        <div className="relative w-full md:w-[550px] h-[400px] md:h-[700px] rounded-3xl overflow-hidden md:overflow-visible">
-          <div className="greenVerticalTextBox">
+    <div className="pageSection my-16 md:my-8">
+      <div className="flex flex-col-reverse md:flex-row justify-center md:justify-between gap-8 md:gap-10 lg:gap-12 items-center">
+        <div className="relative w-full md:w-1/2 h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl group">
+          {/* Modern Vertical Badge */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-b from-tranquil-teal to-custom-green px-3 py-6 rounded-full shadow-2xl backdrop-blur-sm border border-white/20">
             <span
-              className="text-xl uppercase font-semibold transform -rotate-180"
+              className="text-white text-sm font-bold tracking-wider transform -rotate-180"
               style={{ writingMode: "vertical-lr" }}
             >
-              Best elderly care for your family
+              FOR FAMILIES AND INDIVIDUALS
             </span>
           </div>
 
           <div className="hidden md:block relative w-full h-full">
             <Image
-              src="/assets/images/holdinghands.webp"
+              src="/assets/images/startup_nurse.webp"
               alt="supracarer_home-care app"
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", objectPosition: "center" }}
               loading="lazy"
-              className="rounded-3xl"
+              className="rounded-2xl group-hover:scale-105 transition-transform duration-500"
             />
-            <div className="hidden md:block absolute inset-2 border-2 border-white rounded-3xl pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>
-          <div className="block md:hidden">
+          <div className="block md:hidden relative w-full h-full">
             <Image
               src="/assets/images/carer5.webp"
               alt="supracarer_home app"
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", objectPosition: "center" }}
               loading="lazy"
-              className="rounded-3xl px-2"
+              className="rounded-2xl"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>
         </div>
 
         <div className="w-full md:w-1/2 px-4 md:px-0">
-          <h1 className="capitalize text-tranquil-teal text-base font-bold">
-            Get to know us
-          </h1>
-          <h2 className="text-3xl md:text-4xl font-bold text-carer-blue leading-8 mt-4">
-            Living life in the fullest begins right now with you
+          <div className="inline-flex items-center gap-2 bg-tranquil-teal/10 text-tranquil-teal px-4 py-2 rounded-full text-sm font-semibold border border-tranquil-teal/20 mb-4">
+            <span className="w-2 h-2 bg-tranquil-teal rounded-full animate-pulse"></span>
+            <span>Get to Know Us</span>
+          </div>
+
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 leading-tight mt-4 mb-4">
+            Living Life to the{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-tranquil-teal to-custom-green">
+              Fullest
+            </span>{" "}
+            Begins Now
           </h2>
-          <p className="mt-4 text-base text-semi-dark leading-8">
+
+          <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-3">
             We are a pioneering healthcare technology company dedicated to
             revolutionizing home health care through our innovative platform.
           </p>
-          <p className="mt-1 text-base text-semi-dark leading-8">
-            {" "}
+          <p className="text-base md:text-lg text-gray-600 leading-relaxed">
             We also provide NCD prevention and management tools and resources.
           </p>
 
-          <div className="mt-8 flex flex-col lg:flex-row item-center justify-between gap-4">
-            <div className="flex items-center gap-3 w-full md:w-[310px]">
-              <div className="bg-tranquil-teal p-2 rounded-xl transition-transform duration-300 ease-in-out transform hover:scale-110 hover:bg-carer-blue">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-tranquil-teal/5 border border-tranquil-teal/10 hover:border-tranquil-teal/30 transition-all duration-300 group">
+              <div className="bg-tranquil-teal p-3 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-carer-blue flex-shrink-0">
                 <Doctor color="#fff" />
               </div>
               <div className="flex flex-col">
-                <h2 className="text-base font-bold text-haven-blue mb-2">
+                <h3 className="text-base font-bold text-haven-blue mb-2">
                   Quality Service
-                </h2>
-                <p className="text-sm text-semi-dark mb-2">
-                  Top-notch medical care
-                </p>
-                <p className="text-sm text-semi-dark">
-                  for comfort and well-being.
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Top-notch medical care for comfort and well-being.
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3 w-full md:w-[340px]">
-              <div className="bg-tranquil-teal p-2 rounded-xl transition-transform duration-300 ease-in-out transform hover:scale-110 hover:bg-carer-blue">
+
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-tranquil-teal/5 border border-tranquil-teal/10 hover:border-tranquil-teal/30 transition-all duration-300 group">
+              <div className="bg-tranquil-teal p-3 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-carer-blue flex-shrink-0">
                 <Nurse color="#fff" />
               </div>
               <div className="flex flex-col">
-                <h2 className="text-base font-bold text-haven-blue mb-2">
+                <h3 className="text-base font-bold text-haven-blue mb-2">
                   Professional Home Care
-                </h2>
-                <p className="text-sm text-semi-dark mb-1">
-                  Skilled professional from a
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Skilled professionals from a multidisciplinary team.
                 </p>
-                <p className="text-sm text-semi-dark">multidisciplinary team.</p>
               </div>
             </div>
           </div>
-          <div className="my-8">
-            <NormalBtn href="/about" children="Discover more" />
+
+          <div className="mt-8">
+            <NormalBtn href="/about" children="Discover More" />
           </div>
         </div>
       </div>

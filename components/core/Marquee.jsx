@@ -4,7 +4,7 @@ const Marquee = () => {
 
 
   return (
-    <div className="w-full h-[300px] md:h-[400px] lg:h-[400px] bg-news-letter bg-cover bg-[center_top_-50px] flex items-center overflow-hidden relative">
+    <div className="w-full h-[300px] md:h-[300px] lg:h-[300px] bg-news-letter bg-cover bg-[center_top_-50px] flex items-center overflow-hidden relative">
       {/* Marquee Container */}
       <div className="absolute flex whitespace-nowrap animate-marquee">
         {/* Duplicate text ensures seamless looping */}

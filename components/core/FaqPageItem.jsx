@@ -11,7 +11,7 @@ export const FaqPageItem = ({ question, answer }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center p-4 text-left bg-white hover:bg-gray-50 transition-colors"
       >
-        <span className="font-semibold text-base text-carer-blue">
+        <span className="font-semibold text-base text-tranquil-teal">
           {question}
         </span>
         <FaChevronDown
