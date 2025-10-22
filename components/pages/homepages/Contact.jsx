@@ -1,6 +1,5 @@
 import React from "react";
 import Footer from "@components/landing/Footer";
-import Image from "next/image";
 import FeatureBg from "../FeatureBg";
 import ContactUs from "@components/landing/ContactUs";
 import Subscription from "@components/landing/Subscription";
@@ -10,7 +9,7 @@ const Contact = () => {
     <section>
       <FeatureBg
         heading="Get in touch With Supracarer"
-        subheading="For more information on Supracarer, please send us an inquiry"
+        subheading="For more information on Supracarer, feel free to reach out to us"
       />
 
       <ContactUs />

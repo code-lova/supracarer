@@ -6,10 +6,12 @@ import {
   FaShieldAlt,
   FaStar,
   FaUsers,
+  FaUserPlus,
   FaUser,
   FaLightbulb,
   FaHandshake,
   FaHome,
+  FaEnvelope,
   FaUserFriends,
   FaUserEdit,
   FaHeadset,
@@ -30,7 +32,26 @@ import {
   FaUserMd,
   FaClipboardCheck,
   FaBriefcaseMedical,
+  FaCalendarCheck,
+  FaSmile,
+  FaLifeRing,
+  FaPills,
+  FaBath,
+  FaWalking,
+  FaHeartbeat,
+  FaUserNurse,
+  FaStethoscope,
+  FaPrescriptionBottle,
+  FaThermometerHalf,
+  FaBed,
+  FaChartLine,
+  FaMobileAlt,
 } from "react-icons/fa";
+import {
+  FaHandHoldingHand,
+  FaHandHoldingHeart,
+  FaHandHoldingMedical,
+} from "react-icons/fa6";
 import { MdSupportAgent, MdVerified } from "react-icons/md";
 import {
   FiMail,
@@ -48,7 +69,6 @@ import {
   Twitter,
   FacebookRect,
 } from "@components/core/icon/socials";
-import Image from "next/image";
 
 export const navLinks = [
   {
@@ -71,6 +91,24 @@ export const navLinks = [
         title: "Our Values",
         link: "/values",
         icon: <FaBalanceScale />,
+      },
+      {
+        id: "elderly",
+        title: "For the elderly",
+        link: "/for-elderly",
+        icon: <FaHandHoldingHand />,
+      },
+      {
+        id: "sick",
+        title: "For the Sick",
+        link: "/for-the-sick",
+        icon: <FaHandHoldingHeart />,
+      },
+      {
+        id: "health professionals",
+        title: "For Health Care",
+        link: "/for-health-professionals",
+        icon: <FaHandHoldingMedical />,
       },
     ],
   },
@@ -232,106 +270,94 @@ export const features = [
 export const keyBenefits = [
   {
     id: 1,
-    title: "Personalized, All-in-One Holistic Health Solution:",
-    desc: {
-      paragraph1:
-        "Whether you're focused on physical, mental, or emotional well-being, Supracarer offers an integrated platform that addresses all aspects of your health.",
-      paragraph2:
-        "Your wellness plan is tailored to your unique goals, preferences, and lifestyle, ensuring a completely personalized experience.",
-    },
+    title: "Smart Matching System",
+    color: "tranquil-teal",
+    icon: FaUserMd,
+    description:
+      "We take the guesswork out of finding care. Our platform carefully matches families with qualified healthcare professionals based on location, expertise, and availability for optimal care.",
   },
   {
     id: 2,
-    title: "Access to Certified Practitioners from Various Health Disciplines:",
-    desc: {
-      paragraph1:
-        "Connect with trusted experts including nutritionists, mental health counselors, yoga instructors, and more, all in one place.",
-      paragraph2:
-        "Benefit from a range of specialties designed to support holistic wellness.",
-    },
+    title: "Flexible Work Opportunities",
+    color: "custom-green",
+    icon: FaCalendarAlt,
+    description:
+      "Health professionals choose their own schedule and work when it suits them, with full control over availability.",
+  },
+  {
+    id: 3,
+    title: "Instant Payment Processing",
+    color: "haven-blue",
+    icon: FaDollarSign,
+    description:
+      "Healthcare workers can request immediate payment after each session without waiting for weekly or monthly payouts.",
   },
   {
     id: 4,
-    title: "Seamless Appointment Scheduling:",
-    desc: {
-      paragraph1:
-        "Easily book appointments with certified practitioners directly through the platform. No more hassle with finding and managing multiple contacts.",
-      paragraph2: "",
-    },
+    title: "Verified & Trusted Professionals",
+    color: "carer-blue",
+    icon: MdVerified,
+    description:
+      "Families have peace of mind knowing all healthcare professionals are certified, experienced, and background-checked.",
   },
   {
     id: 5,
-    title: "Tailored Health Advice from Day One:",
-    desc: {
-      paragraph1:
-        "Supracarer starts working for you the moment you sign up by offering customized tips and insights that match your individual health profile.",
-      paragraph2: "",
-    },
+    title: "24/7 Support & Safety",
+    color: "tranquil-teal",
+    icon: FaShieldAlt,
+    description:
+      "Round-the-clock support for both families and professionals with comprehensive insurance coverage and safety protocols.",
   },
   {
     id: 6,
-    title: "Flexible and Convenient:",
-    desc: {
-      paragraph1:
-        "Manage your wellness journey on your own terms, whether you prefer mobile, desktop, or tablet. Stay connected and track your progress from anywhere.",
-      paragraph2: "",
-    },
+    title: "Easy Booking & Communication",
+    color: "custom-green",
+    icon: FaClipboardCheck,
+    description:
+      "Simple appointment scheduling, real-time notifications, and seamless communication between families and healthcare providers.",
   },
 ];
 
-export const howItWorks = [
+export const howItWorkSteps = [
   {
-    id: "Step 1",
-    name: "User Registration and Profile Setup:",
+    id: 1,
+    title: "User Registration",
     description:
-      "Clients and caregivers register on the app and set up their profiles, including location, health needs, and expertise.",
+      "Create your account in minutes. Sign up as a client seeking care or as a healthcare professional ready to provide services.",
+    icon: FaUserPlus,
+    color: "tranquil-teal",
   },
   {
-    id: "Step 2",
-    name: "Service Request Initiation:",
+    id: 2,
+    title: "Service Request",
     description:
-      "Clients initiate a service request by inputting their location, specific needs, and urgency level.",
+      "Clients initiate a service request by inputting their location, specific healthcare needs, and urgency level for immediate matching.",
+    icon: FaClipboardList,
+    color: "custom-green",
   },
   {
-    id: "Step 3",
-    name: "Matching Process:",
+    id: 3,
+    title: "Smart Matching",
     description:
-      "Supracarer matches the client with the most suitable caregiver based on proximity, expertise, and availability.",
+      "Clients are matched with the best healthcare professionals by location, expertise, and availability.",
+    icon: FaHandshake,
+    color: "haven-blue",
   },
   {
-    id: "Step 4",
-    name: "Notification and Confirmation:",
+    id: 4,
+    title: "Notification",
     description:
-      "Both the client and the caregiver receive notifications about the match. The caregiver confirms the appointment.",
+      "Both client and healthcare worker get instant appointment notifications; the healthcare worker confirms availability.",
+    icon: FaBell,
+    color: "carer-blue",
   },
   {
-    id: "Step 5",
-    name: "Care Delivery and Feedback:",
+    id: 5,
+    title: "Care & Feedback",
     description:
-      "The caregiver provides the required care, and both parties can leave feedback in the app to improve future matching and service quality.",
-  },
-];
-
-export const aboutUs = [
-  {
-    id: "1",
-    statement:
-      "A homecare app that easily connects families with qualified home care healthcare professionals, ensuring a simple and efficient process. ",
-  },
-  {
-    id: "2",
-    statement:
-      "We are dedicated to helping individuals and families find trusted, compassionate caregivers and nurses who provide high-quality support tailored to their specific needs.",
-  },
-  {
-    id: "3",
-    statement:
-      "We offer round-the-clock services, with our customer support team available whenever you need assistance.",
-  },
-  {
-    id: "4",
-    statement:
-      "At Supracarer, we recognise the critical need for personalized healthcare in the home environment.",
+      "Healthcare workers deliver exceptional care. After each service, both parties can leave feedback to help improve our platform.",
+    icon: FaHeart,
+    color: "custom-green",
   },
 ];
 
@@ -356,31 +382,43 @@ export const team = [
     id: "1",
     image: "/assets/images/founder.webp",
     name: "Kwabena Owusu",
-    position: "Founder",
+    position: "Founder/C.E.O",
+    linkedin: "https://linkedin.com/in/kwabenaowusu",
   },
   {
     id: "2",
-    image: "/assets/images/co-founder.webp",
+    image: "/assets/images/cto-founder.webp",
     name: "Jeremiah Ebizo",
-    position: "Co-Founder/CTO",
+    position: "Co-Founder/Tech Lead",
+    linkedin: "https://www.linkedin.com/in/jeremiah-ebizo/",
   },
   {
     id: "3",
-    image: "/assets/images/founders-adviser.webp",
-    name: "Mawuena Abena Dossah",
-    position: "Founder's Advisor",
-  },
-  {
-    id: "4",
-    image: "/assets/images/head-of-finance.webp",
-    name: "Nancy Pepprah",
-    position: "Head of Finance",
-  },
-  {
-    id: "5",
     image: "/assets/images/brand-designer.webp",
     name: "Joshua Acquah Addo",
     position: "Brand Designer",
+    linkedin: "https://www.linkedin.com/in/joshua-acquah-addo",
+  },
+  {
+    id: "4",
+    image: "/assets/images/strategic_financial_advisor.webp",
+    name: "Deborah Williams Ibidapo",
+    position: "Strategic & Financial Advisor",
+    linkedin: "",
+  },
+  {
+    id: "5",
+    image: "/assets/images/operation_content_lead.webp",
+    name: "Maryam Said Boakye",
+    position: "Operations & Content Lead",
+    linkedin: "https://www.linkedin.com/in/maryam-said-boakye",
+  },
+  {
+    id: "6",
+    image: "/assets/images/ai_consultant.webp",
+    name: "Sceptre Onyewuchi",
+    position: "AI Consultant",
+    linkedin: "https://www.linkedin.com/in/stanley-onyewuchi",
   },
 ];
 
@@ -480,99 +518,99 @@ export const pricingPlan = [
 ];
 
 export const faqs = [
-  // Client FAQs
+  // Families and Individuals FAQs
   {
     id: 1,
     question: "How does Supracarer work?",
     answer:
-      "Supracarer connects families with highly qualified and compassionate caregivers through our smart matching system. Simply register, create a service request, and get matched with a caregiver tailored to your needs.",
-    role: "client",
+      "Supracarer connects families with highly qualified and compassionate healthcare professionals through our smart matching system. Simply register, create a service request, and get matched with a healthcare professional tailored to your needs.",
+    role: "families and individuals",
   },
   {
     id: 2,
     question: "Is Supracarer available 24/7?",
     answer:
       "Yes, we offer round-the-clock care services and support. Whether you need urgent assistance or are planning ahead, our team is here to help anytime.",
-    role: "client",
+    role: "families and individuals",
   },
   {
     id: 3,
-    question: "Can I choose my caregiver?",
+    question: "Can I choose my healthcare professional?",
     answer:
-      "Our platform carefully matches you with professionals based on your preferences, care needs, and location. You can review profiles before confirming.",
-    role: "client",
+      "Our platform carefully matches you with healthcare professionals based on your preferences, care needs, and location. You can review profiles before confirming.",
+    role: "families and individuals",
   },
   {
     id: 4,
     question: "Is my personal and health information secure?",
     answer:
       "Absolutely. At Supracarer, we follow strict data protection policies to ensure all your health and personal information remains confidential and secure.",
-    role: "client",
+    role: "families and individuals",
   },
   {
     id: 5,
     question: "What types of services can I book?",
     answer:
       "You can book a range of services including elderly care, post-operative support, disability care, and wellness check-ins. We tailor each service to fit your lifestyle.",
-    role: "client",
+    role: "families and individuals",
   },
 
-  // Caregiver FAQs
+  // Healthcare Professionals FAQs
   {
     id: 6,
-    question: "How do I join Supracarer as a caregiver?",
+    question: "How do I join Supracarer as a Healthcare Professional?",
     answer:
-      "You can apply directly through our platform. Once you submit your credentials and pass verification, we will onboard you and start matching you with suitable clients.",
-    role: "caregiver",
+      "You can apply directly through our platform. Once you submit your credentials and pass verification, we will onboard you and start matching you with suitable families.",
+    role: "healthcare professionals",
   },
   {
     id: 7,
     question: "Do I need specific qualifications?",
     answer:
-      "Yes. All caregivers must have professional healthcare certifications and valid IDs. We prioritize caregivers with experience in elder care, nursing, or similar fields.",
-    role: "caregiver",
+      "Yes. All healthcare professionals must have professional healthcare certifications and valid IDs. We prioritize healthcare professionals with experience in elder care, nursing, or similar fields.",
+    role: "healthcare professionals",
   },
   {
     id: 8,
-    question: "How are caregivers matched with clients?",
+    question: "How are healthcare professionals matched with families?",
     answer:
-      "We use an AI-driven algorithm to match caregivers with clients based on their health conditions, preferences, and proximity. This ensures high compatibility and satisfaction.",
-    role: "caregiver",
+      "Supracarer matches healthcare professionals with families based on their health conditions, preferences, and proximity. This ensures high compatibility and satisfaction.",
+    role: "healthcare professionals",
   },
   {
     id: 9,
     question: "When and how do I get paid?",
     answer:
-      "Payments are processed weekly or bi-weekly through your preferred payment method, after services are confirmed by the client.",
-    role: "caregiver",
+      "Payments are processed weekly or bi-weekly through your preferred payment method, after services are confirmed by families.",
+    role: "healthcare professionals",
   },
   {
     id: 10,
     question: "Can I set my availability?",
     answer:
-      "Yes, caregivers can set their working hours and availability from their dashboard, giving you full control over your schedule.",
-    role: "caregiver",
+      "Yes, healthcare professionals can set their working hours and availability from their dashboard, giving you full control over your schedule.",
+    role: "healthcare professionals",
   },
   // General FAQs
   {
     id: 11,
     question: "What is Proximity-Based Matching and how does it benefit me?",
     answer:
-      "We match clients to our nurses and caregivers who are nearby. This ensures that caregivers can reach you quickly in case of emergencies, reducing travel time and costs, and providing prompt assistance.",
+      "We match families to our health care professionals who are nearby. This ensures that health care professionals can reach you quickly in case of emergencies, reducing travel time and costs, and providing prompt assistance.",
     role: "general",
   },
   {
     id: 12,
     question: "How does Needs and Expertise Matching work in Supracarer?",
     answer:
-      "Needs and Expertise Matching match you to our trusted caregivers based on their skills and your specific healthcare needs. This includes matching based on medical conditions, required skill sets, and previous experience, ensuring you receive the most suitable care.",
+      "Needs and Expertise Matching match you to our trusted health care professionals based on their skills and your specific healthcare needs. This includes matching based on medical conditions, required skill sets, and previous experience, ensuring you receive the most suitable care.",
     role: "general",
   },
   {
     id: 13,
     question: "What is Dynamic Availability and Urgency Matching?",
     answer:
-      "Dynamic Availability and Urgency Matching constantly updates caregivers availability and matches them with you based on the urgency of care required. It prioritizes urgent needs, ensuring that caregivers are assigned to clients who need immediate attention.",
+      "Dynamic Availability and Urgency Matching constantly updates health care professionals availability and matches them with you based on the urgency of care required. It prioritizes urgent needs, ensuring that health care professionals are assigned to families who need immediate attention.",
     role: "general",
   },
 ];
@@ -653,7 +691,8 @@ export const abtWhatWeOffer = [
   {
     id: 1,
     name: "For The Elderly",
-    image: "/assets/images/02.webp",
+    image: "/assets/images/002.webp",
+    link: "/for-elderly",
     icon: (
       <Elderly
         color="#006838"
@@ -666,6 +705,7 @@ export const abtWhatWeOffer = [
     id: 2,
     name: "For The Sick",
     image: "/assets/images/10500.webp",
+    link: "/for-the-sick",
     icon: (
       <Nurse
         color="#006838"
@@ -676,57 +716,64 @@ export const abtWhatWeOffer = [
   },
   {
     id: 3,
-    name: "For Nurses and Caregivers",
-    image: "/assets/images/nurses.webp",
+    name: "For Health Care Professionals",
+    image: "/assets/images/group_nurse.webp",
+    link: "/for-health-professionals",
     icon: (
       <Doctor
         color="#006838"
         className="w-12 h-12 transition-all duration-300"
       />
     ),
-    text: "Connect with families in need and ​get full paying job offers that meet ​your field of studies.",
+    text: "Connect with families in need and ​get full paying job offers.",
   },
 ];
 
-export const contactDetails = [
+export const contactInfo = [
   {
     id: 1,
-    title: "Phone: ",
-    details: "(+233)-54-914-8087",
-    icon: (
-      <Image
-        src="/assets/icons/icons8-phone-48.png"
-        width={40}
-        height={40}
-        alt="phone"
-      />
-    ),
+    icon: FaPhone,
+    title: "Phone",
+    detail: "(+233) 54-914-8087",
+    description: "Mon-Fri from 8am to 5pm",
+    color: "tranquil-teal",
   },
   {
     id: 2,
-    title: "Email: ",
-    details: "info@supracarer.com",
-    icon: (
-      <Image
-        src="/assets/icons/icons8-envelope-48.png"
-        width={40}
-        height={40}
-        alt="email"
-      />
-    ),
+    icon: FaEnvelope,
+    title: "Email",
+    detail: "support@supracarer.com",
+    description: "We'll respond within 24 hours",
+    color: "custom-green",
   },
   {
     id: 3,
-    title: "Address: ",
-    details: "ALX Ghana One Airport Square, Accra.",
-    icon: (
-      <Image
-        src="/assets/icons/icons8-place-marker-50.png"
-        width={40}
-        height={40}
-        alt="address"
-      />
-    ),
+    icon: FaMapMarkerAlt,
+    title: "Office",
+    detail: "ALX Ghana One Airport Square",
+    description: "Accra, Ghana",
+    color: "haven-blue",
+  },
+];
+
+export const contactStats = [
+  {
+    number: "24hrs",
+    label: "Response Time",
+    icon: FaClock,
+    color: "tranquil-teal",
+  },
+  {
+    number: "100%",
+    label: "Satisfaction Rate",
+    icon: FaSmile,
+    color: "custom-green",
+  },
+  {
+    number: "24/7",
+    label: "Support Available",
+    icon: FaLifeRing,
+    color: "haven-blue",
   },
 ];
 
@@ -1086,7 +1133,7 @@ export const monthNames = [
   "December",
 ];
 
-//For nurses page
+//For nurses page and others
 
 export const benefits = [
   {
@@ -1106,10 +1153,10 @@ export const benefits = [
     available: true,
   },
   {
-    icon: FaShieldAlt,
-    title: "Insurance & Protection",
+    icon: FaHandshake,
+    title: "Home Care (Contract)",
     description:
-      "Comprehensive insurance coverage and professional liability protection for peace of mind.",
+      "Home care services are provided on a contract basis with clear terms, agreed schedules, and liability coverage.",
     color: "tranquil-teal",
     available: true,
   },
@@ -1143,22 +1190,43 @@ export const requirements = [
   {
     icon: FaUserMd,
     title: "Valid Nursing License",
-    description: "Current RN or LPN license in good standing",
+    description: "Current NMC license in good standing",
   },
   {
     icon: FaGraduationCap,
     title: "Education",
-    description: "Nursing degree from an accredited institution",
+    description:
+      "Nursing Certificate, Diploma or Degree from an accredited institution",
   },
   {
     icon: FaClock,
     title: "Experience",
     description: "Minimum 1 year of clinical experience preferred",
   },
+];
+
+export const nurseAppFeatures = [
   {
-    icon: FaCheckCircle,
-    title: "Background Check",
-    description: "Clean background check and drug screening",
+    icon: FaMobileAlt,
+    title: "Easy-to-Use App",
+    description:
+      "Manage appointments, payments, and client communication in one place",
+  },
+  {
+    icon: FaChartLine,
+    title: "Track Your Ratings",
+    description:
+      "Real-time tracking in dashboard to see star ratings and feedback",
+  },
+  {
+    icon: FaHandshake,
+    title: "Direct Client Connection",
+    description: "Build meaningful relationships with families you serve",
+  },
+  {
+    icon: FaClock,
+    title: "Instant Notifications",
+    description: "Get notified immediately about new appointment requests",
   },
 ];
 
@@ -1232,5 +1300,427 @@ export const dayInLife = [
       "Complete appointment, request review from patient to confirm care service for confirmation",
     icon: FaCheckCircle,
     color: "tranquil-teal",
+  },
+];
+
+export const whatDrivesUs = [
+  {
+    icon: FaHeart,
+    title: "Compassion",
+    description:
+      "We care deeply about the wellbeing of families and healthcare professionals alike.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaShieldAlt,
+    title: "Trust & Safety",
+    description:
+      "Verified professionals and secure processes for peace of mind.",
+    color: "custom-green",
+  },
+  {
+    icon: FaHandsHelping,
+    title: "Community",
+    description:
+      "Building meaningful connections between families and health workers.",
+    color: "haven-blue",
+  },
+];
+
+export const simpleProcessForElderly = [
+  {
+    step: "01",
+    title: "Tell Us Your Needs",
+    description:
+      "Share information about your loved one's care requirements and schedule preferences",
+  },
+  {
+    step: "02",
+    title: "Get Matched",
+    description:
+      "We connect you with qualified health care professionals who match your specific needs and location",
+  },
+  {
+    step: "03",
+    title: "Start Care",
+    description:
+      "Begin receiving compassionate, professional care in the comfort of home",
+  },
+];
+
+export const elderlyBenefits = [
+  {
+    icon: FaHeart,
+    title: "Compassionate Care",
+    description:
+      "Dedicated health care professionals who treat your loved ones with dignity, respect, and genuine compassion.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaHome,
+    title: "Comfort of Home",
+    description:
+      "Allow your elderly family members to age gracefully in the familiar comfort of their own home.",
+    color: "custom-green",
+  },
+  {
+    icon: FaUserMd,
+    title: "Professional Expertise",
+    description:
+      "Qualified nurses with specialized training in elderly care and medical support.",
+    color: "haven-blue",
+  },
+  {
+    icon: FaClock,
+    title: "Flexible Scheduling",
+    description:
+      "Choose from hourly, daily, or live-in care options that fit your family's needs and budget.",
+    color: "carer-blue",
+  },
+  {
+    icon: FaShieldAlt,
+    title: "Safety & Security",
+    description:
+      "Background-checked professionals and 24/7 monitoring for complete peace of mind.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaHandHoldingHeart,
+    title: "Family Support",
+    description:
+      "Regular updates and communication to keep family members informed and involved in care.",
+    color: "custom-green",
+  },
+];
+
+export const elderlyServices = [
+  {
+    icon: FaPills,
+    title: "Medication Management",
+    description: "Timely medication reminders and administration tracking",
+  },
+  {
+    icon: FaBath,
+    title: "Personal Care",
+    description: "Assistance with grooming, and daily hygiene",
+  },
+  {
+    icon: FaWalking,
+    title: "Mobility Support",
+    description: "Help with walking, exercises, and physical therapy routines",
+  },
+];
+
+export const simpleProcessForSick = [
+  {
+    step: "01",
+    title: "Share Medical Needs",
+    description:
+      "Provide information about the patient's condition, medical requirements, and care schedule",
+  },
+  {
+    step: "02",
+    title: "Get Matched with Nurses",
+    description:
+      "We connect you with licensed nurses experienced in your specific care needs",
+  },
+  {
+    step: "03",
+    title: "Begin Medical Care",
+    description:
+      "Start receiving professional medical care and monitoring in the comfort of home",
+  },
+];
+
+export const benefitsForSick = [
+  {
+    icon: FaHeartbeat,
+    title: "Skilled Medical Care",
+    description:
+      "Professional nurses and healthcare providers with expertise in managing acute and chronic illnesses.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaHome,
+    title: "Recovery at Home",
+    description:
+      "Receive quality medical care in the comfort and safety of your own home during recovery.",
+    color: "custom-green",
+  },
+  {
+    icon: FaUserNurse,
+    title: "Registered Nurses",
+    description:
+      "Licensed nurses trained in post-operative care, wound management, and chronic disease monitoring.",
+    color: "haven-blue",
+  },
+  {
+    icon: FaClock,
+    title: "24/7 Availability",
+    description:
+      "Round-the-clock care options available for patients requiring continuous medical monitoring.",
+    color: "carer-blue",
+  },
+  {
+    icon: FaShieldAlt,
+    title: "Safe & Sterile",
+    description:
+      "Strict infection control protocols and proper medical equipment for safe home healthcare.",
+    color: "tranquil-teal",
+  },
+  {
+    icon: FaStethoscope,
+    title: "Medical Monitoring",
+    description:
+      "Regular health assessments, vital signs monitoring, and coordination with your doctors.",
+    color: "custom-green",
+  },
+];
+
+export const benefitForServices = [
+  {
+    icon: FaPrescriptionBottle,
+    title: "Medication Administration",
+    description: "Proper medication management, IV therapy, and injections",
+  },
+  {
+    icon: FaHandHoldingMedical,
+    title: "Wound Care",
+    description:
+      "Professional wound dressing, catheter care, and infection prevention",
+  },
+  {
+    icon: FaThermometerHalf,
+    title: "Vital Signs Monitoring",
+    description:
+      "Regular monitoring of blood pressure, temperature, and oxygen levels",
+  },
+  {
+    icon: FaBed,
+    title: "Post-Operative Care",
+    description:
+      "Recovery support after surgery with skilled nursing supervision",
+  },
+];
+
+export const slides = [
+  {
+    id: 1,
+    image: "/assets/images/002.webp", // Placeholder - replace with actual image
+    title: "Compassionate Care for Your Elderly Loved Ones",
+    subtitle: "Professional Elderly Care Services",
+    description:
+      "Connect with experienced nurses who provide personalized, compassionate care for seniors in the comfort of their homes.",
+    primaryCta: {
+      text: "Book Care Now",
+      href: "/signin",
+    },
+    secondaryCta: {
+      text: "Learn More",
+      href: "/for-elderly",
+    },
+    badge: "For Elderly",
+  },
+  {
+    id: 2,
+    image: "/assets/images/for_the_sick.webp", // Placeholder - replace with actual image
+    title: "Professional Medical Care at Home",
+    subtitle: "Skilled Nursing Services",
+    description:
+      "Access qualified registered nurses for post-operative care, chronic disease management, and specialized medical support at home.",
+    primaryCta: {
+      text: "Book Nurse Now",
+      href: "/signin",
+    },
+    secondaryCta: {
+      text: "View Services",
+      href: "/for-the-sick",
+    },
+    badge: "For The Sick",
+  },
+  {
+    id: 3,
+    image: "/assets/images/nurses-hero.webp", // Placeholder - replace with actual image
+    title: "Join Our Network of Healthcare Professionals",
+    subtitle: "Flexible Work, Competitive Pay",
+    description:
+      "Set your own schedule, choose your clients, and get paid immediately. Join a community of healthcare professionals transforming homecare.",
+    primaryCta: {
+      text: "Join Our Network",
+      href: "/signup",
+    },
+    secondaryCta: {
+      text: "Learn More",
+      href: "/for-health-professionals",
+    },
+    badge: "For Healthcare Professionals",
+  },
+  {
+    id: 4,
+    image: "/assets/images/for_family.webp", // Placeholder - replace with actual image
+    title: "Peace of Mind for Your Family",
+    subtitle: "Trusted Healthcare at Home",
+    description:
+      "Experience the Supracarer difference - connecting families with verified healthcare professionals for comprehensive home care services.",
+    primaryCta: {
+      text: "Get Care Now",
+      href: "/signin",
+    },
+    secondaryCta: {
+      text: "How It Works",
+      href: "/how-it-works",
+    },
+    badge: "For Families",
+  },
+];
+
+export const steps = [
+  {
+    id: 1,
+    icon: FaUserPlus,
+    title: "Sign Up & Complete Your Profile",
+    description:
+      "Create your account in minutes, complete your profile with care needs and preferences, and enable location permissions to activate our intelligent smart matching system.",
+    image: "/assets/images/signup.webp",
+    color: "tranquil-teal",
+    iconBg: "bg-tranquil-teal",
+    borderColor: "border-tranquil-teal",
+    gradient: "from-tranquil-teal/10 to-transparent",
+  },
+  {
+    id: 2,
+    icon: FaCalendarCheck,
+    title: "Book Your Care Appointment",
+    description:
+      "Schedule your care appointment directly from your account. Receive real-time email notifications with status updates at every stage of your appointment confirmation.",
+    image: "/assets/images/booking_appt.webp",
+    color: "custom-green",
+    iconBg: "bg-custom-green",
+    borderColor: "border-custom-green",
+    gradient: "from-custom-green/10 to-transparent",
+  },
+  {
+    id: 3,
+    icon: FaHandHoldingHeart,
+    title: "Get Matched & Receive Care",
+    description:
+      "We carefully match you with a qualified healthcare professional who meets your specific appointment requirements. Get notified immediately once matched and receive compassionate care at home.",
+    image: "/assets/images/supracarer_nurse.webp",
+    color: "haven-blue",
+    iconBg: "bg-haven-blue",
+    borderColor: "border-haven-blue",
+    gradient: "from-haven-blue/10 to-transparent",
+  },
+];
+
+export const trustReasons = [
+  {
+    id: 1,
+    icon: MdVerified,
+    title: "Verified Professionals",
+    description:
+      "Every healthcare professional undergoes rigorous background checks, license verification, and skills assessment before joining our platform.",
+    image: "/assets/images/verified.jpg",
+    stats: "100% Verified",
+    color: "tranquil-teal",
+    iconBg: "bg-tranquil-teal",
+    gradient: "from-tranquil-teal/10 to-transparent",
+  },
+  {
+    id: 2,
+    icon: FaShieldAlt,
+    title: "Safety & Security",
+    description:
+      "Your safety is our priority. We provide data encryption, secure payment processing, and 24/7 monitoring for peace of mind.",
+    image: "/assets/images/security.jpg",
+    stats: "24/7 Protected",
+    color: "custom-green",
+    iconBg: "bg-custom-green",
+    gradient: "from-custom-green/10 to-transparent",
+  },
+  {
+    id: 3,
+    icon: FaHeart,
+    title: "Compassionate Care",
+    description:
+      "Our professionals are not just skilled—they're compassionate caregivers who treat your loved ones with dignity, respect, and genuine care.",
+    image: "/assets/images/compassionate-care.jpg",
+    stats: "5-Star Rated",
+    color: "haven-blue",
+    iconBg: "bg-haven-blue",
+    gradient: "from-haven-blue/10 to-transparent",
+  },
+  {
+    id: 4,
+    icon: FaClock,
+    title: "Flexible & Reliable",
+    description:
+      "Book care on your schedule—one-time, recurring, or emergency appointments. Our professionals arrive on time, every time.",
+    image: "/assets/images/flexible-schedule.jpg",
+    stats: "On-Time Guarantee",
+    color: "carer-blue",
+    iconBg: "bg-carer-blue",
+    gradient: "from-carer-blue/10 to-transparent",
+  },
+  {
+    id: 5,
+    icon: FaDollarSign,
+    title: "Transparent Pricing",
+    description:
+      "No hidden fees or surprises. See upfront costs, choose your rate, and pay securely through our platform with complete transparency.",
+    image: "/assets/images/transparent-pricing.jpg",
+    stats: "Fair & Clear",
+    color: "tranquil-teal",
+    iconBg: "bg-tranquil-teal",
+    gradient: "from-tranquil-teal/10 to-transparent",
+  },
+  {
+    id: 6,
+    icon: FaHeadset,
+    title: "Dedicated Support",
+    description:
+      "Our support team is always here to help. Get assistance anytime through phone, chat, or email—we're committed to your satisfaction.",
+    image: "/assets/images/customer-support.jpg",
+    stats: "Always Available",
+    color: "custom-green",
+    iconBg: "bg-custom-green",
+    gradient: "from-custom-green/10 to-transparent",
+  },
+];
+
+export const badges = [
+  {
+    id: 1,
+    icon: FaUserNurse,
+    title: "Nurse Founded",
+    description: "Built by healthcare professionals who understand your needs",
+    color: "tranquil-teal",
+    bgGradient: "from-tranquil-teal/10 to-tranquil-teal/5",
+    iconBg: "bg-tranquil-teal/10",
+    iconColor: "text-tranquil-teal",
+    borderColor: "border-tranquil-teal/20",
+  },
+  {
+    id: 2,
+    icon: FaHeart,
+    title: "Trusted by Families",
+    description: "Verified professionals delivering compassionate care",
+    color: "custom-green",
+    bgGradient: "from-custom-green/10 to-custom-green/5",
+    iconBg: "bg-custom-green/10",
+    iconColor: "text-custom-green",
+    borderColor: "border-custom-green/20",
+    badge: <MdVerified className="text-custom-green" />,
+  },
+  {
+    id: 3,
+    icon: FaDollarSign,
+    title: "Transparent Pricing",
+    description: "No hidden fees, just honest and fair pricing",
+    color: "haven-blue",
+    bgGradient: "from-haven-blue/10 to-haven-blue/5",
+    iconBg: "bg-haven-blue/10",
+    iconColor: "text-haven-blue",
+    borderColor: "border-haven-blue/20",
   },
 ];

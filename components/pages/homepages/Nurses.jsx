@@ -36,18 +36,17 @@ const Nurses = () => {
               </div>
 
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6 leading-tight">
-                Your Nursing Career,
+                Homecare Jobs at,
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-tranquil-teal to-custom-green">
                   {" "}
-                  Reimagined
+                  Your Fingertips
                 </span>
               </h1>
 
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Join Ghana's innovative home healthcare platform where nurses
-                will thrive. Be among the first to enjoy flexible schedules,
-                competitive pay, and the satisfaction of providing personalized
-                care in patients' homes.
+               Join our trusted network of home care nurses to benefit from 
+               flexible scheduling, competitive compensation, 
+               and the opportunity to provide personalized in‑home care.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -55,7 +54,7 @@ const Nurses = () => {
                   href="/signup"
                   className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200"
                 >
-                  Join Our Founding Team
+                  Join Our Network
                   <FaArrowRight className="ml-2" />
                 </Link>
 
@@ -101,11 +100,10 @@ const Nurses = () => {
                   </div>
 
                   <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                    Be Among Our Founding Nurses
+                    Be Among Our Trusted Network of Professional Nurses.
                   </h3>
                   <p className="text-gray-600 mb-6">
-                    Join us at the beginning and help shape the future of home
-                    healthcare in Ghana
+                    Delivering quality care, one home at a time.
                   </p>
                 </div>
               </div>
@@ -118,7 +116,7 @@ const Nurses = () => {
       <div className="pageSection py-20">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Why Nurses Will Love{" "}
+            Why Nurses Love{" "}
             <span className="text-tranquil-teal">Supracarer</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -176,14 +174,14 @@ const Nurses = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
               Application{" "}
-              <span className="text-custom-green">Requirements</span>
+              <span className="text-custom-green">Screening</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Here's what you need to join our team of healthcare professionals
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {requirements.map((req, index) => (
               <div
                 key={index}
@@ -291,12 +289,9 @@ const Nurses = () => {
         <div className="pageSection relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              A Day in the <span className="text-carer-blue">Life</span>
+              Five Simple Processes 
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              See how our seamless appointment system works from notification to
-              completion
-            </p>
+            <p className="text-carer-blue text-4xl font-bold">Instant Payment</p>
           </div>
 
           <div className="grid lg:grid-cols-5 gap-12 items-center max-w-7xl mx-auto">
@@ -359,11 +354,10 @@ const Nurses = () => {
                   Get Paid Immediately
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
-                  After completing an appointment and receiving patient
-                  confirmation, you can request payment immediately. No waiting
-                  for weekly payouts - get paid for each session as soon as it's
-                  verified. Track all your earnings and payment requests in your
-                  dashboard.
+                  Upon patient confirmation of a completed appointment, 
+                  payment is issued immediately, no waiting for weekly payouts. 
+                  You can track all earnings and manage payment requests directly 
+                  from your dashboard.
                 </p>
               </div>
             </div>
@@ -374,7 +368,7 @@ const Nurses = () => {
             <p className="text-lg text-gray-600 mb-6">
               Ready to start your journey?
             </p>
-            <NormalBtn href="/signup">Join Our Team Today</NormalBtn>
+            <NormalBtn href="/signup">Join the Network</NormalBtn>
           </div>
         </div>
       </div>
@@ -390,9 +384,9 @@ const Nurses = () => {
               Ready to Make a Difference?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Be among the founding nurses who will shape the future of home
+              Be among our trusted network of professional nurses, who will shape the future of home
               healthcare in Ghana. Start your application today and be part of
-              building something special from day one.
+              building something special.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -400,7 +394,7 @@ const Nurses = () => {
                 href="/signup"
                 className="inline-flex items-center justify-center px-10 py-4 bg-white text-tranquil-teal font-bold rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200 text-lg"
               >
-                Join Our Founding Team
+                Join Us
                 <FaArrowRight className="ml-3" />
               </Link>
 

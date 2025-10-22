@@ -11,6 +11,7 @@ import { registerRequest } from "@service/request/auth/registerRequest";
 import LoadingStateUI from "@components/core/loading";
 import useRedirectIfAuthenticated from "@hooks/useRedirectIfAuthenticated";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Image from "next/image";
 
 const Register = () => {
   const status = useRedirectIfAuthenticated();
@@ -87,229 +88,315 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-6 text-center uppercase text-custom-green">
-          Create an account
-        </h1>
+    <div className="h-screen flex overflow-hidden">
+      <div className="w-full flex flex-col lg:grid lg:grid-cols-2">
+        {/* Left Side - Form */}
+        <div className="relative bg-white p-6 sm:p-8 lg:p-12 flex items-center justify-center order-2 lg:order-1 overflow-y-auto flex-1 lg:flex-none">
+          <div className="w-full max-w-md mt-16 md:mt-0">
+            {/* Header */}
+            <div className="mb-6">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2 mt-12 md:mt-0">
+                Create Account
+              </h1>
+              <p className="text-gray-600 text-sm">Join Supracarer today</p>
+            </div>
 
-        <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            phone: "",
-            role: "",
-            practitioner: "",
-            password: "",
-            password_confirmation: "",
-          }}
-          validationSchema={registrationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ setFieldValue, resetForm }) => (
-            <Form className="space-y-4">
-              <div>
-                <label
-                  htmlFor="fullname"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Full Name
-                </label>
-                <Field
-                  name="name"
-                  type="text"
-                  className="login-form-input"
-                  placeholder="John Doe"
-                />
-                <ErrorMessage
-                  name="name"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
+            <Formik
+              initialValues={{
+                name: "",
+                email: "",
+                phone: "",
+                role: "",
+                practitioner: "",
+                password: "",
+                password_confirmation: "",
+              }}
+              validationSchema={registrationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ setFieldValue, resetForm }) => (
+                <Form className="space-y-4">
+                  {/* Full Name */}
+                  <div>
+                    <label
+                      htmlFor="fullname"
+                      className="block text-sm font-semibold text-gray-700 mb-1.5"
+                    >
+                      Full Name
+                    </label>
+                    <Field
+                      name="name"
+                      type="text"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none"
+                      placeholder="John Doe"
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="text-red-500 text-sm mt-1"
+                    />
+                  </div>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Email
-                </label>
-                <Field
-                  name="email"
-                  type="email"
-                  className="login-form-input"
-                  placeholder="you@example.com"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
+                  {/* Email and Phone in Grid */}
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-semibold text-gray-700 mb-1.5"
+                      >
+                        Email
+                      </label>
+                      <Field
+                        name="email"
+                        type="email"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none"
+                        placeholder="you@example.com"
+                      />
+                      <ErrorMessage
+                        name="email"
+                        component="div"
+                        className="text-red-500 text-sm mt-1"
+                      />
+                    </div>
 
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Phone
-                </label>
-                <Field
-                  name="phone"
-                  type="text"
-                  className="login-form-input"
-                  placeholder="+23346579304"
-                />
-                <ErrorMessage
-                  name="phone"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
+                    <div>
+                      <label
+                        htmlFor="phone"
+                        className="block text-sm font-semibold text-gray-700 mb-1.5"
+                      >
+                        Phone
+                      </label>
+                      <Field
+                        name="phone"
+                        type="text"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none"
+                        placeholder="+233 24 123 4567"
+                      />
+                      <ErrorMessage
+                        name="phone"
+                        component="div"
+                        className="text-red-500 text-sm mt-1"
+                      />
+                    </div>
+                  </div>
 
-              <div>
-                <label
-                  htmlFor="role"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Please select a role
-                </label>
-                <Field
-                  name="role"
-                  as="select"
-                  className="login-form-input"
-                  onChange={(e) => {
-                    const role = e.target.value;
-                    setSelectedRole(role);
-                    setFieldValue("role", role);
-                    if (role !== "healthworker") {
-                      setFieldValue("practitioner", "");
-                    }
-                  }}
-                >
-                  <option value="">Select a role</option>
-                  <option value="healthworker">Healthcare Professional</option>
-                  <option value="client">Client</option>
-                </Field>
-                <ErrorMessage
-                  name="role"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
-              {selectedRole === "healthworker" && (
-                <div>
-                  <label
-                    htmlFor="practitioner"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Practitioner Type
-                  </label>
-                  <Field
-                    name="practitioner"
-                    as="select"
-                    className="login-form-input"
-                  >
-                    <option value="">Select practitioner</option>
-                    <option value="nurse">Nurse</option>
-                  </Field>
-                  <ErrorMessage
-                    name="practitioner"
-                    component="div"
-                    className="text-red-500 text-sm"
-                  />
-                </div>
+                  {/* Role Selection */}
+                  <div>
+                    <label
+                      htmlFor="role"
+                      className="block text-sm font-semibold text-gray-700 mb-1.5"
+                    >
+                      Select an Account Type
+                    </label>
+                    <Field
+                      name="role"
+                      as="select"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none bg-white"
+                      onChange={(e) => {
+                        const role = e.target.value;
+                        setSelectedRole(role);
+                        setFieldValue("role", role);
+                        if (role !== "healthworker") {
+                          setFieldValue("practitioner", "");
+                        }
+                      }}
+                    >
+                      <option value="">Choose</option>
+                      <option value="healthworker">
+                        Healthcare Professional
+                      </option>
+                      <option value="client">Client</option>
+                    </Field>
+                    <ErrorMessage
+                      name="role"
+                      component="div"
+                      className="text-red-500 text-sm mt-1"
+                    />
+                  </div>
+
+                  {/* Conditional Practitioner Type */}
+                  {selectedRole === "healthworker" && (
+                    <div className="animate-fade-in">
+                      <label
+                        htmlFor="practitioner"
+                        className="block text-sm font-semibold text-gray-700 mb-1.5"
+                      >
+                        Practitioner Type
+                      </label>
+                      <Field
+                        name="practitioner"
+                        as="select"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none bg-white"
+                      >
+                        <option value="">Select type</option>
+                        <option value="nurse">Nurse</option>
+                      </Field>
+                      <ErrorMessage
+                        name="practitioner"
+                        component="div"
+                        className="text-red-500 text-sm mt-1"
+                      />
+                    </div>
+                  )}
+
+                  {/* Password Fields in Grid */}
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <div>
+                      <label
+                        htmlFor="password"
+                        className="block text-sm font-semibold text-gray-700 mb-1.5"
+                      >
+                        Password
+                      </label>
+                      <div className="relative">
+                        <Field
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none"
+                          placeholder="••••••••"
+                        />
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? (
+                            <FaEyeSlash className="w-4 h-4" />
+                          ) : (
+                            <FaEye className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
+                      <ErrorMessage
+                        name="password"
+                        component="div"
+                        className="text-red-500 text-sm mt-1"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="password_confirmation"
+                        className="block text-sm font-semibold text-gray-700 mb-1.5"
+                      >
+                        Confirm
+                      </label>
+                      <div className="relative">
+                        <Field
+                          name="password_confirmation"
+                          type={showConfirmPassword ? "text" : "password"}
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none"
+                          placeholder="••••••••"
+                        />
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
+                        >
+                          {showConfirmPassword ? (
+                            <FaEyeSlash className="w-4 h-4" />
+                          ) : (
+                            <FaEye className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
+                      <ErrorMessage
+                        name="password_confirmation"
+                        component="div"
+                        className="text-red-500 text-sm mt-1"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-1">
+                    <LoaderButton
+                      loading={loading}
+                      loadingText="Creating account..."
+                      text="Create Account"
+                      type="submit"
+                    />
+                  </div>
+                </Form>
               )}
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <Field
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    className="login-form-input"
-                    placeholder="••••••••"
-                  />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <FaEyeSlash className="text-gray-400" />
-                    ) : (
-                      <FaEye className="text-gray-400" />
-                    )}
-                  </button>
-                </div>
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
+            </Formik>
+
+            {/* Footer Links */}
+            <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-3 pt-4 border-t border-gray-200">
+              <Link
+                href="/"
+                className="flex items-center text-gray-600 hover:text-tranquil-teal transition-colors duration-300 text-sm font-medium"
+              >
+                <span className="mr-2">←</span>
+                <span>Back to Home</span>
+              </Link>
+              <Link
+                href="/signin"
+                className="flex items-center text-tranquil-teal hover:text-custom-green transition-colors duration-300 text-sm font-medium"
+              >
+                Have an account?
+                <span className="ml-1 font-semibold">Sign In</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side - Image & Content */}
+        <div className="relative order-1 lg:order-2 overflow-hidden h-48 lg:h-auto">
+          {/* Background Image */}
+          <Image
+            src="/assets/images/group_nurse.webp"
+            fill
+            style={{ objectFit: "cover" }}
+            alt="Healthcare professionals"
+            className="absolute inset-0"
+            priority
+          />
+
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-tranquil-teal/90 via-custom-green/85 to-haven-blue/90"></div>
+
+          {/* Content */}
+          <div className="relative z-10 h-full flex items-center justify-center p-8 sm:p-12">
+            <div className="text-white max-w-md text-center">
+              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium border border-white/30 mb-6">
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                <span>Join Supracarer</span>
               </div>
 
-              <div>
-                <label
-                  htmlFor="password_confirmation"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <Field
-                    name="password_confirmation"
-                    type={showConfirmPassword ? "text" : "password"}
-                    className="login-form-input"
-                    placeholder="••••••••"
-                  />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <FaEyeSlash className="text-gray-400" />
-                    ) : (
-                      <FaEye className="text-gray-400" />
-                    )}
-                  </button>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+                Your Healthcare Journey Starts Here
+              </h2>
+              <p className="text-lg text-white/90 mb-8">
+                Connect with trusted professionals and receive quality care at
+                home.
+              </p>
+
+              {/* Features */}
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/20">
+                <div>
+                  <div className="text-2xl sm:text-3xl font-bold">24/7</div>
+                  <div className="text-white/80 text-xs sm:text-sm">
+                    Available
+                  </div>
                 </div>
-                <ErrorMessage
-                  name="password_confirmation"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
+                <div>
+                  <div className="text-2xl sm:text-3xl font-bold">100%</div>
+                  <div className="text-white/80 text-xs sm:text-sm">
+                    Verified
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl sm:text-3xl font-bold">Safe</div>
+                  <div className="text-white/80 text-xs sm:text-sm">
+                    & Secure
+                  </div>
+                </div>
               </div>
-
-              <LoaderButton
-                loading={loading}
-                loadingText="Creating account..."
-                text="Create account"
-                type="submit"
-              />
-            </Form>
-          )}
-        </Formik>
-
-        <div className="mt-4 flex flex-row justify-between">
-          <Link
-            href="/"
-            className="flex items-center text-custom-green hover:text-green-700 transition-colors duration-300"
-          >
-            <span className="mr-2">&#8592;</span>Go Back
-          </Link>
-          <Link
-            href="/signin"
-            className="flex items-center text-custom-green hover:text-green-700 transition-colors duration-300"
-          >
-            Have an account? SignIn
-          </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

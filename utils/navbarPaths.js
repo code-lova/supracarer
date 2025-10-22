@@ -9,4 +9,7 @@ export const showNavbarPaths = [
   "/for-nurses",
   "/services",
   "/faq",
+  "/for-elderly",
+  "/for-the-sick",
+  "/for-health-professionals",
 ];
