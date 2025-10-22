@@ -188,7 +188,7 @@ const ForSick = () => {
             </div>
 
             {/* Image */}
-            <div className="relative h-[380px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative h-[350px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/assets/images/nurse-with-sick.webp"
                 alt="Nurse providing medical care"

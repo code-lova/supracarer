@@ -29,6 +29,7 @@ const NavLinks = ({
 }) => {
   const pathname = usePathname();
   const isMobile = useIsMobile();
+  const [desktopDropdownOpen, setDesktopDropdownOpen] = useState(null);
 
   return (
     <>
@@ -36,11 +37,13 @@ const NavLinks = ({
         nav.subNav ? (
           <li
             key={nav.id}
-            className="relative group py-2 font-bold text-[16px] text-haven-blue"
+            className="relative py-2 font-bold text-[16px] text-haven-blue"
+            onMouseEnter={() => !isMobile && setDesktopDropdownOpen(nav.id)}
+            onMouseLeave={() => !isMobile && setDesktopDropdownOpen(null)}
             onClick={() => isMobile && setMobileDropdownOpen((prev) => !prev)}
           >
             <div
-              className={`flex items-center space-x-1 cursor-pointer group-hover:text-custom-green`}
+              className={`flex items-center space-x-1 cursor-pointer hover:text-custom-green`}
             >
               <span
                 className={
@@ -57,7 +60,9 @@ const NavLinks = ({
                     ? mobileDropdownOpen
                       ? "rotate-180"
                       : ""
-                    : "group-hover:rotate-180"
+                    : desktopDropdownOpen === nav.id
+                    ? "rotate-180"
+                    : ""
                 }`}
               />
             </div>
@@ -68,7 +73,9 @@ const NavLinks = ({
                   ? mobileDropdownOpen
                     ? "block"
                     : "hidden"
-                  : "absolute left-0 mt-4 w-48 bg-white rounded-md shadow-lg z-50 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 -translate-y-2"
+                  : desktopDropdownOpen === nav.id
+                  ? "absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 opacity-100 translate-y-0"
+                  : "absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 opacity-0 -translate-y-2 pointer-events-none"
               }`}
             >
               {nav.subNav.map((sub) => (

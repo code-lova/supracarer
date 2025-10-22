@@ -9,8 +9,8 @@ export const registrationSchema = yup.object().shape({
   phone: yup.string().required("Phone number is required"),
   role: yup
     .string()
-    .oneOf(["healthworker", "client"], "Invalid role")
-    .required("Role is required"),
+    .oneOf(["healthworker", "client"], "Invalid account type")
+    .required("Account type is required"),
   practitioner: yup.string().when("role", {
     is: "healthworker",
     then: () =>

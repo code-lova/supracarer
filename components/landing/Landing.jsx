@@ -2,6 +2,9 @@
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Hero from "./Hero";
+import TrustBadges from "./TrustBadges";
+import StepsToGetCare from "./StepsToGetCare";
+import WhyFamiliesTrustUs from "./WhyFamiliesTrustUs";
 import Features from "./Features";
 import HowitWorks from "./HowitWorks";
 import AboutUs from "./AboutUs";
@@ -31,19 +34,19 @@ const Landing = () => {
         {/* Hero background image */}
         <Hero />
 
+        {/* Trust Badges */}
+        <TrustBadges />
+
         {/* Who we are */}
         <AboutUs />
 
-        {/* Features of the app section */}
-        <Features />
+        {/* Steps to Get Care */}
+        <StepsToGetCare />
 
-        {/* How it works */}
-        <HowitWorks />
+        {/* Why Families Trust Us */}
+        <WhyFamiliesTrustUs />
 
         <Marquee />
-
-        {/* Our services section */}
-        <Services />
 
         {/* FaQ section */}
         <Faq />
