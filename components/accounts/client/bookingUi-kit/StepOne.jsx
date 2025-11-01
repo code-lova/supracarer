@@ -98,7 +98,7 @@ const StepOne = ({ values, goToNextStep, setFormValues, userDetails }) => {
               name="care_duration"
               value={values.care_duration}
               onChange={handleChange}
-              className="steper-form-input"
+              className="steper-form-input select-dropdown"
             >
               <option value="">Select</option>
               <option value="Hourly">Hourly</option>
@@ -118,7 +118,7 @@ const StepOne = ({ values, goToNextStep, setFormValues, userDetails }) => {
               name="care_duration_value"
               value={values.care_duration_value}
               onChange={handleChange}
-              className="steper-form-input"
+              className="steper-form-input select-dropdown"
             >
               <option value="">Select</option>
               {values.care_duration === "Shift" && (
@@ -152,7 +152,7 @@ const StepOne = ({ values, goToNextStep, setFormValues, userDetails }) => {
               name="care_type"
               value={values.care_type}
               onChange={handleChange}
-              className="steper-form-input"
+              className="steper-form-input select-dropdown"
             >
               <option value="">Select</option>
               {values.care_duration === "Shift" &&
@@ -184,7 +184,7 @@ const StepOne = ({ values, goToNextStep, setFormValues, userDetails }) => {
                   name="accommodation"
                   value={values.accommodation}
                   onChange={handleChange}
-                  className="steper-form-input"
+                  className="steper-form-input select-dropdown"
                 >
                   <option value="">Select</option>
                   <option value="Yes">Yes</option>
@@ -204,7 +204,7 @@ const StepOne = ({ values, goToNextStep, setFormValues, userDetails }) => {
                   name="meal"
                   value={values.meal}
                   onChange={handleChange}
-                  className="steper-form-input"
+                  className="steper-form-input select-dropdown"
                 >
                   <option value="">Select</option>
                   <option value="Yes">Yes</option>
@@ -225,7 +225,7 @@ const StepOne = ({ values, goToNextStep, setFormValues, userDetails }) => {
                     name="num_of_meals"
                     value={values.num_of_meals}
                     onChange={handleChange}
-                    className="steper-form-input"
+                    className="steper-form-input select-dropdown"
                   >
                     <option value="">Select</option>
                     <option value="1">1</option>

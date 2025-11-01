@@ -10,9 +10,9 @@ const AboutUs = () => {
       <div className="flex flex-col-reverse md:flex-row justify-center md:justify-between gap-8 md:gap-10 lg:gap-12 items-center">
         <div className="relative w-full md:w-1/2 h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl group">
           {/* Modern Vertical Badge */}
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-b from-tranquil-teal to-custom-green px-3 py-6 rounded-full shadow-2xl backdrop-blur-sm border border-white/20">
+          <div className="absolute -left-1 top-8 z-20 bg-custom-green text-white px-4 py-8 rounded-r-xl shadow-lg">
             <span
-              className="text-white text-sm font-bold tracking-wider transform -rotate-180"
+              className="text-sm uppercase font-semibold tracking-wider transform -rotate-180"
               style={{ writingMode: "vertical-lr" }}
             >
               FOR FAMILIES AND INDIVIDUALS

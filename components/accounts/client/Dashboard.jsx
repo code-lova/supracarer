@@ -40,7 +40,7 @@ const Dashboard = () => {
         </div>
 
         {/* Right Sidebar (1/3 Width) */}
-        <div className="w-full h-auto md:h-[660px] mt-6 xl:mt-0">
+        <div className="w-full h-auto md:h-[660px] md:mt-6 xl:mt-0">
           <div className="w-full grid grid-cols-1 gap-2">
             <ProfileCard userDetails={userDetails} />
             <AvailablePractioners />
