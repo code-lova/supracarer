@@ -19,7 +19,7 @@ const WelcomeCard = ({ userDetails }) => {
               <p>Check Your Health Regularly</p>
             </div>
 
-            <Link href="/client/appointment" passHref>
+            <Link href="/client/booking" passHref>
               <button className="mt-4 flex items-center gap-2 bg-white text-carer-blue font-semibold py-2 px-5 rounded-xl hover:bg-carer-blue hover:text-white transition duration-300 ease-in-out">
                 <span>Book Appointment</span>
                 <FaRegCalendarAlt size={18} className="text-inherit" />

@@ -7,6 +7,7 @@ import { showClientNextApt } from "@service/request/client/dashboard";
 import ProfileCardSkeleton from "@components/core/skeleton/ProfileCardSkeleton";
 import ProfileCompleteness from "@components/core/ProfileCompleteness";
 import DateFormatter from "@components/core/DateFormatter";
+import Link from "next/link";
 
 const ProfileCard = ({ userDetails }) => {
   const { data, isLoading, isError } = useQuery({
@@ -22,13 +23,15 @@ const ProfileCard = ({ userDetails }) => {
     return <ProfileCardSkeleton />;
   }
   return (
-    <div className="bg-white w-full rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[365px]">
+    <div className="bg-white w-full md:mt-52 lg:mt-0 rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.01] h-[365px]">
       <div className="flex items-center justify-between border-b-2 w-full h-[50px] px-4">
         <h3 className="text-dark-blue font-semibold text-lg">My Profile</h3>
-        <FaPencilAlt
-          className="text-dark-blue hover:text-carer-blue"
-          size={16}
-        />
+        <Link href="/client/profile">
+          <FaPencilAlt
+            className="text-dark-blue hover:text-carer-blue"
+            size={16}
+          />
+        </Link>
       </div>
       <div className="px-3 h-full overflow-y-auto">
         <div className="px-1 py-1">
@@ -69,10 +72,7 @@ const ProfileCard = ({ userDetails }) => {
 
         <div className="w-full h-[1px] bg-gray-200 mt-2 mb-3"></div>
         <div className="mt-2 mb-3">
-          <ProfileCompleteness
-            userDetails={userDetails}
-            userType="client"
-          />
+          <ProfileCompleteness userDetails={userDetails} userType="client" />
         </div>
         {/* Show appointment.label here */}
         {appointment && appointment.label ? (
@@ -95,7 +95,7 @@ const ProfileCard = ({ userDetails }) => {
               <div className="flex item-center justify-between space-x-5">
                 <div className="flex items-center text-xs text-slate-gray bg-white rounded-md border border-carer-blue px-2 py-1 w-fit">
                   <FaCalendarAlt className="mr-2 text-blue-500" />
-                  <DateFormatter date={appointment.start_date} format="long"/>
+                  <DateFormatter date={appointment.start_date} format="long" />
                 </div>
                 <div>
                   <StatusPill status={appointment.status} size="sm" />

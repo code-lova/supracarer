@@ -22,6 +22,7 @@ const Login = () => {
   const [pendingCredentials, setPendingCredentials] = useState(null);
   const [twoFactorData, setTwoFactorData] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [retainedEmail, setRetainedEmail] = useState("");
 
   // Redirect logged-in users to their respective dashboard
   useEffect(() => {
@@ -42,8 +43,10 @@ const Login = () => {
     }
   }, [session, status, router]);
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, setFieldValue }) => {
     setLoading(true);
+    setRetainedEmail(values.email); // Store email before attempting login
+
     try {
       // Use NextAuth signIn for initial login
       const result = await signIn("credentials", {
@@ -69,6 +72,9 @@ const Login = () => {
         toast.error("2FA verification required, but no data returned");
         setLoading(false);
       } else if (result?.error) {
+        // Retain email but clear password on error
+        setFieldValue("email", retainedEmail);
+        setFieldValue("password", "");
         toast.error(
           result.error === "Invalid credentials"
             ? "Invalid email or password"
@@ -77,11 +83,16 @@ const Login = () => {
         setLoading(false);
       } else {
         toast.success("Login successful");
+        // Clear retained email on success
+        setRetainedEmail("");
         // Note: refetchUser() removed - NextAuth session should handle user data
         // User context will automatically update when session changes
         // First-time login flag will be managed by the ProfileWarningModal based on actual user data
       }
     } catch (error) {
+      // Retain email but clear password on error
+      setFieldValue("email", retainedEmail);
+      setFieldValue("password", "");
       toast.error(error.message || "Login failed");
       setLoading(false);
     }
@@ -180,9 +191,10 @@ const Login = () => {
             </div>
 
             <Formik
-              initialValues={{ email: "", password: "" }}
+              initialValues={{ email: retainedEmail, password: "" }}
               validationSchema={loginSchema}
               onSubmit={handleSubmit}
+              enableReinitialize={true}
             >
               {() => (
                 <Form className="space-y-4">
