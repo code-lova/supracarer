@@ -102,7 +102,7 @@ const Hero = () => {
       {/* Navigation Arrows */}
       <button
         onClick={goToPrevious}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 border border-white/30 group"
+        className="hidden absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-md rounded-full md:flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 border border-white/30 group"
         aria-label="Previous slide"
       >
         <FaChevronLeft className="text-lg md:text-xl group-hover:scale-110 transition-transform" />
@@ -110,7 +110,7 @@ const Hero = () => {
 
       <button
         onClick={goToNext}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 border border-white/30 group"
+        className="hidden absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-md rounded-full md:flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 border border-white/30 group"
         aria-label="Next slide"
       >
         <FaChevronRight className="text-lg md:text-xl group-hover:scale-110 transition-transform" />

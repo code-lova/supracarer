@@ -169,7 +169,7 @@ const Profile = () => {
           {/* Left Column (1/3) */}
           <div className="space-y-2">
             {/* User Info Card */}
-            <div className="bg-gray-50 shadow-lg rounded-xl p-4 flex flex-col items-center relative">
+            <div className="bg-gray-50 shadow-md rounded-xl p-4 flex flex-col items-center relative">
               <div className="w-32 h-32 rounded-full flex items-center justify-center text-carer-blue text-4xl font-bold border-2 border-carer-blue relative">
                 {/* FaEdit icon inside the image div, positioned bottom right */}
                 <button
@@ -234,7 +234,7 @@ const Profile = () => {
             </div>
 
             {/* Details Card */}
-            <div className="bg-gray-50 shadow-lg rounded-xl p-4 h-[405px]">
+            <div className="bg-gray-50 shadow-md rounded-xl p-4 h-[405px]">
               <h4 className="text-lg font-bold mb-4 text-dark-blue">
                 Personal Details
               </h4>
@@ -273,7 +273,7 @@ const Profile = () => {
 
           {/* Right Column (2/3) */}
           <div className="lg:col-span-2 ">
-            <div className="bg-gray-50 shadow-lg rounded-xl p-6 h-[90vh] overflow-y-auto">
+            <div className="bg-gray-50 shadow-md rounded-xl p-6 h-auto">
               <h4 className="text-lg font-bold text-dark-blue mb-6">
                 Update Profile Information
               </h4>
@@ -391,7 +391,7 @@ const Profile = () => {
                       <Field
                         type="date"
                         name="date_of_birth"
-                        className="login-form-input"
+                        className="login-form-input select-dropdown"
                       />
                       <ErrorMessage
                         name="date_of_birth"
@@ -406,7 +406,7 @@ const Profile = () => {
                       <Field
                         as="select"
                         name="country"
-                        className="login-form-input"
+                        className="login-form-input select-dropdown"
                       >
                         <option value="">Select country</option>
                         {countries.map((c, idx) => (
@@ -428,7 +428,7 @@ const Profile = () => {
                       <Field
                         as="select"
                         name="region"
-                        className="login-form-input"
+                        className="login-form-input select-dropdown"
                       >
                         <option value="">Select region</option>
                         {region.map((r, idx) => (
@@ -451,7 +451,7 @@ const Profile = () => {
                       <Field
                         as="select"
                         name="religion"
-                        className="login-form-input"
+                        className="login-form-input select-dropdown"
                       >
                         <option value="">Select religion</option>
                         {religion.map((r, idx) => (
@@ -469,7 +469,7 @@ const Profile = () => {
                       <Field
                         as="select"
                         name="gender"
-                        className="login-form-input"
+                        className="login-form-input select-dropdown"
                       >
                         <option value="">Select gender</option>
                         {gender.map((g, idx) => (

@@ -6,7 +6,11 @@ export const registrationSchema = yup.object().shape({
     .string()
     .email("Invalid email format")
     .required("Email is required"),
-  phone: yup.string().required("Phone number is required"),
+  phone: yup
+    .string()
+    .required("Phone number is required")
+    .min(10, "Phone number must be at least 9 digits")
+    .max(14, "Phone number cannot exceed 14 characters"),
   role: yup
     .string()
     .oneOf(["healthworker", "client"], "Invalid account type")
