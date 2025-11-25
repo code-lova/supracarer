@@ -138,7 +138,7 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
                   </div>
                 ) : (
                   <span className="text-sm text-gray-500 italic">
-                    No medical services selected
+                    Medical services Pending collection
                   </span>
                 )}
               </div>
@@ -162,7 +162,7 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
                   </div>
                 ) : (
                   <span className="text-sm text-gray-500 italic">
-                    No additional services selected
+                    Additional services Pending collection
                   </span>
                 )}
               </div>

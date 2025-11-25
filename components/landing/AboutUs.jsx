@@ -95,8 +95,9 @@ const AboutUs = () => {
             </div>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-8 flex gap-4">
             <NormalBtn href="/about" children="Discover More" />
+             <NormalBtn href="/pricing" children="Our Care Package" />
           </div>
         </div>
       </div>

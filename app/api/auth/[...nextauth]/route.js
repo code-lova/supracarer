@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { nextAuthAPIFetch } from "@utils/cloudflareAPIFetch";
 
 const handler = NextAuth({
   session: {
@@ -54,12 +55,11 @@ const handler = NextAuth({
           // Get user agent from the actual request headers
           const userAgent = req?.headers?.["user-agent"];
 
-          const apiResponse = await fetch(
+          const apiResponse = await nextAuthAPIFetch(
             `${process.env.NEXT_PUBLIC_API_URL}/login`,
             {
               method: "POST",
               headers: {
-                "Content-Type": "application/json",
                 // Use real user agent from request headers
                 ...(userAgent && { "X-Real-User-Agent": userAgent }),
                 // Or use client-provided user agent as fallback

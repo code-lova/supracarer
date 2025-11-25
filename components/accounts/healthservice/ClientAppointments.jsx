@@ -193,7 +193,7 @@ const ClientAppointments = () => {
           return (
             <div className="min-w-0">
               <p className="text-sm font-medium text-gray-800 truncate">
-                {services[0] || "No service"}
+                {services[0] || "Confidential"}
               </p>
               {services.length > 1 && (
                 <p className="text-xs text-gray-500">

@@ -50,34 +50,46 @@ const CalendarWidget = () => {
   const mutation = useMutation({
     mutationFn: toggleUnavailableDate,
     onMutate: async ({ date }) => {
+      // Cancel outgoing refetches
       await queryClient.cancelQueries(["unavailableDates"]);
 
-      const previousDates =
-        queryClient.getQueryData(["unavailableDates"]) || [];
+      // Store previous state for rollback
+      const previousDates = [...selectedDates];
+      const toggledDate = new Date(date);
 
-      const isRemoving = previousDates.includes(date);
-      const newDates = isRemoving
-        ? previousDates.filter((d) => d !== date)
-        : [...previousDates, date];
+      // Optimistically update local state immediately
+      const isCurrentlySelected = selectedDates.some((d) =>
+        isSameDay(d, toggledDate)
+      );
 
-      queryClient.setQueryData(["unavailableDates"], newDates);
+      if (isCurrentlySelected) {
+        // Remove date
+        setSelectedDates((prev) =>
+          prev.filter((d) => !isSameDay(d, toggledDate))
+        );
+      } else {
+        // Add date
+        setSelectedDates((prev) => [...prev, toggledDate]);
+      }
 
       return { previousDates };
     },
     onSuccess: (data) => {
-      const toggledDate = new Date(data.date);
+      // Don't update state here - we already did it optimistically in onMutate
+      // Just show success feedback if needed
       const isRemoving = data.status === "removed";
-
-      setSelectedDates((prev) => {
-        if (isRemoving) {
-          return prev.filter((d) => !isSameDay(d, toggledDate));
-        } else {
-          return [...prev, toggledDate];
-        }
-      });
+      toast.success(
+        isRemoving
+          ? "Date availability restored"
+          : "Date marked as unavailable",
+        { duration: 2000 }
+      );
     },
-    onError: (err, _, context) => {
-      queryClient.setQueryData(["unavailableDates"], context.previousDates);
+    onError: (err, variables, context) => {
+      // Rollback to previous state on error
+      if (context?.previousDates) {
+        setSelectedDates(context.previousDates);
+      }
       toast.error("Something went wrong. Try again.");
     },
   });
@@ -86,9 +98,12 @@ const CalendarWidget = () => {
     // Only allow future dates (today or after)
     if (date < today.setHours(0, 0, 0, 0)) return;
 
+    // Don't allow clicks while mutation is in progress
+    if (mutation.isPending) return;
+
     const formatted = format(date, "yyyy-MM-dd");
 
-    // Optimistically toggle state while waiting for response
+    // Send request - UI will update immediately via onMutate
     mutation.mutate({ date: formatted });
   };
 
@@ -175,7 +190,7 @@ const CalendarWidget = () => {
     return <div className="space-y-1 py-1 font-semibold">{rows}</div>;
   };
 
-  if (isLoading || mutation.isPending) {
+  if (isLoading) {
     return (
       <div className="p-4 text-gray-400 animate-pulse">Loading calendar...</div>
     );

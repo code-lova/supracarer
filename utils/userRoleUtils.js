@@ -55,7 +55,7 @@ export const getUnassignedHealthWorkerMessage = (role) => {
   if (isAdmin(role)) {
     return "You have not yet assigned a health worker to this appointment. Please assign a suitable health worker to proceed.";
   } else if (isClient(role)) {
-    return "A health worker has not been assigned to this appointment yet. You will be notified once an admin assigns a suitable health worker.";
+    return "A health worker has not been assigned to this appointment yet. You will be notified once our care coordinators assign a suitable health worker.";
   } else {
     return "A health worker has not been assigned to this appointment yet.";
   }

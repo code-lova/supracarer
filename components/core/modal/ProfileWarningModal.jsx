@@ -3,11 +3,15 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { PiWarningFill } from "react-icons/pi";
 import { useUserContext } from "@context/userContext";
+import { isFeatureEnabled } from "@config/features";
+
 
 const ProfileWarningModal = ({ userType = "health-service" }) => {
   const { user } = useUserContext();
   const [showModal, setShowModal] = useState(false);
   const userDetails = user?.data;
+
+  const grsEnabled = isFeatureEnabled("GUIDED_RATE_SYSTEM");
 
   // Check profile completion status
   const hasCompleteProfile = Boolean(userDetails?.address);
@@ -24,10 +28,12 @@ const ProfileWarningModal = ({ userType = "health-service" }) => {
     if (typeof window !== "undefined" && userDetails) {
       const currentFlag = localStorage.getItem("firstTimeLogin");
 
-      // If user has complete profile and guided rate system, mark as not first-time
+      // If user has complete profile and GRS is either disabled or completed, mark as not first-time
+      const grsRequirementMet = !grsEnabled || hasGuidedRateSystem;
+      
       if (
         hasCompleteProfile &&
-        hasGuidedRateSystem &&
+        grsRequirementMet &&
         currentFlag !== "false"
       ) {
         localStorage.setItem("firstTimeLogin", "false");
@@ -37,12 +43,15 @@ const ProfileWarningModal = ({ userType = "health-service" }) => {
         localStorage.setItem("firstTimeLogin", "true");
       }
     }
-  }, [userDetails, hasCompleteProfile, hasGuidedRateSystem]);
+  }, [userDetails, hasCompleteProfile, hasGuidedRateSystem, grsEnabled]);
 
   // Determine what needs to be completed
   const needsProfileUpdate = !hasCompleteProfile;
   const needsGuidedRateSetup =
-    userType === "health-service" && hasCompleteProfile && !hasGuidedRateSystem;
+    userType === "health-service" && 
+    hasCompleteProfile && 
+    !hasGuidedRateSystem && 
+    grsEnabled; // Only require GRS setup if feature is enabled
 
   // For first-time users or incomplete profiles, force profile completion
   const forceProfileUpdate =
@@ -84,7 +93,7 @@ const ProfileWarningModal = ({ userType = "health-service" }) => {
             : "Missing address information",
         ],
       };
-    } else if (needsGuidedRateSetup) {
+    } else if (needsGuidedRateSetup && grsEnabled) {
       return {
         link: "/health-service/guided-rate-system",
         buttonText: "Setup Rate System",

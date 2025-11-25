@@ -19,6 +19,8 @@ import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { getUnreadCount } from "@service/request/user/getNotifications";
 import DateFormatter from "@components/core/DateFormatter";
 import NotificationDropdown from "@components/core/NotificationDropdown";
+import { isFeatureEnabled } from "@config/features";
+
 
 const NavigationBar = () => {
   const { user } = useUserContext();
@@ -37,9 +39,11 @@ const NavigationBar = () => {
     refetchInterval: 30000, // Refetch every 30 seconds
   });
 
+  const grsEnabled = isFeatureEnabled("GUIDED_RATE_SYSTEM");
+
   // Check if profile needs updates
   const needsProfileUpdate =
-    !userDetails?.address || userDetails?.has_guided_rate_system === false;
+    !userDetails?.address || (grsEnabled && userDetails?.has_guided_rate_system === false);
 
   // Get unread notification count
   const unreadCount = unreadResponse?.data?.unread_count || 0;
@@ -69,7 +73,7 @@ const NavigationBar = () => {
     queryClient.clear();
   };
 
-  const dropdownItems = [
+  const allDropdownItems = [
     {
       label: "Profile",
       href: "/health-service/profile",
@@ -84,8 +88,16 @@ const NavigationBar = () => {
       label: "GRS",
       href: "/health-service/guided-rate-system",
       icon: FaStar,
+      featureFlag: "GUIDED_RATE_SYSTEM",
     },
   ];
+
+  const dropdownItems = allDropdownItems.filter((item) => {
+    if (item.featureFlag) {
+      return isFeatureEnabled(item.featureFlag);
+    }
+    return true; // Show items without feature flag requirements
+  });
 
   return (
     <header className="hidden lg:flex sticky top-0 z-30 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 px-6 py-2">
