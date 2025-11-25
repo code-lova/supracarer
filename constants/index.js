@@ -69,6 +69,7 @@ import {
   Twitter,
   FacebookRect,
 } from "@components/core/icon/socials";
+import { IoIosPricetags } from "react-icons/io";
 
 export const navLinks = [
   {
@@ -85,6 +86,12 @@ export const navLinks = [
         title: "About Us",
         link: "/about",
         icon: <FaInfoCircle />,
+      },
+      {
+        id: "pricing",
+        title: "Pricing",
+        link: "/pricing",
+        icon: <IoIosPricetags />,
       },
       {
         id: "values",
@@ -425,95 +432,86 @@ export const team = [
 export const pricingPlan = [
   {
     id: "1",
-    name: "Basic Plan",
-    heading: "Perfect for those who need reliable and nearby assistance",
-    amount: "₵19.99",
-    annual: "₵199.99",
-    discount: "16%",
-    features: {
-      first: {
-        title: "Proximity-Based Matching",
-        available: "yes",
-      },
-      second: {
-        title: "Needs and Expertise Matching",
-        available: "no",
-      },
-      third: {
-        title: "Personalized Care Plans",
-        available: "no",
-      },
-      forth: {
-        title: "Dynamic Availability/Urgency Matching",
-        available: "no",
-      },
-      fifth: {
-        title: "24/7 Support",
-        available: "no",
-      },
-    },
+    name: "Hypertension & Diabetes Home Plan",
+    tagline: "Stay on Top of Your Numbers",
+    subtitle: "Regular check. Regular people. Peace of mind.",
+    amount: "GHS 100",
+    period: "per month",
+    popular: false,
+    icon: "🩺",
+    color: "tranquil-teal",
+    features: [
+      "BP and blood sugar checks",
+      "Monitoring log (digital or paper) for family/doctor updates",
+      "Lifestyle reminders & health coaching touchpoints",
+      "Monthly progress note sent to family",
+      "Referral pathways to certified medical herbalist (if requested)",
+      "Hospital/doctor referral if readings are abnormal",
+      "Optional: Cardiovascular risk assessment (WHO tools)",
+    ],
+    includes: "1 home visit + digital log",
   },
   {
     id: "2",
-    name: "Standard Plan",
-    heading:
-      "Ideal for clients who need specialized care tailored to their unique needs.",
-    amount: "₵39.99",
-    annual: "₵399.99",
-    discount: "16%",
-    features: {
-      first: {
-        title: "Proximity-Based Matching",
-        available: "yes",
-      },
-      second: {
-        title: "Needs and Expertise Matching",
-        available: "yes",
-      },
-      third: {
-        title: "Personalized Care Plans",
-        available: "yes",
-      },
-      forth: {
-        title: "Dynamic Availability/Urgency Matching",
-        available: "no",
-      },
-      fifth: {
-        title: "24/7 Support",
-        available: "no",
-      },
-    },
+    name: "Safe & Comfortable Catheter Support",
+    tagline: "Safe & Comfortable Catheter Support",
+    subtitle: "Gentle hands. Daily care. Comfort at home.",
+    amount: "GHS 120",
+    period: "per 2-hour visit",
+    popular: true,
+    icon: "🏥",
+    color: "custom-green",
+    features: [
+      "Hygiene and dressing (no insertion/removal)",
+      "Monitoring for infection signs",
+      "Patient comfort checks & reassurance",
+      "Family education on do's and don'ts",
+    ],
+    includes: "Professional catheter care support",
   },
   {
     id: "3",
-    name: "Premium Plan",
-    heading:
-      "The ultimate plan for comprehensive, responsive, and expert home healthcare.",
-    amount: "₵59.99",
-    annual: "₵599.99",
-    discount: "16%",
-    features: {
-      first: {
-        title: "Proximity-Based Matching",
-        available: "yes",
-      },
-      second: {
-        title: "Needs and Expertise Matching",
-        available: "yes",
-      },
-      third: {
-        title: "Personalized Care Plans",
-        available: "yes",
-      },
-      forth: {
-        title: "Dynamic Availability/Urgency Matching",
-        available: "yes",
-      },
-      fifth: {
-        title: "24/7 Support",
-        available: "yes",
-      },
-    },
+    name: "Never Alone Companion Service",
+    tagline: "Never Alone",
+    subtitle: "Someone to talk to. Someone to lean on.",
+    amount: "GHS 120 - 170",
+    period: "varies by duration",
+    popular: false,
+    icon: "🤝",
+    color: "haven-blue",
+    features: [
+      "Emotional support & conversation",
+      "Escort to hospital/appointments",
+      "Light daily assistance (meals, reminders, simple tasks)",
+      "Safety monitoring for peace of mind",
+    ],
+    priceOptions: [
+      { duration: "Half-day (6 hrs, 8am–2pm)", price: "GHS 120" },
+      { duration: "Full-day (10 hrs, 8am–6pm)", price: "GHS 150" },
+      { duration: "Live-in / 24 hrs", price: "GHS 170" },
+    ],
+  },
+  {
+    id: "4",
+    name: "Golden Age Care Package",
+    tagline: "Golden Age Care",
+    subtitle: "Care, company, and dignity for every day.",
+    amount: "GHS 120 - 170",
+    period: "varies by duration",
+    popular: true,
+    icon: "👴",
+    color: "carer-blue",
+    features: [
+      "Health monitoring + companion care combined",
+      "Medication reminders",
+      "Mobility support (walks, stretching, light exercise)",
+      "Regular family updates (WhatsApp check-ins, short reports)",
+    ],
+    priceOptions: [
+      { duration: "Half-day (6 hrs, 8am–2pm)", price: "GHS 120" },
+      { duration: "Full-day (10 hrs, 8am–6pm)", price: "GHS 150" },
+      { duration: "Live-in / 24 hrs", price: "GHS 170" },
+    ],
   },
 ];
 
@@ -1516,8 +1514,8 @@ export const slides = [
       href: "/signin",
     },
     secondaryCta: {
-      text: "Learn More",
-      href: "/for-elderly",
+      text: "Care Package",
+      href: "/pricing",
     },
     badge: "For Elderly",
   },

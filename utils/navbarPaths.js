@@ -12,4 +12,5 @@ export const showNavbarPaths = [
   "/for-elderly",
   "/for-the-sick",
   "/for-health-professionals",
+  "/pricing",
 ];

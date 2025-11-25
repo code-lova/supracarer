@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { logoutRequest } from "@/service/request/auth/logoutRequest";
 import { signOut as nextAuthSignOut } from "next-auth/react";
 import { HealthDashboardLinks } from "@constants/index";
+import { isFeatureEnabled, logFeatureStatus } from "@config/features";
 import {
   FaSignOutAlt,
   FaBell,
@@ -35,6 +36,21 @@ const Sidebar = () => {
   const queryClient = useQueryClient();
   const { user } = useUserContext();
   const userDetails = user?.data;
+
+  // Log feature status in development
+  useEffect(() => {
+    logFeatureStatus();
+  }, []);
+
+  // Filter navigation links based on feature flags
+  const filteredNavLinks = HealthDashboardLinks.filter((nav) => {
+    // Check if this is a GRS-related link
+    if (nav.id === "grs" || nav.link.includes("guided-rate-system")) {
+      return isFeatureEnabled("GUIDED_RATE_SYSTEM");
+    }
+    // Add other feature-dependent links here in the future
+    return true; // Show all other links by default
+  });
 
   // Fetch unread count for badge
   const { data: unreadResponse } = useQuery({
@@ -71,7 +87,8 @@ const Sidebar = () => {
     queryClient.clear();
   };
 
-  const dropdownItems = [
+  // Filter dropdown items based on feature flags
+  const allDropdownItems = [
     {
       label: "Profile",
       href: "/health-service/profile",
@@ -86,8 +103,16 @@ const Sidebar = () => {
       label: "GRS",
       href: "/health-service/guided-rate-system",
       icon: FaStar,
+      featureFlag: "GUIDED_RATE_SYSTEM", // Add feature flag requirement
     },
   ];
+
+  const dropdownItems = allDropdownItems.filter((item) => {
+    if (item.featureFlag) {
+      return isFeatureEnabled(item.featureFlag);
+    }
+    return true; // Show items without feature flag requirements
+  });
 
   const closeMobileMenu = () => setToggle(false);
 
@@ -249,7 +274,7 @@ const Sidebar = () => {
         {/* Navigation Links */}
         <nav className="flex-1 px-4 py-6 overflow-y-auto">
           <ul className="space-y-2">
-            {HealthDashboardLinks.map((nav) => {
+            {filteredNavLinks.map((nav) => {
               const Icon = nav.icon;
               const isActive = pathname === nav.link;
 
@@ -272,6 +297,18 @@ const Sidebar = () => {
               );
             })}
           </ul>
+
+          {/* Development Feature Status Indicator */}
+          {process.env.NODE_ENV === "development" && (
+            <div className="mt-6 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-xs font-medium text-yellow-800 mb-1">
+                🎛️ Feature Status (Dev Only)
+              </p>
+              <p className="text-xs text-yellow-700">
+                GRS: {isFeatureEnabled("GUIDED_RATE_SYSTEM") ? "✅ Enabled" : "❌ Disabled"}
+              </p>
+            </div>
+          )}
         </nav>
 
         {/* Bottom Section */}
