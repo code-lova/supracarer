@@ -300,7 +300,7 @@ const AppointmentDetailsModal = ({
                     ))
                   ) : (
                     <span className="text-gray-500 text-sm">
-                      No medical services specified
+                      Confidential: Will be requested by Care Coordinator
                     </span>
                   )}
                 </div>

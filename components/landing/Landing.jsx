@@ -11,6 +11,7 @@ import Subscription from "./Subscription";
 import Footer from "./Footer";
 import Marquee from "@components/core/Marquee";
 import Partners from "./Partners";
+import CarePackagePromo from "./CarePackagePromo";
 import { useRouter } from "next/navigation";
 
 const Landing = () => {
@@ -50,6 +51,9 @@ const Landing = () => {
 
         {/* Partnership section */}
         <Partners />
+
+        {/* Care Package Promo */}
+        <CarePackagePromo />
 
         {/* The Subscription section */}
         <Subscription />

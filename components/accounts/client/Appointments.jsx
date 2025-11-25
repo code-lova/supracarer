@@ -476,7 +476,7 @@ const Appointments = () => {
                           <td className="px-4 py-4">
                             <div className="space-y-1">
                               <div className="text-sm">
-                                {appointment.medical_services?.length || 0}{" "}
+                                {appointment.medical_services?.length || "Confidential"}{" "}
                                 medical service(s)
                               </div>
                               <div className="text-xs text-slate-gray">

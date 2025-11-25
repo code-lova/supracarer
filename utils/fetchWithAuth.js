@@ -1,4 +1,5 @@
 import { signOut, getSession } from "next-auth/react";
+import { cloudflareAPIFetch } from "./cloudflareAPIFetch";
 
 export const fetchWithAuth = async (url, options = {}) => {
   let session = await getSession();
@@ -7,7 +8,7 @@ export const fetchWithAuth = async (url, options = {}) => {
     throw new Error("No access token found. User might be logged out.");
   }
 
-  let response = await fetch(url, {
+  let response = await cloudflareAPIFetch(url, {
     ...options,
     headers: {
       ...options.headers,

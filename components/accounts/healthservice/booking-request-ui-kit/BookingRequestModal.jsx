@@ -187,18 +187,21 @@ const BookingRequestModal = ({ showModal, patient, onClose }) => {
                 Medical Services Required
               </h4>
               <div className="flex flex-wrap gap-2">
-                {patient.medical_services?.map((service, index) => (
-                  <span
-                    key={index}
-                    className="px-4 py-2 bg-tranquil-teal/20 text-tranquil-teal text-sm rounded-full font-medium border border-tranquil-teal/30"
-                  >
-                    {service}
-                  </span>
-                )) || (
+                {patient.medical_services && patient.medical_services.length > 0 ? (
+                  patient.medical_services?.map((service, index) => (
+                    <span
+                      key={index}
+                      className="px-4 py-2 bg-tranquil-teal/20 text-tranquil-teal text-sm rounded-full font-medium border border-tranquil-teal/30"
+                    >
+                      {service}
+                    </span>
+                  ))
+                ): (
                   <span className="text-gray-500 text-sm">
-                    No medical services specified
+                    Care Coordinator offering details
                   </span>
                 )}
+                
               </div>
             </div>
 

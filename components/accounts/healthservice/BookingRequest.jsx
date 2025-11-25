@@ -15,6 +15,8 @@ import { useUserContext } from "@context/userContext";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import ErrorState from "@components/core/ErrorState";
+import { isFeatureEnabled } from "@config/features";
+
 
 const BookingRequest = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -25,8 +27,10 @@ const BookingRequest = () => {
   const { user } = useUserContext();
   const userDetails = user?.data;
 
+  const grsEnabled = isFeatureEnabled("GUIDED_RATE_SYSTEM")
+
   // Check if user has guided rate system setup
-  const hasGuidedRateSystem = userDetails?.has_guided_rate_system === true;
+  const hasGuidedRateSystem = grsEnabled && userDetails?.has_guided_rate_system === true;
 
   // Fetch processing booking requests
   const { data, isLoading, error, refetch } = useQuery({
@@ -158,7 +162,7 @@ const BookingRequest = () => {
         </div>
 
         {/* Check for Guided Rate System Setup */}
-        {!hasGuidedRateSystem ? (
+        {!hasGuidedRateSystem && grsEnabled ? (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="bg-orange-50 border-2 border-orange-200 rounded-2xl p-8 max-w-md text-center">
               <FaExclamationTriangle className="text-orange-500 text-5xl mx-auto mb-4" />

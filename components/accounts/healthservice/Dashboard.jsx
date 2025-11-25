@@ -8,6 +8,7 @@ import AppointmentCard from "./dashboard-kits/AppointmentCard";
 import ServiceChargeCard from "./dashboard-kits/ServiceChargeCard";
 import RecentAppointmentsCard from "./dashboard-kits/RecentAppointmentCard";
 import AppointmentChart from "./dashboard-kits/AppointmentChart";
+import { isFeatureEnabled } from "@config/features";
 
 const Dashboard = () => {
   return (
@@ -22,7 +23,9 @@ const Dashboard = () => {
                 <div className="flex flex-col md:flex-row gap-2 ">
                   <AppointmentCard />
 
-                  <ServiceChargeCard />
+                  {isFeatureEnabled("GUIDED_RATE_SYSTEM") && (
+                    <ServiceChargeCard />
+                  )}
                 </div>
                 <div className="flex flex-col">
                   <AppointmentChart />

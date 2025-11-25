@@ -2,11 +2,17 @@
 import React from "react";
 import { FaCheckCircle, FaExclamationTriangle, FaUser } from "react-icons/fa";
 import { healthWorkerFields, clientFields } from "@constants";
+import { isFeatureEnabled } from "@config/features";
 
 const ProfileCompleteness = ({ userDetails, userType = "health-service" }) => {
   // Get required fields based on user type
-  const requiredFields =
-    userType === "health-service" ? healthWorkerFields : clientFields;
+  let requiredFields =
+    userType === "health-service" ? [...healthWorkerFields] : clientFields;
+
+  // For health workers, exclude GRS field if feature is disabled
+  if (userType === "health-service" && !isFeatureEnabled("GUIDED_RATE_SYSTEM")) {
+    requiredFields = requiredFields.filter(field => field !== "has_guided_rate_system");
+  }
 
   // Calculate completeness
   const calculateCompleteness = () => {

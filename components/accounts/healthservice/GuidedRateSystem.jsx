@@ -19,6 +19,7 @@ import { FaDoorOpen } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import GrsLoaderSkeleton from "@components/core/skeleton/grs/GrsLoaderSkeleton";
 import WordCountTextarea from "@components/core/WordCountTextarea";
+import { withGRSFeature } from "@components/hoc/withFeatureFlag";
 
 const GuidedRateSystem = () => {
   const { user, refetchUser } = useUserContext();
@@ -653,4 +654,4 @@ const GuidedRateSystem = () => {
   );
 };
 
-export default GuidedRateSystem;
+export default withGRSFeature(GuidedRateSystem);

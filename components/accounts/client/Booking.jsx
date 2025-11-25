@@ -27,7 +27,7 @@ const Booking = () => {
     num_of_meals: "",
     medical_services: [],
     other_extra_service: [],
-    special_notes: "",
+    special_notes: "Pending Note",
     start_date: "",
     end_date: "",
     start_time: "",
@@ -81,7 +81,7 @@ const Booking = () => {
         medical_services: [],
         other_extra_services: [],
         special_notes: "",
-        start_date: "",
+        start_date: "Pending Note",
         end_date: "",
         start_time: "",
         start_time_period: "AM",
@@ -121,7 +121,7 @@ const Booking = () => {
           </div>
         </div>
       </div>
-      <div className="xl:h-[690px] bg-gray-50 rounded-2xl shadow-lg px-5 py-3">
+      <div className="xl:h-[690px] bg-gray-50 rounded-2xl shadow-lg px-1 py-3">
         {/* rest o the form here  */}
         {!isPreviewing ? (
           <StepWrapper
