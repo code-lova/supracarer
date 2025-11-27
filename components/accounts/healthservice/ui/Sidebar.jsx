@@ -23,6 +23,7 @@ import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { useUserContext } from "@/context/userContext";
 import NotificationDropdown from "@components/core/NotificationDropdown";
 import { getUnreadCount } from "@service/request/user/getNotifications";
+import { clearSessionCache } from "@utils/sessionCache";
 
 const Sidebar = () => {
   const [toggle, setToggle] = useState(false);
@@ -83,6 +84,7 @@ const Sidebar = () => {
     } catch (e) {
       console.error("Logout error:", e);
     }
+    await clearSessionCache();
     await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
     queryClient.clear();
   };

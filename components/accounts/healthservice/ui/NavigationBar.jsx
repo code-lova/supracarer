@@ -20,6 +20,7 @@ import { getUnreadCount } from "@service/request/user/getNotifications";
 import DateFormatter from "@components/core/DateFormatter";
 import NotificationDropdown from "@components/core/NotificationDropdown";
 import { isFeatureEnabled } from "@config/features";
+import { clearSessionCache } from "@utils/sessionCache";
 
 
 const NavigationBar = () => {
@@ -69,6 +70,7 @@ const NavigationBar = () => {
     } catch (e) {
       console.error("Logout error:", e);
     }
+    await clearSessionCache();
     await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
     queryClient.clear();
   };

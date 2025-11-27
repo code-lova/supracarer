@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession, getSession } from "next-auth/react";
 import { loginSchema } from "@schema/auth";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/core/LoaderButton";
@@ -12,6 +12,10 @@ import LoadingStateUI from "@components/core/loading";
 import TwoFactorAuth from "./TwoFactorAuth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Image from "next/image";
+import {
+  clearSessionCache,
+  waitForSessionAvailable,
+} from "@utils/sessionCache";
 
 const Login = () => {
   const { data: session, status } = useSession();
@@ -85,6 +89,27 @@ const Login = () => {
         toast.success("Login successful");
         // Clear retained email on success
         setRetainedEmail("");
+
+        // Clear any cached session data and force fresh session fetch
+        setTimeout(async () => {
+          try {
+            // Clear browser and Cloudflare cache
+            await clearSessionCache();
+
+            // Wait for session to be available with retries
+            const sessionData = await waitForSessionAvailable(3, 300);
+
+            if (sessionData?.user) {
+              console.log("Session confirmed:", sessionData.user);
+            } else {
+              console.warn(
+                "Session not immediately available, NextAuth will handle it"
+              );
+            }
+          } catch (error) {
+            console.error("Session refresh error:", error);
+          }
+        }, 100);
         // Note: refetchUser() removed - NextAuth session should handle user data
         // User context will automatically update when session changes
         // First-time login flag will be managed by the ProfileWarningModal based on actual user data
@@ -138,6 +163,27 @@ const Login = () => {
       setShowTwoFactor(false);
       setPendingCredentials(null);
       setTwoFactorData(null);
+
+      // Clear any cached session data and force fresh session fetch
+      setTimeout(async () => {
+        try {
+          // Clear browser and Cloudflare cache
+          await clearSessionCache();
+
+          // Wait for session to be available with retries
+          const sessionData = await waitForSessionAvailable(3, 300);
+
+          if (sessionData?.user) {
+            console.log("2FA Session confirmed:", sessionData.user);
+          } else {
+            console.warn(
+              "2FA Session not immediately available, NextAuth will handle it"
+            );
+          }
+        } catch (error) {
+          console.error("Session refresh error after 2FA:", error);
+        }
+      }, 100);
       // First-time login flag will be managed by the ProfileWarningModal based on actual user data
     } catch (error) {
       console.error("2FA success handler error:", error);

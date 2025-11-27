@@ -19,6 +19,7 @@ import { logoutRequest } from "@/service/request/auth/logoutRequest";
 import { signOut as nextAuthSignOut } from "next-auth/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserContext } from "@/context/userContext";
+import { clearSessionCache } from "@utils/sessionCache";
 
 const links = [
   {
@@ -86,6 +87,8 @@ export default function Sidebar({ open, onClose }) {
     } catch (e) {
       // Optionally handle error, but proceed with sign out regardless
     }
+    // Clear session cache first
+    await clearSessionCache();
     await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
     queryClient.clear();
     setUser(null);

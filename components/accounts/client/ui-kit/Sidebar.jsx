@@ -9,6 +9,7 @@ import { FaSignOutAlt, FaTimes, FaBars } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
+import { clearSessionCache } from "@utils/sessionCache";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +24,8 @@ const Sidebar = () => {
     } catch (error) {
       console.error("Logout error:", error);
     }
+    // Clear session cache first
+    await clearSessionCache();
     queryClient.clear();
     await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
   };
