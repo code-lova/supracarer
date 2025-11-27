@@ -18,6 +18,7 @@ import { signOut as nextAuthSignOut } from "next-auth/react";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { getUnreadCount } from "@service/request/user/getNotifications";
 import NotificationDropdown from "@components/core/NotificationDropdown";
+import { clearSessionCache } from "@utils/sessionCache";
 
 const NavigationBar = () => {
   const { user } = useUserContext();
@@ -63,6 +64,8 @@ const NavigationBar = () => {
     } catch (error) {
       console.error("Logout error:", error);
     }
+    // Clear session cache first
+    await clearSessionCache();
     queryClient.clear();
     await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
   };

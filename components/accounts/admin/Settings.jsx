@@ -22,6 +22,7 @@ import {
   Disable2FAModal,
 } from "./settingsUi-kit";
 import { FaBell, FaShieldAlt, FaCog, FaUser } from "react-icons/fa";
+import { clearSessionCache } from "@utils/sessionCache";
 
 const Settings = () => {
   const { user, refetchUser, setUser } = useUserContext();
@@ -131,6 +132,8 @@ const Settings = () => {
   const logoutAllDevicesMutation = useMutation({
     mutationFn: logoutAllDeviceRequest,
     onSuccess: async () => {
+      // Clear session cache first
+      await clearSessionCache();
       // Clear query cache and sign out
       await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
       queryClient.clear();
@@ -146,6 +149,8 @@ const Settings = () => {
     mutationFn: deleteUserProfile,
     onSuccess: async () => {
       toast.success("Account deleted successfully");
+      // Clear session cache first
+      await clearSessionCache();
       // Clear query cache and sign out
       queryClient.clear();
       setUser(null);

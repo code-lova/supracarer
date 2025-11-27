@@ -1,11 +1,13 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { NextResponse } from "next/server";
 import { nextAuthAPIFetch } from "@utils/cloudflareAPIFetch";
 
 const handler = NextAuth({
   session: {
     strategy: "jwt",
     maxAge: 24 * 60 * 60, // 1 days (24 hours)
+    updateAge: 0, // Force session refresh on every request
   },
   providers: [
     CredentialsProvider({
@@ -147,4 +149,37 @@ const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
 });
 
-export { handler as GET, handler as POST };
+// Wrap handler to add proper cache control headers for Cloudflare
+const wrappedGET = async (req, res) => {
+  const response = await handler(req, res);
+
+  // Add headers to prevent Cloudflare caching of session endpoints
+  response.headers.set(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+  );
+  response.headers.set("Pragma", "no-cache");
+  response.headers.set("Expires", "0");
+  response.headers.set("X-Accel-Expires", "0");
+  response.headers.set("Cache-Tag", "session-" + Date.now());
+
+  return response;
+};
+
+const wrappedPOST = async (req, res) => {
+  const response = await handler(req, res);
+
+  // Add headers to prevent Cloudflare caching of session endpoints
+  response.headers.set(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+  );
+  response.headers.set("Pragma", "no-cache");
+  response.headers.set("Expires", "0");
+  response.headers.set("X-Accel-Expires", "0");
+  response.headers.set("Cache-Tag", "session-" + Date.now());
+
+  return response;
+};
+
+export { wrappedGET as GET, wrappedPOST as POST };
