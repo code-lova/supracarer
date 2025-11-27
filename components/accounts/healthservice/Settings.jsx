@@ -13,6 +13,7 @@ import { getUserSettings } from "@service/request/user/settings/getUserSettings"
 import { deleteUserProfile } from "@service/request/user/settings/deleteProfile";
 import { useUserContext } from "@context/userContext";
 import { signOut as nextAuthSignOut } from "next-auth/react";
+import { clearSessionCache } from "@utils/sessionCache";
 import {
   SecurityTab,
   NotificationsTab,
@@ -131,6 +132,8 @@ const Settings = () => {
   const logoutAllDevicesMutation = useMutation({
     mutationFn: logoutAllDeviceRequest,
     onSuccess: async () => {
+      // Clear session cache first
+      await clearSessionCache();
       // Clear query cache and sign out
       await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
       queryClient.clear();
@@ -146,6 +149,8 @@ const Settings = () => {
     mutationFn: deleteUserProfile,
     onSuccess: async () => {
       toast.success("Account deleted successfully");
+      // Clear session cache first
+      await clearSessionCache();
       // Clear query cache and sign out
       queryClient.clear();
       setUser(null);
