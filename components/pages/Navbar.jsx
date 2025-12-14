@@ -107,16 +107,10 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-4">
               <Link
                 href="/signin"
-                className="flex items-center gap-2 px-4 py-2 text-tranquil-teal hover:text-custom-green font-semibold transition-colors duration-200"
+                className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200"
               >
                 <ProfileFill color="currentColor" />
-                <span>Login</span>
-              </Link>
-              <Link
-                href="/signup"
-                className="px-6 py-2.5 bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200"
-              >
-                Sign Up
+                Account
               </Link>
             </div>
 

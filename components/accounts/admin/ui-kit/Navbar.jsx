@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useRef } from "react";
 import { useUserContext } from "@context/userContext";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { signOut as nextAuthSignOut } from "next-auth/react";
 import { getUnreadCount } from "@service/request/user/getNotifications";
 import NotificationDropdown from "@components/core/NotificationDropdown";
 import Link from "next/link";
@@ -12,10 +13,15 @@ import {
   FaComments,
   FaChevronDown,
   FaSearch,
+  FaSignOutAlt,
 } from "react-icons/fa";
+import { clearSessionCache } from "@utils/sessionCache";
+import { logoutRequest } from "@service/request/auth/logoutRequest";
 
 export default function Navbar({ onMenuClick }) {
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
+  const [loading, setLoading] = useState(false);
+  const queryClient = useQueryClient();
   const userDetails = user?.data;
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -42,6 +48,20 @@ export default function Navbar({ onMenuClick }) {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
+
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      await logoutRequest();
+    } catch (e) {
+      // Optionally handle error, but proceed with sign out regardless
+    }
+    // Clear session cache first
+    await clearSessionCache();
+    await nextAuthSignOut({ callbackUrl: "/signin", redirect: true });
+    queryClient.clear();
+    setUser(null);
+  };
 
   return (
     <header className="w-full bg-white shadow flex items-center justify-between px-4 py-3">
@@ -134,14 +154,23 @@ export default function Navbar({ onMenuClick }) {
                 {userDetails?.fullname}
               </div>
               <ul>
-                <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer">
-                  Profile
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer">
-                  Settings
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-danger-red">
-                  Logout
+                <Link href="/admin/profile">
+                  <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer">
+                    Profile
+                  </li>
+                </Link>
+                <Link href="/admin/settings">
+                  <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer">
+                    Settings
+                  </li>
+                </Link>
+                <li
+                  onClick={handleLogout}
+                  className={`px-4 py-2 hover:bg-gray-50 cursor-pointer text-danger-red ${
+                    loading ? "opacity-50 pointer-events-none" : ""
+                  }`}
+                >
+                  {loading ? "Logging Out..." : "Logout"}
                 </li>
               </ul>
             </div>

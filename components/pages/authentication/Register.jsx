@@ -143,6 +143,7 @@ const Register = () => {
                 practitioner: "",
                 password: "",
                 password_confirmation: "",
+                agreeToTerms: false,
               }}
               validationSchema={registrationSchema}
               onSubmit={handleSubmit}
@@ -347,6 +348,42 @@ const Register = () => {
                       />
                     </div>
                   </div>
+
+                  {/* Terms and Privacy Policy Agreement */}
+                  <div className="flex items-start gap-2">
+                    <Field
+                      type="checkbox"
+                      name="agreeToTerms"
+                      id="agreeToTerms"
+                      className="h-4 w-4 mt-0.5 rounded border-gray-300 text-tranquil-teal focus:ring-tranquil-teal cursor-pointer"
+                    />
+                    <label
+                      htmlFor="agreeToTerms"
+                      className="text-sm text-gray-600 leading-tight"
+                    >
+                      I agree to the{" "}
+                      <Link
+                        href="/terms"
+                        className="text-tranquil-teal hover:text-custom-green font-medium underline"
+                        target="_blank"
+                      >
+                        Terms & Conditions
+                      </Link>{" "}
+                      and{" "}
+                      <Link
+                        href="/privacy-policy"
+                        className="text-tranquil-teal hover:text-custom-green font-medium underline"
+                        target="_blank"
+                      >
+                        Privacy Policy
+                      </Link>
+                    </label>
+                  </div>
+                  <ErrorMessage
+                    name="agreeToTerms"
+                    component="div"
+                    className="text-red-500 text-sm -mt-2"
+                  />
 
                   {/* Submit Button */}
                   <div className="pt-1">

@@ -328,6 +328,26 @@ const Login = () => {
                       text="Sign In"
                     />
                   </div>
+
+                  {/* Terms and Privacy Policy Links */}
+                  <p className="text-xs text-center text-gray-500 mt-3">
+                    By signing in, you agree to our{" "}
+                    <Link
+                      href="/terms"
+                      className="text-tranquil-teal hover:text-custom-green font-medium underline"
+                      target="_blank"
+                    >
+                      Terms & Conditions
+                    </Link>{" "}
+                    and{" "}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-tranquil-teal hover:text-custom-green font-medium underline"
+                      target="_blank"
+                    >
+                      Privacy Policy
+                    </Link>
+                  </p>
                 </Form>
               )}
             </Formik>

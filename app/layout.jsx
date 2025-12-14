@@ -9,6 +9,7 @@ import ServerLayout from "./ServerLayout";
 import { showNavbarPaths } from "@utils/navbarPaths";
 import { UserProvider } from "@context/userContext";
 import { SessionTimeoutProvider } from "@providers/SessionTimeoutProvider";
+import CookieConsent from "@components/core/CookieConsent";
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
@@ -25,6 +26,7 @@ const RootLayout = ({ children }) => {
                 {shouldShowNavbar && <Navbar />}
                 {children}
                 <Toaster />
+                <CookieConsent />
               </SessionTimeoutProvider>
             </UserProvider>
           </ReactQueryProvider>

@@ -7,6 +7,7 @@ import {
   FaUser,
   FaPhone,
   FaEnvelope,
+  FaRedo,
 } from "react-icons/fa";
 import { MdLocalHospital, MdAccessTime } from "react-icons/md";
 import { BiUserCheck } from "react-icons/bi";
@@ -133,6 +134,52 @@ const BookingRequestModal = ({ showModal, patient, onClose }) => {
                     </span>
                   </div>
                 </div>
+
+                {/* Recurring Information */}
+                {patient.recurrence?.is_recurring === "Yes" && (
+                  <div className="pt-3 border-t border-gray-200">
+                    <p className="text-sm text-gray-500 mb-2 flex items-center">
+                      <FaRedo className="w-3 h-3 mr-1" />
+                      Recurring Schedule
+                    </p>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded-full font-medium">
+                          {patient.recurrence.recurrence_type}
+                        </span>
+                        {patient.recurrence.recurrence_type === "Weekly" &&
+                          patient.recurrence.recurrence_days &&
+                          patient.recurrence.recurrence_days.length > 0 && (
+                            <div className="flex flex-wrap gap-1">
+                              {patient.recurrence.recurrence_days.map(
+                                (day, index) => (
+                                  <span
+                                    key={index}
+                                    className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-xs rounded font-medium"
+                                  >
+                                    {day.slice(0, 3)}
+                                  </span>
+                                )
+                              )}
+                            </div>
+                          )}
+                      </div>
+                      <p className="text-sm text-slate-gray">
+                        <span className="font-medium">Ends:</span>{" "}
+                        {patient.recurrence.recurrence_end_type === "date" &&
+                        patient.recurrence.recurrence_end_date
+                          ? `On ${new Date(
+                              patient.recurrence.recurrence_end_date
+                            ).toLocaleDateString()}`
+                          : patient.recurrence.recurrence_end_type ===
+                              "occurrences" &&
+                            patient.recurrence.recurrence_occurrences
+                          ? `After ${patient.recurrence.recurrence_occurrences} occurrences`
+                          : "Not specified"}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -187,7 +234,8 @@ const BookingRequestModal = ({ showModal, patient, onClose }) => {
                 Medical Services Required
               </h4>
               <div className="flex flex-wrap gap-2">
-                {patient.medical_services && patient.medical_services.length > 0 ? (
+                {patient.medical_services &&
+                patient.medical_services.length > 0 ? (
                   patient.medical_services?.map((service, index) => (
                     <span
                       key={index}
@@ -196,12 +244,11 @@ const BookingRequestModal = ({ showModal, patient, onClose }) => {
                       {service}
                     </span>
                   ))
-                ): (
+                ) : (
                   <span className="text-gray-500 text-sm">
                     Care Coordinator offering details
                   </span>
                 )}
-                
               </div>
             </div>
 
@@ -300,11 +347,7 @@ const BookingRequestModal = ({ showModal, patient, onClose }) => {
           {/* Action Footer */}
           <div className="bg-gray-50 rounded-xl p-6 border-t border-gray-100">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <MediumBtn
-                onClick={onClose}
-                text="Close Details"
-                color="gray"
-              />
+              <MediumBtn onClick={onClose} text="Close Details" color="gray" />
 
               <MediumBtn
                 text="Contact Client"

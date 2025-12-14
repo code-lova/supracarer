@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import Marquee from "@components/core/Marquee";
 import Partners from "./Partners";
 import CarePackagePromo from "./CarePackagePromo";
+import Suprabot from "./Suprabot";
 import { useRouter } from "next/navigation";
 
 const Landing = () => {
@@ -54,6 +55,9 @@ const Landing = () => {
 
         {/* Care Package Promo */}
         <CarePackagePromo />
+
+        {/* Suprabot - AI Health Assistant */}
+        <Suprabot />
 
         {/* The Subscription section */}
         <Subscription />
