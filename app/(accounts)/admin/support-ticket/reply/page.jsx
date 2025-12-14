@@ -1,4 +1,3 @@
-"use client";
 import React, { Suspense } from "react";
 import TicketReply from "@components/accounts/admin/TicketReply";
 import TicketReplySkeleton from "@components/core/skeleton/TicketReplySkeleton";
