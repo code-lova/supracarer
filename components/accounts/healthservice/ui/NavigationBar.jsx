@@ -119,7 +119,7 @@ const NavigationBar = () => {
                   {!userDetails?.address && (
                     <span>• Missing address information</span>
                   )}
-                  {userDetails?.has_guided_rate_system === false && (
+                  {grsEnabled && userDetails?.has_guided_rate_system === false && (
                     <span>• Guided Rate System not configured</span>
                   )}
                 </div>

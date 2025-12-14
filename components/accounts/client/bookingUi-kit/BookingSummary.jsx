@@ -8,6 +8,7 @@ import {
   FiMail,
   FiFileText,
   FiCheckCircle,
+  FiRepeat,
 } from "react-icons/fi";
 import {
   FaStethoscope,
@@ -237,6 +238,56 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
             </div>
           </SectionCard>
 
+          {/* Recurring Booking Information */}
+          {formValues.is_recurring === "Yes" && (
+            <SectionCard
+              icon={FiRepeat}
+              title="Recurring Schedule"
+              iconColor="text-indigo-500"
+            >
+              <div className="space-y-0">
+                <InfoItem
+                  label="Recurring"
+                  value={
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                      Yes
+                    </span>
+                  }
+                />
+                <InfoItem
+                  label="Frequency"
+                  value={formValues.recurrence_type}
+                />
+                {formValues.recurrence_type === "Weekly" &&
+                  formValues.recurrence_days?.length > 0 && (
+                    <div className="py-2 border-b border-gray-100">
+                      <span className="text-sm font-medium text-gray-600 block mb-2">
+                        Days:
+                      </span>
+                      <div className="flex flex-wrap gap-1">
+                        {formValues.recurrence_days.map((day, index) => (
+                          <span
+                            key={index}
+                            className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                          >
+                            {day}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                <InfoItem
+                  label="Ends"
+                  value={
+                    formValues.recurrence_end_type === "date"
+                      ? `On ${formValues.recurrence_end_date}`
+                      : `After ${formValues.recurrence_occurrences} occurrences`
+                  }
+                />
+              </div>
+            </SectionCard>
+          )}
+
           {/* Requester Information */}
           <SectionCard
             icon={FaUserInjured}
@@ -279,7 +330,7 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
       </div>
 
       {/* Fixed Action Buttons */}
-      <div className="bg-gray-50 border-t border-gray-200 p-4 flex-shrink-0">
+      <div className="mb-6 border-t border-gray-200 p-4 flex-shrink-0">
         <div className="flex item-center justify-between">
           <MediumBtn
             text="Back to Edit"
@@ -298,10 +349,6 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
             icon={<FiCheckCircle className="mr-2 w-4 h-4" />}
           />
         </div>
-
-        <p className="text-xs text-gray-500 text-center mt-4">
-          By submitting this booking, you agree to our terms and conditions
-        </p>
       </div>
     </div>
   );

@@ -40,6 +40,10 @@ export const registrationSchema = yup.object().shape({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
+  agreeToTerms: yup
+    .boolean()
+    .oneOf([true], "You must agree to the Terms & Conditions and Privacy Policy")
+    .required("You must agree to the Terms & Conditions and Privacy Policy"),
 });
 
 export const loginSchema = yup.object().shape({

@@ -114,12 +114,7 @@ const NavLinks = ({
         <>
           <li className="py-2 font-bold text-[16px] text-haven-blue hover:text-custom-green">
             <Link href="/signin" onClick={handleNavClick}>
-              Login
-            </Link>
-          </li>
-          <li className="py-2 font-bold text-[16px] text-haven-blue hover:text-custom-green">
-            <Link href="/signup" onClick={handleNavClick}>
-              SignUp
+              Account
             </Link>
           </li>
         </>

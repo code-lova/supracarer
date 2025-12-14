@@ -6,6 +6,7 @@ import {
   FaMapMarkerAlt,
   FaCalendarAlt,
   FaBriefcaseMedical,
+  FaRedo,
 } from "react-icons/fa";
 import DateFormatter from "@components/core/DateFormatter";
 
@@ -103,7 +104,7 @@ const ClientDetailsModal = ({ patient, isOpen, onClose }) => {
           {/* Appointment Details */}
           <div className="bg-gray-50 rounded-lg p-4">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="bg-ever-green text-white p-2 rounded-full">
+              <div className="bg-custom-green text-white p-2 rounded-full">
                 <FaCalendarAlt className="text-lg" />
               </div>
               <div>
@@ -122,8 +123,8 @@ const ClientDetailsModal = ({ patient, isOpen, onClose }) => {
                 <div>
                   <p className="text-sm text-gray-600">Schedule</p>
                   <p className="font-medium">
-                    <DateFormatter date={patient.start_date} format="short" />{" "}
-                    - <DateFormatter date={patient.end_date} format="short" />
+                    <DateFormatter date={patient.start_date} format="short" /> -{" "}
+                    <DateFormatter date={patient.end_date} format="short" />
                   </p>
                   <p className="text-xs text-gray-500">
                     {patient.start_time?.slice(0, 5)}{" "}
@@ -164,6 +165,79 @@ const ClientDetailsModal = ({ patient, isOpen, onClose }) => {
               </div>
             </div>
           </div>
+
+          {/* Recurring Schedule */}
+          {patient.recurrence?.is_recurring === "Yes" && (
+            <div className="bg-indigo-50 rounded-lg p-4">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="bg-custom-green text-white p-2 rounded-full">
+                  <FaRedo className="text-lg" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-800">
+                    Recurring Schedule
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    This is a recurring appointment
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <FaRedo className="text-custom-green" />
+                  <div>
+                    <p className="text-sm text-gray-600">Frequency</p>
+                    <p className="font-medium">
+                      {patient.recurrence.recurrence_type}
+                    </p>
+                  </div>
+                </div>
+
+                {patient.recurrence.recurrence_type === "Weekly" &&
+                  patient.recurrence.recurrence_days &&
+                  patient.recurrence.recurrence_days.length > 0 && (
+                    <div className="flex items-start space-x-3">
+                      <FaCalendarAlt className="text-custom-green mt-1" />
+                      <div>
+                        <p className="text-sm text-gray-600">Days</p>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {patient.recurrence.recurrence_days.map(
+                            (day, index) => (
+                              <span
+                                key={index}
+                                className="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs rounded font-medium"
+                              >
+                                {day}
+                              </span>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                <div className="flex items-center space-x-3">
+                  <FaCalendarAlt className="text-custom-green" />
+                  <div>
+                    <p className="text-sm text-gray-600">Ends</p>
+                    <p className="font-medium">
+                      {patient.recurrence.recurrence_end_type === "date" &&
+                      patient.recurrence.recurrence_end_date
+                        ? `On ${new Date(
+                            patient.recurrence.recurrence_end_date
+                          ).toLocaleDateString()}`
+                        : patient.recurrence.recurrence_end_type ===
+                            "occurrences" &&
+                          patient.recurrence.recurrence_occurrences
+                        ? `After ${patient.recurrence.recurrence_occurrences} occurrences`
+                        : "Not specified"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Services */}
           {services.length > 0 && (

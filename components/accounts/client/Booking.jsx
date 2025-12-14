@@ -12,7 +12,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useUserContext } from "@context/userContext";
 import { FaBriefcaseMedical } from "react-icons/fa6";
 
-
 const Booking = () => {
   const { user } = useUserContext();
   const userDetails = user?.data;
@@ -34,6 +33,14 @@ const Booking = () => {
     start_time_period: "AM",
     end_time: "",
     end_time_period: "AM",
+    // Recurring booking fields
+    is_recurring: "No",
+    recurrence_type: "", // "Daily", "Weekly", "Monthly"
+    recurrence_days: [], // For weekly: ["Monday", "Tuesday", etc.]
+    recurrence_end_type: "date", // "date" or "occurrences"
+    recurrence_end_date: "",
+    recurrence_occurrences: "",
+    // End recurring fields
     requesting_for: "",
     someone_name: "",
     someone_email: "",
@@ -87,6 +94,12 @@ const Booking = () => {
         start_time_period: "AM",
         end_time: "",
         end_time_period: "AM",
+        is_recurring: "No",
+        recurrence_type: "", // "Daily", "Weekly", "Monthly"
+        recurrence_days: [], // For weekly: ["Monday", "Tuesday", etc.]
+        recurrence_end_type: "date", // "date" or "occurrences"
+        recurrence_end_date: "",
+        recurrence_occurrences: "",
         requesting_for: "",
         someone_name: "",
         someone_email: "",
@@ -101,7 +114,7 @@ const Booking = () => {
   });
 
   const handleSubmit = () => {
-    console.log("Submitting form data:", formValues);
+    console.log("formValues to submit:", formValues )
     mutate.mutate(formValues);
   };
 
@@ -114,14 +127,16 @@ const Booking = () => {
             <FaBriefcaseMedical className="text-white text-xl" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Appointment Bookings</h1>
+            <h1 className="text-2xl font-bold text-gray-800">
+              Appointment Bookings
+            </h1>
             <p className="text-gray-600 text-sm">
               Make your appointment bookings easily.
             </p>
           </div>
         </div>
       </div>
-      <div className="xl:h-[690px] bg-gray-50 rounded-2xl shadow-lg px-1 py-3">
+      <div className="xl:h-full bg-gray-50 rounded-2xl shadow-lg px-1 py-3">
         {/* rest o the form here  */}
         {!isPreviewing ? (
           <StepWrapper
@@ -149,6 +164,7 @@ const Booking = () => {
               <StepThree
                 values={formValues}
                 handleChange={handleChange}
+                setFormValues={setFormValues}
                 goToNextStep={goToNextStep}
                 goToPrevStep={goToPrevStep}
               />
