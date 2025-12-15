@@ -1,21 +1,10 @@
-export const contactUs = async (payload) => {
-  // Prepare the payload with Turnstile token for backend verification
-  const requestPayload = {
-    fullname: payload.fullname,
-    email: payload.email,
-    phone: payload.phone,
-    subject: payload.subject,
-    message: payload.message,
-    // Cloudflare Turnstile token for server-side verification
-    cf_turnstile_response: payload.turnstileToken || null,
-  };
-
+export const subscriber = async (payload) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/contact-us`,
+    `${process.env.NEXT_PUBLIC_API_URL}/subscribe-newsletter`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestPayload),
+      body: JSON.stringify(payload),
     }
   );
 

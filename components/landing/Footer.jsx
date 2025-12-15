@@ -195,10 +195,10 @@ const Footer = () => {
               <div className="flex items-center gap-3">
                 <FaEnvelope className="text-custom-green text-sm flex-shrink-0" />
                 <Link
-                  href={`mailto:${emailDetail?.detail}`}
+                  href="/contact-us"
                   className="text-xs text-gray-400 hover:text-custom-green transition-colors duration-300"
                 >
-                  {emailDetail?.detail}
+                  Email Protected
                 </Link>
               </div>
               <div className="flex items-center gap-3">

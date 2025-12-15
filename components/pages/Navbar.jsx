@@ -25,18 +25,18 @@ const Navbar = () => {
   return (
     <div>
       {/* Top Bar - Hidden on mobile */}
-      <div className="hidden md:flex bg-gradient-to-r from-tranquil-teal via-custom-green to-haven-blue w-full fixed z-50 text-white">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+      <div className="hidden md:flex md:-mt-2 bg-gradient-to-r from-tranquil-teal via-custom-green to-haven-blue w-full fixed z-50 text-white">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             {/* Left Side - Contact Info */}
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2 hover:text-white/80 transition-colors">
                 <OutlineEmail />
                 <Link
-                  href={`mailto:${emailDetail?.detail}`}
+                  href="/contact-us"
                   className="text-xs lg:text-sm font-medium"
                 >
-                  {emailDetail?.detail}
+                  Email Protected
                 </Link>
               </div>
               <div className="flex items-center gap-2">
@@ -74,7 +74,7 @@ const Navbar = () => {
       </div>
 
       {/* Main Navbar */}
-      <nav className="bg-white fixed shadow-md z-50 top-0 md:top-10 w-full">
+      <nav className="bg-white fixed shadow-md z-50 top-0 md:top-8 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -107,9 +107,9 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-4">
               <Link
                 href="/signin"
-                className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200"
+                className="flex text-[14px] items-center gap-2 px-4 py-2 bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200"
               >
-                <ProfileFill color="currentColor" />
+                <ProfileFill color="currentColor" size={20} />
                 Account
               </Link>
             </div>
@@ -208,10 +208,10 @@ const Navbar = () => {
                 <div className="flex items-center gap-2 text-gray-700">
                   <OutlineEmail />
                   <Link
-                    href={`mailto:${emailDetail?.detail}`}
+                    href="/contact-us"
                     className="hover:text-tranquil-teal transition-colors"
                   >
-                    {emailDetail?.detail}
+                    Contact Support
                   </Link>
                 </div>
                 <div className="flex items-center gap-2 text-gray-700">
