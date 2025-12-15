@@ -740,7 +740,7 @@ export const contactInfo = [
     id: 2,
     icon: FaEnvelope,
     title: "Email",
-    detail: "support@supracarer.com",
+    detail: "Protected",
     description: "We'll respond within 24 hours",
     color: "custom-green",
   },

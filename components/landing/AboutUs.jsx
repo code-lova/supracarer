@@ -7,8 +7,8 @@ import { NormalBtn } from "@components/core/button";
 const AboutUs = () => {
   return (
     <div className="pageSection my-16 md:my-8">
-      <div className="flex flex-col-reverse md:flex-row justify-center md:justify-between gap-8 md:gap-10 lg:gap-12 items-center">
-        <div className="relative w-full md:w-1/2 h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl group">
+      <div className="w-full flex flex-col-reverse md:flex-col lg:flex-row justify-center gap-8 md:gap-6 lg:gap-12 items-center">
+        <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl group">
           {/* Modern Vertical Badge */}
           <div className="absolute -left-1 top-8 z-20 bg-custom-green text-white px-4 py-8 rounded-r-xl shadow-lg">
             <span
@@ -43,7 +43,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-1/2 px-4 md:px-0">
+        <div className="w-full px-4 md:px-0">
           <div className="inline-flex items-center gap-2 bg-tranquil-teal/10 text-tranquil-teal px-4 py-2 rounded-full text-sm font-semibold border border-tranquil-teal/20 mb-4">
             <span className="w-2 h-2 bg-tranquil-teal rounded-full animate-pulse"></span>
             <span>Get to Know Us</span>
