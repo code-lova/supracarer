@@ -1,8 +1,90 @@
-import React from "react";
+"use client";
+import React, { useState, useCallback } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useMutation } from "@tanstack/react-query";
 import { contactInfo, contactStats } from "@constants";
-import { FaClock, FaPaperPlane, FaCheckCircle } from "react-icons/fa";
+import { ContactFormSchema } from "@schema/frontend";
+import { contactUs } from "@service/request/frontend/contactUs";
+import {
+  FaClock,
+  FaPaperPlane,
+  FaCheckCircle,
+  FaSpinner,
+  FaShieldAlt,
+} from "react-icons/fa";
+import toast from "react-hot-toast";
+import PhoneInput from "@components/core/PhoneInput";
+import Turnstile from "@components/core/Turnstile";
+
+// Turnstile site key from environment variable
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 const ContactUs = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileError, setTurnstileError] = useState(false);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: contactUs,
+    onSuccess: (data) => {
+      toast.success(data?.message || "Message sent successfully!");
+      setIsSubmitted(true);
+    },
+    onError: (error) => {
+      const errorMessage =
+        error?.message || "Failed to send message. Please try again.";
+      toast.error(errorMessage);
+    },
+  });
+
+  const handleSubmit = (values, { resetForm }) => {
+    // Validate Turnstile token if configured
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      toast.error("Please complete the security verification");
+      return;
+    }
+
+    // Sanitize values before sending (trim whitespace)
+    const sanitizedValues = {
+      fullname: values.fullname.trim(),
+      email: values.email.trim().toLowerCase(),
+      phone: values.phone?.trim() || "",
+      subject: values.subject.trim(),
+      message: values.message.trim(),
+      turnstileToken: turnstileToken,
+    };
+
+    mutate(sanitizedValues, {
+      onSuccess: () => {
+        resetForm();
+        setTurnstileToken(""); // Reset token after successful submission
+      },
+    });
+  };
+
+  const handleSendAnother = () => {
+    setIsSubmitted(false);
+    setTurnstileToken("");
+    setTurnstileError(false);
+  };
+
+  // Turnstile callbacks
+  const handleTurnstileVerify = useCallback((token) => {
+    setTurnstileToken(token);
+    setTurnstileError(false);
+  }, []);
+
+  const handleTurnstileError = useCallback(() => {
+    setTurnstileToken("");
+    setTurnstileError(true);
+    toast.error("Security verification failed. Please try again.");
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken("");
+    toast.error("Security verification expired. Please verify again.");
+  }, []);
+
   return (
     <div className="relative bg-gradient-to-br from-gray-50 via-white to-tranquil-teal/3 overflow-hidden -mt-16">
       {/* Decorative Elements */}
@@ -117,113 +199,268 @@ const ContactUs = () => {
           {/* Contact Form */}
           <div className="order-1 lg:order-2">
             <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
-                Send Us a Message
-              </h2>
-              <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
-                Fill out the form below and we'll get back to you as soon as
-                possible.
-              </p>
-
-              <form className="space-y-4 sm:space-y-6">
-                <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                  <div>
-                    <label
-                      htmlFor="full-name"
-                      className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                    >
-                      Full Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="full-name"
-                      placeholder="John Doe"
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border border-gray-200 focus:border-tranquil-teal focus:ring-2 focus:ring-tranquil-teal/20 outline-none transition-all duration-200"
-                      required
-                    />
+              {isSubmitted ? (
+                /* Success State */
+                <div className="text-center py-8">
+                  <div className="w-20 h-20 bg-custom-green/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <FaCheckCircle className="text-custom-green text-4xl" />
                   </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                    >
-                      Email Address <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      placeholder="johndoe@example.com"
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border border-gray-200 focus:border-tranquil-teal focus:ring-2 focus:ring-tranquil-teal/20 outline-none transition-all duration-200"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                  <div>
-                    <label
-                      htmlFor="phone"
-                      className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                    >
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      placeholder="+233 54-914-8087"
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border border-gray-200 focus:border-tranquil-teal focus:ring-2 focus:ring-tranquil-teal/20 outline-none transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                    >
-                      Subject <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      placeholder="How can we help?"
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border border-gray-200 focus:border-tranquil-teal focus:ring-2 focus:ring-tranquil-teal/20 outline-none transition-all duration-200"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
-                  >
-                    Message <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    rows="6"
-                    placeholder="Tell us more about your inquiry..."
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border border-gray-200 focus:border-tranquil-teal focus:ring-2 focus:ring-tranquil-teal/20 outline-none transition-all duration-200 resize-none"
-                    required
-                  ></textarea>
-                </div>
-
-                <div className="bg-tranquil-teal/5 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-tranquil-teal/20">
-                  <p className="text-xs sm:text-sm text-gray-600">
-                    <span className="font-semibold text-gray-800">
-                      Response Time:
-                    </span>{" "}
-                    We typically respond within 24 hours during business days.
+                  <h2 className="text-2xl font-bold text-gray-800 mb-3">
+                    Message Sent!
+                  </h2>
+                  <p className="text-gray-600 mb-6">
+                    Thank you for reaching out. We'll get back to you within 24
+                    hours during business days.
                   </p>
+                  <button
+                    type="button"
+                    onClick={handleSendAnother}
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200"
+                  >
+                    <FaPaperPlane />
+                    Send Another Message
+                  </button>
                 </div>
+              ) : (
+                /* Form State */
+                <>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
+                    Send Us a Message
+                  </h2>
+                  <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
+                    Fill out the form below and we'll get back to you as soon as
+                    possible.
+                  </p>
 
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 text-sm sm:text-base rounded-lg sm:rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-2"
-                >
-                  <FaPaperPlane className="text-sm sm:text-base" />
-                  Send Message
-                </button>
-              </form>
+                  <Formik
+                    initialValues={{
+                      fullname: "",
+                      email: "",
+                      phone: "",
+                      subject: "",
+                      message: "",
+                    }}
+                    validationSchema={ContactFormSchema}
+                    onSubmit={handleSubmit}
+                  >
+                    {({ isSubmitting, errors, touched }) => (
+                      <Form className="space-y-4 sm:space-y-6" noValidate>
+                        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                          {/* Full Name */}
+                          <div>
+                            <label
+                              htmlFor="fullname"
+                              className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
+                            >
+                              Full Name <span className="text-red-500">*</span>
+                            </label>
+                            <Field
+                              type="text"
+                              id="fullname"
+                              name="fullname"
+                              placeholder="John Doe"
+                              maxLength={100}
+                              autoComplete="name"
+                              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border ${
+                                errors.fullname && touched.fullname
+                                  ? "border-red-400 focus:border-red-500 focus:ring-red-200"
+                                  : "border-gray-200 focus:border-tranquil-teal focus:ring-tranquil-teal/20"
+                              } focus:ring-2 outline-none transition-all duration-200`}
+                            />
+                            <ErrorMessage
+                              name="fullname"
+                              component="div"
+                              className="text-red-500 text-xs mt-1"
+                            />
+                          </div>
+
+                          {/* Email */}
+                          <div>
+                            <label
+                              htmlFor="email"
+                              className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
+                            >
+                              Email Address{" "}
+                              <span className="text-red-500">*</span>
+                            </label>
+                            <Field
+                              type="email"
+                              id="email"
+                              name="email"
+                              placeholder="johndoe@example.com"
+                              maxLength={255}
+                              autoComplete="email"
+                              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border ${
+                                errors.email && touched.email
+                                  ? "border-red-400 focus:border-red-500 focus:ring-red-200"
+                                  : "border-gray-200 focus:border-tranquil-teal focus:ring-tranquil-teal/20"
+                              } focus:ring-2 outline-none transition-all duration-200`}
+                            />
+                            <ErrorMessage
+                              name="email"
+                              component="div"
+                              className="text-red-500 text-xs mt-1"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                          {/* Phone */}
+                          <div>
+                            <label
+                              htmlFor="phone"
+                              className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
+                            >
+                              Phone Number{" "}
+                              <span className="text-gray-400">(Optional)</span>
+                            </label>
+                            <Field name="phone">
+                              {({ field, form, meta }) => (
+                                <PhoneInput
+                                  value={field.value}
+                                  onChange={(value) =>
+                                    form.setFieldValue("phone", value)
+                                  }
+                                  error={
+                                    meta.touched && meta.error
+                                      ? meta.error
+                                      : null
+                                  }
+                                  placeholder="+233 12-345-6789"
+                                />
+                              )}
+                            </Field>
+                          </div>
+
+                          {/* Subject */}
+                          <div>
+                            <label
+                              htmlFor="subject"
+                              className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
+                            >
+                              Subject <span className="text-red-500">*</span>
+                            </label>
+                            <Field
+                              type="text"
+                              id="subject"
+                              name="subject"
+                              placeholder="How can we help?"
+                              maxLength={200}
+                              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border ${
+                                errors.subject && touched.subject
+                                  ? "border-red-400 focus:border-red-500 focus:ring-red-200"
+                                  : "border-gray-200 focus:border-tranquil-teal focus:ring-tranquil-teal/20"
+                              } focus:ring-2 outline-none transition-all duration-200`}
+                            />
+                            <ErrorMessage
+                              name="subject"
+                              component="div"
+                              className="text-red-500 text-xs mt-1"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Message */}
+                        <div>
+                          <label
+                            htmlFor="message"
+                            className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2"
+                          >
+                            Message <span className="text-red-500">*</span>
+                          </label>
+                          <Field
+                            as="textarea"
+                            id="message"
+                            name="message"
+                            rows="6"
+                            placeholder="Tell us more about your inquiry..."
+                            maxLength={2000}
+                            className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border ${
+                              errors.message && touched.message
+                                ? "border-red-400 focus:border-red-500 focus:ring-red-200"
+                                : "border-gray-200 focus:border-tranquil-teal focus:ring-tranquil-teal/20"
+                            } focus:ring-2 outline-none transition-all duration-200 resize-none`}
+                          />
+                          <div className="flex justify-between items-center mt-1">
+                            <ErrorMessage
+                              name="message"
+                              component="div"
+                              className="text-red-500 text-xs"
+                            />
+                            <Field name="message">
+                              {({ field }) => (
+                                <span className="text-xs text-gray-400">
+                                  {field.value?.length || 0}/2000
+                                </span>
+                              )}
+                            </Field>
+                          </div>
+                        </div>
+
+                        {/* Response Time Notice */}
+                        <div className="bg-tranquil-teal/5 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-tranquil-teal/20">
+                          <p className="text-xs sm:text-sm text-gray-600">
+                            <span className="font-semibold text-gray-800">
+                              Response Time:
+                            </span>{" "}
+                            We typically respond within 24 hours during business
+                            days.
+                          </p>
+                        </div>
+
+                        {/* Cloudflare Turnstile Security Check */}
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                            <FaShieldAlt className="text-tranquil-teal" />
+                            <span>Security Verification</span>
+                          </div>
+                          <Turnstile
+                            siteKey={TURNSTILE_SITE_KEY}
+                            onVerify={handleTurnstileVerify}
+                            onError={handleTurnstileError}
+                            onExpire={handleTurnstileExpire}
+                            theme="light"
+                            size="normal"
+                          />
+                          {turnstileError && (
+                            <p className="text-red-500 text-xs">
+                              Verification failed. Please try again.
+                            </p>
+                          )}
+                          {turnstileToken && (
+                            <p className="text-green-600 text-xs flex items-center gap-1">
+                              <FaCheckCircle /> Verified
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Submit Button */}
+                        <button
+                          type="submit"
+                          disabled={
+                            isPending ||
+                            isSubmitting ||
+                            (TURNSTILE_SITE_KEY && !turnstileToken)
+                          }
+                          className="w-full bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 text-sm sm:text-base rounded-lg sm:rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                        >
+                          {isPending ? (
+                            <>
+                              <FaSpinner className="text-sm sm:text-base animate-spin" />
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              <FaPaperPlane className="text-sm sm:text-base" />
+                              Send Message
+                            </>
+                          )}
+                        </button>
+                      </Form>
+                    )}
+                  </Formik>
+                </>
+              )}
             </div>
           </div>
         </div>
