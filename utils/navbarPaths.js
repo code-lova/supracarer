@@ -13,4 +13,8 @@ export const showNavbarPaths = [
   "/for-the-sick",
   "/for-health-professionals",
   "/pricing",
+  "/privacy-policy",
+  "/terms",
+  "/cookie-policy",
+  "/code-of-conduct",
 ];

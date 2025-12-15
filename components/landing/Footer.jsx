@@ -84,6 +84,22 @@ const Footer = () => {
                   Privacy Policy
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/cookie-policy"
+                  className="text-sm hover:text-tranquil-teal duration-300 hover:pl-2 inline-block transition-all"
+                >
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/code-of-conduct"
+                  className="text-sm hover:text-tranquil-teal duration-300 hover:pl-2 inline-block transition-all"
+                >
+                  Code of Conduct
+                </Link>
+              </li>
             </ul>
           </div>
 

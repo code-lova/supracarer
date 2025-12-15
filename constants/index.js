@@ -188,7 +188,7 @@ export const HealthDashboardLinks = [
   {
     id: "request",
     link: "/health-service/booking-request",
-    title: "Booking Requst",
+    title: "Booking Request",
     icon: SiOnlyoffice,
   },
   {
@@ -1722,3 +1722,464 @@ export const badges = [
     borderColor: "border-haven-blue/20",
   },
 ];
+
+// Privacy Policy Content
+export const privacyPolicyData = {
+  lastUpdated: "December 10, 2025",
+  sections: [
+    {
+      id: 1,
+      title: "Introduction",
+      content: `Supracarer ("we", "our", "us") is dedicated to protecting your privacy, particularly because we operate in the health and care industry. This Privacy Policy explains how we collect, use, store, share, and secure your personal and health-related information.
+
+      By using our website or services, you consent to the practices described herein.`,
+    },
+    {
+      id: 2,
+      title: "Information We Collect",
+      subsections: [
+        {
+          subtitle: "a. Personal Information",
+          intro: "We may collect:",
+          items: [
+            "Full name",
+            "Email address",
+            "Phone number",
+            "Address",
+            "Gender (optional)",
+            "Date of birth",
+            "Account login details",
+            "Payment details (processed securely by third-party providers)",
+          ],
+        },
+        {
+          subtitle: "b. Sensitive Health Information",
+          intro: "You may voluntarily provide:",
+          items: [
+            "Care requirements",
+            "Allergies, mobility info, conditions relevant to care",
+            "Emergency contact info",
+            "Preferences for caregiver type",
+          ],
+          note: "We treat this data with increased confidentiality.",
+        },
+        {
+          subtitle: "c. Automatically Collected Data",
+          items: [
+            "IP address",
+            "Device type",
+            "Browser type",
+            "Operating system",
+            "Pages viewed",
+            "Cookies & session data",
+          ],
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "Legal Basis for Processing (GDPR Compliant)",
+      content:
+        "For users in the EU/EEA, data is processed under one or more of the following:",
+      items: [
+        "Consent (Article 6(1)(a))",
+        "Contractual necessity (Article 6(1)(b))",
+        "Legal obligation (Article 6(1)(c))",
+        "Legitimate interest (Article 6(1)(f))",
+      ],
+      additionalContent: "Sensitive health information is processed under:",
+      additionalItems: ["Explicit consent (Article 9(2)(a))"],
+    },
+    {
+      id: 4,
+      title: "How We Use Your Information",
+      intro: "We use your information to:",
+      items: [
+        "Deliver and improve care coordination services",
+        "Match users with suitable caregivers",
+        "Create and manage user accounts",
+        "Process payments securely",
+        "Communicate updates, appointments, or support",
+        "Improve website performance",
+        "Comply with health-industry, legal, or regulatory obligations",
+      ],
+    },
+    {
+      id: 5,
+      title: "HIPAA-Friendly Statement",
+      content: `Supracarer is committed to handling health-related information responsibly.
+
+While we may not qualify as a "HIPAA-covered entity," we:`,
+      items: [
+        "Protect all health-related information with industry-standard safeguards",
+        "Limit access to authorized personnel only",
+        "Never disclose sensitive data without consent unless legally required",
+      ],
+    },
+    {
+      id: 6,
+      title: "Data Sharing",
+      content: "We never sell your personal information.",
+      intro: "We may share your data with:",
+      items: [
+        "Verified caregivers and service providers",
+        "Payment processors",
+        "Hosting providers",
+        "Analytics tools",
+        "Legal authorities when required",
+      ],
+      note: "All third parties follow strict confidentiality agreements.",
+    },
+    {
+      id: 7,
+      title: "Data Retention Policy",
+      intro: "We retain data only as long as necessary:",
+      items: [
+        "Account information: until your account is closed + 12 months",
+        "Health-related information: until service completion + required retention period",
+        "Logs & analytics: typically 12–24 months",
+        "Legal or financial records: as required by law",
+      ],
+      note: "You may request deletion at any time (unless we are legally required to retain it).",
+    },
+    {
+      id: 8,
+      title: "Your Rights",
+      intro: "Depending on your region, you may request:",
+      items: [
+        "Access to your data",
+        "Correction or deletion",
+        "Restriction of processing",
+        "Data portability",
+        "Withdrawal of consent",
+        "Opt-out of marketing",
+      ],
+      contact: "info@supracarer.com",
+    },
+    {
+      id: 9,
+      title: "Cookies",
+      intro: "We use cookies to:",
+      items: [
+        "Improve user experience",
+        "Track site performance",
+        "Save user preferences",
+      ],
+      note: "You can disable cookies in your browser settings.",
+    },
+    {
+      id: 10,
+      title: "Children's Privacy",
+      content:
+        "We do not knowingly collect information from children under 13.",
+    },
+    {
+      id: 11,
+      title: "International Transfers",
+      content:
+        "Data may be processed in countries outside your own. We use appropriate safeguards such as:",
+      items: [
+        "Standard Contractual Clauses (SCCs)",
+        "Secure encrypted storage",
+        "Verified processors",
+      ],
+    },
+    {
+      id: 12,
+      title: "Changes to This Policy",
+      content: `We may update the Privacy Policy occasionally. The "Last Updated" date applies.`,
+    },
+    {
+      id: 13,
+      title: "Contact Us",
+      content: "Supracarer",
+      contactInfo: {
+        email: "info@supracarer.com",
+        address: "ALX Ghana One Airport Square",
+      },
+    },
+  ],
+};
+
+export const termsConditionsData = {
+  lastUpdated: "December 10, 2025",
+  sections: [
+    {
+      id: 1,
+      title: "Acceptance of Terms",
+      content:
+        "By accessing or using Supracarer's website, services, or platform, you agree to be bound by these Terms & Conditions.",
+    },
+    {
+      id: 2,
+      title: "Description of Services",
+      intro:
+        "Supracarer provides digital tools for health and care services including:",
+      items: [
+        "Care coordination",
+        "Client-caregiver matching",
+        "Wellness services",
+        "Appointment management",
+        "Health-related support",
+      ],
+      note: "We do not provide medical diagnoses or emergency services.",
+    },
+    {
+      id: 3,
+      title: "User Responsibilities",
+      intro: "Users agree to:",
+      items: [
+        "Provide accurate information",
+        "Use the site legally",
+        "Not interfere with platform security",
+        "Not impersonate other individuals",
+      ],
+    },
+    {
+      id: 4,
+      title: "Caregiver/Service Provider Terms",
+      intro:
+        "If you register as a caregiver or service provider, you agree to:",
+      items: [
+        "Provide accurate qualifications",
+        "Maintain professional conduct",
+        "Comply with local regulations",
+        "Keep client information confidential",
+        "Not misuse platform data",
+      ],
+      note: "Supracarer may verify or request documentation before activating profiles.",
+    },
+    {
+      id: 5,
+      title: "Payments, Refunds & Cancellation",
+      intro: "If services involve payments:",
+      items: [
+        "All fees must be paid upfront or per billing cycle",
+        "Subscriptions may auto-renew",
+        "Refunds apply only for unused or service-related issues within 7–14 days",
+        "Users may cancel anytime; no refunds for past periods",
+        "Caregivers are paid through approved payout methods",
+      ],
+    },
+    {
+      id: 6,
+      title: "Account Security",
+      intro: "You agree to:",
+      items: [
+        "Keep your password confidential",
+        "Notify us of unauthorized access",
+        "Accept responsibility for activities under your account",
+      ],
+    },
+    {
+      id: 7,
+      title: "Intellectual Property",
+      content:
+        "All website content, software, branding, and materials belong to Supracarer. You may not copy, redistribute, or reverse-engineer any part of the platform.",
+    },
+    {
+      id: 8,
+      title: "Health Information Disclaimer",
+      content:
+        "Supracarer does not provide medical diagnoses or treatment recommendations. Always consult a qualified healthcare professional.",
+    },
+    {
+      id: 9,
+      title: "Limitation of Liability",
+      intro: "Supracarer is not liable for:",
+      items: [
+        "Service interruptions",
+        "Loss of data",
+        "Loss of profits",
+        "Misinformation provided by users or caregivers",
+        "Third-party issues",
+        "Any indirect or consequential damages",
+      ],
+      note: "Use of our platform is at your own risk.",
+    },
+    {
+      id: 10,
+      title: "Termination of Use",
+      intro: "We may suspend or terminate accounts that:",
+      items: [
+        "Violate these terms",
+        "Provide false information",
+        "Abuse or misuse the platform",
+        "Endanger other users",
+      ],
+    },
+    {
+      id: 11,
+      title: "Governing Law",
+      content:
+        "These terms are governed by the laws of Ghana, and disputes will be resolved in the appropriate jurisdiction within Ghana.",
+    },
+    {
+      id: 12,
+      title: "Changes to Terms",
+      content:
+        "We may update these Terms at any time. Continued use means acceptance.",
+    },
+    {
+      id: 13,
+      title: "Contact Information",
+      content: "Supracarer",
+      contactInfo: {
+        email: "info@supracarer.com",
+        address: "ALX Ghana One Airport Square",
+      },
+    },
+  ],
+};
+
+export const cookiePolicyData = {
+  lastUpdated: "December 10, 2025",
+  sections: [
+    {
+      id: 1,
+      title: "Introduction",
+      content:
+        'Supracarer ("we", "our", "us") uses cookies and similar tracking technologies on our website and platform to improve user experience, analyze usage, and support essential site functions. This Cookie Policy explains what cookies are, how we use them, and how you can manage your preferences.',
+    },
+    {
+      id: 2,
+      title: "What Are Cookies?",
+      content:
+        "Cookies are small text files stored on your device when you visit a website. They help the site function properly, remember your preferences, and understand how you interact with the platform.",
+    },
+    {
+      id: 3,
+      title: "Types of Cookies We Use",
+      subsections: [
+        {
+          subtitle: "a. Strictly Necessary Cookies",
+          content:
+            "Required for the website to operate, such as security, login, and page navigation.",
+        },
+        {
+          subtitle: "b. Functional Cookies",
+          content:
+            "Remember your choices (e.g., location, preferences).",
+        },
+        {
+          subtitle: "c. Performance & Analytics Cookies",
+          content:
+            "Help us analyze traffic and usage patterns to improve our service.",
+        },
+        {
+          subtitle: "d. Advertising & Marketing Cookies",
+          content:
+            "Used to show relevant ads and measure campaign effectiveness.",
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: "How We Use Cookies",
+      items: [
+        "To secure the platform",
+        "To remember user sessions",
+        "To analyze performance",
+        "To personalize the user experience",
+      ],
+    },
+    {
+      id: 5,
+      title: "Third-Party Cookies",
+      content:
+        "Some cookies may come from third-party service providers (e.g., analytics or payment integrations). These providers have their own cookie policies.",
+    },
+    {
+      id: 6,
+      title: "Cookie Management",
+      content:
+        "You can accept, reject, or modify cookie settings through your browser or our cookie banner. Disabling certain cookies may affect platform functionality.",
+    },
+    {
+      id: 7,
+      title: "Updates to This Policy",
+      content:
+        'We may update this policy periodically. Changes will be posted with an updated "Last Updated" date.',
+    },
+    {
+      id: 8,
+      title: "Contact Us",
+      content: "For questions about our cookie practices, please contact us:",
+      contactInfo: {
+        email: "support@supracarer.com",
+      },
+    },
+  ],
+};
+
+export const codeOfConductData = {
+  lastUpdated: "December 10, 2025",
+  intro:
+    "At Supracarer, we are committed to providing safe, professional, and human-centered care. All Healthcare Professionals (\"Care Providers\") who use our platform must adhere to the following Code of Conduct.",
+  sections: [
+    {
+      id: 1,
+      title: "Professionalism",
+      items: [
+        "Provide care with respect, dignity, and compassion.",
+        "Maintain a clean, professional appearance.",
+        "Arrive on time and communicate promptly if delays occur.",
+      ],
+    },
+    {
+      id: 2,
+      title: "Safety & Compliance",
+      items: [
+        "Follow all legal, ethical, and professional standards of care.",
+        "Use safe practices when assisting clients.",
+        "Report any accidents, concerns, or emergencies immediately.",
+      ],
+    },
+    {
+      id: 3,
+      title: "Honesty & Integrity",
+      items: [
+        "Provide accurate information in your Healthcare Professional profile.",
+        "Do not falsify qualifications, identity, or certifications.",
+        "Respect client privacy and confidentiality at all times.",
+      ],
+    },
+    {
+      id: 4,
+      title: "Respect for Clients",
+      items: [
+        "Treat all clients equally regardless of age, gender, religion, or background.",
+        "Honor client boundaries and cultural preferences.",
+        "Never engage in harassment, discrimination, or abuse of any kind.",
+      ],
+    },
+    {
+      id: 5,
+      title: "Data Protection",
+      items: [
+        "Do not share client information outside the scope of your duties.",
+        "Secure all digital and physical records related to client care.",
+      ],
+    },
+    {
+      id: 6,
+      title: "Prohibited Actions",
+      items: [
+        "Theft or misuse of client property",
+        "Providing medical services outside your certification",
+        "Substance use during care assignments",
+        "Soliciting additional payments outside the platform",
+      ],
+    },
+    {
+      id: 7,
+      title: "Termination of Access",
+      content:
+        "Violation of this code may result in suspension or removal from Supracarer.",
+    },
+  ],
+  footer: {
+    text: "For questions about our Code of Conduct, please contact us:",
+    email: "support@supracarer.com",
+  },
+};

@@ -21,6 +21,7 @@ import {
   FaTrash,
   FaBan,
   FaStar,
+  FaRedo,
 } from "react-icons/fa";
 
 const AppointmentDetailsModal = ({
@@ -121,7 +122,7 @@ const AppointmentDetailsModal = ({
                 </p>
                 <p className="text-dark-gray-blue">
                   <DateFormatter
-                    time={appointment.start_time}
+                    time={appointment.start_time.split(":").splice(0, 2).join(":")}
                     timePeriod={appointment.start_time_period}
                   />
                 </p>
@@ -135,13 +136,85 @@ const AppointmentDetailsModal = ({
                 </p>
                 <p className="text-dark-gray-blue">
                   <DateFormatter
-                    time={appointment.end_time}
+                    time={appointment.end_time.split(":").splice(0, 2).join(":")}
                     timePeriod={appointment.end_time_period}
                   />
                 </p>
               </div>
             </div>
           </div>
+
+          {/* Recurring Booking Information */}
+          {appointment.recurrence?.is_recurring === "Yes" && (
+            <div className="bg-indigo-50 rounded-xl p-4">
+              <h3 className="text-lg font-semibold text-indigo-700 mb-3 flex items-center">
+                <FaRedo className="mr-2" />
+                Recurring Schedule
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-gray">
+                    Recurring
+                  </label>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                    Yes
+                  </span>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-gray">
+                    Frequency
+                  </label>
+                  <p className="text-dark-gray-blue font-medium">
+                    {appointment.recurrence.recurrence_type}
+                  </p>
+                </div>
+                {appointment.recurrence.recurrence_type === "Weekly" &&
+                  appointment.recurrence.recurrence_days &&
+                  appointment.recurrence.recurrence_days.length > 0 && (
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-slate-gray mb-1">
+                        Days
+                      </label>
+                      <div className="flex flex-wrap gap-1">
+                        {appointment.recurrence.recurrence_days.map(
+                          (day, index) => (
+                            <span
+                              key={index}
+                              className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-medium"
+                            >
+                              {day}
+                            </span>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
+                <div>
+                  <label className="block text-sm font-medium text-slate-gray">
+                    Ends
+                  </label>
+                  <p className="text-dark-gray-blue font-medium">
+                    {appointment.recurrence.recurrence_end_type === "date" &&
+                    appointment.recurrence.recurrence_end_date ? (
+                      <>
+                        On{" "}
+                        <DateFormatter
+                          date={appointment.recurrence.recurrence_end_date}
+                          format="long"
+                        />
+                      </>
+                    ) : appointment.recurrence.recurrence_end_type ===
+                        "occurrences" &&
+                      appointment.recurrence.recurrence_occurrences ? (
+                      `After ${appointment.recurrence.recurrence_occurrences} occurrences`
+                    ) : (
+                      "Not specified"
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Care Information */}
           <div className="bg-green-50 rounded-xl p-4">

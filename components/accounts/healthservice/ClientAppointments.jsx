@@ -15,7 +15,7 @@ import EmptyState from "@components/core/EmptyState";
 import ErrorState from "@components/core/ErrorState";
 import TableFilters from "@components/core/table/TableFilters";
 import DataTable from "react-data-table-component";
-import { FaCalendarAlt, FaUserMd, FaClock, FaSearch } from "react-icons/fa";
+import { FaCalendarAlt, FaUserMd, FaClock, FaSearch, FaRedo } from "react-icons/fa";
 import AdminTableSkeleton from "@components/core/skeleton/AdminTableSkeleton";
 import ThreeDotDropdown from "@components/core/button/ThreeDotDropdown";
 import DateFormatter from "@components/core/DateFormatter";
@@ -241,6 +241,24 @@ const ClientAppointments = () => {
         sortable: true,
         width: "150px",
         cell: (row) => <StatusPill status={row.status} />,
+      },
+      {
+        name: "Recurring",
+        selector: (row) => row.recurrence?.is_recurring || "No",
+        sortable: true,
+        width: "110px",
+        cell: (row) => (
+          <div className="flex items-center">
+            {row.recurrence?.is_recurring === "Yes" ? (
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-tranquil-teal">
+                <FaRedo className="w-3 h-3 mr-1" />
+                Yes
+              </span>
+            ) : (
+              <span className="text-xs text-gray-500">No</span>
+            )}
+          </div>
+        ),
       },
       {
         name: "Actions",

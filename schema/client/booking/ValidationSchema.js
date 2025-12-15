@@ -145,19 +145,18 @@ export const StepThreeValidationSchema = Yup.object().shape({
       };
       // Helper to get AM/PM
       const getAmPm = (period) => period;
-      // For 24hr Shift, just check end_time is after start_time
+      // For 24hr Shift, start time and end time should be the same
       const start = to24Hour(start_time, start_time_period);
       const end = to24Hour(end_time, end_time_period);
       const startTotal = start.h + start.m / 60;
       const endTotal = end.h + end.m / 60;
       if (care_duration === "Shift" && care_duration_value === "24") {
-        if (endTotal <= startTotal) {
+        // For 24-hour shift, start and end time must be exactly the same
+        if (start_time !== end_time || start_time_period !== end_time_period) {
           return this.createError({
-            message: `End time (${end_time} ${getAmPm(
-              end_time_period
-            )}) must be after Start time (${start_time} ${getAmPm(
+            message: `For 24hr Shift, End time must be the same as Start time (${start_time} ${getAmPm(
               start_time_period
-            )}) for 24hr Shift`,
+            )})`,
           });
         }
         return true;
@@ -181,6 +180,84 @@ export const StepThreeValidationSchema = Yup.object().shape({
         )} - ${expectedTime})`,
       });
     }),
+
+  // Recurring booking fields
+  is_recurring: Yup.string()
+    .required("Please select if this is a recurring booking")
+    .oneOf(["Yes", "No"], "Invalid selection"),
+
+  recurrence_type: Yup.string().when("is_recurring", {
+    is: "Yes",
+    then: (schema) =>
+      schema
+        .required("Please select how often this should repeat")
+        .oneOf(["Daily", "Weekly", "Monthly"], "Invalid recurrence type"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+
+  recurrence_days: Yup.array()
+    .of(Yup.string())
+    .when(["is_recurring", "recurrence_type"], {
+      is: (is_recurring, recurrence_type) =>
+        is_recurring === "Yes" && recurrence_type === "Weekly",
+      then: (schema) =>
+        schema.min(1, "Please select at least one day of the week"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+
+  recurrence_end_type: Yup.string().when("is_recurring", {
+    is: "Yes",
+    then: (schema) =>
+      schema
+        .required("Please select when recurring should end")
+        .oneOf(["date", "occurrences"], "Invalid end type"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+
+  recurrence_end_date: Yup.date()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
+    .nullable()
+    .when(["is_recurring", "recurrence_end_type"], {
+      is: (is_recurring, recurrence_end_type) =>
+        is_recurring === "Yes" && recurrence_end_type === "date",
+      then: (schema) =>
+        schema
+          .required("Please select an end date for recurring bookings")
+          .test("end-after-start", function (recurrence_end_date) {
+            const { start_date } = this.parent;
+            if (!start_date || !recurrence_end_date) return true;
+            const start = new Date(start_date);
+            const end = new Date(recurrence_end_date);
+            if (end <= start) {
+              return this.createError({
+                message: "Recurrence end date must be after the start date",
+              });
+            }
+            return true;
+          }),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+
+  recurrence_occurrences: Yup.string().when(
+    ["is_recurring", "recurrence_end_type"],
+    {
+      is: (is_recurring, recurrence_end_type) =>
+        is_recurring === "Yes" && recurrence_end_type === "occurrences",
+      then: (schema) =>
+        schema
+          .required("Please select the number of occurrences")
+          .test("valid-occurrences", function (value) {
+            const num = parseInt(value, 10);
+            if (isNaN(num) || num < 2 || num > 30) {
+              return this.createError({
+                message: "Occurrences must be between 2 and 30",
+              });
+            }
+            return true;
+          }),
+      otherwise: (schema) => schema.notRequired(),
+    }
+  ),
 });
 
 export const StepFourValidationSchema = Yup.object().shape({

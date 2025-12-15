@@ -339,9 +339,9 @@ const Appointments = () => {
                         <div className="flex items-center text-sm">
                           <FaClock className="text-carer-green mr-2" />
                           <span>
-                            {appointment.start_time}{" "}
+                            {appointment.start_time.split(":").splice(0, 2).join(":")}{" "}
                             {appointment.start_time_period} -{" "}
-                            {appointment.end_time} {appointment.end_time_period}
+                            {appointment.end_time.split(":").splice(0, 2).join(":")} {appointment.end_time_period}
                           </span>
                         </div>
                         <div className="flex items-center text-sm">
@@ -406,12 +406,13 @@ const Appointments = () => {
                     <thead className="sticky top-0 z-10">
                       <tr className="bg-slate-gray2 text-white">
                         <th className="px-4 py-4 text-left rounded-tl-lg">
-                          Booking ID
+                          S/N
                         </th>
                         <th className="px-4 py-4 text-left">Status</th>
                         <th className="px-4 py-4 text-left">Schedule</th>
                         <th className="px-4 py-4 text-left">Care Details</th>
                         <th className="px-4 py-4 text-left">Services</th>
+                        <th className="px-4 py-4 text-left">Recurring</th>
                         <th className="px-4 py-4 text-left">Requester</th>
                         <th className="px-4 py-4 text-center rounded-tr-lg">
                           Actions
@@ -431,12 +432,12 @@ const Appointments = () => {
                               <div className="font-semibold text-dark-blue">
                                 #{appointment.id}
                               </div>
-                              <div className="text-sm text-slate-gray">
+                              {/* <div className="text-sm text-slate-gray">
                                 <DateFormatter
                                   date={appointment.created_at}
                                   format="short"
                                 />
-                              </div>
+                              </div> */}
                             </div>
                           </td>
                           <td className="px-4 py-4">
@@ -456,7 +457,7 @@ const Appointments = () => {
                               <div className="flex items-center text-sm">
                                 <FaClock className="text-green-600 mr-1" />
                                 <span>
-                                  {appointment.start_time}{" "}
+                                  {appointment.start_time.split(":").splice(0, 2).join(":")}{" "}
                                   {appointment.start_time_period}
                                 </span>
                               </div>
@@ -477,7 +478,7 @@ const Appointments = () => {
                             <div className="space-y-1">
                               <div className="text-sm">
                                 {appointment.medical_services?.length || "Confidential"}{" "}
-                                medical service(s)
+                                care service(s)
                               </div>
                               <div className="text-xs text-slate-gray">
                                 {appointment.other_extra_services?.length > 0 &&
@@ -488,6 +489,13 @@ const Appointments = () => {
                                   ✓ Worker Assigned
                                 </div>
                               )}
+                            </div>
+                          </td>
+                          <td className="px-4 py-4">
+                            <div className="space-y-1">
+                              <div className="text-md text-slate-gray">
+                                {appointment.recurrence?.is_recurring || "No"}
+                              </div>
                             </div>
                           </td>
                           <td className="px-4 py-4">

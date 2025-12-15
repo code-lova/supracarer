@@ -9,6 +9,8 @@ import ServerLayout from "./ServerLayout";
 import { showNavbarPaths } from "@utils/navbarPaths";
 import { UserProvider } from "@context/userContext";
 import { SessionTimeoutProvider } from "@providers/SessionTimeoutProvider";
+import CookieConsent from "@components/core/CookieConsent";
+import { Analytics } from "@vercel/analytics/react";
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
@@ -25,6 +27,8 @@ const RootLayout = ({ children }) => {
                 {shouldShowNavbar && <Navbar />}
                 {children}
                 <Toaster />
+                <CookieConsent />
+                <Analytics />
               </SessionTimeoutProvider>
             </UserProvider>
           </ReactQueryProvider>
