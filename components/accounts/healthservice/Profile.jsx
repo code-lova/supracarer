@@ -290,7 +290,7 @@ const Profile = () => {
 
           {/* Right Column (2/3) */}
           <div className="lg:col-span-2 ">
-            <div className="bg-white shadow-lg rounded-2xl p-6 h-[90vh] mb-4 overflow-x-auto">
+            <div className="bg-white shadow-lg rounded-2xl p-6 h-[100vh] mb-4">
               <h4 className="text-lg font-bold text-tranquil-teal mb-6">
                 Update Profile Information
               </h4>
