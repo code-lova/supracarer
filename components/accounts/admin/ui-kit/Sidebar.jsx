@@ -11,6 +11,7 @@ import {
   FaTrashAlt,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { FaChalkboardUser } from "react-icons/fa6";
 import { FaRankingStar, FaMessage } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import Link from "next/link";
@@ -66,6 +67,11 @@ const links = [
     name: "Send Email",
     icon: <MdEmail size={20} />,
     href: "/admin/send-emails",
+  },
+  {
+    name: "Service Flyers",
+    icon: <FaChalkboardUser size={20} />,
+    href: "/admin/service-flyers",
   },
   {
     name: "Deleted Accounts",

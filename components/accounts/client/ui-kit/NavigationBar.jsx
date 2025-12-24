@@ -19,6 +19,7 @@ import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { getUnreadCount } from "@service/request/user/getNotifications";
 import NotificationDropdown from "@components/core/NotificationDropdown";
 import { clearSessionCache } from "@utils/sessionCache";
+import CurrentDateTime from "@components/core/CurrentDateTime";
 
 const NavigationBar = () => {
   const { user } = useUserContext();
@@ -111,12 +112,7 @@ const NavigationBar = () => {
                   !
                 </p>
                 <p className="hidden lg:block text-xs text-gray-500">
-                  {new Date().toLocaleDateString("en-US", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  <CurrentDateTime showDateTime={true} textClass="text-gray-500" />
                 </p>
               </div>
             )}

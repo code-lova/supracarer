@@ -12,6 +12,7 @@ import {
   subMonths,
   isSameMonth,
   isSameDay,
+  isToday,
 } from "date-fns";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -24,14 +25,13 @@ import toast from "react-hot-toast";
 const CalendarWidget = () => {
   const queryClient = useQueryClient();
   const [currentDate, setCurrentDate] = useState(new Date());
-  // CHANGED: store multiple selected dates
   const [selectedDates, setSelectedDates] = useState([]);
 
   const handlePrevMonth = () => setCurrentDate(subMonths(currentDate, 1));
   const handleNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
 
-  // UPDATED: toggle date selection
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   // Fetch existing unavailable dates
   const { data: unavailableDates = [], isLoading } = useQuery({
@@ -50,43 +50,34 @@ const CalendarWidget = () => {
   const mutation = useMutation({
     mutationFn: toggleUnavailableDate,
     onMutate: async ({ date }) => {
-      // Cancel outgoing refetches
       await queryClient.cancelQueries(["unavailableDates"]);
-
-      // Store previous state for rollback
       const previousDates = [...selectedDates];
       const toggledDate = new Date(date);
 
-      // Optimistically update local state immediately
       const isCurrentlySelected = selectedDates.some((d) =>
         isSameDay(d, toggledDate)
       );
 
       if (isCurrentlySelected) {
-        // Remove date
         setSelectedDates((prev) =>
           prev.filter((d) => !isSameDay(d, toggledDate))
         );
       } else {
-        // Add date
         setSelectedDates((prev) => [...prev, toggledDate]);
       }
 
       return { previousDates };
     },
     onSuccess: (data) => {
-      // Don't update state here - we already did it optimistically in onMutate
-      // Just show success feedback if needed
       const isRemoving = data.status === "removed";
       toast.success(
         isRemoving
-          ? "Date availability restored"
-          : "Date marked as unavailable",
+          ? "You're now available on this date"
+          : "Marked as unavailable",
         { duration: 2000 }
       );
     },
     onError: (err, variables, context) => {
-      // Rollback to previous state on error
       if (context?.previousDates) {
         setSelectedDates(context.previousDates);
       }
@@ -95,44 +86,45 @@ const CalendarWidget = () => {
   });
 
   const handleDateClick = (date) => {
-    // Only allow future dates (today or after)
-    if (date < today.setHours(0, 0, 0, 0)) return;
+    const dateToCheck = new Date(date);
+    dateToCheck.setHours(0, 0, 0, 0);
 
-    // Don't allow clicks while mutation is in progress
+    if (dateToCheck < today) return;
     if (mutation.isPending) return;
 
     const formatted = format(date, "yyyy-MM-dd");
-
-    // Send request - UI will update immediately via onMutate
     mutation.mutate({ date: formatted });
   };
 
   const renderHeader = () => (
-    <div className="flex items-center justify-between p-4 border-b">
+    <div className="flex items-center justify-between px-2 py-3">
       <button
         onClick={handlePrevMonth}
-        className="text-tranquil-teal hover:text-ever-green"
+        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-tranquil-teal/10 text-tranquil-teal transition-colors"
       >
-        <FaChevronLeft />
+        <FaChevronLeft className="w-3 h-3" />
       </button>
-      <h2 className="text-md font-bold text-tranquil-teal">
+      <h2 className="text-sm font-bold text-gray-800">
         {format(currentDate, "MMMM yyyy")}
       </h2>
       <button
         onClick={handleNextMonth}
-        className="text-tranquil-teal hover:text-ever-green"
+        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-tranquil-teal/10 text-tranquil-teal transition-colors"
       >
-        <FaChevronRight />
+        <FaChevronRight className="w-3 h-3" />
       </button>
     </div>
   );
 
   const renderDays = () => {
-    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
     return (
-      <div className="grid grid-cols-7 gap-2 py-2">
+      <div className="grid grid-cols-7 gap-1 mb-1">
         {dayNames.map((day, i) => (
-          <div key={i} className="text-xs font-bold text-center text-gray-500">
+          <div
+            key={i}
+            className="text-[10px] font-semibold text-center text-gray-400 uppercase tracking-wide py-1"
+          >
             {day}
           </div>
         ))}
@@ -153,25 +145,50 @@ const CalendarWidget = () => {
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         const formattedDate = format(day, "d");
-        const cloneDay = day;
+        const cloneDay = new Date(day);
+        cloneDay.setHours(0, 0, 0, 0);
         const isCurrentMonth = isSameMonth(day, monthStart);
-
-        // Check if day is in selectedDates
         const isSelected = selectedDates.some((d) => isSameDay(d, cloneDay));
-        const isPast = cloneDay < today.setHours(0, 0, 0, 0);
+        const isTodayDate = isToday(day);
+        const isPast = cloneDay < today;
 
         days.push(
           <div
             key={day.toString()}
-            className={`text-center text-sm p-1 rounded-lg transition-all duration-150
-              ${!isCurrentMonth ? "text-gray-300" : "text-slate-gray"}
+            onClick={() => !isPast && handleDateClick(cloneDay)}
+            className={`
+              relative flex items-center justify-center
+              w-8 h-8 mx-auto text-xs font-medium rounded-full
+              transition-all duration-200 select-none
+              ${!isCurrentMonth ? "text-gray-300" : ""}
               ${
-                isSelected ? "bg-tranquil-teal text-white" : "hover:bg-gray-100"
+                isPast && isCurrentMonth
+                  ? "text-gray-300 cursor-not-allowed"
+                  : ""
               }
-              ${isPast ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
-            onClick={() => handleDateClick(cloneDay)}
+              ${
+                !isPast && isCurrentMonth && !isSelected
+                  ? "text-gray-700 hover:bg-tranquil-teal/10 cursor-pointer"
+                  : ""
+              }
+              ${
+                isSelected && isCurrentMonth
+                  ? "bg-red-100 text-red-600 ring-2 ring-red-200"
+                  : ""
+              }
+              ${
+                isTodayDate && !isSelected
+                  ? "bg-tranquil-teal text-white font-bold"
+                  : ""
+              }
+              ${isTodayDate && isSelected ? "ring-2 ring-tranquil-teal" : ""}
+              ${mutation.isPending ? "pointer-events-none" : ""}
+            `}
           >
             {formattedDate}
+            {isSelected && isCurrentMonth && (
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full" />
+            )}
           </div>
         );
 
@@ -179,7 +196,7 @@ const CalendarWidget = () => {
       }
 
       rows.push(
-        <div className="grid grid-cols-7 gap-2" key={day.toString()}>
+        <div className="grid grid-cols-7 gap-1" key={day.toString()}>
           {days}
         </div>
       );
@@ -187,23 +204,52 @@ const CalendarWidget = () => {
       days = [];
     }
 
-    return <div className="space-y-1 py-1 font-semibold">{rows}</div>;
+    return <div className="space-y-1">{rows}</div>;
   };
 
   if (isLoading) {
     return (
-      <div className="p-4 text-gray-400 animate-pulse">Loading calendar...</div>
+      <div className="p-6">
+        <div className="animate-pulse space-y-3">
+          <div className="h-6 bg-gray-200 rounded w-1/2 mx-auto"></div>
+          <div className="grid grid-cols-7 gap-2">
+            {[...Array(35)].map((_, i) => (
+              <div
+                key={i}
+                className="h-8 w-8 bg-gray-100 rounded-full mx-auto"
+              ></div>
+            ))}
+          </div>
+        </div>
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="p-2">
       {renderHeader()}
-      <div className="px-2">
-        {renderDays()}
-        {renderCells()}
+      {renderDays()}
+      {renderCells()}
+
+      {/* Legend */}
+      <div className="mt-4 pt-3 border-t border-gray-100">
+        <div className="flex items-center justify-center gap-4 text-[10px]">
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-tranquil-teal"></div>
+            <span className="text-gray-500">Today</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-100 ring-1 ring-red-200 relative">
+              <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+            </div>
+            <span className="text-gray-500">Unavailable</span>
+          </div>
+        </div>
+        <p className="text-[10px] text-gray-400 text-center mt-2">
+          Click on a date to toggle availability
+        </p>
       </div>
-    </>
+    </div>
   );
 };
 

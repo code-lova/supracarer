@@ -186,6 +186,12 @@ export const HealthDashboardLinks = [
     icon: FaHome,
   },
   {
+    id: "analytics",
+    link: "/health-service/analytics",
+    title: "Analytics",
+    icon: FaChartLine,
+  },
+  {
     id: "request",
     link: "/health-service/booking-request",
     title: "Booking Request",
@@ -2058,8 +2064,7 @@ export const cookiePolicyData = {
         },
         {
           subtitle: "b. Functional Cookies",
-          content:
-            "Remember your choices (e.g., location, preferences).",
+          content: "Remember your choices (e.g., location, preferences).",
         },
         {
           subtitle: "c. Performance & Analytics Cookies",
@@ -2115,7 +2120,7 @@ export const cookiePolicyData = {
 export const codeOfConductData = {
   lastUpdated: "December 10, 2025",
   intro:
-    "At Supracarer, we are committed to providing safe, professional, and human-centered care. All Healthcare Professionals (\"Care Providers\") who use our platform must adhere to the following Code of Conduct.",
+    'At Supracarer, we are committed to providing safe, professional, and human-centered care. All Healthcare Professionals ("Care Providers") who use our platform must adhere to the following Code of Conduct.',
   sections: [
     {
       id: 1,

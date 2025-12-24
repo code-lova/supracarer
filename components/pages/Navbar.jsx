@@ -107,7 +107,7 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-4">
               <Link
                 href="/signin"
-                className="flex text-[14px] items-center gap-2 px-4 py-2 bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200"
+                className="flex text-[14px] items-center gap-1 px-4 py-2 bg-gradient-to-r from-tranquil-teal to-custom-green text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200"
               >
                 <ProfileFill color="currentColor" size={20} />
                 Account

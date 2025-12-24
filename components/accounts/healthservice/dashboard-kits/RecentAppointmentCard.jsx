@@ -59,7 +59,7 @@ const RecentAppointmentsCard = () => {
   }
 
   return (
-    <div className="bg-white w-full h-[200px] overflow-y-auto border-2 rounded-2xl shadow-md hover:shadow-lg duration-200">
+    <div className="bg-white w-full h-[260px] overflow-y-auto border rounded-xl shadow-md">
       <div className="p-4 h-full flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
