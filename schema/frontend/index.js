@@ -44,3 +44,12 @@ export const ContactFormSchema = Yup.object().shape({
     otherwise: () => Yup.string().notRequired(),
   }),
 });
+
+export const subscriberSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Please enter a valid email address")
+    .required("Email is required")
+    .max(255, "Email cannot exceed 255 characters")
+    .lowercase()
+    .trim(),
+});

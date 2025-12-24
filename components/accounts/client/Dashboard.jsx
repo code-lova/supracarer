@@ -7,7 +7,8 @@ import AppointmentCard from "./dashboardUi-kit/AppointmentCard";
 import HealthTipsCard from "./dashboardUi-kit/HealthTipsCard";
 import ActivityStatsCard from "./dashboardUi-kit/ActivityStatsCard";
 import ProfileCard from "./dashboardUi-kit/ProfileCard";
-import AvailablePractioners from "./dashboardUi-kit/AvailablePractioners";
+// import AvailablePractioners from "./dashboardUi-kit/AvailablePractioners"; // Temporarily disabled
+import ServiceFlyerSlider from "./dashboardUi-kit/ServiceFlyerSlider";
 
 const Dashboard = () => {
   const { user } = useUserContext();
@@ -26,12 +27,16 @@ const Dashboard = () => {
         )}
 
         {/* Left Section (2/3 Width) */}
-        <div className="w-full h-auto md:h-[660px] md:col-span-2">
+        <div className="w-full h-auto xl:h-[660px] xl:col-span-2">
           <div className="grid grid-cols-1 gap-4 mb-1">
             <WelcomeCard userDetails={userDetails} />
+            {/* Service Flyer Slider - Show under WelcomeCard on mobile/medium */}
+            <div className="xl:hidden">
+              <ServiceFlyerSlider />
+            </div>
             <div className="grid grid-col-1 lg:grid-cols-2 gap-2">
-              <AppointmentCard />
               <HealthTipsCard />
+              <AppointmentCard />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3">
               <ActivityStatsCard />
@@ -39,11 +44,14 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Right Sidebar (1/3 Width) */}
-        <div className="w-full h-auto md:h-[660px] md:mt-6 xl:mt-0">
+        {/* Right Sidebar (1/3 Width) - Shows at bottom on md, sidebar on xl */}
+        <div className="w-full h-auto xl:h-[660px] order-last xl:order-none">
           <div className="w-full grid grid-cols-1 gap-2">
             <ProfileCard userDetails={userDetails} />
-            <AvailablePractioners />
+            <div className="hidden xl:block">
+              <ServiceFlyerSlider />
+            </div>
+            {/* <AvailablePractioners /> */}
           </div>
         </div>
       </div>

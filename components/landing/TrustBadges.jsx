@@ -10,7 +10,7 @@ const TrustBadges = () => {
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-custom-green/5 rounded-full blur-3xl"></div>
 
       <div className="pageSection relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {badges.map((badge, index) => {
             const IconComponent = badge.icon;
             return (

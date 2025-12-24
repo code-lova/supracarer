@@ -20,7 +20,7 @@ const AppointmentCard = () => {
   }
 
   return (
-    <div className="bg-gradient-to-l from-[#ffe6ec] via-[#fff0f4] to-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.02] w-full h-[160px] flex items-center justify-between">
+    <div className="bg-gradient-to-l from-[#ffe6ec] via-[#fff0f4] to-white rounded-xl p-6 shadow-md hover:shadow-xl transition-transform duration-300 transform hover:scale-[1.02] w-full h-[160px] flex items-center justify-between">
       {/* Icon Section */}
       <div className="flex items-center justify-center w-[70px] h-[70px] rounded-full bg-[#ffd6e2] shadow-inner border border-pink-100">
         <FaCalendarCheck size={38} className="text-danger-red" />

@@ -37,7 +37,7 @@ const NavLinks = ({
         nav.subNav ? (
           <li
             key={nav.id}
-            className="relative py-2 font-bold text-[16px] text-haven-blue"
+            className="relative py-2 font-bold text-[14px] text-haven-blue"
             onMouseEnter={() => !isMobile && setDesktopDropdownOpen(nav.id)}
             onMouseLeave={() => !isMobile && setDesktopDropdownOpen(null)}
             onClick={() => isMobile && setMobileDropdownOpen((prev) => !prev)}
@@ -99,7 +99,7 @@ const NavLinks = ({
         ) : (
           <li
             key={nav.id}
-            className={`py-2 font-bold text-[16px] hover:text-custom-green ${
+            className={`py-2 font-bold text-[14px] hover:text-custom-green ${
               pathname === nav.link ? "text-custom-green" : "text-haven-blue"
             }`}
             onClick={handleNavClick}
@@ -112,7 +112,7 @@ const NavLinks = ({
       {/* Sign In and Sign Up only on mobile */}
       {isMobile && (
         <>
-          <li className="py-2 font-bold text-[16px] text-haven-blue hover:text-custom-green">
+          <li className="py-2 font-bold text-[14px] text-haven-blue hover:text-custom-green">
             <Link href="/signin" onClick={handleNavClick}>
               Account
             </Link>
