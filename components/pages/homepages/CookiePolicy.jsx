@@ -3,6 +3,7 @@ import { cookiePolicyData } from "@constants";
 import { FaCookieBite, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import Footer from "@components/landing/Footer";
 import Subscription from "@components/landing/Subscription";
+import Link from "next/link";
 
 const CookiePolicy = () => {
   const { lastUpdated, sections } = cookiePolicyData;
@@ -105,12 +106,12 @@ const CookiePolicy = () => {
                     <p className="text-gray-700 flex items-center gap-3">
                       <FaEnvelope className="text-tranquil-teal text-lg" />
                       <span>Email: </span>
-                      <a
-                        href={`mailto:${section.contactInfo.email}`}
+                      <Link
+                        href="/contact-us"
                         className="text-tranquil-teal hover:underline font-medium"
                       >
-                        {section.contactInfo.email}
-                      </a>
+                        Contact Us
+                      </Link>
                     </p>
                   </div>
                 </div>
