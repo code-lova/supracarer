@@ -10,6 +10,7 @@ import {
   FaHourglassHalf,
   FaTrashAlt,
   FaSignOutAlt,
+  FaSubway,
 } from "react-icons/fa";
 import { FaChalkboardUser } from "react-icons/fa6";
 import { FaRankingStar, FaMessage } from "react-icons/fa6";
@@ -74,6 +75,11 @@ const links = [
     href: "/admin/service-flyers",
   },
   {
+    name: "Subscribers",
+    icon: <FaSubway size={20} />,
+    href: "/admin/subscribers",
+  },
+  {
     name: "Deleted Accounts",
     icon: <FaTrashAlt size={20} />,
     href: "/admin/deleted-accounts",
@@ -103,7 +109,7 @@ export default function Sidebar({ open, onClose }) {
   return (
     <aside
       className={clsx(
-        "fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 transition-transform duration-300 flex flex-col",
+        "fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 transition-transform duration-300 flex flex-col overflow-y-auto",
         open ? "translate-x-0" : "-translate-x-full",
         "md:static md:translate-x-0 md:h-auto md:w-56 md:shadow-none"
       )}

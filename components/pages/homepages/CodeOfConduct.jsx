@@ -3,6 +3,7 @@ import { codeOfConductData } from "@constants";
 import { FaUserShield, FaEnvelope } from "react-icons/fa";
 import Footer from "@components/landing/Footer";
 import Subscription from "@components/landing/Subscription";
+import Link from "next/link";
 
 const CodeOfConduct = () => {
   const { lastUpdated, intro, sections, footer } = codeOfConductData;
@@ -85,12 +86,12 @@ const CodeOfConduct = () => {
               <p className="text-gray-700 flex items-center gap-3">
                 <FaEnvelope className="text-tranquil-teal text-lg" />
                 <span>Contact: </span>
-                <a
-                  href={`mailto:${footer.email}`}
+                <Link
+                  href="/contact-us"
                   className="text-tranquil-teal hover:underline font-medium"
                 >
                   {footer.email}
-                </a>
+                </Link>
               </p>
             </div>
           )}

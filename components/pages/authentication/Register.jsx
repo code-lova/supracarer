@@ -1,18 +1,22 @@
 "use client";
-import Link from "next/link";
+import React, { useState, useEffect, useCallback } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { registrationSchema } from "@schema/auth";
 import toast from "react-hot-toast";
 import LoaderButton from "@components/core/LoaderButton";
-import React, { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { registerRequest } from "@service/request/auth/registerRequest";
 import LoadingStateUI from "@components/core/loading";
 import useRedirectIfAuthenticated from "@hooks/useRedirectIfAuthenticated";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaShieldAlt, FaCheckCircle } from "react-icons/fa";
 import Image from "next/image";
 import PhoneInput from "@components/core/PhoneInput";
+import Turnstile from "@components/core/Turnstile";
+import Link from "next/link";
+
+// Turnstile site key from environment variable
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 const Register = () => {
   const status = useRedirectIfAuthenticated();
@@ -22,11 +26,30 @@ const Register = () => {
   const [selectedRole, setSelectedRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileError, setTurnstileError] = useState(false);
   const [retainedValues, setRetainedValues] = useState({
     name: "",
     email: "",
     phone: "",
   });
+
+  // Turnstile callbacks
+  const handleTurnstileVerify = useCallback((token) => {
+    setTurnstileToken(token);
+    setTurnstileError(false);
+  }, []);
+
+  const handleTurnstileError = useCallback(() => {
+    setTurnstileToken("");
+    setTurnstileError(true);
+    toast.error("Security verification failed. Please try again.");
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken("");
+    toast.error("Security verification expired. Please verify again.");
+  }, []);
 
   const { mutate } = useMutation({
     mutationFn: registerRequest,
@@ -43,6 +66,7 @@ const Register = () => {
         phone: "",
       });
       setSelectedRole("");
+      setTurnstileToken(""); // Reset token after successful submission
       // Clear form by resetting Formik
       if (context?.resetForm) {
         context.resetForm();
@@ -66,6 +90,12 @@ const Register = () => {
   });
 
   const handleSubmit = (values, { resetForm, setFieldValue }) => {
+    // Validate Turnstile token if configured
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      toast.error("Please complete the security verification");
+      return;
+    }
+
     // Store values before submitting (exclude passwords for security)
     setRetainedValues({
       name: values.name,
@@ -73,7 +103,10 @@ const Register = () => {
       phone: values.phone,
     });
 
-    mutate(values, {
+    // Add turnstileToken to values
+    const submissionValues = { ...values, turnstileToken };
+
+    mutate(submissionValues, {
       onSuccess: () => {
         resetForm();
       },
@@ -88,9 +121,12 @@ const Register = () => {
         setFieldValue("password_confirmation", "");
         // Update selected role for conditional field display
         setSelectedRole(retainedValues.role || values.role);
+        // Reset Turnstile on error
+        setTurnstileToken("");
+        setTurnstileError(false);
       },
     });
-    console.log("values to submit ", values);
+    console.log("values to submit ", submissionValues);
   };
 
   // Show loading screen when actively registering
@@ -385,6 +421,32 @@ const Register = () => {
                     className="text-red-500 text-sm -mt-2"
                   />
 
+                  {/* Cloudflare Turnstile Security Check */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <FaShieldAlt className="text-tranquil-teal" />
+                      <span>Security Verification</span>
+                    </div>
+                    <Turnstile
+                      siteKey={TURNSTILE_SITE_KEY}
+                      onVerify={handleTurnstileVerify}
+                      onError={handleTurnstileError}
+                      onExpire={handleTurnstileExpire}
+                      theme="light"
+                      size="normal"
+                    />
+                    {turnstileError && (
+                      <p className="text-red-500 text-sm">
+                        Verification failed. Please try again.
+                      </p>
+                    )}
+                    {turnstileToken && (
+                      <p className="text-green-600 text-sm flex items-center gap-1">
+                        <FaCheckCircle className="w-4 h-4" /> Verified
+                      </p>
+                    )}
+                  </div>
+
                   {/* Submit Button */}
                   <div className="pt-1">
                     <LoaderButton
@@ -392,6 +454,7 @@ const Register = () => {
                       loadingText="Creating account..."
                       text="Create Account"
                       type="submit"
+                      disabled={TURNSTILE_SITE_KEY && !turnstileToken}
                     />
                   </div>
                 </Form>
