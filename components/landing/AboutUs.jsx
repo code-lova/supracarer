@@ -10,14 +10,14 @@ const AboutUs = () => {
       <div className="w-full flex flex-col-reverse md:flex-col lg:flex-row justify-center gap-8 md:gap-6 lg:gap-12 items-center">
         <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden shadow-xl group">
           {/* Modern Vertical Badge */}
-          <div className="absolute -left-1 top-8 z-20 bg-custom-green text-white px-4 py-8 rounded-r-xl shadow-lg">
+          {/* <div className="absolute -left-1 top-8 z-20 bg-custom-green text-white px-4 py-8 rounded-r-xl shadow-lg">
             <span
               className="text-sm uppercase font-semibold tracking-wider transform -rotate-180"
               style={{ writingMode: "vertical-lr" }}
             >
               FOR FAMILIES AND INDIVIDUALS
             </span>
-          </div>
+          </div> */}
 
           <div className="hidden md:block relative w-full h-full">
             <Image
@@ -26,7 +26,7 @@ const AboutUs = () => {
               fill
               style={{ objectFit: "cover", objectPosition: "center" }}
               loading="lazy"
-              className="rounded-2xl group-hover:scale-105 transition-transform duration-500"
+              className="rounded-3xl group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>

@@ -3,13 +3,13 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import {
   FaBell,
-  FaSearch,
   FaCog,
   FaUserCircle,
   FaChevronDown,
   FaUser,
   FaSignOutAlt,
   FaHeadset,
+  FaFlask,
 } from "react-icons/fa";
 import { PiWarningFill } from "react-icons/pi";
 import { useUserContext } from "@context/userContext";
@@ -20,6 +20,7 @@ import { getUnreadCount } from "@service/request/user/getNotifications";
 import NotificationDropdown from "@components/core/NotificationDropdown";
 import { clearSessionCache } from "@utils/sessionCache";
 import CurrentDateTime from "@components/core/CurrentDateTime";
+import BetaBadge from "@components/core/BetaBadge";
 
 const NavigationBar = () => {
   const { user } = useUserContext();
@@ -78,10 +79,10 @@ const NavigationBar = () => {
     { label: "Support", href: "/client/support", icon: FaHeadset },
   ];
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    console.log("Search query:", searchQuery);
-  };
+  // const handleSearchSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Search query:", searchQuery);
+  // };
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
@@ -112,7 +113,10 @@ const NavigationBar = () => {
                   !
                 </p>
                 <p className="hidden lg:block text-xs text-gray-500">
-                  <CurrentDateTime showDateTime={true} textClass="text-gray-500" />
+                  <CurrentDateTime
+                    showDateTime={true}
+                    textClass="text-gray-500"
+                  />
                 </p>
               </div>
             )}
@@ -120,7 +124,7 @@ const NavigationBar = () => {
 
           {/* Center Section - Search (Desktop Only) */}
           <div className="hidden lg:flex flex-1 max-w-md mx-6">
-            <form onSubmit={handleSearchSubmit} className="w-full relative">
+            {/* <form onSubmit={handleSearchSubmit} className="w-full relative">
               <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <input
                 type="text"
@@ -129,16 +133,24 @@ const NavigationBar = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-64 pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-carer-blue/20 focus:border-carer-blue text-sm"
               />
-            </form>
+            </form> */}
+            <BetaBadge
+              text="Beta Testing"
+              icon={FaFlask}
+              className="custom-classes"
+              iconClassName="custom-icon-classes"
+            />
           </div>
 
           {/* Right Section - Actions */}
           <div className="flex items-center gap-3 flex-shrink-0">
-            {/* Search (Mobile Only) */}
-            <button className="lg:hidden p-2 hover:bg-gray-100 rounded-lg">
-              <FaSearch className="text-carer-blue" size={16} />
-            </button>
 
+            <BetaBadge
+              text="Beta Testing"
+              icon={FaFlask}
+              className="block lg:hidden"
+              iconClassName="default-icon-classes"
+            />
             {/* Notifications */}
             <div className="relative">
               <button

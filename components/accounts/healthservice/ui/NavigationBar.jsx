@@ -10,6 +10,7 @@ import {
   FaUser,
   FaSignOutAlt,
   FaStar,
+  FaFlask,
 } from "react-icons/fa";
 import { PiWarningFill } from "react-icons/pi";
 import { useUserContext } from "@context/userContext";
@@ -21,7 +22,7 @@ import DateFormatter from "@components/core/DateFormatter";
 import NotificationDropdown from "@components/core/NotificationDropdown";
 import { isFeatureEnabled } from "@config/features";
 import { clearSessionCache } from "@utils/sessionCache";
-
+import BetaBadge from "@components/core/BetaBadge";
 
 const NavigationBar = () => {
   const { user } = useUserContext();
@@ -44,7 +45,8 @@ const NavigationBar = () => {
 
   // Check if profile needs updates
   const needsProfileUpdate =
-    !userDetails?.address || (grsEnabled && userDetails?.has_guided_rate_system === false);
+    !userDetails?.address ||
+    (grsEnabled && userDetails?.has_guided_rate_system === false);
 
   // Get unread notification count
   const unreadCount = unreadResponse?.data?.unread_count || 0;
@@ -119,28 +121,38 @@ const NavigationBar = () => {
                   {!userDetails?.address && (
                     <span>• Missing address information</span>
                   )}
-                  {grsEnabled && userDetails?.has_guided_rate_system === false && (
-                    <span>• Guided Rate System not configured</span>
-                  )}
+                  {grsEnabled &&
+                    userDetails?.has_guided_rate_system === false && (
+                      <span>• Guided Rate System not configured</span>
+                    )}
                 </div>
               </div>
             </div>
           ) : (
-            <>
-              <h1 className="text-md font-semibold text-tranquil-teal">
-                Welcome back, {userDetails?.fullname || "Health Worker"}! 👋
-              </h1>
-              <p className="text-sm text-gray-500 mt-1">
-                <DateFormatter date={new Date()} format="long" />
-              </p>
-            </>
+            <div className="flex items-center gap-12">
+              <div>
+                <h1 className="text-md font-semibold text-tranquil-teal">
+                  Welcome back, {userDetails?.fullname || "Health Worker"}! 👋
+                </h1>
+                <p className="text-sm text-gray-500 mt-1">
+                  <DateFormatter date={new Date()} format="long" />
+                </p>
+              </div>
+
+              <BetaBadge
+                text="Beta Testing"
+                icon={FaFlask}
+                className="default-classes"
+                iconClassName="default-icon-classes"
+              />
+            </div>
           )}
         </div>
 
         {/* Right side - Actions */}
         <div className="flex items-center gap-4">
           {/* Search */}
-          <div className="relative">
+          {/* <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FaSearch className="h-4 w-4 text-gray-400" />
             </div>
@@ -149,7 +161,8 @@ const NavigationBar = () => {
               placeholder="Search..."
               className="block w-64 pl-10 pr-3 py-2 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-tranquil-teal focus:border-transparent bg-gray-50"
             />
-          </div>
+          </div> */}
+          
 
           {/* Notifications */}
           <div className="relative">
@@ -184,7 +197,7 @@ const NavigationBar = () => {
             <FaCog className="h-5 w-5 text-gray-600 group-hover:text-tranquil-teal transition-colors" />
           </Link>
 
-          {/* Profile with Dropdown */}
+          {/* Profile image with Dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
