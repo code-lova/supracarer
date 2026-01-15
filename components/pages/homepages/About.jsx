@@ -44,14 +44,14 @@ export const About = () => {
           {/* Image Section - Left */}
           <div className="relative w-full md:w-[550px] h-[650px] md:h-[750px] rounded-3xl overflow-hidden group">
             {/* Vertical Text Badge */}
-            <div className="absolute -left-1 top-20 z-20 bg-custom-green text-white px-4 py-8 rounded-r-xl shadow-lg">
+            {/* <div className="absolute -left-1 top-20 z-20 bg-custom-green text-white px-4 py-8 rounded-r-xl shadow-lg">
               <span
                 className="text-sm uppercase font-semibold tracking-wider transform -rotate-180"
                 style={{ writingMode: "vertical-lr" }}
               >
                 Quality Care for Every Family
               </span>
-            </div>
+            </div> */}
 
             {/* Main Image */}
             <div className="relative w-full h-full">

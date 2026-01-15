@@ -82,7 +82,7 @@ export default function Subscribers() {
         name: "Source",
         selector: (row) => row.source,
         sortable: true,
-        width: "120px",
+        width: "100px",
         cell: (row) => (
           <span className="flex items-center">
             <span className="text-haven-blue">{row.source}</span>
@@ -93,7 +93,7 @@ export default function Subscribers() {
         name: "IP Address",
         selector: (row) => row.ip_address,
         sortable: true,
-        width: "160px",
+        width: "140px",
         cell: (row) => (
           <span className="flex items-center">
             <FiCloudLightning className="text-slate-gray mr-1" />
@@ -124,7 +124,7 @@ export default function Subscribers() {
           <span className="flex items-center">
             <FiCalendar className="text-slate-gray mr-1" />
             <span className="capitalize text-haven-blue">
-              {row.unsubscribed_at ?? "N/A"}
+               <DateFormatter date={row.unsubscribed_at} format="short" />
             </span>
           </span>
         ),
@@ -133,7 +133,7 @@ export default function Subscribers() {
         name: "Status",
         selector: (row) => row.status,
         sortable: true,
-        width: "120px",
+        width: "160px",
         cell: (row) => (
           <StatusPill
             status={row.status === "active" ? "Active" : "Unsubscribed"}
