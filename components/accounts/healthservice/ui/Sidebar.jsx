@@ -16,6 +16,8 @@ import {
   FaUser,
   FaStar,
   FaChevronDown,
+  FaFlask,
+  FaTimes,
 } from "react-icons/fa";
 import { RiCloseLargeFill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
@@ -24,6 +26,7 @@ import { useUserContext } from "@/context/userContext";
 import NotificationDropdown from "@components/core/NotificationDropdown";
 import { getUnreadCount } from "@service/request/user/getNotifications";
 import { clearSessionCache } from "@utils/sessionCache";
+import BetaBadge from "@components/core/BetaBadge";
 
 const Sidebar = () => {
   const [toggle, setToggle] = useState(false);
@@ -123,119 +126,126 @@ const Sidebar = () => {
       {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 bg-white shadow-md z-50 px-4 py-3">
         <div className="flex items-center justify-between">
-          <Link href="/health-service">
+          {/* <Link href="/health-service">
             <Image
               src="/assets/images/logo.png"
               width={140}
               height={35}
               alt="Supracarer logo"
             />
-          </Link>
-
-          <div className="flex items-center gap-3">
-            {/* Notifications */}
-            <div className="relative">
-              <button
-                ref={notificationRef}
-                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors group"
-              >
-                <FaBell className="h-5 w-5 text-gray-600 group-hover:text-tranquil-teal transition-colors" />
-                {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
-                    <span className="text-xs font-bold text-white">
-                      {unreadCount > 99 ? "99+" : unreadCount}
-                    </span>
-                  </span>
-                )}
-              </button>
-
-              <NotificationDropdown
-                isOpen={isNotificationOpen}
-                onClose={() => setIsNotificationOpen(false)}
-                triggerRef={notificationRef}
-                userRole="health-service"
+          </Link> */}
+          {/* Menu Toggle */}
+          <button
+            onClick={() => setToggle(!toggle)}
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors ml-1"
+          >
+            {toggle ? (
+              <RiCloseLargeFill className="text-tranquil-teal" size={24} />
+            ) : (
+              <FaAlignRight
+                className="text-gray-600 hover:text-tranquil-teal transition-colors"
+                size={20}
               />
-            </div>
+            )}
+          </button>
 
-            {/* Profile with Dropdown */}
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors group"
-              >
-                {userDetails?.image_url ? (
-                  <img
-                    src={userDetails?.image_url}
-                    alt={userDetails.fullname || "Profile"}
-                    className="w-8 h-8 rounded-full object-cover"
+          <div className="flex items-center gap-12">
+            <BetaBadge
+              text="Beta Testing"
+              icon={FaFlask}
+              className="default-classes"
+              iconClassName="default-icon-classes"
+            />
+            <div className="flex items-center gap-3">
+              {/* Notifications */}
+              <div className="relative">
+                <button
+                  ref={notificationRef}
+                  onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                  className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors group"
+                >
+                  <FaBell className="h-5 w-5 text-gray-600 group-hover:text-tranquil-teal transition-colors" />
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-white">
+                        {unreadCount > 99 ? "99+" : unreadCount}
+                      </span>
+                    </span>
+                  )}
+                </button>
+
+                <NotificationDropdown
+                  isOpen={isNotificationOpen}
+                  onClose={() => setIsNotificationOpen(false)}
+                  triggerRef={notificationRef}
+                  userRole="health-service"
+                />
+              </div>
+
+              {/* Profile with Dropdown */}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors group"
+                >
+                  {userDetails?.image_url ? (
+                    <img
+                      src={userDetails?.image_url}
+                      alt={userDetails.fullname || "Profile"}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <FaUserCircle className="h-8 w-8 text-gray-600 group-hover:text-tranquil-teal transition-colors" />
+                  )}
+                  <div className="hidden xl:block text-left">
+                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                      {userDetails?.fullname || "Health Worker"}
+                    </p>
+                    <p className="text-xs text-gray-500 capitalize">
+                      {user?.role || "Health Worker"}
+                    </p>
+                  </div>
+                  <FaChevronDown
+                    className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
+                      isDropdownOpen ? "rotate-180" : ""
+                    }`}
                   />
-                ) : (
-                  <FaUserCircle className="h-8 w-8 text-gray-600 group-hover:text-tranquil-teal transition-colors" />
+                </button>
+
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                    {dropdownItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.label}
+                          href={item.href}
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-tranquil-teal transition-colors"
+                          onClick={() => setIsDropdownOpen(false)}
+                        >
+                          <Icon className="h-4 w-4" />
+                          <span>{item.label}</span>
+                        </Link>
+                      );
+                    })}
+
+                    {/* Divider */}
+                    <hr className="my-1 border-gray-200" />
+
+                    {/* Logout */}
+                    <button
+                      onClick={handleLogout}
+                      disabled={loading}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <FaSignOutAlt className="h-4 w-4" />
+                      <span>{loading ? "Logging Out..." : "Logout"}</span>
+                    </button>
+                  </div>
                 )}
-                <div className="hidden xl:block text-left">
-                  <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                    {userDetails?.fullname || "Health Worker"}
-                  </p>
-                  <p className="text-xs text-gray-500 capitalize">
-                    {user?.role || "Health Worker"}
-                  </p>
-                </div>
-                <FaChevronDown
-                  className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
-                    isDropdownOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {/* Dropdown Menu */}
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                  {dropdownItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-tranquil-teal transition-colors"
-                        onClick={() => setIsDropdownOpen(false)}
-                      >
-                        <Icon className="h-4 w-4" />
-                        <span>{item.label}</span>
-                      </Link>
-                    );
-                  })}
-
-                  {/* Divider */}
-                  <hr className="my-1 border-gray-200" />
-
-                  {/* Logout */}
-                  <button
-                    onClick={handleLogout}
-                    disabled={loading}
-                    className="flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <FaSignOutAlt className="h-4 w-4" />
-                    <span>{loading ? "Logging Out..." : "Logout"}</span>
-                  </button>
-                </div>
-              )}
+              </div>
             </div>
-
-            {/* Menu Toggle */}
-            <button
-              onClick={() => setToggle(!toggle)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors ml-1"
-            >
-              {toggle ? (
-                <RiCloseLargeFill className="text-tranquil-teal" size={24} />
-              ) : (
-                <FaAlignRight
-                  className="text-gray-600 hover:text-tranquil-teal transition-colors"
-                  size={20}
-                />
-              )}
-            </button>
           </div>
         </div>
       </div>
@@ -261,7 +271,7 @@ const Sidebar = () => {
         )}
       >
         {/* Header Section */}
-        <div className="px-2 py-4 border-b border-gray-100">
+        <div className="flex items-center justify-between px-2 py-4 border-b border-gray-100">
           <Link href="/health-service" onClick={closeMobileMenu}>
             <Image
               src="/assets/images/logo.png"
@@ -271,6 +281,16 @@ const Sidebar = () => {
               className="px-2"
             />
           </Link>
+
+          <button
+            onClick={() => setToggle(false)}
+            className={clsx(
+              "lg:hidden p-2 rounded-lg ml-4",
+              "text-gray-600 hover:bg-gray-100 hover:text-gray-800 transition-colors"
+            )}
+          >
+            <FaTimes size={20} />
+          </button>
         </div>
 
         {/* Navigation Links */}
@@ -307,7 +327,10 @@ const Sidebar = () => {
                 🎛️ Feature Status (Dev Only)
               </p>
               <p className="text-xs text-yellow-700">
-                GRS: {isFeatureEnabled("GUIDED_RATE_SYSTEM") ? "✅ Enabled" : "❌ Disabled"}
+                GRS:{" "}
+                {isFeatureEnabled("GUIDED_RATE_SYSTEM")
+                  ? "✅ Enabled"
+                  : "❌ Disabled"}
               </p>
             </div>
           )}
