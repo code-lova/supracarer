@@ -28,7 +28,7 @@ const BetaLanding = () => {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-            Join SupraCarer
+            Join Supracarer
             <span className="block text-white/90">Beta Testing</span>
           </h1>
 
@@ -58,14 +58,14 @@ const BetaLanding = () => {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* What SupraCarer Does */}
+        {/* What Supracarer Does */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-            What is <span className="text-tranquil-teal">SupraCarer</span>?
+            What is <span className="text-tranquil-teal">Supracarer</span>?
           </h2>
           <div className="max-w-4xl mx-auto space-y-4">
             <p className="text-lg text-gray-600 leading-relaxed">
-              SupraCarer is a comprehensive homecare platform that seamlessly
+              Supracarer is a comprehensive homecare platform that seamlessly
               connects families seeking quality care with qualified healthcare
               professionals, ensuring a simple and efficient process for
               everyone.
@@ -166,7 +166,7 @@ const BetaLanding = () => {
               <h4 className="text-xl font-bold text-gray-800 mb-2">
                 Beta End Date
               </h4>
-              <p className="text-gray-600">April 30, 2026</p>
+              <p className="text-gray-600">February 6th, 2026</p>
               <p className="text-sm text-gray-500 mt-1">Limited time access</p>
             </div>
 
@@ -212,7 +212,7 @@ const BetaLanding = () => {
                 <strong>
                   This platform is in beta and not for medical emergencies.
                 </strong>{" "}
-                SupraCarer is currently in testing phase. While we strive to
+                Supracarer is currently in testing phase. While we strive to
                 provide high-quality services, beta features may have
                 limitations. For medical emergencies, please contact emergency
                 services immediately (911 or local emergency number).
@@ -248,7 +248,7 @@ const BetaLanding = () => {
       <div className="bg-gray-50 py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-600">
-            © 2026 SupraCarer. All rights reserved. |{" "}
+            © 2026 Supracarer. All rights reserved. |{" "}
             <Link
               href="/privacy-policy"
               className="text-tranquil-teal hover:text-custom-green font-medium"
