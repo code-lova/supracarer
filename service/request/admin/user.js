@@ -92,12 +92,67 @@ export const updateUser = async (userId, userData) => {
   return data;
 };
 
+
+//verify health worker to access health worker features
+export const verifyHealthWorker = async (userId) => {
+  const response = await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/${userId}/verify`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    if (response.status === 422 && errorData.errors)
+      throw new Error(Object.values(errorData.errors).flat().join(" "));
+    if (response.status >= 500)
+      throw new Error("Server error. Please try again later.");
+    throw new Error(
+      errorData.message || "An error occurred. Please try again."
+    );
+  }
+
+  const data = await response.json();
+  return data;
+};
+
 //Block user for accessing their account
 export const blockUser = async (userId) => {
   const response = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_API_URL}/user/${userId}/block`,
     {
       method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    if (response.status === 422 && errorData.errors)
+      throw new Error(Object.values(errorData.errors).flat().join(" "));
+    if (response.status >= 500)
+      throw new Error("Server error. Please try again later.");
+    throw new Error(
+      errorData.message || "An error occurred. Please try again."
+    );
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+//delete user account permanently
+export const deleteUserPermanently = async (userId) => {
+  const response = await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/${userId}/delete-account`,
+    {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },

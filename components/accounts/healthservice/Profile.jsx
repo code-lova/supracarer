@@ -22,6 +22,7 @@ import TimeAgo from "@components/core/TimeAgo";
 import Age from "@components/core/Age";
 import WordCountTextarea from "@components/core/WordCountTextarea";
 import { useRouter } from "next/navigation";
+import StatusPill from "@components/core/StatusPill";
 
 const Profile = () => {
   const { user, refetchUser } = useUserContext();
@@ -241,13 +242,16 @@ const Profile = () => {
                   }}
                 />
               </div>
-
+              <div className="flex items-center gap-4 mt-6">
+                <StatusPill status={userDetails?.is_verified ? "verified": "Unverified"} />
+                <p className="text-sm uppercase tracking-wide text-slate-gray font-bold">
+                  {userDetails?.practitioner}
+                </p>
+              </div>
               <h3 className="text-xl font-bold text-tranquil-teal mt-3">
                 {userDetails?.fullname}
               </h3>
-              <p className="text-sm capitalize text-slate-gray font-bold">
-                {userDetails?.practitioner}
-              </p>
+             
             </div>
 
             {/* Details Card */}
@@ -290,7 +294,7 @@ const Profile = () => {
 
           {/* Right Column (2/3) */}
           <div className="lg:col-span-2 ">
-            <div className="bg-white shadow-lg rounded-2xl p-6 h-[100vh] mb-4">
+            <div className="bg-white shadow-lg rounded-2xl p-6 h-auto mb-4">
               <h4 className="text-lg font-bold text-tranquil-teal mb-6">
                 Update Profile Information
               </h4>

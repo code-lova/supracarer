@@ -3,6 +3,7 @@ import React from "react";
 import { FaCheckCircle, FaExclamationTriangle, FaUser } from "react-icons/fa";
 import { healthWorkerFields, clientFields } from "@constants";
 import { isFeatureEnabled } from "@config/features";
+import { FaAirbnb } from "@node_modules/react-icons/fa6";
 
 const ProfileCompleteness = ({ userDetails, userType = "health-service" }) => {
   // Get required fields based on user type
@@ -27,6 +28,9 @@ const ProfileCompleteness = ({ userDetails, userType = "health-service" }) => {
       if (field === "has_guided_rate_system") {
         // For boolean field, check if it's explicitly set to true
         if (value === true) completedFields++;
+      } else if (field === "is_verified") {
+        // For verification status, consider it complete if it's true
+        if (value === true) completedFields++;
       } else if (
         value &&
         value.toString().trim() !== "" &&
@@ -43,7 +47,7 @@ const ProfileCompleteness = ({ userDetails, userType = "health-service" }) => {
 
   // Determine status and styling based on completion percentage
   const getStatusInfo = (percentage) => {
-    if (percentage >= 80) {
+    if (percentage >= 90) {
       const colorScheme = userType === "client" ? "carer-blue" : "custom-green";
       const bgColor = userType === "client" ? "bg-blue-50" : "bg-green-50";
 
@@ -55,6 +59,15 @@ const ProfileCompleteness = ({ userDetails, userType = "health-service" }) => {
         textColor: `text-${colorScheme}`,
         status: "Complete",
       };
+    } else if (percentage >= 80) {
+      return {
+        icon: FaAirbnb,
+        iconColor: "text-orange-500",
+        bgColor: "bg-orange-50",
+        borderColor: "border-orange-500",
+        textColor: "text-orange-600",
+        status: "Almost Complete",
+      }
     } else if (percentage >= 50) {
       return {
         icon: FaExclamationTriangle,
@@ -104,7 +117,7 @@ const ProfileCompleteness = ({ userDetails, userType = "health-service" }) => {
       <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
         <div
           className={`h-2 rounded-full transition-all duration-300 ${
-            completionPercentage >= 80
+            completionPercentage >= 90
               ? userType === "client"
                 ? "bg-carer-blue"
                 : "bg-custom-green"

@@ -17,6 +17,13 @@ import {
   FaBed,
 } from "react-icons/fa";
 
+const formatDate = (dateStr) => {
+  if (!dateStr) return "";
+  const [y, m, d] = dateStr.split("-");
+  return `${d}-${m}-${y}`;
+};
+
+
 const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
   const SectionCard = ({
     icon: Icon,
@@ -196,7 +203,7 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
                   <span className="text-sm text-gray-600">Start Date</span>
                 </div>
                 <p className="text-lg font-semibold text-gray-800 ml-6">
-                  {formValues.start_date || "—"}
+                  {formatDate(formValues.start_date) || "—"}
                 </p>
               </div>
 
@@ -206,7 +213,7 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
                   <span className="text-sm text-gray-600">End Date</span>
                 </div>
                 <p className="text-lg font-semibold text-gray-800 ml-6">
-                  {formValues.end_date || "—"}
+                  {formatDate(formValues.end_date) || "—"}
                 </p>
               </div>
 
@@ -280,7 +287,7 @@ const BookingSummary = ({ formValues, onBack, onSubmit, isLoading }) => {
                   label="Ends"
                   value={
                     formValues.recurrence_end_type === "date"
-                      ? `On ${formValues.recurrence_end_date}`
+                      ? `On ${formatDate(formValues.recurrence_end_date)}`
                       : `After ${formValues.recurrence_occurrences} occurrences`
                   }
                 />

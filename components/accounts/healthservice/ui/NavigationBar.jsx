@@ -139,12 +139,12 @@ const NavigationBar = () => {
                 </p>
               </div>
 
-              <BetaBadge
+              {/* <BetaBadge
                 text="Beta Testing"
                 icon={FaFlask}
                 className="default-classes"
                 iconClassName="default-icon-classes"
-              />
+              /> */}
             </div>
           )}
         </div>

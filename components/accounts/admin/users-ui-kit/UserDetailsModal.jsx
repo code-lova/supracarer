@@ -19,6 +19,20 @@ export default function UserDetailsModal({
   error,
 }) {
   const [editMode, setEditMode] = useState(false);
+  const [shouldRender, setShouldRender] = useState(open);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setShouldRender(true);
+      const timer = setTimeout(() => setIsAnimating(true), 10);
+      return () => clearTimeout(timer);
+    } else {
+      setIsAnimating(false);
+      const timer = setTimeout(() => setShouldRender(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
 
   useEffect(() => {
     setEditMode(false);
@@ -43,7 +57,7 @@ export default function UserDetailsModal({
     };
   }, [open, onClose]);
 
-  if (!open || !user) return null;
+  if (!shouldRender || !user) return null;
 
   // Initial values
   const initialValues = {
@@ -66,7 +80,7 @@ export default function UserDetailsModal({
       {/* Backdrop */}
       <div
         className={`fixed inset-0 z-[1000] transition-opacity duration-300 ${
-          open ? "opacity-100" : "opacity-0 pointer-events-none"
+          isAnimating ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
         <div
@@ -78,7 +92,7 @@ export default function UserDetailsModal({
       {/* Modal Panel */}
       <div
         className={`fixed top-0 right-0 z-[1001] h-full w-full max-w-lg bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
-          open ? "translate-x-0" : "translate-x-full"
+          isAnimating ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
@@ -153,8 +167,20 @@ export default function UserDetailsModal({
                           : "bg-yellow-100 text-yellow-800"
                       }`}
                     >
-                      {user.email_verified_at ? "Verified" : "Unverified"}
+                      {user.email_verified_at ? "Valid Email" : "Invalid Email"}
                     </span>
+                    {user.role === "healthworker" && (
+                      <span
+                        className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
+                          user.is_verified === 1
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-yellow-100 text-yellow-800"
+                        }`}
+                      >
+                      {user.is_verified === 1 ? "Verified" : "Unverified"}
+                      </span>
+                    )}
+                   
                   </div>
                 </div>
 

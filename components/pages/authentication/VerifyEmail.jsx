@@ -107,7 +107,7 @@ const VerifyEmail = () => {
           </div>
 
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Verify Your Email
+            Let's Verify Your Email
           </h1>
           <p className="text-gray-600 mb-2">
             We've sent a verification code to

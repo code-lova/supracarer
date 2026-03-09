@@ -22,6 +22,13 @@ import Age from "@components/core/Age";
 import TimeAgo from "@components/core/TimeAgo";
 import WordCountTextarea from "@components/core/WordCountTextarea";
 
+const DetailRow = ({ label, children }) => (
+  <div className="flex flex-col gap-0.5 py-2.5 border-b border-gray-100 last:border-0">
+    <span className="text-xs text-gray-400 uppercase tracking-wide font-medium">{label}</span>
+    <span className="text-sm text-slate-gray font-medium">{children || <span className="text-gray-300 italic">Not set</span>}</span>
+  </div>
+);
+
 const Profile = () => {
   const { user, refetchUser } = useUserContext();
   const userDetails = user?.data;
@@ -29,18 +36,15 @@ const Profile = () => {
   const [showLocationOptions, setShowLocationOptions] = useState(false);
   const [manualAddress, setManualAddress] = useState("");
 
-  // Check if user has location data and update consentGiven state
   React.useEffect(() => {
     if (userDetails?.latitude && userDetails?.longitude) {
       setConsentGiven(true);
     }
   }, [userDetails]);
 
-  // Image upload preview state
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
 
-  // Mutation for updating user image in backend
   const imageMutation = useMutation({
     mutationFn: updateUserImage,
     onSuccess: () => {
@@ -52,9 +56,7 @@ const Profile = () => {
     },
   });
 
-  // Upload image to Cloudinary and backend
   const handleImageUpload = async (file) => {
-    // Validate file before upload
     const { valid, error } = validateImageFile(file);
     if (!valid) {
       toast.error(error);
@@ -65,7 +67,6 @@ const Profile = () => {
       const cloudinaryRes = await uploadToCloudinary(file);
       toast.dismiss();
       setPreviewImage(cloudinaryRes.secure_url);
-      // Send to backend
       imageMutation.mutate({
         image: cloudinaryRes.secure_url,
         image_public_id: cloudinaryRes.public_id,
@@ -85,20 +86,16 @@ const Profile = () => {
     onError: () => toast.error("Failed to update location"),
   });
 
-  // Handle GPS location with automatic IP fallback
   const handleLocationPermission = () => {
     getCurrentLocation(
-      // On GPS success
       (coords) => {
         locationMutation.mutate(coords);
         toast.success("Location set successfully using GPS");
       },
-      // IP fallback function
       handleIPLocation
     );
   };
 
-  // Handle IP-based location
   const handleIPLocation = async () => {
     const result = await getLocationFromIP();
     if (result.success) {
@@ -111,7 +108,6 @@ const Profile = () => {
     }
   };
 
-  // Handle manual address entry
   const handleManualLocation = async (address) => {
     const result = await geocodeAddress(address);
     if (result.success) {
@@ -124,18 +120,15 @@ const Profile = () => {
     }
   };
 
-  //Mutation for updating user details
   const mutation = useMutation({
     mutationFn: updateClientProfile,
     onSuccess: () => {
-      toast.success("Profile Update Successfully");
+      toast.success("Profile updated successfully");
       refetchUser();
       const isFirstTimeLogin = localStorage.getItem("firstTimeLogin");
       if (isFirstTimeLogin === "true") {
         localStorage.setItem("firstTimeLogin", "false");
-        toast.success("Profile updated successfully! You're all set.", {
-          duration: 3000,
-        });
+        toast.success("You're all set!", { duration: 3000 });
       }
     },
     onError: (err) => {
@@ -146,384 +139,271 @@ const Profile = () => {
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
+
   return (
-    <>
-      <div className="pageContent">
-        {/* Header Section */}
-        <div className="mb-8 mt-3">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-haven-blue to-carer-blue rounded-xl flex items-center justify-center shadow-lg">
-              <FaHouseUser className="text-white text-xl" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">
-                Profile Setup
-              </h1>
-              <p className="text-gray-600 text-sm">
-                Configure your profile setting to get matched with a patient
-              </p>
-            </div>
+    <div className="pageContent">
+      {/* Header */}
+      <div className="mb-8 mt-3">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-haven-blue to-carer-blue rounded-xl flex items-center justify-center shadow-lg">
+            <FaHouseUser className="text-white text-xl" />
           </div>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
-          {/* Left Column (1/3) */}
-          <div className="space-y-2">
-            {/* User Info Card */}
-            <div className="bg-gray-50 shadow-md rounded-xl p-4 flex flex-col items-center relative">
-              <div className="w-32 h-32 rounded-full flex items-center justify-center text-carer-blue text-4xl font-bold border-2 border-carer-blue relative">
-                {/* FaEdit icon inside the image div, positioned bottom right */}
-                <button
-                  className="absolute right-1 bottom-1 bg-carer-blue rounded-full p-2"
-                  type="button"
-                  aria-label="Edit profile image"
-                  onClick={() => {
-                    if (fileInputRef.current) fileInputRef.current.click();
-                  }}
-                >
-                  <FaEdit className="text-sm text-white" />
-                </button>
-                {/* Image preview logic */}
-                {previewImage ? (
-                  <img
-                    src={previewImage}
-                    alt="Preview"
-                    className="w-28 h-28 rounded-full border-1 border-carer-blue object-cover"
-                  />
-                ) : userDetails?.image ? (
-                  <img
-                    src={userDetails?.image}
-                    alt="Profile"
-                    className="w-28 h-28 rounded-full border-1 border-carer-blue object-cover"
-                  />
-                ) : (
-                  <span>
-                    {userDetails?.fullname?.[0]?.toUpperCase() || "U"}
-                  </span>
-                )}
-                {/* Hidden file input for image upload */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={async (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      // Validate before preview/upload
-                      const { valid, error } = validateImageFile(file);
-                      if (!valid) {
-                        toast.error(error);
-                        return;
-                      }
-                      // Preview locally
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        setPreviewImage(reader.result);
-                      };
-                      reader.readAsDataURL(file);
-                      // Upload to Cloudinary and backend
-                      await handleImageUpload(file);
-                    }
-                  }}
-                />
-              </div>
-
-              <h3 className="text-xl font-bold text-dark-blue mt-3">
-                {userDetails?.fullname}
-              </h3>
-            </div>
-
-            {/* Details Card */}
-            <div className="bg-gray-50 shadow-md rounded-xl p-4 h-[405px]">
-              <h4 className="text-lg font-bold mb-4 text-dark-blue">
-                Personal Details
-              </h4>
-              <ul className="text-sm text-slate-gray space-y-3">
-                <li>
-                  <strong>Phone:</strong> {userDetails?.phone}
-                </li>
-                <li>
-                  <strong>Email:</strong> {userDetails?.email}
-                </li>
-                <li>
-                  <strong>Gender:</strong> {userDetails?.gender}
-                </li>
-                <li>
-                  <strong>Age:</strong>{" "}
-                  <Age dateOfBirth={userDetails?.date_of_birth || ""} />
-                </li>
-                <li>
-                  <strong>Region:</strong> {userDetails?.region || ""}
-                </li>
-                <li>
-                  <strong>Address:</strong> {userDetails?.address || ""}
-                </li>
-                <li>
-                  <strong>About me:</strong> {userDetails?.about || ""}
-                </li>
-                <li className="py-6">
-                  <strong>last Session :</strong>{" "}
-                  <TimeAgo
-                    timestamp={userDetails?.last_logged_in || new Date()}
-                  />
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Right Column (2/3) */}
-          <div className="lg:col-span-2 ">
-            <div className="bg-gray-50 shadow-md rounded-xl p-6 h-auto">
-              <h4 className="text-lg font-bold text-dark-blue mb-6">
-                Update Profile Information
-              </h4>
-              {!consentGiven && (
-                <div className="mb-4 bg-yellow-100 p-4 rounded-lg">
-                  <p className="text-sm text-yellow-700 mb-4">
-                    📍 To improve your match experience, we need your location.
-                  </p>
-
-                  <div className="space-y-3">
-                    <MediumBtn
-                      onClick={handleLocationPermission}
-                      text="Allow Location Access"
-                      color="carerBlue"
-                    />
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setShowLocationOptions(!showLocationOptions)
-                      }
-                      className="block w-full px-4 py-2 text-sm text-gray-600 hover:text-gray-800 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
-                    >
-                      {showLocationOptions ? "Hide" : "Enter"} Location Manually
-                    </button>
-                  </div>
-
-                  {showLocationOptions && (
-                    <div className="mt-4">
-                      <div className="p-3 bg-white rounded border">
-                        <h5 className="font-medium mb-2">Enter Your Address</h5>
-                        <div className="flex gap-2">
-                          <input
-                            type="text"
-                            placeholder="Enter your city, region, or full address"
-                            value={manualAddress}
-                            onChange={(e) => setManualAddress(e.target.value)}
-                            className="flex-1 px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            onKeyPress={(e) => {
-                              if (e.key === "Enter") {
-                                handleManualLocation(manualAddress);
-                              }
-                            }}
-                          />
-                          <button
-                            onClick={() => handleManualLocation(manualAddress)}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled={!manualAddress.trim()}
-                          >
-                            Set Location
-                          </button>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-2">
-                          Example: "Accra, Ghana" or "Kumasi Central, Ashanti
-                          Region"
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <Formik
-                initialValues={{
-                  name: userDetails?.fullname || "",
-                  email: userDetails?.email || "",
-                  phone: userDetails?.phone || "",
-                  date_of_birth: userDetails?.date_of_birth || "",
-                  country: userDetails?.country || "",
-                  region: userDetails?.region || "",
-                  address: userDetails?.address || "",
-                  religion: userDetails?.religion || "",
-                  gender: userDetails?.gender || "",
-                  about: userDetails?.about || "",
-                }}
-                enableReinitialize={true}
-                validationSchema={clientProfileSchema}
-                onSubmit={handleSubmit}
-              >
-                {({ dirty, values, setFieldValue }) => (
-                  <Form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Full Name
-                      </label>
-                      <Field name="name" className="login-form-input" />
-                      <ErrorMessage
-                        name="name"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">Email</label>
-                      <Field name="email" className="login-form-input" />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">Phone</label>
-                      <Field name="phone" className="login-form-input" />
-                      <ErrorMessage
-                        name="phone"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Date of Birth
-                      </label>
-                      <Field
-                        type="date"
-                        name="date_of_birth"
-                        className="login-form-input select-dropdown"
-                      />
-                      <ErrorMessage
-                        name="date_of_birth"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Country
-                      </label>
-                      <Field
-                        as="select"
-                        name="country"
-                        className="login-form-input select-dropdown"
-                      >
-                        <option value="">Select country</option>
-                        {countries.map((c, idx) => (
-                          <option key={idx} value={c}>
-                            {c}
-                          </option>
-                        ))}
-                      </Field>
-                      <ErrorMessage
-                        name="country"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Region/State
-                      </label>
-                      <Field
-                        as="select"
-                        name="region"
-                        className="login-form-input select-dropdown"
-                      >
-                        <option value="">Select region</option>
-                        {region.map((r, idx) => (
-                          <option key={idx} value={r}>
-                            {r}
-                          </option>
-                        ))}
-                      </Field>
-                      <ErrorMessage
-                        name="region"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Religion(Optional)
-                      </label>
-                      <Field
-                        as="select"
-                        name="religion"
-                        className="login-form-input select-dropdown"
-                      >
-                        <option value="">Select religion</option>
-                        {religion.map((r, idx) => (
-                          <option key={idx} value={r}>
-                            {r}
-                          </option>
-                        ))}
-                      </Field>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Gender
-                      </label>
-                      <Field
-                        as="select"
-                        name="gender"
-                        className="login-form-input select-dropdown"
-                      >
-                        <option value="">Select gender</option>
-                        {gender.map((g, idx) => (
-                          <option key={idx} value={g}>
-                            {g}
-                          </option>
-                        ))}
-                      </Field>
-                      <ErrorMessage
-                        name="gender"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium">
-                        Address
-                      </label>
-                      <Field name="address" className="login-form-input" />
-                      <ErrorMessage
-                        name="address"
-                        component="div"
-                        className="text-red-600 text-xs"
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <WordCountTextarea
-                        name="about"
-                        label="About You"
-                        value={values.about}
-                        onChange={(text) => setFieldValue("about", text)}
-                        maxWords={50}
-                        rows={4}
-                        placeholder="Say something about yourself, what makes you special..."
-                      />
-                    </div>
-                    <div className="md:col-span-2 mx-auto py-8">
-                      <MediumBtn
-                        loading={mutation.isPending}
-                        loadingText="Updating..."
-                        text="Update Profile"
-                        color="carerBlue"
-                        type="submit"
-                        disabled={!dirty || mutation.isPending}
-                      />
-                    </div>
-                  </Form>
-                )}
-              </Formik>
-            </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Profile Setup</h1>
+            <p className="text-gray-500 text-sm">
+              Configure your profile to get matched with a carer
+            </p>
           </div>
         </div>
       </div>
-    </>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Left Column */}
+        <div className="space-y-4">
+          {/* Avatar Card */}
+          <div className="bg-white rounded-xl shadow-3xl border border-gray-100 p-5 flex flex-col items-center">
+            <div className="relative w-32 h-32 rounded-full border-2 border-carer-blue flex items-center justify-center text-carer-blue text-4xl font-bold">
+              {previewImage ? (
+                <img
+                  src={previewImage}
+                  alt="Preview"
+                  className="w-28 h-28 rounded-full object-cover"
+                />
+              ) : userDetails?.image ? (
+                <img
+                  src={userDetails?.image}
+                  alt="Profile"
+                  className="w-28 h-28 rounded-full object-cover"
+                />
+              ) : (
+                <span>{userDetails?.fullname?.[0]?.toUpperCase() || "U"}</span>
+              )}
+              <button
+                type="button"
+                aria-label="Edit profile image"
+                onClick={() => fileInputRef.current?.click()}
+                className="absolute right-1 bottom-1 bg-carer-blue rounded-full p-2 shadow-md hover:bg-haven-blue transition-colors"
+              >
+                <FaEdit className="text-sm text-white" />
+              </button>
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                className="hidden"
+                onChange={async (e) => {
+                  const file = e.target.files[0];
+                  if (!file) return;
+                  const { valid, error } = validateImageFile(file);
+                  if (!valid) { toast.error(error); return; }
+                  const reader = new FileReader();
+                  reader.onloadend = () => setPreviewImage(reader.result);
+                  reader.readAsDataURL(file);
+                  await handleImageUpload(file);
+                }}
+              />
+            </div>
+            <h3 className="text-lg font-bold text-dark-blue mt-3">
+              {userDetails?.fullname}
+            </h3>
+            <span className="text-xs text-gray-400 mt-0.5">{userDetails?.email}</span>
+          </div>
+
+          {/* Personal Details Card */}
+          <div className="bg-white rounded-xl shadow-3xl border border-gray-100 p-5">
+            <p className="text-xs font-semibold text-slate-gray uppercase tracking-wider mb-2">
+              Personal Details
+            </p>
+            <DetailRow label="Phone">{userDetails?.phone}</DetailRow>
+            <DetailRow label="Gender">{userDetails?.gender}</DetailRow>
+            <DetailRow label="Age">
+              <Age dateOfBirth={userDetails?.date_of_birth || ""} />
+            </DetailRow>
+            <DetailRow label="Region">{userDetails?.region}</DetailRow>
+            <DetailRow label="Address">{userDetails?.address}</DetailRow>
+            <DetailRow label="About">{userDetails?.about}</DetailRow>
+            <DetailRow label="Last Session">
+              <TimeAgo timestamp={userDetails?.last_logged_in || new Date()} />
+            </DetailRow>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-xl shadow-3xl border border-gray-100 p-6">
+            <p className="text-xs font-semibold text-slate-gray uppercase tracking-wider mb-5">
+              Update Profile Information
+            </p>
+
+            {/* Location Banner */}
+            {!consentGiven && (
+              <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+                <p className="text-sm text-amber-700 mb-3">
+                  📍 To improve your match experience, we need your location.
+                </p>
+                <div className="flex flex-col gap-2">
+                  <MediumBtn
+                    onClick={handleLocationPermission}
+                    text="Allow Location Access"
+                    color="carerBlue"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowLocationOptions(!showLocationOptions)}
+                    className="text-sm text-gray-500 hover:text-gray-700 underline underline-offset-2 transition-colors text-center"
+                  >
+                    {showLocationOptions ? "Hide" : "Enter"} location manually
+                  </button>
+                </div>
+
+                {showLocationOptions && (
+                  <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4">
+                    <h5 className="text-sm font-medium text-gray-700 mb-2">Enter Your Address</h5>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder='e.g. "Accra, Ghana"'
+                        value={manualAddress}
+                        onChange={(e) => setManualAddress(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && handleManualLocation(manualAddress)}
+                        className="steper-form-input flex-1"
+                      />
+                      <button
+                        onClick={() => handleManualLocation(manualAddress)}
+                        disabled={!manualAddress.trim()}
+                        className="px-4 py-2 bg-carer-blue text-white rounded-lg text-sm hover:bg-haven-blue transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Set
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <Formik
+              initialValues={{
+                name: userDetails?.fullname || "",
+                email: userDetails?.email || "",
+                phone: userDetails?.phone || "",
+                date_of_birth: userDetails?.date_of_birth || "",
+                country: userDetails?.country || "",
+                region: userDetails?.region || "",
+                address: userDetails?.address || "",
+                religion: userDetails?.religion || "",
+                gender: userDetails?.gender || "",
+                about: userDetails?.about || "",
+              }}
+              enableReinitialize={true}
+              validationSchema={clientProfileSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ dirty, values, setFieldValue }) => (
+                <Form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
+                    <Field name="name" className="steper-form-input" />
+                    <ErrorMessage name="name" component="p" className="text-danger-red text-xs mt-1" />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
+                    <Field name="email" className="steper-form-input" />
+                    <ErrorMessage name="email" component="p" className="text-danger-red text-xs mt-1" />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Phone</label>
+                    <Field name="phone" className="steper-form-input" />
+                    <ErrorMessage name="phone" component="p" className="text-danger-red text-xs mt-1" />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Date of Birth</label>
+                    <Field type="date" name="date_of_birth" className="steper-form-input select-dropdown" />
+                    <ErrorMessage name="date_of_birth" component="p" className="text-danger-red text-xs mt-1" />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Country</label>
+                    <Field as="select" name="country" className="steper-form-input select-dropdown">
+                      <option value="">Select country</option>
+                      {countries.map((c, idx) => (
+                        <option key={idx} value={c}>{c}</option>
+                      ))}
+                    </Field>
+                    <ErrorMessage name="country" component="p" className="text-danger-red text-xs mt-1" />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Region / State</label>
+                    <Field as="select" name="region" className="steper-form-input select-dropdown">
+                      <option value="">Select region</option>
+                      {region.map((r, idx) => (
+                        <option key={idx} value={r}>{r}</option>
+                      ))}
+                    </Field>
+                    <ErrorMessage name="region" component="p" className="text-danger-red text-xs mt-1" />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">
+                      Religion <span className="text-gray-400 font-normal">(optional)</span>
+                    </label>
+                    <Field as="select" name="religion" className="steper-form-input select-dropdown">
+                      <option value="">Select religion</option>
+                      {religion.map((r, idx) => (
+                        <option key={idx} value={r}>{r}</option>
+                      ))}
+                    </Field>
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Gender</label>
+                    <Field as="select" name="gender" className="steper-form-input select-dropdown">
+                      <option value="">Select gender</option>
+                      {gender.map((g, idx) => (
+                        <option key={idx} value={g}>{g}</option>
+                      ))}
+                    </Field>
+                    <ErrorMessage name="gender" component="p" className="text-danger-red text-xs mt-1" />
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Address</label>
+                    <Field name="address" className="steper-form-input" />
+                    <ErrorMessage name="address" component="p" className="text-danger-red text-xs mt-1" />
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <WordCountTextarea
+                      name="about"
+                      label="About You"
+                      value={values.about}
+                      onChange={(text) => setFieldValue("about", text)}
+                      maxWords={50}
+                      rows={4}
+                      placeholder="Say something about yourself, what makes you special..."
+                    />
+                  </div>
+
+                  <div className="md:col-span-2 flex justify-center pt-2 pb-4">
+                    <MediumBtn
+                      loading={mutation.isPending}
+                      loadingText="Updating..."
+                      text="Update Profile"
+                      color="carerBlue"
+                      type="submit"
+                      disabled={!dirty || mutation.isPending}
+                    />
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
