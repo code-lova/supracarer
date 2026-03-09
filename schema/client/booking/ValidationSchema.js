@@ -65,7 +65,7 @@ export const StepThreeValidationSchema = Yup.object().shape({
     .test("start-date-valid", function (start_date) {
       const { care_duration, care_duration_value } = this.options.context || {};
       if (!start_date) return true;
-      if (care_duration === "Shift" && care_duration_value === "24") {
+      if (care_duration === "Shift" || care_duration === "Hourly") {
         // Must be today or future
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -95,7 +95,7 @@ export const StepThreeValidationSchema = Yup.object().shape({
       if (["1", "2", "3", "8", "12"].includes(care_duration_value)) {
         if (start.toDateString() !== end.toDateString()) {
           return this.createError({
-            message: "Start and End date must be the same day for Hourly",
+            message: `Start and End date must be the same day for ${care_duration_value} hrs ${care_duration} Care Duration`,
           });
         }
       } else if (care_duration === "Shift" && care_duration_value === "24") {

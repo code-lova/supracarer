@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { FiUser, FiMail, FiBriefcase } from "react-icons/fi";
-import { FaEye, FaBan } from "react-icons/fa";
+import { FiUser, FiMail, FiBriefcase, FiShield } from "react-icons/fi";
+import { FaEye, FaBan, FaTrash } from "react-icons/fa";
 import StatusPill from "../../core/StatusPill";
 import UserDetailsModal from "./users-ui-kit/UserDetailsModal";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -10,6 +10,8 @@ import {
   fetchAllUsers,
   updateUser,
   blockUser,
+  verifyHealthWorker,
+  deleteUserPermanently,
 } from "@service/request/admin/user";
 import { FiRefreshCw } from "react-icons/fi";
 import toast from "react-hot-toast";
@@ -22,8 +24,9 @@ export default function Users() {
   const [modalOpen, setModalOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
-  const [verifiedFilter, setVerifiedFilter] = useState("");
+  const [validFilter, setValidFilter] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
+  const [verifiedFilter, setVerifiedFilter] = useState("");
   const sortBy = "created_at";
   const queryClient = useQueryClient();
 
@@ -32,13 +35,20 @@ export default function Users() {
     search,
     role: roleFilter,
     email_verified:
+      validFilter === ""
+        ? undefined
+        : validFilter === "valid"
+        ? true
+        : false,
+    sort_by: sortBy,
+    sort_order: sortOrder,
+    is_verified:
       verifiedFilter === ""
         ? undefined
         : verifiedFilter === "verified"
         ? true
         : false,
-    sort_by: sortBy,
-    sort_order: sortOrder,
+
   };
 
   const {
@@ -71,6 +81,18 @@ export default function Users() {
     },
   });
 
+
+  const verifyMutation = useMutation({
+    mutationFn: ({ id, values }) => verifyHealthWorker(id, values),
+    onSuccess: () => {
+      toast.success("Health worker verified successfully");
+      queryClient.invalidateQueries(["users"]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to verify health worker");
+    },
+  });
+
   const blockUserMutation = useMutation({
     mutationFn: (userData) => blockUser(userData.uuid),
     onSuccess: (data, variables) => {
@@ -85,13 +107,24 @@ export default function Users() {
     },
   });
 
+  const deleteUserMutation = useMutation({
+    mutationFn: (userId) => deleteUserPermanently(userId),
+    onSuccess: () => {
+      toast.success("User deleted successfully");
+      queryClient.invalidateQueries(["users"]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to delete user");
+    },
+  });
+
   const columns = useMemo(
     () => [
       {
         name: "Name",
         selector: (row) => row.name,
         sortable: true,
-        width: "300px",
+        width: "280px",
         cell: (row) => (
           <span className="flex items-center gap-1">
             <FiUser className="text-slate-gray" />
@@ -103,7 +136,7 @@ export default function Users() {
         name: "Email",
         selector: (row) => row.email,
         sortable: true,
-        width: "290px",
+        width: "230px",
         cell: (row) => (
           <span className="flex items-center">
             <span className="text-haven-blue">{row.email}</span>
@@ -122,14 +155,27 @@ export default function Users() {
           </span>
         ),
       },
-      {
+       {
         name: "Verified",
+        selector: (row) => row.is_verified,
+        sortable: true,
+        width: "160px",
+        cell: (row) =>
+          row.role === "healthworker" ? (
+            <StatusPill
+              status={row.is_verified === 1 ? "Verified" : "Unverified"}
+              size="sm"
+            />
+          ) : null,
+      },
+      {
+        name: "Email Validation",
         selector: (row) => row.email_verified_at,
         sortable: true,
         width: "120px",
         cell: (row) => (
           <StatusPill
-            status={row.email_verified_at ? "Verified" : "Unverified"}
+            status={row.email_verified_at ? "Valid" : "Invalid"}
             size="sm"
           />
         ),
@@ -166,6 +212,23 @@ export default function Users() {
               icon: <FaBan className="w-4 h-4" />,
               disabled: blockUserMutation.isLoading,
             },
+            {
+              label: "Delete",
+              onClick: () => handleDeleteUser(row),
+              icon: <FaTrash className="w-4 h-4" />,
+              disabled: deleteUserMutation.isLoading,
+            },
+
+            //show this option if role is healthworker
+            ...(row.role === "healthworker" && !row.is_verified
+              ? [
+                  {
+                    label: "Make Verified",
+                    onClick: () => makeUserVerified(row),
+                    icon: <FiShield className="w-4 h-4" />,
+                  },
+                ]
+              : [])
           ];
 
           return (
@@ -186,6 +249,14 @@ export default function Users() {
     setModalOpen(true);
   };
 
+  const handleDeleteUser = (user) => {
+    if (
+      window.confirm(`Are you sure you want to permanently delete ${user.name}? This action cannot be undone.`)
+    ) {
+      deleteUserMutation.mutate(user.uuid);
+    }
+  };
+
   const handleBlockUser = (user) => {
     const action = user.is_active === "1" ? "block" : "unblock";
     const confirmMessage = `Are you sure you want to ${action} ${user.name}?`;
@@ -195,6 +266,18 @@ export default function Users() {
       blockUserMutation.mutate({
         uuid: user.uuid,
         originalStatus: user.is_active,
+      });
+    }
+  };
+
+    //we are making the is_verified column true for healthworkers when the admin clicks on the make verified option in the dropdown.
+  const makeUserVerified = (user) => {
+    const confirmMessage = `Are you sure you want to verify ${user.name}? This will allow them to access health worker features.`;
+
+    if (window.confirm(confirmMessage)) {
+      verifyMutation.mutate({
+        id: user.uuid,
+        values: { is_verified: true },
       });
     }
   };
@@ -244,6 +327,7 @@ export default function Users() {
             <option value="Healthworker">Health Worker</option>
             <option value="Admin">Admin</option>
           </select>
+
           <select
             value={verifiedFilter}
             onChange={(e) => setVerifiedFilter(e.target.value)}
@@ -252,6 +336,16 @@ export default function Users() {
             <option value="">All Users</option>
             <option value="verified">Verified</option>
             <option value="unverified">Unverified</option>
+          </select>
+
+          <select
+            value={validFilter}
+            onChange={(e) => setValidFilter(e.target.value)}
+            className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-haven-blue w-full sm:w-1/4"
+          >
+            <option value="">All Users</option>
+            <option value="valid">Valid Email</option>
+            <option value="invalid">Invalid Email</option>
           </select>
           <select
             value={sortOrder}

@@ -8,6 +8,7 @@ import {
   FiHelpCircle,
   FiXCircle,
   FiLoader,
+  FiShield,
 } from "react-icons/fi";
 
 const statusStyleMap = {
@@ -19,9 +20,11 @@ const statusStyleMap = {
   cancelled: "bg-red-100 text-red-800",
   processing: "bg-blue-100 text-blue-800",
   verified: "bg-green-100 text-green-800",
-  unverified: "bg-gray-100 text-gray-800",
+  unverified: "bg-red-50 text-red-900 border-2 border-red-300",
   active: "bg-green-100 text-green-800",
   blocked: "bg-red-100 text-red-800",
+  valid: "bg-green-100 text-green-800",
+  invalid: "bg-gray-100 text-gray-800",
 };
 
 const sizeClassMap = {
@@ -38,10 +41,12 @@ const statusIconMap = {
   done: FiCheckCircle,
   cancelled: FiXCircle,
   processing: FiLoader,
-  verified: FiCheckCircle,
+  verified: FiShield,
   unverified: FiAlertCircle,
   active: FiThumbsUp,
   blocked: FiXCircle,
+  valid: FiCheckCircle,
+  invalid: FiAlertCircle,
 };
 
 const StatusPill = ({

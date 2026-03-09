@@ -150,12 +150,12 @@ const Sidebar = () => {
           </button>
 
           <div className="flex items-center gap-12">
-            <BetaBadge
+            {/* <BetaBadge
               text="Beta Testing"
               icon={FaFlask}
               className="default-classes"
               iconClassName="default-icon-classes"
-            />
+            /> */}
             <div className="flex items-center gap-3">
               {/* Notifications */}
               <div className="relative">

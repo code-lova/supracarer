@@ -15,10 +15,12 @@ import EmptyState from "@components/core/EmptyState";
 import ErrorState from "@components/core/ErrorState";
 import TableFilters from "@components/core/table/TableFilters";
 import DataTable from "react-data-table-component";
-import { FaCalendarAlt, FaUserMd, FaClock, FaSearch, FaRedo } from "react-icons/fa";
+import { FaCalendarAlt, FaUserMd, FaClock, FaSearch, FaRedo, FaStethoscope, FaEye } from "react-icons/fa";
 import AdminTableSkeleton from "@components/core/skeleton/AdminTableSkeleton";
 import ThreeDotDropdown from "@components/core/button/ThreeDotDropdown";
 import DateFormatter from "@components/core/DateFormatter";
+import { MediumBtn } from "@components/core/button";
+import { TablePagination } from "@components/core/table";
 
 const ClientAppointments = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
@@ -28,6 +30,8 @@ const ClientAppointments = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [searchTerm, setSearchTerm] = useState("");
   const [showAllAppointments, setShowAllAppointments] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const queryClient = useQueryClient();
 
@@ -47,6 +51,9 @@ const ClientAppointments = () => {
     ...(statusFilter !== "All" && { status: statusFilter }),
     ...(sortBy && { sort: sortBy }),
     ...(searchTerm && { search: searchTerm }),
+    ...(currentPage && { page: currentPage }),
+    ...(itemsPerPage && { per_page: itemsPerPage}),
+
   };
 
   const {
@@ -62,6 +69,20 @@ const ClientAppointments = () => {
   });
 
   const appointments = appointmentsData?.data || [];
+
+   // Get pagination info from API response
+  const totalItems = appointmentsData?.meta?.total || 0;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // Reset to first page when filters change
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [statusFilter, sortBy]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
 
   // Mutation for updating to ongoing booking requests
   const updateToOngoingMutation = useMutation({
@@ -435,31 +456,128 @@ const ClientAppointments = () => {
                 />
               </div>
             ) : (
-              <div className="h-[500px] sm:h-[500px] w-full min-w-full overflow-hidden flex flex-col">
-                <DataTable
-                  columns={columns}
-                  data={filteredAppointments}
-                  pagination
-                  paginationPerPage={10}
-                  paginationRowsPerPageOptions={[5, 10, 15, 20]}
-                  highlightOnHover
-                  striped
-                  responsive
-                  customStyles={customStyles}
-                  noDataComponent={
-                    <div className="p-8">
-                      <EmptyState
-                        icon={FaCalendarAlt}
-                        title="No appointments match your filters"
-                        description="Try adjusting your search criteria or filters."
+              
+              <>
+              {/* mobile card view */}
+                <div className="md:hidden flex-1 overflow-y-auto">
+                  <div className="space-y-6">
+                    {appointments.map((appointment) => (
+                      <div
+                        key={appointment.uuid}
+                        className="bg-gradient-to-r from-green-50 to-green-50 rounded-xl p-4 border border-gray-100 shadow-sm"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <div>
+                            <h3 className="font-semibold text-tranquil-teal">
+                              Booking #{appointment.booking_reference}
+                            </h3>
+
+                            <p className="text-sm text-slate-gray">
+                              Created:{" "}
+                              <DateFormatter
+                                date={appointment.created_at}
+                                format="short"
+                              />
+                            </p>
+                          </div>
+                          <StatusPill status={appointment.status} size="sm" />
+                        </div>
+
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center text-sm">
+                            <FaCalendarAlt className="text-carer-blue mr-2" />
+                            <span>
+                              <DateFormatter
+                                date={appointment.start_date}
+                                format="short"
+                              />{" "}
+                              -{" "}
+                              <DateFormatter
+                                date={appointment.end_date}
+                                format="short"
+                              />
+                            </span>
+                          </div>
+                          <div className="flex items-center text-sm">
+                            <FaClock className="text-carer-green mr-2" />
+                            <span>
+                              {appointment.start_time.split(":").splice(0, 2).join(":")}{" "}
+                              {appointment.start_time_period} -{" "}
+                              {appointment.end_time.split(":").splice(0, 2).join(":")} {appointment.end_time_period}
+                            </span>
+                          </div>
+                          <div className="flex items-center text-sm">
+                            <FaStethoscope className="text-red-500 mr-2" />
+                            <span>
+                              {appointment.care_duration} -{" "}
+                              {appointment.care_duration_value}hrs (
+                              {appointment.care_type})
+                            </span>
+                          </div>
+                         
+                        </div>
+
+                        <div className="flex item-center justify-center space-x-2">
+                          <MediumBtn
+                            onClick={() => {
+                              setSelectedAppointment(appointment)
+                              setShowDetails(true)
+                            }}
+                            text="View Details"
+                            color="gray"
+                            icon={<FaEye className="mr-1" />}
+                          />
+                        </div>
+
+                       
+                      </div>
+                    ))}
+                    {/* Pagination */}
+                    {!isLoading &&
+                    !error &&
+                    appointments.length > 0 &&
+                    totalPages > 1 && (
+                      <div className="mb-6">
+                      <TablePagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        itemsPerPage={itemsPerPage}
+                        totalItems={totalItems}
+                        filteredItems={totalItems}
+                        onPageChange={handlePageChange}
                       />
-                    </div>
-                  }
-                  fixedHeader
-                  fixedHeaderScrollHeight="400px"
-                  dense
-                />
-              </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* desktop datatable view  */}
+                <div className="hidden md:flex flex-col h-[500px] sm:h-[500px] w-full min-w-full overflow-hidden ">
+                  <DataTable
+                    columns={columns}
+                    data={filteredAppointments}
+                    pagination
+                    paginationPerPage={10}
+                    paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                    highlightOnHover
+                    striped
+                    responsive
+                    customStyles={customStyles}
+                    noDataComponent={
+                      <div className="p-8">
+                        <EmptyState
+                          icon={FaCalendarAlt}
+                          title="No appointments match your filters"
+                          description="Try adjusting your search criteria or filters."
+                        />
+                      </div>
+                    }
+                    fixedHeader
+                    fixedHeaderScrollHeight="400px"
+                    dense
+                  />
+                </div>
+              </>
             )}
           </div>
         ) : (

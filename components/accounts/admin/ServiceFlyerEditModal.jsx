@@ -168,8 +168,24 @@ const ServiceFlyerEditModal = ({
   // Check if a new image was selected (different from original)
   const hasNewImage = Boolean(selectedFile);
 
+  // ============== Animation State ==============
+  const [shouldRender, setShouldRender] = useState(isOpen);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      const timer = setTimeout(() => setIsAnimating(true), 10);
+      return () => clearTimeout(timer);
+    } else {
+      setIsAnimating(false);
+      const timer = setTimeout(() => setShouldRender(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
   // ============== Early Return ==============
-  if (!isOpen) return null;
+  if (!shouldRender) return null;
 
   // ============== Initial Form Values ==============
   const initialValues = {
@@ -186,7 +202,7 @@ const ServiceFlyerEditModal = ({
     <>
       {/* Backdrop - closes modal on click */}
       <div
-        className="fixed inset-0 -top-6 bg-black bg-opacity-50 z-40"
+        className={`fixed inset-0 -top-6 bg-black z-40 transition-opacity duration-500 ${isAnimating ? "opacity-50" : "opacity-0"}`}
         onClick={!isProcessing ? onClose : undefined}
         aria-hidden="true"
       />
@@ -194,7 +210,7 @@ const ServiceFlyerEditModal = ({
       {/* Modal Panel */}
       <div
         ref={modalRef}
-        className="fixed right-0 -top-6 h-full w-full max-w-2xl bg-white shadow-2xl z-50 overflow-y-auto"
+        className={`fixed right-0 -top-6 h-full w-full max-w-2xl bg-white shadow-2xl z-50 overflow-y-auto transform transition-transform duration-500 ${isAnimating ? "translate-x-0" : "translate-x-full"}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"

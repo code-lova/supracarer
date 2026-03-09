@@ -1,5 +1,5 @@
 import { MediumBtn } from "@components/core/button";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import {
   FaUser,
@@ -11,7 +11,22 @@ import {
 import DateFormatter from "@components/core/DateFormatter";
 
 const ClientDetailsModal = ({ patient, isOpen, onClose }) => {
-  if (!isOpen || !patient) return null;
+  const [shouldRender, setShouldRender] = useState(isOpen);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      const timer = setTimeout(() => setIsAnimating(true), 10);
+      return () => clearTimeout(timer);
+    } else {
+      setIsAnimating(false);
+      const timer = setTimeout(() => setShouldRender(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
+  if (!shouldRender || !patient) return null;
 
   const clientName =
     patient.user?.name ||
@@ -26,11 +41,12 @@ const ClientDetailsModal = ({ patient, isOpen, onClose }) => {
   const extraServices = patient.others?.[0]?.other_extra_service || [];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end">
+    <div className={`fixed inset-0 bg-black/10 backdrop-blur-sm z-50 flex justify-end transition-opacity duration-300 ${isAnimating ? "opacity-100" : "opacity-0"}`} onClick={onClose}>
       <div
         className={`bg-white h-full w-full max-w-md transform transition-transform duration-300 ease-in-out overflow-y-auto ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isAnimating ? "translate-x-0" : "translate-x-full"
         }`}
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">

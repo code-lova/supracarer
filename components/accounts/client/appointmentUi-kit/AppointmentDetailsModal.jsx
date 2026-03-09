@@ -5,7 +5,7 @@ import {
   useUserRole,
   getUnassignedHealthWorkerMessage,
 } from "@utils/userRoleUtils";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaTimes,
   FaCalendarAlt,
@@ -35,6 +35,23 @@ const AppointmentDetailsModal = ({
   isDeleting = false,
 }) => {
   const { role } = useUserRole();
+
+  // Keep the component mounted during the closing transition
+  const [shouldRender, setShouldRender] = useState(isOpen);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      const timer = setTimeout(() => setIsAnimating(true), 10);
+      return () => clearTimeout(timer);
+    } else {
+      setIsAnimating(false);
+      const timer = setTimeout(() => setShouldRender(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
   const handleCancelAppointment = (uuid) => {
     // Call the parent function - the parent handles async states via React Query
     onCancelAppointment(uuid);
@@ -53,18 +70,18 @@ const AppointmentDetailsModal = ({
     // Don't close the modal here - let the parent close it via the mutation onSuccess
   };
 
-  if (!isOpen || !appointment) return null;
+  if (!shouldRender || !appointment) return null;
 
   return (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        className={`fixed inset-0 bg-black z-40 transition-opacity duration-500 ${isAnimating ? "opacity-50" : "opacity-0"}`}
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl z-50 transform transition-transform duration-300 overflow-y-auto">
+      <div className={`fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl z-50 transform transition-transform duration-500 overflow-y-auto ${isAnimating ? "translate-x-0" : "translate-x-full"}`}>
         {/* Header */}
         <div className="bg-slate-gray2 text-white p-6 sticky top-0 z-10">
           <div className="flex justify-between items-center">
