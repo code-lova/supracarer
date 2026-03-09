@@ -292,16 +292,16 @@
   }
 
   .steper-form-input {
-    @apply w-full border border-gray-300 text-slate-gray rounded px-4 py-2 text-sm shadow-sm outline-none focus:ring-carer-blue focus:border-carer-blue;
+    @apply w-full border border-gray-200 bg-gray-50 text-slate-gray rounded-lg px-4 py-2.5 text-sm outline-none transition-all duration-200 hover:border-carer-blue focus:ring-2 focus:ring-carer-blue/20 focus:border-carer-blue focus:bg-white;
   }
 
   /* Custom Select Dropdown Arrow */
   .select-dropdown {
     @apply appearance-none cursor-pointer;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%232c9ace' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
     background-position: right 0.75rem center;
     background-repeat: no-repeat;
-    background-size: 1.5em 1.5em;
+    background-size: 1.25em 1.25em;
     padding-right: 2.5rem;
   }
 

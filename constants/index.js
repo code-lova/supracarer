@@ -1109,6 +1109,7 @@ export const healthWorkerFields = [
   "latitude",
   "longitude",
   "has_guided_rate_system",
+  "is_verified",
 ];
 
 export const clientFields = [

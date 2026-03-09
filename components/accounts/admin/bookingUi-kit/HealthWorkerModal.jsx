@@ -339,7 +339,7 @@ const HealthWorkerModal = ({
                         {/* Worker Details */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-base md:text-lg font-semibold text-gray-900 truncate pr-2">
+                            <h3 className="text-sm md:text-lg font-semibold text-gray-900 truncate pr-2">
                               {worker.name}
                             </h3>
                             <div className="flex items-center space-x-1 md:space-x-2 flex-shrink-0">
@@ -368,10 +368,22 @@ const HealthWorkerModal = ({
                             </div>
 
                             {worker.phone && (
-                              <div className="flex items-center text-gray-600">
-                                <FiPhone className="mr-2 text-green-500 flex-shrink-0" />
-                                <span>{worker.phone}</span>
+                              <div className="flex items-center justify-between text-gray-600">
+                                <div className="flex items-center">
+                                  <FiPhone className="mr-2 text-green-500 flex-shrink-0" />
+                                  <span>{worker.phone}</span>
+                                </div>
+                                <StatusPill
+                                  status={
+                                    worker.is_verified === 1
+                                      ? "Verified"
+                                      : "Unverified"
+                                  }
+                                  size="sm"
+                                />
+                               
                               </div>
+
                             )}
 
                             <div className="flex item-center justify-between">

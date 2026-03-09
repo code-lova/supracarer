@@ -12,6 +12,7 @@ import {
 } from "react-icons/fi";
 import { useUserContext } from "@context/userContext";
 import ProfileCompleteness from "@components/core/ProfileCompleteness";
+import StatusPill from "@components/core/StatusPill";
 
 const ProfileCard = () => {
   const { user } = useUserContext();
@@ -77,8 +78,9 @@ const ProfileCard = () => {
             <h3 className="text-lg font-bold text-gray-800 capitalize truncate">
               {userDetails?.fullname || "Username"}
             </h3>
-            <p className="text-sm text-tranquil-teal font-medium capitalize">
+            <p className="text-sm text-tranquil-teal font-medium capitalize flex items-center justify-between mt-1">
               {userDetails?.practitioner || "Healthcare Professional"}
+              <StatusPill status={userDetails?.is_verified ? "verified": "Unverified"} />
             </p>
             <div className="flex items-center gap-1.5 mt-2 text-gray-500 text-xs">
               <FiMapPin className="text-tranquil-teal flex-shrink-0" />
