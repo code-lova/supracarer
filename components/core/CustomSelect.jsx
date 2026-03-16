@@ -27,14 +27,14 @@ const CustomSelect = ({ name, value, onChange, options, placeholder = "Select" }
         onClick={() => setOpen((prev) => !prev)}
         className={`w-full flex items-center justify-between border rounded-lg px-4 py-2.5 text-sm transition-all duration-200 outline-none
           ${open
-            ? "border-carer-blue ring-2 ring-carer-blue/20 bg-white"
-            : "border-gray-200 bg-gray-50 hover:border-carer-blue"
+            ? "border-gray-300 ring-2 ring-carer-blue/20 bg-white"
+            : "border-gray-200 bg-gray-50 hover:border-gray-300"
           }
           ${selected ? "text-slate-gray" : "text-gray-400"}`}
       >
         <span>{selected ? selected.label : placeholder}</span>
         <svg
-          className={`w-4 h-4 text-carer-blue flex-shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
           fill="none"
           viewBox="0 0 20 20"
         >
@@ -50,13 +50,13 @@ const CustomSelect = ({ name, value, onChange, options, placeholder = "Select" }
               onClick={() => handleSelect(opt.value)}
               className={`flex items-center justify-between px-4 py-2.5 text-sm cursor-pointer transition-colors duration-150
                 ${opt.value === value
-                  ? "bg-light-blue-bg text-dark-blue-border font-medium"
+                  ? "bg-transparent text-gray-900 font-medium"
                   : "text-slate-gray hover:bg-gray-50"
                 }`}
             >
               <span>{opt.label}</span>
               {opt.value === value && (
-                <svg className="w-4 h-4 text-carer-blue flex-shrink-0" fill="none" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
                 </svg>
               )}
