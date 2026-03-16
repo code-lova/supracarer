@@ -14,6 +14,9 @@ import Image from "next/image";
 import PhoneInput from "@components/core/PhoneInput";
 import Turnstile from "@components/core/Turnstile";
 import Link from "next/link";
+import CustomSelect from "@components/core/CustomSelect";
+
+const PRACTITIONER_OPTIONS = [{ value: "nurse", label: "Nurse" }];
 
 // Turnstile site key from environment variable
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
@@ -23,7 +26,7 @@ const Register = () => {
   const navigate = useRouter();
   const [loading, setLoading] = useState(false);
   const [registrationComplete, setRegistrationComplete] = useState(false);
-  const [selectedRole, setSelectedRole] = useState("");
+  const [selectedRole, setSelectedRole] = useState("client");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -50,6 +53,12 @@ const Register = () => {
     setTurnstileToken("");
     toast.error("Security verification expired. Please verify again.");
   }, []);
+
+  const handleAccountTypeSwitch = (type) => {
+    if (type === selectedRole) return;
+    setSelectedRole(type);
+    setRetainedValues({ name: "", email: "", phone: "" });
+  };
 
   const { mutate } = useMutation({
     mutationFn: registerRequest,
@@ -167,7 +176,41 @@ const Register = () => {
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
                 Create Account
               </h1>
-              <p className="text-gray-600 text-sm">Join Supracarer today</p>
+              <p className="text-gray-600 text-sm mb-4">Join Supracarer today</p>
+
+              {/* Account Type Toggle */}
+              <div className="relative flex items-center bg-gray-100 rounded-xl p-1">
+                {/* Sliding pill */}
+                <div
+                  className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm border border-gray-200 transition-transform duration-300 ease-in-out ${
+                    selectedRole === "healthworker"
+                      ? "translate-x-[calc(100%+4px)]"
+                      : "translate-x-0"
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => handleAccountTypeSwitch("client")}
+                  className={`relative flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors duration-300 ${
+                    selectedRole === "client"
+                      ? "text-tranquil-teal"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
+                >
+                  Client
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleAccountTypeSwitch("healthworker")}
+                  className={`relative flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors duration-300 ${
+                    selectedRole === "healthworker"
+                      ? "text-tranquil-teal"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
+                >
+                  Health Worker
+                </button>
+              </div>
             </div>
 
             <Formik
@@ -175,7 +218,7 @@ const Register = () => {
                 name: retainedValues.name,
                 email: retainedValues.email,
                 phone: retainedValues.phone,
-                role: "",
+                role: selectedRole,
                 practitioner: "",
                 password: "",
                 password_confirmation: "",
@@ -185,7 +228,7 @@ const Register = () => {
               onSubmit={handleSubmit}
               enableReinitialize={true}
             >
-              {({ setFieldValue, resetForm }) => (
+              {() => (
                 <Form className="space-y-4">
                   {/* Full Name */}
                   <div>
@@ -255,40 +298,6 @@ const Register = () => {
                     </div>
                   </div>
 
-                  {/* Role Selection */}
-                  <div>
-                    <label
-                      htmlFor="role"
-                      className="block text-sm font-semibold text-gray-700 mb-1.5"
-                    >
-                      Select an Account Type
-                    </label>
-                    <Field
-                      name="role"
-                      as="select"
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none bg-white appearance-none cursor-pointer select-dropdown"
-                      onChange={(e) => {
-                        const role = e.target.value;
-                        setSelectedRole(role);
-                        setFieldValue("role", role);
-                        if (role !== "healthworker") {
-                          setFieldValue("practitioner", "");
-                        }
-                      }}
-                    >
-                      <option value="">Choose</option>
-                      <option value="healthworker">
-                        Healthcare Professional
-                      </option>
-                      <option value="client">Client</option>
-                    </Field>
-                    <ErrorMessage
-                      name="role"
-                      component="div"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
-
                   {/* Conditional Practitioner Type */}
                   {selectedRole === "healthworker" && (
                     <div className="animate-fade-in">
@@ -298,13 +307,18 @@ const Register = () => {
                       >
                         Practitioner Type
                       </label>
-                      <Field
-                        name="practitioner"
-                        as="select"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tranquil-teal focus:border-transparent transition-all duration-200 outline-none bg-white appearance-none cursor-pointer select-dropdown"
-                      >
-                        <option value="">Select type</option>
-                        <option value="nurse">Nurse</option>
+                      <Field name="practitioner">
+                        {({ field, form }) => (
+                          <CustomSelect
+                            name="practitioner"
+                            value={field.value}
+                            onChange={(e) =>
+                              form.setFieldValue("practitioner", e.target.value)
+                            }
+                            options={PRACTITIONER_OPTIONS}
+                            placeholder="Select type"
+                          />
+                        )}
                       </Field>
                       <ErrorMessage
                         name="practitioner"
